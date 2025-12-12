@@ -1,0 +1,47 @@
+{
+  "error": "",
+  "message": "",
+  "warning": "",
+  "request_id": "e3e3e7f345bdc39b5f4d1e24258bb501",
+  "response": {
+    "list": [
+      {
+        "category_id": 123,
+        "attribute_tree": [
+          {
+            "attribute_id": 100004,
+            "mandatory": false,
+            "name": "測試Duplicate Name",
+            "attribute_value_list": [
+              {
+                "value_id": 2134,
+                "name": "XXXL",
+                "multi_lang": [
+                  {
+                    "language": "en",
+                    "value": "XXXL"
+                  }
+                ]
+              }
+            ],
+            "attribute_info": {
+              "input_type": 2,
+              "input_validation_type": 1,
+              "format_type": 2,
+              "attribute_unit_list": ["kg", "g"],
+              "is_oem": false,
+              "support_search_value": false
+            },
+            "multi_lang": [
+              {
+                "language": "en",
+                "value": "測試Duplicate Name"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "debug_message": ""
+}

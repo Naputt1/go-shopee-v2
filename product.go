@@ -5,6 +5,7 @@ type ProductService interface {
 	GetBrandList(uint64, uint64, int, int, int, string) (*GetBrandListResponse, error)
 	GetDTSLimit(uint64, uint64, string) (*GetDTSLimitResponse, error)
 	GetAttributes(uint64, uint64, string, string) (*GetAttributesResponse, error)
+	GetAttributeTree(uint64, []uint64, string, string) (*GetAttributeTreeResponse, error)
 	SupportSizeChart(uint64, uint64, string) (*SupportSizeChartResponse, error)
 	UpdateSizeChart(uint64, uint64, string, string) (*UpdateSizeChartResponse, error)
 	GetItemBaseInfo(uint64, []uint64, string) (*GetItemBaseInfoResponse, error)
@@ -52,6 +53,18 @@ type GetCategoryRequest struct {
 
 func (s *ProductServiceOp) GetCategory(sid uint64, lang, tok string) (*GetCategoryResponse, error) {
 	path := "/product/get_category"
+
+	opt := GetCategoryRequest{
+		Language: lang,
+	}
+
+	resp := new(GetCategoryResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *ProductServiceOp) GetCategoryTree(sid uint64, lang, tok string) (*GetCategoryResponse, error) {
+	path := "/product/get_category_tree"
 
 	opt := GetCategoryRequest{
 		Language: lang,
@@ -182,6 +195,7 @@ type ParentBrand struct {
 	ParentBrandID uint64 `json:"parent_brand_id"`
 }
 
+// Deprecated: GetAttributes is deprecated. Use GetAttributeTree instead.
 func (s *ProductServiceOp) GetAttributes(sid, cid uint64, lang, tok string) (*GetAttributesResponse, error) {
 	path := "/product/get_attributes"
 
@@ -192,6 +206,109 @@ func (s *ProductServiceOp) GetAttributes(sid, cid uint64, lang, tok string) (*Ge
 
 	resp := new(GetAttributesResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+type GetAttibuteTreeRequest struct {
+	CategoryID []uint64 `url:"category_id_list"`
+	Language   string   `url:"language"`
+}
+
+type GetAttributeTreeResponse struct {
+	BaseResponse
+
+	Response GetAttributeTreeResponseData `json:"response"`
+}
+
+type GetAttributeTreeResponseData struct {
+	List []AttributeTreeCategory `json:"list"`
+}
+
+type AttributeTree struct {
+	AttributeID        uint64                        `json:"attribute_id"`
+	Mandatory          bool                          `json:"mandatory"`
+	Name               string                        `json:"name"`
+	AttributeValueList []AttributeTreeAttributeValue `json:"attribute_value_list"`
+	AttributeInfo      AttributeTreeAttributeInfo    `json:"attribute_info"`
+	MultiLang          []AttributeTreeMultiLang      `json:"multi_lang"`
+}
+
+type AttributeTreeAttributeValue struct {
+	ValueID            uint64                   `json:"value_id"`
+	Name               string                   `json:"name"`
+	ValueUnit          string                   `json:"value_unit"`
+	ChildAttributeList []AttributeTree          `json:"child_attribute_list"`
+	MultiLang          []AttributeTreeMultiLang `json:"multi_lang"`
+}
+
+type AttributeTreeInputType uint8
+
+const (
+	SINGLE_DROP_DOWN AttributeTreeInputType = iota + 1
+	SINGLE_COMBO_BOX
+	FREE_TEXT_FILED
+	MULTI_DROP_DOWN
+	MULTI_COMBO_BOX
+)
+
+type AttributeTreeInpuValidationType uint8
+
+const (
+	VALIDATOR_NO_VALIDATE_TYPE AttributeTreeInpuValidationType = iota
+	VALIDATOR_INT_TYPE
+	VALIDATOR_STRING_TYPE
+	VALIDATOR_FLOAT_TYPE
+	VALIDATOR_DATE_TYPE
+)
+
+type AttributeTreeFormatType uint8
+
+const (
+	FORMAT_NORMAL AttributeTreeFormatType = iota + 1
+	FORMAT_QUANTITATIVE_WITH_UNIT
+)
+
+type AttributeTreeDateFormatType uint8
+
+const (
+	YEAR_MONTH_DATE AttributeTreeDateFormatType = iota // (DD/MM/YYYY)
+	YEAR_MONTH_DAY                                     // (MM/YYYY)
+)
+
+type AttributeTreeAttributeInfo struct {
+	InputType           AttributeTreeInputType          `json:"input_type"`
+	InputValidationType AttributeTreeInpuValidationType `json:"input_validation_type"`
+	FormatType          AttributeTreeFormatType         `json:"format_type"`
+	DateFormatType      AttributeTreeDateFormatType     `json:"date_format_type"`
+	AttributeUnitList   []string                        `json:"attribute_unit_list"`
+	MaxValueCount       int64                           `json:"max_value_count"`
+	Introduction        string                          `json:"introduction"`
+	IsOem               bool                            `json:"is_oem"`
+	SupportSearchValue  bool                            `json:"support_search_value"`
+}
+
+type AttributeTreeMultiLang struct {
+	Language string `json:"language"`
+	Value    string `json:"value"`
+}
+
+type AttributeTreeCategory struct {
+	AttributeTree []AttributeTree `json:"attribute_tree"`
+	CategoryID    uint64          `json:"category_id"`
+	Warning       string          `json:"warning"`
+}
+
+func (s *ProductServiceOp) GetAttributeTree(sid uint64, cid []uint64, lang, tok string) (*GetAttributeTreeResponse, error) {
+	path := "/product/get_attribute_tree"
+
+	opt := GetAttibuteTreeRequest{
+		CategoryID: cid,
+		Language:   lang,
+	}
+
+	resp := new(GetAttributeTreeResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+
 	return resp, err
 }
 

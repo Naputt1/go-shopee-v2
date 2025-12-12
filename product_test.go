@@ -92,6 +92,31 @@ func Test_GetAttributes(t *testing.T) {
 	}
 }
 
+func Test_GetAttributeTree(t *testing.T) {
+	setup()
+	defer teardown()
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/product/get_attribute_tree", app.APIURL),
+		httpmock.NewBytesResponder(200, loadFixture("attributeTree.json")))
+
+	res, err := client.Product.GetAttributeTree(shopID, []uint64{123}, "en", accessToken)
+	if err != nil {
+		t.Errorf("Product.GetAttributeTree error: %s", err)
+	}
+
+	t.Logf("Product.GetAttributeTree: %#v", res)
+
+	var expectedID uint64 = 123
+	if res.Response.List[0].CategoryID != expectedID {
+		t.Errorf("List[0].CategoryID returned %+v, expected %+v", res.Response.List[0].CategoryID, expectedID)
+	}
+
+	var expectedBrandID uint64 = 2134
+	if res.Response.List[0].AttributeTree[0].AttributeValueList[0].ValueID != expectedBrandID {
+		t.Errorf("List[0].AttributeTree[0].AttributeValueList[0].ValueID returned %+v, expected %+v", res.Response.List[0].AttributeTree[0].AttributeValueList[0].ValueID, expectedBrandID)
+	}
+}
+
 func Test_SupportSizeChart(t *testing.T) {
 	setup()
 	defer teardown()
