@@ -383,6 +383,12 @@ type ItemBase struct {
 	VideoInfo     []ItemVideo     `json:"video_info"`
 	Brand         ItemBrand       `json:"brand"`
 	ItemDangerous int             `json:"item_dangerous"`
+	SellerStock   *[]SellerStock  `json:"seller_stock"`
+}
+
+type SellerStock struct {
+	LocationID *string `json:"location_id"`
+	Stock      int32   `json:"stock"`
 }
 
 type ItemBaseInfo struct {
