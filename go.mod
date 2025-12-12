@@ -1,4 +1,4 @@
-module github.com/passwind/go-shopee-v2
+module github.com/Naputt1/go-shopee-v2
 
 go 1.15
 
