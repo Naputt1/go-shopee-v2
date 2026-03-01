@@ -554,56 +554,40 @@ type AddItemRequest struct {
 	// DescriptionInfo is the extended description information for the item.
 	DescriptionInfo *DescriptionInfo `json:"description_info"`
 	// DescriptionType is the type of description. NORMAL or EXTENDED.
-	DescriptionType string `json:"description_type"`
+	DescriptionType DescriptionType `json:"description_type"`
 	// TaxInfo is the tax information for the item.
 	TaxInfo *TaxInfo `json:"tax_info"`
 	// ComplaintPolicy is the complaint policy for the item.
 	ComplaintPolicy *ComplaintPolicy `json:"complaint_policy"`
 }
 
+type DescriptionType string
+
+const DescriptionTypeNormal DescriptionType = "normal"
+const DescriptionTypeExtended DescriptionType = "extended"
+
 type DescriptionInfo struct {
 	// ExtendedDescription is the extended description for the item.
 	ExtendedDescription []DescriptionElement `json:"extended_description"`
 }
 
+type DescriptionElementFieldType string
+
+const DescriptionElementFieldTypeText DescriptionElementFieldType = "text"
+const DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
+
 type DescriptionElement struct {
-	// FieldType is the type of the field. text or image.
-	FieldType string `json:"field_type"`
-	// Text is the text content if field_type is text.
+	// Type of extended description field ：values: See Data Definition- description_field_type (text , image).
+	FieldType DescriptionElementFieldType `json:"field_type"`
+	// If field_type is text, text information will be returned through this field.
 	Text string `json:"text"`
-	// ImageInfo is the image information if field_type is image.
+	// If field_type is image, image url will be returned through this field.
 	ImageInfo *DescriptionImageInfo `json:"image_info"`
 }
 
 type DescriptionImageInfo struct {
-	// ImageID is the identifier of the image.
-	ImageID string `json:"image_id"`
-}
-
-type TaxInfo struct {
-	// Ncm is the NCM code for the item. (Brazil only)
-	Ncm string `json:"ncm"`
-	// SameStateCfop is the CFOP code for the item in the same state. (Brazil only)
-	SameStateCfop string `json:"same_state_cfop"`
-	// DiffStateCfop is the CFOP code for the item in a different state. (Brazil only)
-	DiffStateCfop string `json:"diff_state_cfop"`
-	// Csosn is the CSOSN code for the item. (Brazil only)
-	Csosn string `json:"csosn"`
-	// Origin is the origin of the item. (Brazil only)
-	Origin string `json:"origin"`
-	// Cest is the CEST code for the item. (Brazil only)
-	Cest string `json:"cest"`
-	// MeasureUnit is the measure unit for the item. (Brazil only)
-	MeasureUnit string `json:"measure_unit"`
-	// TaxCode is the tax code for the item. (Brazil only)
-	TaxCode string `json:"tax_code"`
-}
-
-type ComplaintPolicy struct {
-	// WarrantyTime is the warranty time for the item.
-	WarrantyTime string `json:"warranty_time"`
-	// ExcludeLanguage is the language to exclude for the complaint policy.
-	ExcludeLanguage []string `json:"exclude_language"`
+	ImageID  string `json:"image_id"`
+	ImaegURL string `json:"image_url"`
 }
 
 type AddItemResponse struct {
@@ -837,6 +821,10 @@ func (s *ProductServiceOp) SearchItem(sid uint64, opt SearchItemRequest, tok str
 type GetItemBaseInfoRequest struct {
 	// ItemIDList is the identifiers of the items for which to retrieve detailed information.
 	ItemIDList []uint64 `url:"item_id_list" mandatory:"true"`
+	// if true will response tax_info
+	NeedTaxInfo bool `url:"need_tax_info"`
+	// if true will response complaint_policy
+	NeedComplaintPolicy bool `url:"need_complaint_policy"`
 }
 
 type GetItemBaseInfoResponse struct {
@@ -846,21 +834,19 @@ type GetItemBaseInfoResponse struct {
 
 type GetItemBaseInfoResponseData struct {
 	// ItemList is the list of detailed information for the specified items.
-	ItemList []ItemBaseInfoData `json:"item_list"`
-}
-
-type ItemBaseInfoData struct {
-	// ItemID is the identifier of the item.
-	ItemID uint64 `json:"item_id"`
-	// ItemBaseInfo is the base information of the item.
-	ItemBaseInfo ItemBaseInfo `json:"item_base_info"`
+	ItemList []ItemBaseInfo `json:"item_list"`
+	// Complaint policy.Only returned for local PL sellers, and need_complaint_policy in request is true.
+	ComplaintPolicy ComplaintPolicy  `json:"complaint_policy"`
+	TaxInfo         TaxInfo          `json:"tax_info"`
+	DescriptionInfo *DescriptionInfo `json:"description_info"`
+	DescriptionType DescriptionType  `json:"description_type"`
 	// StockInfoV2 is the stock information for the item.
 	StockInfoV2 StockInfoV2 `json:"stock_info_v2"`
-	// PriceInfo is the price information for the item.
-	PriceInfo PriceInfo `json:"price_info"`
 }
 
 type ItemBaseInfo struct {
+	// ItemID is the identifier of the item.
+	ItemID uint64 `json:"item_id"`
 	// CategoryID is the identifier of the category.
 	CategoryID uint64 `json:"category_id"`
 	// ItemName is the name of the item.
@@ -875,6 +861,8 @@ type ItemBaseInfo struct {
 	UpdateTime uint64 `json:"update_time"`
 	// AttributeList is the list of attributes for the item.
 	AttributeList []ItemAttribute `json:"attribute_list"`
+	// PriceInfo is the price information for the item.
+	PriceInfo PriceInfo `json:"price_info"`
 	// Image is the images for the item.
 	Image ItemImage `json:"image"`
 	// Weight is the weight of the item.
@@ -903,6 +891,98 @@ type ItemBaseInfo struct {
 	Brand ItemBrand `json:"brand"`
 	// ItemDangerous is the dangerous information for the item.
 	ItemDangerous int `json:"item_dangerous"`
+}
+
+type WarrantyTime string
+
+const WarrantyTimeOneYear = "ONE_YEAR"
+const WarrantyTimeTwoYears = "TWO_YEARS"
+const WarrantyTimeOverTwoYears = "OVER_TWO_YEARS"
+
+type ComplaintPolicy struct {
+	WarrantyTime                WarrantyTime `json:"warranty_time"`
+	ExcludeEntrepreneurWarranty bool         `json:"exclude_entrepreneur_warranty"`
+	ComplaintAddressID          int64        `json:"complaint_address_id"`
+	AdditionalInfo              string       `json:"additional_info"`
+}
+
+type InvoiceOption string
+
+const InvoiceOptionNoInvoice InvoiceOption = "NO_INVOICE"
+const InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+const InvoiceOptionVat InvoiceOption = "VAT_INVOICES"
+const InvoiceOptionNonVat InvoiceOption = "NON_VAT_INVOICES"
+
+type TaxType int
+
+const TaxTypeNoTax TaxType = 0
+const TaxTypeTaxable TaxType = 1
+const TaxTypeTaxFree TaxType = 2
+
+type OperationType string
+
+const OperationTypeRetailer OperationType = "1"
+const OperationTypeManufactorer OperationType = "2"
+
+type TaxInfo struct {
+	// Mercosur Common Nomenclature, it is a convention between Mercosur member countries to easily recognize goods, services and productive factors negotiated among themselves.(BR region)
+	//
+	// Note: ncm = "00" means that this item doesn't have a NCM.
+	NCM string `json:"ncm"`
+	// Tax Code of Operations and Installments for orders that seller and buyer are in different states. It identifies a specific operation by category at the time of issuing the invoice. (BR region)
+	DiffStateCFOP string `json:"diff_state_cfop"`
+	// Code of Operation Status – Simples Nacional, code for company operations to identify the origin of the goods and the taxation regime of the operations. (BR region)
+	CSOSN string `json:"csosn"`
+	// Product source, domestic or foreig (BR region)
+	Origin string `json:"origin"`
+	// Tax Replacement Specifying Code (CEST), to separate within the same NCM products that do or do not have ICMS tax substitution. (BR region)
+	//
+	// Note: cest = "00" means that this item doesn't have a CEST.
+	CEST string `json:"cest"`
+	// (BR region)
+	MeasureUnit string `json:"measure_unit"`
+	// Value shuold be one of NO_INVOICES VAT_MARGIN_SCHEME_INVOICES VAT_INVOICES NON_VAT_INVOICES and if value is NON_VAT_INVOICE vat_rate should be null (PL region)
+	InvoiceOption InvoiceOption `json:"invoice_option"`
+	// Value should be one of 0% 5% 8% 23% NO_VAT_RATE (PL region)
+	VatRate string `json:"vat_rate"`
+	// HS Code (Only for IN region)
+	HSCode string `json:"hs_code"`
+	// Tax Code (Only for IN region)
+	TaxCode string `json:"tax_code"`
+	// tax_type only for TW whitelist shop. Shopee will referred Tax type when substitute sellers for issuing e-receipts to buyers. All variations share the same tax type.
+	TaxType TaxType `json:"tax_type"`
+	// Only for BR shop.
+	// PIS - Programa de Integração Social (Social Integration Program). It is a government tax to collect resources for the payment of unemployment insurance and other employee related rights.
+	// PIS % - the tax applied to this product
+	PIS string `json:"pis"`
+	// 	Only for BR shop.
+	// COFINS – Contribuição para Financiamento da Seguridade Social (Contribution for Social Security Funding). It is a government tax to collect resources for public health system and social security.
+	// COFINS % - the tax applied to this product
+	COFINS string `json:"cofins"`
+	// 	Only for BR shop.
+	// ICMS - Imposto sobre Circulação de Mercadorias e Serviços (Circulation of Goods and Services Tax).
+	// CST - Código da Situação Tributária (Tax Situation Code) is represented by a combination of 3 numbers with the purpose of demonstrating the origin of a product and determining the form of taxation that will apply to it. Therefore, each digit in the CST Table has a specific meaning: the first digit indicates the origin of the operation, the second digit represents the ICMS taxation on the operation and the third digit provides additional information about the form of taxation.
+	ICMS_CST string `json:"icms_cst"`
+	// Only for BR shop.
+	// The CST PIS/Cofins is a code on the Electronic Invoice (NF-e) that identifies the tax situation of PIS (Programa de Integração Social) and Cofins (Contribuição para o Financiamento da Seguridade Social) in sales of goods.
+	PIS_CONFINS_CST string `json:"pis_cofins_cst"`
+	// 	Only for BR shop.
+	// Enter the total percentage of the combination of federal, state, and municipal taxes, using up to two decimals.
+	FederalStateTaxes string `json:"federal_state_taxes"`
+	// Only for BR shop
+	OperationType OperationType `json:"operation_type"`
+	// 	Only for BR shop.
+	// The EXTIPI field in the NF-e (Nota Fiscal Eletrônica) is used to indicate if there's an exception to the IPI (Imposto sobre Produtos Industrializados) tax rate for a specific product.
+	EX_TIPI string `json:"ex_tipi"`
+	// 	Only for BR shop.
+	// The FCI Control Number is a unique identifier assigned to each import FCI (Import Content Form). It's mandatory on the corresponding NF-e (electronic invoice) to ensure compliance with Brazilian import tax regulations.
+	FCINum string `json:"fci_num"`
+	// 	Only for BR shop.
+	// RECOPI NACIONAL is a Brazilian government system that facilitates the registration and management of tax-exempt operations involving paper destined for printing books, newspapers, and periodicals (known as "papel imune" in Portuguese).
+	RECOPINum string `json:"recopinum"`
+	// 	Only for BR shop.
+	// Include relevant information to display on Invoice.
+	AdditionalInfo string `json:"additional_info"`
 }
 
 func (s *ProductServiceOp) GetItemBaseInfo(sid uint64, itemIDList []uint64, tok string) (*GetItemBaseInfoResponse, error) {
