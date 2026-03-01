@@ -7,7 +7,7 @@ import (
 	"github.com/jarcoal/httpmock"
 )
 
-func Test_GetAuthURL(t *testing.T) {
+func Test_Auth_GetAuthURL(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -15,7 +15,7 @@ func Test_GetAuthURL(t *testing.T) {
 	t.Logf("auth url: %s",authURL)
 } 
 
-func Test_GetCancelAuthURL(t *testing.T) {
+func Test_Auth_GetCancelAuthURL(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -23,7 +23,7 @@ func Test_GetCancelAuthURL(t *testing.T) {
 	t.Logf("cancel auth url: %s",authURL)
 }
 
-func Test_GetAccessToken(t *testing.T) {
+func Test_Auth_GetAccessToken(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -43,7 +43,7 @@ func Test_GetAccessToken(t *testing.T) {
 	}
 }
 
-func Test_RefreshAccessToken(t *testing.T) {
+func Test_Auth_RefreshAccessToken(t *testing.T) {
 	setup()
 	defer teardown()
 

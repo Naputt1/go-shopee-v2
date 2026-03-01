@@ -1,0 +1,189 @@
+{
+  "modules": {
+    "Product": { "file_name": "product.go" },
+    "GlobalProduct(CB seller only)": { "file_name": "global_product.go" },
+    "Shop": { "file_name": "shop.go" },
+    "Merchant": { "file_name": "merchant.go" },
+    "Order": { "file_name": "order.go" },
+    "Logistics": { "file_name": "logistics.go" },
+    "FirstMile": { "file_name": "first_mile.go" },
+    "Payment": { "file_name": "payment.go" },
+    "Discount": { "file_name": "discount.go" },
+    "Bundle Deal": { "file_name": "bundle_deal.go" },
+    "Add-On Deal": { "file_name": "add_on_deal.go" },
+    "Voucher": { "file_name": "voucher.go" },
+    "ShopFlashSale": { "file_name": "shop_flash_sale.go" },
+    "Follow Prize": { "file_name": "follow_prize.go" },
+    "TopPicks": { "file_name": "top_picks.go" },
+    "ShopCategory": { "file_name": "shop_category.go" },
+    "Returns": { "file_name": "returns.go" },
+    "AccountHealth": { "file_name": "account_health.go" },
+    "Ads": { "file_name": "ads.go" },
+    "Public": { 
+      "file_name": "public.go",
+      "ignore_apis": [
+        "v2.public.get_access_token",
+        "v2.public.refresh_access_token"
+      ]
+    },
+    "Push": { "file_name": "push.go" },
+    "SBS": { "file_name": "sbs.go" },
+    "FBS": { "file_name": "fbs.go" },
+    "Livestream": { "file_name": "livestream.go" }
+  },
+  "static_modules": {
+    "Auth": { "file_name": "auth.go" },
+    "Media": { "file_name": "media_space.go" },
+    "MediaSpace": { "file_name": "media_space.go" },
+    "Util": { "file_name": "utils.go" }
+  },
+  "type_overrides": {
+    "is_cnsc": "bool",
+    "item_status": "ItemStatus",
+    "description_type": "DescriptionType",
+    "field_type": "DescriptionElementFieldType",
+    "warranty_time": "WarrantyTime",
+    "invoice_option": "InvoiceOption",
+    "tax_type": "TaxType",
+    "operation_type": "OperationType",
+    "promotion_status": "PromotionStatus",
+    "campaign_status": "CampaignStatus",
+    "order_status": "OrderStatus",
+    "logistics_status": "LogisticsStatus",
+    "return_status": "ReturnStatus",
+    "booking_status": "BookingStatus",
+    "is_eligible": "bool",
+    "is_activated": "bool",
+    "has_next_page": "bool"
+  },
+  "type_definitions": {
+    "ItemStatus": {
+      "base_type": "string",
+      "values": {
+        "NORMAL": "ItemStatusNormal",
+        "BANNED": "ItemStatusBanned",
+        "UNLIST": "ItemStatusUnlist"
+      }
+    },
+    "PromotionStatus": {
+      "base_type": "string",
+      "values": {
+        "upcoming": "PromotionStatusUpcoming",
+        "ongoing": "PromotionStatusOngoing",
+        "expired": "PromotionStatusExpired",
+        "all": "PromotionStatusAll"
+      }
+    },
+    "CampaignStatus": {
+      "base_type": "string",
+      "values": {
+        "upcoming": "CampaignStatusUpcoming",
+        "ongoing": "CampaignStatusOngoing",
+        "expired": "CampaignStatusExpired",
+        "paused": "CampaignStatusPaused",
+        "scheduled": "CampaignStatusScheduled",
+        "ended": "CampaignStatusEnded",
+        "deleted": "CampaignStatusDeleted",
+        "closed": "CampaignStatusClosed"
+      }
+    },
+    "OrderStatus": {
+      "base_type": "string",
+      "values": {
+        "UNPAID": "OrderStatusUnpaid",
+        "READY_TO_SHIP": "OrderStatusReadyToShip",
+        "PROCESSED": "OrderStatusProcessed",
+        "SHIPPED": "OrderStatusShipped",
+        "COMPLETED": "OrderStatusCompleted",
+        "IN_CANCEL": "OrderStatusInCancel",
+        "CANCELLED": "OrderStatusCancelled",
+        "INVOICE_PENDING": "OrderStatusInvoicePending"
+      }
+    },
+    "LogisticsStatus": {
+      "base_type": "string",
+      "values": {
+        "LOGISTICS_NOT_START": "LogisticsStatusNotStart",
+        "LOGISTICS_REQUEST_CREATED": "LogisticsStatusRequestCreated",
+        "LOGISTICS_PICKUP_DONE": "LogisticsStatusPickupDone",
+        "LOGISTICS_PICKUP_FAILED": "LogisticsStatusPickupFailed",
+        "LOGISTICS_DELIVERY_DONE": "LogisticsStatusDeliveryDone",
+        "LOGISTICS_DELIVERY_FAILED": "LogisticsStatusDeliveryFailed",
+        "LOGISTICS_REQUEST_CANCELED": "LogisticsStatusRequestCanceled",
+        "LOGISTICS_COD_REJECTED": "LogisticsStatusCodRejected",
+        "LOGISTICS_READY": "LogisticsStatusReady",
+        "LOGISTICS_INVALID": "LogisticsStatusInvalid",
+        "LOGISTICS_LOST": "LogisticsStatusLost"
+      }
+    },
+    "ReturnStatus": {
+      "base_type": "string",
+      "values": {
+        "REQUESTED": "ReturnStatusRequested",
+        "ACCEPTED": "ReturnStatusAccepted",
+        "CANCELLED": "ReturnStatusCancelled",
+        "JUDGING": "ReturnStatusJudging",
+        "REFUNDING": "ReturnStatusRefunding",
+        "CLOSED": "ReturnStatusClosed",
+        "PROCESSING": "ReturnStatusProcessing",
+        "SELLER_DISPUTE": "ReturnStatusSellerDispute"
+      }
+    },
+    "BookingStatus": {
+      "base_type": "string",
+      "values": {
+        "READY_TO_SHIP": "BookingStatusReadyToShip",
+        "PROCESSED": "BookingStatusProcessed",
+        "SHIPPED": "BookingStatusShipped",
+        "CANCELLED": "BookingStatusCancelled",
+        "MATCHED": "BookingStatusMatched"
+      }
+    },
+    "DescriptionType": {
+      "base_type": "string",
+      "values": {
+        "normal": "DescriptionTypeNormal",
+        "extended": "DescriptionTypeExtended"
+      }
+    },
+    "DescriptionElementFieldType": {
+      "base_type": "string",
+      "values": {
+        "text": "DescriptionElementFieldTypeText",
+        "image": "DescriptionElementFieldTypeImage"
+      }
+    },
+    "WarrantyTime": {
+      "base_type": "string",
+      "values": {
+        "ONE_YEAR": "WarrantyTimeOneYear",
+        "TWO_YEARS": "WarrantyTimeTwoYears",
+        "OVER_TWO_YEARS": "WarrantyTimeOverTwoYears"
+      }
+    },
+    "InvoiceOption": {
+      "base_type": "string",
+      "values": {
+        "NO_INVOICE": "InvoiceOptionNoInvoice",
+        "VAT_MARGIN_SCHEME_INVOICES": "InvoiceOptionVatMarginScheme",
+        "VAT_INVOICES": "InvoiceOptionVat",
+        "NON_VAT_INVOICES": "InvoiceOptionNonVat"
+      }
+    },
+    "TaxType": {
+      "base_type": "int",
+      "values": {
+        "0": "TaxTypeNoTax",
+        "1": "TaxTypeTaxable",
+        "2": "TaxTypeTaxFree"
+      }
+    },
+    "OperationType": {
+      "base_type": "string",
+      "values": {
+        "1": "OperationTypeRetailer",
+        "2": "OperationTypeManufactorer"
+      }
+    }
+  }
+}

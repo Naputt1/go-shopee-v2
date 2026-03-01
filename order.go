@@ -1,133 +1,224 @@
+// Code generated. DO NOT EDIT.
 package goshopee
 
-import "strings"
-
-type OrderService interface{
-	GetOrderDetail(uint64, []string, []string, string) (*GetOrderDetailResponse, error)
+type OrderService interface {
+	// GetOrderList Use this api to search orders. You may also filter them by status, if needed.
+	// https://open.shopee.com/documents/v2/v2.order.get_order_list?module=94&type=1
+	GetOrderList(sid uint64, opt GetOrderListRequest, tok string) (*GetOrderListResponse, error)
+	// GetOrderDetail Use this api to get order detail.
+	// https://open.shopee.com/documents/v2/v2.order.get_order_detail?module=94&type=1
+	GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error)
+	// GetShipmentList Use this api to get order list which order_status is READY_TO_SHIP or RETRY_SHIP to start process the whole shipping progress.
+	// https://open.shopee.com/documents/v2/v2.order.get_shipment_list?module=94&type=1
+	GetShipmentList(sid uint64, opt GetShipmentListRequest, tok string) (*GetShipmentListResponse, error)
+	// SearchPackageList Use this API to search the list of packages that have not been SHIPPED to proceed arranging shipment, and it supports various filters and sort fields.
+	// https://open.shopee.com/documents/v2/v2.order.search_package_list?module=94&type=1
+	SearchPackageList(sid uint64, req SearchPackageListRequest, tok string) (*SearchPackageListResponse, error)
+	// GetPackageDetail Use this api to get package detail.
+	//
+	// https://open.shopee.com/documents/v2/v2.order.get_package_detail?module=94&type=1
+	GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error)
+	// SplitOrder Use this api to split an order into multiple packages. Orders that include installation services cannot be split by quantity.
+	// https://open.shopee.com/documents/v2/v2.order.split_order?module=94&type=1
+	SplitOrder(sid uint64, req SplitOrderRequest, tok string) (*SplitOrderResponse, error)
+	// UnsplitOrder Use this ai to undo split of order. After undo split, the order will have only one package. It can only be used when order status still at READY_TO_SHIP.
+	// https://open.shopee.com/documents/v2/v2.order.unsplit_order?module=94&type=1
+	UnsplitOrder(sid uint64, req UnsplitOrderRequest, tok string) (*UnsplitOrderResponse, error)
+	// CancelOrder Use this api to cancel an order. This action can only be performed before the order has been shipped.
+	// https://open.shopee.com/documents/v2/v2.order.cancel_order?module=94&type=1
+	CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error)
+	// HandleBuyerCancellation Use this api to handle buyer's cancellation application.
+	// https://open.shopee.com/documents/v2/v2.order.handle_buyer_cancellation?module=94&type=1
+	HandleBuyerCancellation(sid uint64, req HandleBuyerCancellationRequest, tok string) (*HandleBuyerCancellationResponse, error)
+	// SetNote Use this api to set note for an order.
+	// https://open.shopee.com/documents/v2/v2.order.set_note?module=94&type=1
+	SetNote(sid uint64, req SetNoteRequest, tok string) (*SetNoteResponse, error)
+	// GetPendingBuyerInvoiceOrderList This endpoint only for PH and BR local sellers only. This API is used for seller to retrieve a list of order IDs that are pending invoice upload.
+	// https://open.shopee.com/documents/v2/v2.order.get_pending_buyer_invoice_order_list?module=94&type=1
+	GetPendingBuyerInvoiceOrderList(sid uint64, opt GetPendingBuyerInvoiceOrderListRequest, tok string) (*GetPendingBuyerInvoiceOrderListResponse, error)
+	// GetBuyerInvoiceInfo API to obtain buyer submitted invoice info for VN, TH and PH local sellers only.
+	// https://open.shopee.com/documents/v2/v2.order.get_buyer_invoice_info?module=94&type=1
+	GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error)
+	// UploadInvoiceDoc This endpoint is for PH and BR local seller. Upload the invoice document
+	//
+	// https://open.shopee.com/documents/v2/v2.order.upload_invoice_doc?module=94&type=1
+	UploadInvoiceDoc(sid uint64, req UploadInvoiceDocRequest, tok string) (*UploadInvoiceDocResponse, error)
+	// DownloadInvoiceDoc This endpoint only for PH and BR local seller. Seller can download the invoice uploaded before through this endpoint.
+	//
+	// https://open.shopee.com/documents/v2/v2.order.download_invoice_doc?module=94&type=1
+	DownloadInvoiceDoc(sid uint64, opt DownloadInvoiceDocRequest, tok string) (*DownloadInvoiceDocResponse, error)
+	// HandlePrescriptionCheck Use this API to approve or reject a prescription
+	// https://open.shopee.com/documents/v2/v2.order.handle_prescription_check?module=94&type=1
+	HandlePrescriptionCheck(sid uint64, req HandlePrescriptionCheckRequest, tok string) (*HandlePrescriptionCheckResponse, error)
+	// GetWarehouseFilterConfig For multi-warehouse shops, return all warehouses with packages that have not been SHIPPED including product_location_id and address_id. Compared to v2.shop.get_warehouse_detail, it covers some edge cases like warehouse that have been unlinked but still retain packages that have not been SHIPPED, and does not cover some cases like single warehouse with default product_location_id and FBS shop.
+	// https://open.shopee.com/documents/v2/v2.order.get_warehouse_filter_config?module=94&type=1
+	GetWarehouseFilterConfig(sid uint64, tok string) (*GetWarehouseFilterConfigResponse, error)
+	// GetBookingList Use this api to search bookings. You may also filter them by status, if needed.
+	// https://open.shopee.com/documents/v2/v2.order.get_booking_list?module=94&type=1
+	GetBookingList(sid uint64, opt GetBookingListRequest, tok string) (*GetBookingListResponse, error)
+	// GetBookingDetail Use this api to get booking detail.
+	// https://open.shopee.com/documents/v2/v2.order.get_booking_detail?module=94&type=1
+	GetBookingDetail(sid uint64, opt GetBookingDetailRequest, tok string) (*GetBookingDetailResponse, error)
+	// GenerateFbsInvoices This API creates a task to download a specific tax document (e.g., sales invoice, remessa invoice) for the seller's account, available only after the document is issued by the system as part of the Fulfilled by Shopee (FBS) process.
+	// The workflow is as follows: (1) v2.order.generate_fbs_invoices; (2) v2.order.get_fbs_invoices_result; (3) v2.order.download_fbs_invoices.
+	// Please note: The download link for the document will expire 30 minutes after being generated.
+	// https://open.shopee.com/documents/v2/v2.order.generate_fbs_invoices?module=94&type=1
+	GenerateFbsInvoices(sid uint64, req GenerateFbsInvoicesRequest, tok string) (*GenerateFbsInvoicesResponse, error)
+	// GetFbsInvoicesResult This API allows you to consult the status of a previously requested batch download for FBS tax documents.
+	// https://open.shopee.com/documents/v2/v2.order.get_fbs_invoices_result?module=94&type=1
+	GetFbsInvoicesResult(sid uint64, req GetFbsInvoicesResultRequest, tok string) (*GetFbsInvoicesResultResponse, error)
+	// DownloadFbsInvoices This API allows you to download FBS invoices. To use this API, the client must first call v2.order.generate_fbs_invoices to create a new shipping document task, followed by calling v2.order.get_fbs_invoices_result to check the task status. The document can only be downloaded once the task status is "READY."
+	// https://open.shopee.com/documents/v2/v2.order.download_fbs_invoices?module=94&type=1
+	DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error)
 }
 
 type OrderServiceOp struct {
 	client *Client
 }
 
-// https://open.shopee.com/documents?module=94&type=1&id=557&version=2
-type GetOrderDetailRequest struct {
-	OrderSNList string `url:"order_sn_list"`
-	ResponseOptionalFields string `url:"response_optional_fields"`
+func (s *OrderServiceOp) GetOrderList(sid uint64, opt GetOrderListRequest, tok string) (*GetOrderListResponse, error) {
+	path := "/order/get_order_list"
+	resp := new(GetOrderListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
 }
 
-type GetOrderDetailResponse struct {
-	BaseResponse
-
-	Response GetOrderDetailResponseData `json:"response"`
-}
-
-type GetOrderDetailResponseData struct {
-	OrderList []Order `json:"order_list"`
-}
-
-type Order struct {
-	OrderSN string `json:"order_sn"`
-	Region string `json:"region"`
-	Currency string `json:"currency"`
-	COD bool `json:"cod"`
-	TotalAmount float64 `json:"total_amount"`
-	OrderStatus string `json:"order_status"`
-	ShippingCarrier string `json:"shipping_carrier"`
-	PaymentMethod string `json:"payment_method"`
-	EstimatedShippingFee float64 `json:"estimated_shipping_fee"`
-	MessageToSeller string `json:"message_to_seller"`
-	CreateTime int64 `json:"create_time"`
-	UpdateTime int64 `json:"update_time"`
-	DaysToShip int `json:"days_to_ship"`
-	ShipByDate int `json:"ship_by_date"`
-	BuyerUserID uint64 `json:"buyer_user_id"`
-	BuyerUsername string `json:"buyer_username"`
-	RecipientAddress OrderAddress `json:"recipient_address"`
-	ActualShippingFee float64 `json:"actual_shipping_fee"`
-	GoodsToDeclare bool `json:"goods_to_declare"`
-	Note string `json:"note"`
-	NoteUpdateTime int64 `json:"note_update_time"`
-	ItemList []OrderItem `json:"item_list"`
-	PayTime int64 `json:"pay_time"`
-	Dropshipper string `json:"dropshipper"`
-	CreditCardNumber string `json:"credit_card_number"`
-	DropshipperPhone string `json:"dropshipper_phone"`
-	SplitUp bool `json:"split_up"`
-	BuyerCancelReason string `json:"buyer_cancel_reason"`
-	CancelBy string `json:"cancel_by"`
-	CancelReason string `json:"cancel_reason"`
-	ActualShippingFeeConfirmed bool `json:"actual_shipping_fee_confirmed"`
-	BuyerCpfID string `json:"buyer_cpf_id"`
-	FulfillmentFlag string `json:"fulfillment_flag"`
-	PickupDoneTime int64 `json:"pickup_done_time"`
-	PackageList []OrderPackage `json:"package_list"`
-	InvoiceData Invoice `json:"invoice_data"`
-	CheckoutShippingCarrier string `json:"checkout_shipping_carrier"`
-}
-
-type Invoice struct {
-	Number string `json:"number"`
-	SeriesNumber string `json:"series_number"`
-	AccessKey string `json:"access_key"`
-	IssueDate int64 `json:"issue_date"`
-	TotalValue float64 `json:"total_value"`
-	ProductsTotalValue float64 `json:"products_total_value"`
-	TaxCode string `json:"tax_code"`
-}
-
-type OrderPackage struct {
-	PackageNumber string `json:"package_number"`
-	LogisticsStatus string `json:"logistics_status"`
-	ShippingCarrier string `json:"shipping_carrier"`
-	ItemList []OrderPackageItem `json:"item_list"`
-}
-
-type OrderPackageItem struct {
-	ItemID uint64 `json:"item_id"`
-	ModelID uint64 `json:"model_id"`
-}
-
-type OrderItem struct {
-	ItemID uint64 `json:"item_id"`
-	ItemName string `json:"item_name"`
-	ItemSKU string `json:"item_sku"`
-	ModelID uint64 `json:"model_id"`
-	ModelName string `json:"model_name"`
-	ModelSKU string `json:"model_sku"`
-	ModelQuantityPurchased int `json:"model_quantity_purchased"`
-	ModelOriginalPrice float64 `json:"model_original_price"`
-	ModelDiscountedPrice float64 `json:"model_discounted_price"`
-	Wholesale bool `json:"wholesale"`
-	Weight float64 `json:"weight"`
-	AddOnDeal bool `json:"add_on_deal"`
-	MainItem bool `json:"main_item"`
-	AddOnDealID uint64 `json:"add_on_deal_id"`
-	PromotionType string `json:"promotion_type"`
-	PromotionID uint64 `json:"promotion_id"`
-}
-
-type OrderAddress struct {
-	Name string `json:"name"`
-	Phone string `json:"phone"`
-	Town string `json:"town"`
-	District string `json:"district"`
-	City string `json:"city"`
-	State string `json:"state"`
-	Region string `json:"region"`
-	Zipcode string `json:"zipcode"`
-	FullAddress string `json:"full_address"`
-}
-
-func (s *OrderServiceOp)GetOrderDetail(sid uint64, snlist, fields []string, tok string) (*GetOrderDetailResponse, error) {
+func (s *OrderServiceOp) GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error) {
 	path := "/order/get_order_detail"
-
-	opt:=GetOrderDetailRequest{
-		OrderSNList: strings.Join(snlist,","),
-		ResponseOptionalFields: strings.Join(fields,","),
-	}
-
 	resp := new(GetOrderDetailResponse)
-	err := s.client.WithShop(sid,tok).Get(path, resp, opt)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetShipmentList(sid uint64, opt GetShipmentListRequest, tok string) (*GetShipmentListResponse, error) {
+	path := "/order/get_shipment_list"
+	resp := new(GetShipmentListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) SearchPackageList(sid uint64, req SearchPackageListRequest, tok string) (*SearchPackageListResponse, error) {
+	path := "/order/search_package_list"
+	resp := new(SearchPackageListResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error) {
+	path := "/order/get_package_detail"
+	resp := new(GetPackageDetailResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) SplitOrder(sid uint64, req SplitOrderRequest, tok string) (*SplitOrderResponse, error) {
+	path := "/order/split_order"
+	resp := new(SplitOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) UnsplitOrder(sid uint64, req UnsplitOrderRequest, tok string) (*UnsplitOrderResponse, error) {
+	path := "/order/unsplit_order"
+	resp := new(UnsplitOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error) {
+	path := "/order/cancel_order"
+	resp := new(CancelOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) HandleBuyerCancellation(sid uint64, req HandleBuyerCancellationRequest, tok string) (*HandleBuyerCancellationResponse, error) {
+	path := "/order/handle_buyer_cancellation"
+	resp := new(HandleBuyerCancellationResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) SetNote(sid uint64, req SetNoteRequest, tok string) (*SetNoteResponse, error) {
+	path := "/order/set_note"
+	resp := new(SetNoteResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetPendingBuyerInvoiceOrderList(sid uint64, opt GetPendingBuyerInvoiceOrderListRequest, tok string) (*GetPendingBuyerInvoiceOrderListResponse, error) {
+	path := "/order/get_pending_buyer_invoice_order_list"
+	resp := new(GetPendingBuyerInvoiceOrderListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error) {
+	path := "/order/get_buyer_invoice_info"
+	resp := new(GetBuyerInvoiceInfoResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) UploadInvoiceDoc(sid uint64, req UploadInvoiceDocRequest, tok string) (*UploadInvoiceDocResponse, error) {
+	path := "/order/upload_invoice_doc"
+	resp := new(UploadInvoiceDocResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) DownloadInvoiceDoc(sid uint64, opt DownloadInvoiceDocRequest, tok string) (*DownloadInvoiceDocResponse, error) {
+	path := "/order/download_invoice_doc"
+	resp := new(DownloadInvoiceDocResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) HandlePrescriptionCheck(sid uint64, req HandlePrescriptionCheckRequest, tok string) (*HandlePrescriptionCheckResponse, error) {
+	path := "/order/handle_prescription_check"
+	resp := new(HandlePrescriptionCheckResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetWarehouseFilterConfig(sid uint64, tok string) (*GetWarehouseFilterConfigResponse, error) {
+	path := "/order/get_warehouse_filter_config"
+	resp := new(GetWarehouseFilterConfigResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetBookingList(sid uint64, opt GetBookingListRequest, tok string) (*GetBookingListResponse, error) {
+	path := "/order/get_booking_list"
+	resp := new(GetBookingListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetBookingDetail(sid uint64, opt GetBookingDetailRequest, tok string) (*GetBookingDetailResponse, error) {
+	path := "/order/get_booking_detail"
+	resp := new(GetBookingDetailResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GenerateFbsInvoices(sid uint64, req GenerateFbsInvoicesRequest, tok string) (*GenerateFbsInvoicesResponse, error) {
+	path := "/order/generate_fbs_invoices"
+	resp := new(GenerateFbsInvoicesResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) GetFbsInvoicesResult(sid uint64, req GetFbsInvoicesResultRequest, tok string) (*GetFbsInvoicesResultResponse, error) {
+	path := "/order/get_fbs_invoices_result"
+	resp := new(GetFbsInvoicesResultResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *OrderServiceOp) DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error) {
+	path := "/order/download_fbs_invoices"
+	resp := new(DownloadFbsInvoicesResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

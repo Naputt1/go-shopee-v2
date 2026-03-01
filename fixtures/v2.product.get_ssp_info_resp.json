@@ -1,0 +1,85 @@
+{
+    "error": "",
+    "message": "",
+    "request_id": "317a860d24f9155fdb9589f45b182b00:040000314d134aed:030003f276c005a9",
+    "response": {
+        "ssp_list": [
+            {
+                "brand_info": {
+                    "brand_id": 0,
+                    "original_brand_name": "Sem marca"
+                },
+                "category_id": 100021,
+                "compatibility_info": {},
+                "description": {
+                    "description": "",
+                    "description_type": "extended",
+                    "extended_description": {
+                        "field_list": [
+                            {
+                                "text": "test ssp item description",
+                                "type": "text"
+                            }
+                        ]
+                    }
+                },
+                "dimension": {
+                    "package_height": "11",
+                    "package_length": "11",
+                    "package_width": "11"
+                },
+                "global_code": {
+                    "gtin": "",
+                    "oem": ""
+                },
+                "media": {
+                    "image": {
+                        "image_id_list": [
+                            "sg-11134299-7r98o-m1dn2zrq08unac"
+                        ],
+                        "image_ratio": "1:1",
+                        "image_url_list": [
+                            "https://cf.shopee.com.br/file/sg-11134299-7r98o-m1dn2zrq08unac"
+                        ]
+                    }
+                },
+                "product_name": "test ssp item name",
+                "sales_info": {
+                    "model_setting_list": [
+                        {
+                            "gtin": "7898443605196",
+                            "tier_index": [
+                                0
+                            ]
+                        },
+                        {
+                            "gtin": "6972810101427",
+                            "tier_index": [
+                                1
+                            ]
+                        }
+                    ],
+                    "std_tier_variation_list": [
+                        {
+                            "variation_id": 201304,
+                            "variation_name": "Color",
+                            "variation_group_id": 0,
+                            "variation_option_list": [
+                                {
+                                    "variation_option_id": 0,
+                                    "variation_option_name": "Red"
+                                },
+                                {
+                                    "variation_option_id": 0,
+                                    "variation_option_name": "Blue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "ssp_id": 536537088,
+                "weight": "1"
+            }
+        ]
+    }
+}

@@ -1,280 +1,129 @@
+// Code generated. DO NOT EDIT.
 package goshopee
 
 type DiscountService interface {
-	GetDiscountList(uint64, GetDiscountListRequest, string) (*GetDiscountListResponse, error)
-	GetDiscount(uint64, GetDiscountRequest, string) (*GetDiscountResponse, error)
-	AddDiscount(uint64, AddDiscountRequest, string) (*AddDiscountResponse, error)
-	AddDiscountItem(uint64, AddDiscountItemRequest, string) (*AddDiscountItemResponse, error)
-	DeleteDiscountItem(uint64, uint64, uint64, uint64, string) (*DeleteDiscountItemResponse, error)
-	UpdateDiscountItem(uint64, UpdateDiscountItemRequest, string) (*UpdateDiscountItemResponse, error)
+	// AddDiscount Use this api to add shop discount activity
+	// https://open.shopee.com/documents/v2/v2.discount.add_discount?module=99&type=1
+	AddDiscount(sid uint64, req AddDiscountRequest, tok string) (*AddDiscountResponse, error)
+	// AddDiscountItem Use this api to add shop discount item.
+	// https://open.shopee.com/documents/v2/v2.discount.add_discount_item?module=99&type=1
+	AddDiscountItem(sid uint64, req AddDiscountItemRequest, tok string) (*AddDiscountItemResponse, error)
+	// DeleteDiscount Use this api to delete one discount activity
+	// https://open.shopee.com/documents/v2/v2.discount.delete_discount?module=99&type=1
+	DeleteDiscount(sid uint64, req DeleteDiscountRequest, tok string) (*DeleteDiscountResponse, error)
+	// DeleteDiscountItem Use this api to delete items of the discount activity
+	// https://open.shopee.com/documents/v2/v2.discount.delete_discount_item?module=99&type=1
+	DeleteDiscountItem(sid uint64, req DeleteDiscountItemRequest, tok string) (*DeleteDiscountItemResponse, error)
+	// GetDiscount Use this api to get one shop discount activity detail
+	// https://open.shopee.com/documents/v2/v2.discount.get_discount?module=99&type=1
+	GetDiscount(sid uint64, opt GetDiscountRequest, tok string) (*GetDiscountResponse, error)
+	// GetDiscountList Use this api to get shop discount activity list
+	// https://open.shopee.com/documents/v2/v2.discount.get_discount_list?module=99&type=1
+	GetDiscountList(sid uint64, req GetDiscountListRequest, tok string) (*GetDiscountListResponse, error)
+	// UpdateDiscount Use this api to update one discount information
+	// https://open.shopee.com/documents/v2/v2.discount.update_discount?module=99&type=1
+	UpdateDiscount(sid uint64, req UpdateDiscountRequest, tok string) (*UpdateDiscountResponse, error)
+	// UpdateDiscountItem Use this api to update items of the discount promotion.
+	// https://open.shopee.com/documents/v2/v2.discount.update_discount_item?module=99&type=1
+	UpdateDiscountItem(sid uint64, req UpdateDiscountItemRequest, tok string) (*UpdateDiscountItemResponse, error)
+	// EndDiscount Use this api to end shop discount activity
+	// https://open.shopee.com/documents/v2/v2.discount.end_discount?module=99&type=1
+	EndDiscount(sid uint64, req EndDiscountRequest, tok string) (*EndDiscountResponse, error)
+	// GetSipDiscounts Get SIP Overseas Discounts. Only regions that have upcoming/ongoing discounts will be returned. Please use Primary shop's Shop ID to request, the API will return the list of Affiliate shops under this Primary shop that have set discounts, along with the discount details.
+	// https://open.shopee.com/documents/v2/v2.discount.get_sip_discounts?module=99&type=1
+	GetSipDiscounts(sid uint64, opt GetSipDiscountsRequest, tok string) (*GetSipDiscountsResponse, error)
+	// SetSipDiscount Set SIP Overseas Discount for SIP affiliate region. Please use Primary shop's Shop ID to request, and provide the region and discount rate of the Affiliate shop to be set or update, the API will set or update the discount rate for that region's Affiliate shop.
+	// https://open.shopee.com/documents/v2/v2.discount.set_sip_discount?module=99&type=1
+	SetSipDiscount(sid uint64, req SetSipDiscountRequest, tok string) (*SetSipDiscountResponse, error)
+	// DeleteSipDiscount Delete SIP Overseas Discounts for SIP affiliate region. Please use Primary shop's Shop ID to request, and provide the region of the Affiliate shop to be deleted, the API will delete the discount from that region's Affiliate shop.
+	// https://open.shopee.com/documents/v2/v2.discount.delete_sip_discount?module=99&type=1
+	DeleteSipDiscount(sid uint64, req DeleteSipDiscountRequest, tok string) (*DeleteSipDiscountResponse, error)
 }
 
 type DiscountServiceOp struct {
 	client *Client
 }
 
-// v2.discount.get_discount
-// https://open.shopee.cn/documents/v2/v2.discount.get_discount?module=99&type=1
-
-type GetDiscountRequest struct {
-	DiscountID uint64 `json:"discount_id"`
-	PageNo     int    `json:"page_no"`
-	PageSize   int    `json:"page_size"`
+func (s *DiscountServiceOp) AddDiscount(sid uint64, req AddDiscountRequest, tok string) (*AddDiscountResponse, error) {
+	path := "/discount/add_discount"
+	resp := new(AddDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
 }
 
-type GetDiscountResponse struct {
-	BaseResponse
-
-	Response GetDiscountResponseData `json:"response"`
+func (s *DiscountServiceOp) AddDiscountItem(sid uint64, req AddDiscountItemRequest, tok string) (*AddDiscountItemResponse, error) {
+	path := "/discount/add_discount_item"
+	resp := new(AddDiscountItemResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
 }
 
-type GetDiscountResponseData struct {
-	Status       string                        `json:"status"`
-	DiscountName string                        `json:"discount_name"`
-	ItemList     []GetDiscountResponseDataItem `json:"item_list"`
-	StartTime    int64                         `json:"start_time"`
-	EndTime      int64                         `json:"end_time"`
-	DiscountID   uint64                        `json:"discount_id"`
-	More         bool                          `json:"more"`
+func (s *DiscountServiceOp) DeleteDiscount(sid uint64, req DeleteDiscountRequest, tok string) (*DeleteDiscountResponse, error) {
+	path := "/discount/delete_discount"
+	resp := new(DeleteDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
 }
 
-type GetDiscountResponseDataItem struct {
-	ItemPromotionPrice                float64                            `json:"item_promotion_price"`
-	ItemName                          string                             `json:"item_name"`
-	ItemID                            uint64                             `json:"item_id"`
-	PurchaseLimit                     int                                `json:"purchase_limit"`
-	ItemOriginalPrice                 float64                            `json:"item_original_price"`
-	NormalStock                       int                                `json:"normal_stock"`
-	ItemInflatedPriceOfOriginalPrice  float64                            `json:"item_inflated_price_of_original_price"`
-	ItemInflatedPriceOfPromotionPrice float64                            `json:"item_inflated_price_of_promotion_price"`
-	ItemPromotionStock                int                                `json:"item_promotion_stock"`
-	ModelList                         []GetDiscountResponseDataItemModel `json:"model_list"`
-}
-
-type GetDiscountResponseDataItemModel struct {
-	ModelName                          string  `json:"model_name"`
-	ModelID                            uint64  `json:"model_id"`
-	ModelNomalStock                    int     `json:"model_nomal_stock"`
-	ModelOriginalPrice                 float64 `json:"model_original_price"`
-	ModelPromotionPrice                float64 `json:"model_promotion_price"`
-	ModelInflatedPriceOfOriginalPrice  float64 `json:"model_inflated_price_of_original_price"`
-	ModelInflatedPriceOfPromotionPrice float64 `json:"model_inflated_price_of_promotion_price"`
-	ModelPromotionStock                int     `json:"model_promotion_stock"`
+func (s *DiscountServiceOp) DeleteDiscountItem(sid uint64, req DeleteDiscountItemRequest, tok string) (*DeleteDiscountItemResponse, error) {
+	path := "/discount/delete_discount_item"
+	resp := new(DeleteDiscountItemResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
 }
 
 func (s *DiscountServiceOp) GetDiscount(sid uint64, opt GetDiscountRequest, tok string) (*GetDiscountResponse, error) {
 	path := "/discount/get_discount"
-
 	resp := new(GetDiscountResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-// v2.discount.get_discount_list
-// https://open.shopee.cn/documents/v2/v2.discount.get_discount_list?module=99&type=1
-
-const (
-	DiscountStatusUpcoming = "upcoming"
-	DiscountStatusOngoing  = "ongoing"
-	DiscountStatusExpired  = "expired"
-	DiscountStatusAll      = "all"
-)
-
-type GetDiscountListRequest struct {
-	DiscountStatus string `json:"discount_status"`
-	PageNo         int    `json:"page_no"`
-	PageSize       int    `json:"page_size"`
-	UpdateTimeFrom int64  `json:"update_time_from"`
-	UpdateTimeTo   int64  `json:"update_time_to"`
-}
-
-type GetDiscountListResponse struct {
-	BaseResponse
-
-	Response GetDiscountListResponseData `json:"response"`
-}
-
-type GetDiscountListResponseData struct {
-	DiscountList []GetDiscountListResponseDataDiscount `json:"discount_list"`
-	More         bool                                  `json:"more"`
-}
-
-const (
-	DiscountSourceOthers     = 0
-	DiscountSourceAdmin      = 1
-	DiscountSourceLiveStream = 7
-)
-
-type GetDiscountListResponseDataDiscount struct {
-	Status       string `json:"status"`
-	DiscountName string `json:"discount_name"`
-	StartTime    int64  `json:"start_time"`
-	EndTime      int64  `json:"end_time"`
-	DiscountID   uint64 `json:"discount_id"`
-	Source       int    `json:"source"`
-}
-
-func (s *DiscountServiceOp) GetDiscountList(sid uint64, opt GetDiscountListRequest, tok string) (*GetDiscountListResponse, error) {
+func (s *DiscountServiceOp) GetDiscountList(sid uint64, req GetDiscountListRequest, tok string) (*GetDiscountListResponse, error) {
 	path := "/discount/get_discount_list"
-
 	resp := new(GetDiscountListResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *DiscountServiceOp) UpdateDiscount(sid uint64, req UpdateDiscountRequest, tok string) (*UpdateDiscountResponse, error) {
+	path := "/discount/update_discount"
+	resp := new(UpdateDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *DiscountServiceOp) UpdateDiscountItem(sid uint64, req UpdateDiscountItemRequest, tok string) (*UpdateDiscountItemResponse, error) {
+	path := "/discount/update_discount_item"
+	resp := new(UpdateDiscountItemResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *DiscountServiceOp) EndDiscount(sid uint64, req EndDiscountRequest, tok string) (*EndDiscountResponse, error) {
+	path := "/discount/end_discount"
+	resp := new(EndDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *DiscountServiceOp) GetSipDiscounts(sid uint64, opt GetSipDiscountsRequest, tok string) (*GetSipDiscountsResponse, error) {
+	path := "/discount/get_sip_discounts"
+	resp := new(GetSipDiscountsResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-type AddDiscountRequest struct {
-	DiscountName string `json:"discount_name"`
-	StartTime    int64  `json:"start_time"`
-	EndTime      int64  `json:"end_time"`
-}
-
-type AddDiscountResponse struct {
-	BaseResponse
-
-	Response AddDiscountResponseData `json:"response"`
-}
-
-type AddDiscountResponseData struct {
-	DiscountID uint64 `json:"discount_id"`
-}
-
-func (s *DiscountServiceOp) AddDiscount(sid uint64, data AddDiscountRequest, tok string) (*AddDiscountResponse, error) {
-	path := "/discount/add_discount"
-	resp := new(AddDiscountResponse)
-	req, err := StructToMap(data)
-	if err != nil {
-		return nil, err
-	}
-	err = s.client.WithShop(sid, tok).Post(path, req, resp)
+func (s *DiscountServiceOp) SetSipDiscount(sid uint64, req SetSipDiscountRequest, tok string) (*SetSipDiscountResponse, error) {
+	path := "/discount/set_sip_discount"
+	resp := new(SetSipDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-type AddDiscountItemRequest struct {
-	DiscountID uint64                       `json:"discount_id"`
-	ItemList   []AddDiscountItemRequestData `json:"item_list"`
-}
-
-type AddDiscountItemRequestData struct {
-	ItemID             uint64                            `json:"item_id"`
-	ModelList          []AddDiscountItemRequestDataModel `json:"model_list"`
-	ItemPromotionPrice *float64                          `json:"item_promotion_price,omitempty"`
-	PurchaseLimit      int                               `json:"purchase_limit"`
-	ItemPromotionStock *int                              `json:"item_promotion_stock,omitempty"`
-}
-
-type AddDiscountItemRequestDataModel struct {
-	ModelID             uint64  `json:"model_id"`
-	ModelPromotionPrice float64 `json:"model_promotion_price"`
-	ModelPromotionStock int     `json:"model_promotion_stock"`
-}
-
-type AddDiscountItemResponse struct {
-	BaseResponse
-
-	Response AddDiscountItemResponseData `json:"response"`
-}
-
-type AddDiscountItemResponseData struct {
-	DiscountID uint64                             `json:"discount_id"`
-	Count      int                                `json:"count"`
-	ErrorList  []AddDiscountItemResponseDataError `json:"error_list"`
-}
-
-type AddDiscountItemResponseDataError struct {
-	ItemID      uint64 `json:"item_id"`
-	ModelID     uint64 `json:"model_id"`
-	FailMessage string `json:"fail_message"`
-	FailError   string `json:"fail_error"`
-}
-
-func (s *DiscountServiceOp) AddDiscountItem(sid uint64, data AddDiscountItemRequest, tok string) (*AddDiscountItemResponse, error) {
-	path := "/discount/add_discount_item"
-	resp := new(AddDiscountItemResponse)
-	req, err := StructToMap(data)
-	if err != nil {
-		return nil, err
-	}
-	err = s.client.WithShop(sid, tok).Post(path, req, resp)
-	return resp, err
-}
-
-type DeleteDiscountItemResponse struct {
-	BaseResponse
-
-	Response DeleteDiscountItemResponseData `json:"response"`
-}
-
-type DeleteDiscountItemResponseData struct {
-	DiscountID uint64                                `json:"discount_id"`
-	ErrorList  []DeleteDiscountItemResponseDataError `json:"error_list"`
-}
-
-type DeleteDiscountItemResponseDataError struct {
-	ItemID      uint64 `json:"item_id"`
-	ModelID     uint64 `json:"model_id"`
-	FailMessage string `json:"fail_message"`
-	FailError   string `json:"fail_error"`
-}
-
-func (s *DiscountServiceOp) DeleteDiscountItem(sid, discountID, itemID, modelID uint64, tok string) (*DeleteDiscountItemResponse, error) {
-	path := "/discount/delete_discount_item"
-	wrappedData := map[string]interface{}{
-		"discount_id": discountID,
-		"item_id":     itemID,
-		"model_id":    modelID,
-	}
-	resp := new(DeleteDiscountItemResponse)
-	err := s.client.WithShop(sid, tok).Post(path, wrappedData, resp)
-	return resp, err
-}
-
-type UpdateDiscountItemRequest struct {
-	DiscountID uint64                          `json:"discount_id"`
-	ItemList   []UpdateDiscountItemRequestItem `json:"item_list"`
-}
-
-// type UpdateDiscountItemRequestItem struct {
-// 	ItemID uint64 `json:"item_id"`
-// 	// ItemPromotionPrice float64                          `json:"item_promotion_price"`
-// 	// PurchaseLimit      int                              `json:"purchase_limit"`
-// 	ModelList []UpdateDiscountItemRequestModel `json:"model_list"`
-// }
-
-// cause item_promotion_price & purchase_limit are optional
-// if not needed, must not set them in parameters
-type UpdateDiscountItemRequestItem map[string]interface{}
-
-type UpdateDiscountItemRequestModel struct {
-	ModelID             uint64  `json:"model_id"`
-	ModelPromotionPrice float64 `json:"model_promotion_price"`
-}
-
-type UpdateDiscountItemResponse struct {
-	BaseResponse
-
-	Response UpdateDiscountItemResponseData `json:"response"`
-}
-
-type UpdateDiscountItemResponseData struct {
-	DiscountID uint64                                `json:"discount_id"`
-	Count      int                                   `json:"count"`
-	ErrorList  []UpdateDiscountItemResponseDataError `json:"error_list"`
-}
-
-type UpdateDiscountItemResponseDataError struct {
-	ItemID      uint64 `json:"item_id"`
-	ModelID     uint64 `json:"model_id"`
-	FailMessage string `json:"fail_message"`
-	FailError   string `json:"fail_error"`
-}
-
-func (s *DiscountServiceOp) UpdateDiscountItem(sid uint64, data UpdateDiscountItemRequest, tok string) (*UpdateDiscountItemResponse, error) {
-	path := "/discount/update_discount_item"
-	resp := new(UpdateDiscountItemResponse)
-	req, err := StructToMap(data)
-	if err != nil {
-		return nil, err
-	}
-	err = s.client.WithShop(sid, tok).Post(path, req, resp)
+func (s *DiscountServiceOp) DeleteSipDiscount(sid uint64, req DeleteSipDiscountRequest, tok string) (*DeleteSipDiscountResponse, error) {
+	path := "/discount/delete_sip_discount"
+	resp := new(DeleteSipDiscountResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

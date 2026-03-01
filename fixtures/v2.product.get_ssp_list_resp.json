@@ -1,0 +1,49 @@
+{
+    "error": "",
+    "message": "",
+    "request_id": "317a860d2480a8d704c218854e05d100:0400003e77eb0441:030003db6ff77ecd",
+    "response": {
+        "page_info": {
+            "has_next_page": true,
+            "next_offset": "4"
+        },
+        "ssp_list": [
+            {
+                "available": true,
+                "ssp_info": {
+                    "gtin": "",
+                    "oem": "A4H3U68556",
+                    "product_name": "test ssp 1",
+                    "ssp_id": 1260083200
+                }
+            },
+            {
+                "available": true,
+                "ssp_info": {
+                    "gtin": "7891515525729",
+                    "oem": "",
+                    "product_name": "test ssp 2",
+                    "ssp_id": 1261009920
+                }
+            },
+            {
+                "available": true,
+                "ssp_info": {
+                    "gtin": "",
+                    "oem": "HF756393J",
+                    "product_name": "test ssp 3",
+                    "ssp_id": 1261138944
+                }
+            },
+            {
+                "available": true,
+                "ssp_info": {
+                    "gtin": "",
+                    "oem": "H6729JF",
+                    "product_name": "test ssp 4",
+                    "ssp_id": 1261292544
+                }
+            }
+        ]
+    }
+}
