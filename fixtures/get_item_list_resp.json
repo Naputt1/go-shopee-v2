@@ -1,0 +1,18 @@
+{
+  "error": "",
+  "message": "",
+  "response": {
+    "item": [
+      {
+        "item_id": 12345
+      },
+      {
+        "item_id": 67890
+      }
+    ],
+    "total_count": 2,
+    "has_next_page": false,
+    "next_offset": 0
+  },
+  "request_id": "abcd1234efgh5678"
+}
