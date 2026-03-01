@@ -988,6 +988,14 @@ type CancelOrderResponseData struct {
 	UpdateTime *int64 `json:"update_time,omitempty"` // [Optional] The time when the order is updated.
 }
 
+type CancelVideoUploadRequest struct {
+	VideoUploadId string `json:"video_upload_id"` // [Required] The ID of this upload session, returned in init_video_upload.
+}
+
+type CancelVideoUploadResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
+}
+
 type CancellationOrder struct {
 	OrderSn          *string `json:"order_sn,omitempty"`          // [Optional] <p>Order SN.</p>
 	CancellationType *int64  `json:"cancellation_type,omitempty"` // [Optional] <p>Cancellation Type.&nbsp;Applicable values:&nbsp;</p><p>1: System Cancellation</p><p>2: Seller Cancellation<br /></p>
@@ -1154,6 +1162,16 @@ type ComplaintPolicy struct {
 	ExcludeEntrepreneurWarranty *bool         `json:"exclude_entrepreneur_warranty,omitempty"` // [Optional] If True means "I exclude warranty complaints for entrepreneur"
 	ComplaintAddressId          *int64        `json:"complaint_address_id,omitempty"`          // [Optional] The identity of complaint address.
 	AdditionalInformation       *string       `json:"additional_information,omitempty"`        // [Optional]  Additional information for complaint policy.
+}
+
+type CompleteVideoUploadRequest struct {
+	VideoUploadId string      `json:"video_upload_id"` // [Required] The ID of this upload session, returned in init_video_upload.
+	PartSeqList   []int64     `json:"part_seq_list"`   // [Required] All uploaded sequence number.
+	ReportData    *ReportData `json:"report_data"`     // [Required]
+}
+
+type CompleteVideoUploadResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
 }
 
 type Component struct {
@@ -2187,8 +2205,8 @@ type ExtendedDescriptionField struct {
 }
 
 type ExtendedDescriptionFieldImageInfo struct {
-	ImageUrl *string `json:"image_url,omitempty"` // [Optional] Image url.
-	ImageId  *string `json:"image_id,omitempty"`  // [Optional] Id of image.
+	ImageId  *string `json:"image_id,omitempty"`  // [Optional] <p>Unique ID of the uploaded image.</p>
+	ImageUrl *string `json:"image_url,omitempty"` // [Optional] <p>URL of the uploaded image.</p>
 }
 
 type ExtendedDescriptionLimit struct {
@@ -5554,6 +5572,30 @@ type GetVehicleListByCompatibilityDetailResponseData struct {
 	VehicleList []Vehicle `json:"vehicle_list,omitempty"` // [Optional]
 }
 
+type GetVideoUploadResultRequest struct {
+	VideoUploadId string `json:"video_upload_id" url:"video_upload_id"` // [Required]
+}
+
+type GetVideoUploadResultResponse struct {
+	BaseResponse `json:",inline"`                 // Common response fields
+	Response     GetVideoUploadResultResponseData `json:"response"` // Actual response data
+}
+
+type GetVideoUploadResultResponseData struct {
+	Status    *string                `json:"status,omitempty"`     // [Optional] Current status of this video upload session. could be: INITIATED(waiting for part uploading and/or the complete_video_upload API call), TRANSCODING(has received all video parts, and is transcoding the video file), SUCCEEDED(transcoding completed, and this upload_id can now be used for item adding/updating), FAILED(this upload failed, see the message filed for some info), CANCELLED(this upload is cancelled)
+	VideoInfo *ResponseDataVideoInfo `json:"video_info,omitempty"` // [Optional] Transcoded video info, will be present if status is SUCCEEDED.
+	Message   *string                `json:"message,omitempty"`    // [Optional] Detail error message if video uploading/transcoding failed.
+}
+
+type GetVideoUploadResultResponseDataVideoInfo struct {
+	VideoUrl          *string `json:"video_url,omitempty"`           // [Optional] <p>Video playback url.</p>
+	VideoThumbnailUrl *string `json:"video_thumbnail_url,omitempty"` // [Optional] <p>Video thumbnail image url.</p>
+	ThumbnailWidth    *int64  `json:"thumbnail_width,omitempty"`     // [Optional] <p>Video thumbnail image width.</p>
+	ThumbnailHeight   *int64  `json:"thumbnail_height,omitempty"`    // [Optional] <p>Video thumbnail image width.</p>
+	Duration          *int64  `json:"duration,omitempty"`            // [Optional] <p>Video duration in seconds.</p>
+	Resolution        *string `json:"resolution,omitempty"`          // [Optional] <p>Video resolution, e.g., "1280x1280".</p>
+}
+
 type GetVoucherListRequest struct {
 	PageNo   *int64 `json:"page_no,omitempty"`   // [Optional] Specifies the page number of data to return in the current call. Default to be 1 and allowed input is from 1 - 5000.
 	PageSize *int64 `json:"page_size,omitempty"` // [Optional] Use the 'page_size' filters to control the maximum number of entries to retrieve per page (i.e., per call). Default to be 20 and allowed input is from 1- 100.
@@ -6012,6 +6054,20 @@ type InitTierVariationResponseData struct {
 	Model         []ResponseDataModel         `json:"model,omitempty"`          // [Optional]
 }
 
+type InitVideoUploadRequest struct {
+	FileMd5  string `json:"file_md5"`  // [Required] md5 of video file
+	FileSize int64  `json:"file_size"` // [Required] size of video file, in bytes, maximum is 30MB
+}
+
+type InitVideoUploadResponse struct {
+	BaseResponse `json:",inline"`            // Common response fields
+	Response     InitVideoUploadResponseData `json:"response"` // Actual response data
+}
+
+type InitVideoUploadResponseData struct {
+	VideoUploadId *string `json:"video_upload_id,omitempty"` // [Optional] The identifier of this upload session, used in following video upload request and item creating and/or updating
+}
+
 type InstantOperatingHour struct {
 	Monday        *Monday `json:"monday,omitempty"`         // [Optional] <p>Operating hours for Monday: You can skip this information if you want to mark the day as closed.</p>
 	Tuesday       *Monday `json:"tuesday,omitempty"`        // [Optional] <p>Operating hours for Tuesday: You can skip this information if you want to mark the day as closed.</p>
@@ -6420,6 +6476,19 @@ type LivestreamGetItemListResponseData struct {
 	List       []GetItemListResponseDataList `json:"list,omitempty"`        // [Optional]
 }
 
+type LivestreamUploadImageRequest struct {
+	Image interface{} `json:"image"` // [Required] <p>The image file to upload.</p>
+}
+
+type LivestreamUploadImageResponse struct {
+	BaseResponse `json:",inline"`                  // Common response fields
+	Response     LivestreamUploadImageResponseData `json:"response"` // Actual response data
+}
+
+type LivestreamUploadImageResponseData struct {
+	ImageUrl *string `json:"image_url,omitempty"` // [Optional] <p>The image URL</p>
+}
+
 type LogisticInfo struct {
 	LogisticId  int64    `json:"logistic_id"`            // [Required] Logistic id.
 	Enabled     bool     `json:"enabled"`                // [Required] If this logistic channel is enabled.
@@ -6528,6 +6597,82 @@ type MeasurementValue struct {
 type Media struct {
 	ImageUrlList []string `json:"image_url_list,omitempty"` // [Optional] <p>List of image url uploaded by the buyer in the comment.</p>
 	VideoUrlList []string `json:"video_url_list,omitempty"` // [Optional] <p>List of video url uploaded by the buyer in the comment.</p>
+}
+
+type MediaCancelVideoUploadRequest struct {
+	VideoUploadId string `json:"video_upload_id"` // [Required] <p>The unique ID of the upload task, returned by v2.media.init_video_upload.</p>
+}
+
+type MediaCancelVideoUploadResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
+}
+
+type MediaCompleteVideoUploadRequest struct {
+	VideoUploadId string `json:"video_upload_id"` // [Required] <p>The unique ID of the upload task, returned by v2.media.init_video_upload.</p>
+}
+
+type MediaCompleteVideoUploadResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
+}
+
+type MediaGetVideoUploadResultRequest struct {
+	VideoUploadId string `json:"video_upload_id" url:"video_upload_id"` // [Required] <p>The unique ID of the upload task, returned by v2.media.init_video_upload.</p>
+}
+
+type MediaGetVideoUploadResultResponse struct {
+	BaseResponse `json:",inline"`                      // Common response fields
+	Response     MediaGetVideoUploadResultResponseData `json:"response"` // Actual response data
+}
+
+type MediaGetVideoUploadResultResponseData struct {
+	Status     *string                                    `json:"status,omitempty"`      // [Optional] <p>Current status of the upload task. Possible values:<br /></p><p>- INITIATED: Upload task has been created (via init_video_upload) but no parts have been uploaded yet.</p><p>- UPLOADING: Video file parts are being uploaded. The upload has started but is not yet completed.</p><p>- UPLOADED: All video parts have been uploaded successfully, waiting for complete_video_upload to trigger processing.</p><p>- PROCESSING: Video is being transcoded/validated by the system (duration, format, resolution checks).</p><p>- SUCCEEDED: Video upload and transcoding completed successfully. Video URL and cover URL are available for use.</p><p>- FAILED: Upload or processing failed (e.g., invalid format, duration not within allowed range, transcoding error).</p><p>- CANCELLED: Upload task was explicitly canceled by the client (cancel_video_upload), and the video is discarded.</p>
+	Reason     *string                                    `json:"reason,omitempty"`      // [Optional] <p>Detailed fail or cancel reason, will be returned if status is FAILED or CANCELLED.</p>
+	UpdateTime *int64                                     `json:"update_time,omitempty"` // [Optional] <p>The time of video status updates.</p>
+	VideoInfo  *GetVideoUploadResultResponseDataVideoInfo `json:"video_info,omitempty"`  // [Optional] <p>Transcoded video info, will be returned if status is SUCCEEDED.</p>
+}
+
+type MediaInitVideoUploadRequest struct {
+	Business int64  `json:"business"`  // [Required] <p>Defines the business type of the uploaded image. Supported values:&nbsp;</p><p>3 = Video</p>
+	Scene    int64  `json:"scene"`     // [Required] <p>Defines the purpose of the uploaded image under the specified business type.&nbsp;Supported values:&nbsp;</p><p>- If business = 3 (Video): 1 = Shopee Video</p>
+	FileName string `json:"file_name"` // [Required] <p>Original video file name.</p>
+	FileSize int64  `json:"file_size"` // [Required] <p>Total video file size in bytes.&nbsp;Rules and restrictions by business and scene:&nbsp;</p><p>- If business = 3 (Video) and scene = 1 (Shopee Video):&nbsp;Maximum <b>1GB</b>.</p>
+	Duration int64  `json:"duration"`  // [Required] <p>Video duration in seconds.&nbsp;Rules and restrictions by business and scene:</p><p>- If business = 3 (Video) and scene = 1 (Shopee Video): <b>1s~180s</b>.</p>
+}
+
+type MediaInitVideoUploadResponse struct {
+	BaseResponse `json:",inline"`                 // Common response fields
+	Response     MediaInitVideoUploadResponseData `json:"response"` // Actual response data
+}
+
+type MediaInitVideoUploadResponseData struct {
+	VideoUploadId *string `json:"video_upload_id,omitempty"` // [Optional] <p>Unique upload session ID.</p>
+	PartSize      *int64  `json:"part_size,omitempty"`       // [Optional] <p>The size of each part. When uploading video chunks, the video must be split according to this part size for each upload request.</p>
+}
+
+type MediaUploadImageRequest struct {
+	Business int64       `json:"business"` // [Required] <p>Defines the business type of the uploaded image. Supported values:&nbsp;</p><p>2 = Returns</p>
+	Scene    int64       `json:"scene"`    // [Required] <p>Defines the purpose of the uploaded image under the specified business type.&nbsp;Supported values:</p><p>- If&nbsp;business = 2 (Returns): 1 = Return Seller Self Arrange Pickup Proof Image</p>
+	Images   interface{} `json:"images"`   // [Required] <p>The image files to be uploaded. Rules and restrictions by business and scene:</p><p>- If business = 2 (Returns) and scene = 1 (Return Seller Self Arrange Pickup Proof Image): Up to&nbsp;<b>3</b>&nbsp;images can be uploaded. Each image must not exceed&nbsp;<b>10MB</b>. Supported formats:&nbsp;<b>JPG, JPEG, PNG</b>.</p>
+}
+
+type MediaUploadImageResponse struct {
+	BaseResponse `json:",inline"`             // Common response fields
+	Response     MediaUploadImageResponseData `json:"response"` // Actual response data
+}
+
+type MediaUploadImageResponseData struct {
+	ImageList []ExtendedDescriptionFieldImageInfo `json:"image_list,omitempty"` // [Optional] <p>List of uploaded images.</p>
+}
+
+type MediaUploadVideoPartRequest struct {
+	VideoUploadId string      `json:"video_upload_id"` // [Required] <p>The unique ID of the upload task, returned by v2.media.init_video_upload.</p>
+	PartSeq       int64       `json:"part_seq"`        // [Required] <p>Sequence number of this part, starting from 0.</p>
+	PartContent   interface{} `json:"part_content"`    // [Required] <p>The content of this part of file. Part size should be exactly equal to part_size returned in v2.media.init_video_upload, except last part of file.</p>
+	PartMd5       string      `json:"part_md5"`        // [Required] <p>MD5 checksum of this part for data integrity validation.</p>
+}
+
+type MediaUploadVideoPartResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
 }
 
 type Metric struct {
@@ -7375,6 +7520,10 @@ type Report struct {
 	Impression        *float64 `json:"impression,omitempty"`          // [Optional] <p>The number of times shoppers see your ad.<br /></p>
 }
 
+type ReportData struct {
+	UploadCost int64 `json:"upload_cost"` // [Required] Time used for uploading the video file via upload_video_part api, in milliseconds. For video upload performance tracking purpose.
+}
+
 type Repsonse struct {
 	RegularOperatingHour        *RepsonseRegularOperatingHour `json:"regular_operating_hour,omitempty"`         // [Optional] <p>The details of Pickup Operating Hours/Preferred Pickup Hours</p>
 	InstantOperatingHour        *RepsonseRegularOperatingHour `json:"instant_operating_hour,omitempty"`         // [Optional] <p>The details of Instant Operating Hours</p>
@@ -7783,6 +7932,11 @@ type ResponseDataImage struct {
 	Thumbnail *string `json:"thumbnail,omitempty"` // [Optional] <p>The thumbnail of video</p>
 }
 
+type ResponseDataImageInfo struct {
+	ImageId      *string        `json:"image_id,omitempty"`       // [Optional] <p>Id of image</p>
+	ImageUrlList []ThumbnailUrl `json:"image_url_list,omitempty"` // [Optional] <p>Image URL of each region<br /></p>
+}
+
 type ResponseDataInfoNeeded struct {
 	Dropoff []string `json:"dropoff,omitempty"` // [Optional] <p>Could contain 'branch_id', 'sender_real_name' or 'tracking_no'. If it contains 'branch_id', choose one to Init. If it contains 'sender_real_name' or 'tracking_no', should manually input these values in Init API. If it has empty value, developer should still include "dropoff" field in Init API.<br /></p>
 	Pickup  []string `json:"pickup,omitempty"`  // [Optional] <p>Could contain 'address_id' and 'pickup_time_id'. Choose one address_id and its corresponding pickup_time_id to Init. If it has empty value, developer should still include "pickup" field in Init API.It could contains "tracking_number" returned from "info_need"for some channels, please also add it when init.<br /></p>
@@ -8122,6 +8276,12 @@ type ResponseDataTrackingNumber struct {
 	Status                  *string `json:"status,omitempty"`                     // [Optional] <p>The logistics status for first-mile tracking number. Status could be:</p><p>CANCELED<br />CANCELING<br />DELIVERED<br />NOT_AVAILABLE<br />ORDER_CREATED<br />ORDER_RECEIVED<br />PICKED_UP</p><p><br /></p><p>Note:&nbsp;NOT_AVAILABLE status means that Binding ID / First Mile Tracking Number is not yet bound with any order.</p>
 	Reason                  *string `json:"reason,omitempty"`                     // [Optional] <p>Indicate the reason when Shopee failed to place courier order to 3PL (Kuaidi 100 supporting) or courier company cancelled the order.</p><p><br /></p><p>Note: Will be empty if status is not CANCELED.</p>
 	DeclareDate             *string `json:"declare_date,omitempty"`               // [Optional] <p>The declare date of binding ID/first-mile tracking number.</p>
+}
+
+type ResponseDataVideoInfo struct {
+	VideoUrlList     []VideoUrl     `json:"video_url_list,omitempty"`     // [Optional] Video playback URL list.
+	ThumbnailUrlList []ThumbnailUrl `json:"thumbnail_url_list,omitempty"` // [Optional] Video thumbnail image URL list.
+	Duration         *int64         `json:"duration,omitempty"`           // [Optional] Duration of this video, in seconds.
 }
 
 type ResponseDataWholesale struct {
@@ -8563,7 +8723,8 @@ type SharedUploadImageResponse struct {
 }
 
 type SharedUploadImageResponseData struct {
-	ImageUrl *string `json:"image_url,omitempty"` // [Optional] <p>The image URL</p>
+	ImageInfo     *ResponseDataImageInfo             `json:"image_info,omitempty"`      // [Optional]
+	ImageInfoList []UploadImageResponseDataImageInfo `json:"image_info_list,omitempty"` // [Optional]
 }
 
 type ShipBookingRequest struct {
@@ -9105,6 +9266,11 @@ type ThirdPartyLogisticInfo struct {
 	TwStoreName                   *string                  `json:"tw_store_name,omitempty"`                     // [Optional] <p>[Only for TW channel_id:30005 ]&nbsp;Store name for 7-ELEVEN orders.<br /></p>
 	TwStoreNumber                 *string                  `json:"tw_store_number,omitempty"`                   // [Optional] <p>[Only for TW channel_id:30005 ]Store number for 7-ELEVEN orders.<br /></p>
 	BuyerPreferDeliveryTime       *BuyerPreferDeliveryTime `json:"buyer_prefer_delivery_time,omitempty"`        // [Optional] <p>[Only for TW channel:30017]&nbsp;The time buyer prefers to receive the packages.<br /></p>
+}
+
+type ThumbnailUrl struct {
+	ImageUrlRegion *string `json:"image_url_region,omitempty"` // [Optional] <p>Region of image url<br /></p>
+	ImageUrl       *string `json:"image_url,omitempty"`        // [Optional] <p>image url<br /></p>
 }
 
 type TierVariation struct {
@@ -9927,7 +10093,16 @@ type UpdatedChannels struct {
 }
 
 type UploadImageRequest struct {
-	Image interface{} `json:"image"` // [Required] <p>The image file to upload.</p>
+	Image interface{} `json:"image"`           // [Required] <p>image files. Max 10.0 MB each. Image format accepted: JPG, JPEG, PNG. image number should be less than 9<br /></p>
+	Scene *string     `json:"scene,omitempty"` // [Optional] The scene where the picture is used, The value range is normal or desc; normal: we will process the image as a square image, it is recommended to use when uploading item image; desc: we will not process the image, it is recommended to use when uploading the image of extend_description, if you do not upload this field, it will be normal.
+	Ratio *string     `json:"ratio,omitempty"` // [Optional] <p>only applicable to whitelisted sellers.<br />only support 1:1 and 3:4;&nbsp;</p><p>1:1 by default.<br /></p>
+}
+
+type UploadImageResponseDataImageInfo struct {
+	Id        *int64                 `json:"id,omitempty"`         // [Optional] <p>the index of images</p>
+	Error     *string                `json:"error,omitempty"`      // [Optional] <p>Indicate error type if this index's image upload processing hit error. Empty if no error happened for this index's image .<br /></p>
+	Message   *string                `json:"message,omitempty"`    // [Optional] <p>Indicate error detail if this index's image upload processing hit error. Empty if no error happened for this index's image .<br /></p>
+	ImageInfo *ResponseDataImageInfo `json:"image_info,omitempty"` // [Optional]
 }
 
 type UploadInvoiceDocRequest struct {
@@ -9976,6 +10151,17 @@ type UploadShippingProofRequest struct {
 type UploadShippingProofResponse struct {
 	BaseResponse `json:",inline"` // Common response fields
 	Response     interface{}      `json:"response"` // Actual response data
+}
+
+type UploadVideoPartRequest struct {
+	VideoUploadId string      `json:"video_upload_id"` // [Required] The video_upload_id in the response of initiate_video_upload
+	PartSeq       int64       `json:"part_seq"`        // [Required] Sequence of the current part, starts from 0
+	ContentMd5    string      `json:"content_md5"`     // [Required] md5 of this part
+	PartContent   interface{} `json:"part_content"`    // [Required] The content of this part of file.  Part size should be exactly 4MB, except last part of file.
+}
+
+type UploadVideoPartResponse struct {
+	BaseResponse `json:",inline"` // Common response fields
 }
 
 type User struct {
@@ -10034,6 +10220,11 @@ type VideoInfo struct {
 	VideoUrl     *string `json:"video_url,omitempty"`     // [Optional] Url of video.
 	ThumbnailUrl *string `json:"thumbnail_url,omitempty"` // [Optional] Thumbnail of video.
 	Duration     *int64  `json:"duration,omitempty"`      // [Optional] Duration of video.
+}
+
+type VideoUrl struct {
+	VideoUrlRegion *string `json:"video_url_region,omitempty"` // [Optional] The region of this video URL.
+	VideoUrl       *string `json:"video_url,omitempty"`        // [Optional] Video playback URL.
 }
 
 type ViolationListing struct {
@@ -10150,43 +10341,17 @@ type WorkingDayConfigMonday struct {
 	Operating_24HourToggle *bool   `json:"operating_24_hour_toggle,omitempty"` // [Optional] <p>If the toggle value is true, the user can set the&nbsp;start_time&nbsp;to&nbsp;00:00&nbsp;and the&nbsp;end_time&nbsp;to&nbsp;23:59&nbsp;to indicate that the shop is operating 24 hours a day.</p>
 }
 
-type WarrantyTime string
+type ReturnStatus string
 
 const (
-	WarrantyTimeOneYear      WarrantyTime = "ONE_YEAR"
-	WarrantyTimeOverTwoYears WarrantyTime = "OVER_TWO_YEARS"
-	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
-)
-
-type PromotionStatus string
-
-const (
-	PromotionStatusAll      PromotionStatus = "all"
-	PromotionStatusExpired  PromotionStatus = "expired"
-	PromotionStatusOngoing  PromotionStatus = "ongoing"
-	PromotionStatusUpcoming PromotionStatus = "upcoming"
-)
-
-type OrderStatus string
-
-const (
-	OrderStatusCancelled      OrderStatus = "CANCELLED"
-	OrderStatusCompleted      OrderStatus = "COMPLETED"
-	OrderStatusInvoicePending OrderStatus = "INVOICE_PENDING"
-	OrderStatusInCancel       OrderStatus = "IN_CANCEL"
-	OrderStatusProcessed      OrderStatus = "PROCESSED"
-	OrderStatusReadyToShip    OrderStatus = "READY_TO_SHIP"
-	OrderStatusShipped        OrderStatus = "SHIPPED"
-	OrderStatusUnpaid         OrderStatus = "UNPAID"
-)
-
-type InvoiceOption string
-
-const (
-	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
-	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
-	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
-	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+	ReturnStatusAccepted      ReturnStatus = "ACCEPTED"
+	ReturnStatusCancelled     ReturnStatus = "CANCELLED"
+	ReturnStatusClosed        ReturnStatus = "CLOSED"
+	ReturnStatusJudging       ReturnStatus = "JUDGING"
+	ReturnStatusProcessing    ReturnStatus = "PROCESSING"
+	ReturnStatusRefunding     ReturnStatus = "REFUNDING"
+	ReturnStatusRequested     ReturnStatus = "REQUESTED"
+	ReturnStatusSellerDispute ReturnStatus = "SELLER_DISPUTE"
 )
 
 type TaxType int
@@ -10212,17 +10377,17 @@ const (
 	ItemStatusUnlist ItemStatus = "UNLIST"
 )
 
-type CampaignStatus string
+type OrderStatus string
 
 const (
-	CampaignStatusClosed    CampaignStatus = "closed"
-	CampaignStatusDeleted   CampaignStatus = "deleted"
-	CampaignStatusEnded     CampaignStatus = "ended"
-	CampaignStatusExpired   CampaignStatus = "expired"
-	CampaignStatusOngoing   CampaignStatus = "ongoing"
-	CampaignStatusPaused    CampaignStatus = "paused"
-	CampaignStatusScheduled CampaignStatus = "scheduled"
-	CampaignStatusUpcoming  CampaignStatus = "upcoming"
+	OrderStatusCancelled      OrderStatus = "CANCELLED"
+	OrderStatusCompleted      OrderStatus = "COMPLETED"
+	OrderStatusInvoicePending OrderStatus = "INVOICE_PENDING"
+	OrderStatusInCancel       OrderStatus = "IN_CANCEL"
+	OrderStatusProcessed      OrderStatus = "PROCESSED"
+	OrderStatusReadyToShip    OrderStatus = "READY_TO_SHIP"
+	OrderStatusShipped        OrderStatus = "SHIPPED"
+	OrderStatusUnpaid         OrderStatus = "UNPAID"
 )
 
 type LogisticsStatus string
@@ -10239,19 +10404,6 @@ const (
 	LogisticsStatusReady           LogisticsStatus = "LOGISTICS_READY"
 	LogisticsStatusRequestCanceled LogisticsStatus = "LOGISTICS_REQUEST_CANCELED"
 	LogisticsStatusRequestCreated  LogisticsStatus = "LOGISTICS_REQUEST_CREATED"
-)
-
-type ReturnStatus string
-
-const (
-	ReturnStatusAccepted      ReturnStatus = "ACCEPTED"
-	ReturnStatusCancelled     ReturnStatus = "CANCELLED"
-	ReturnStatusClosed        ReturnStatus = "CLOSED"
-	ReturnStatusJudging       ReturnStatus = "JUDGING"
-	ReturnStatusProcessing    ReturnStatus = "PROCESSING"
-	ReturnStatusRefunding     ReturnStatus = "REFUNDING"
-	ReturnStatusRequested     ReturnStatus = "REQUESTED"
-	ReturnStatusSellerDispute ReturnStatus = "SELLER_DISPUTE"
 )
 
 type BookingStatus string
@@ -10276,4 +10428,43 @@ type DescriptionElementFieldType string
 const (
 	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
 	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
+)
+
+type WarrantyTime string
+
+const (
+	WarrantyTimeOneYear      WarrantyTime = "ONE_YEAR"
+	WarrantyTimeOverTwoYears WarrantyTime = "OVER_TWO_YEARS"
+	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
+)
+
+type InvoiceOption string
+
+const (
+	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
+	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
+	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
+	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+)
+
+type PromotionStatus string
+
+const (
+	PromotionStatusAll      PromotionStatus = "all"
+	PromotionStatusExpired  PromotionStatus = "expired"
+	PromotionStatusOngoing  PromotionStatus = "ongoing"
+	PromotionStatusUpcoming PromotionStatus = "upcoming"
+)
+
+type CampaignStatus string
+
+const (
+	CampaignStatusClosed    CampaignStatus = "closed"
+	CampaignStatusDeleted   CampaignStatus = "deleted"
+	CampaignStatusEnded     CampaignStatus = "ended"
+	CampaignStatusExpired   CampaignStatus = "expired"
+	CampaignStatusOngoing   CampaignStatus = "ongoing"
+	CampaignStatusPaused    CampaignStatus = "paused"
+	CampaignStatusScheduled CampaignStatus = "scheduled"
+	CampaignStatusUpcoming  CampaignStatus = "upcoming"
 )

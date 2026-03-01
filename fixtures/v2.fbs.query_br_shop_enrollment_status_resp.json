@@ -1,0 +1,9 @@
+{
+    "request_id": "mock_request_id",
+    "error": "",
+    "message": "",
+    "response": {
+        "enrollment_status": 1,
+        "enable_enrollment_time": 1650624369
+    }
+}
