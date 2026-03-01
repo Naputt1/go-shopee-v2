@@ -499,6 +499,9 @@ func auditStaticModule(mod Module, config Config) {
 }
 
 func isParamRequired(req string) bool {
+	if req == "" {
+		return true // Default to required if not specified (common in responses)
+	}
 	req = strings.ToLower(req)
 	return req == "yes" || req == "true"
 }
@@ -631,7 +634,10 @@ func applyManualPrefix(name string) string {
 func getStructSignature(s StructData) string {
 	var fieldSigs []string
 	for _, f := range s.Fields {
-		fieldSigs = append(fieldSigs, fmt.Sprintf("%s:%s:%s", f.JSONTag, f.Type, f.URLTag))
+		// Make signature agnostic to pointers and omitempty to share structs
+		cleanType := strings.TrimPrefix(f.Type, "*")
+		cleanJSON := strings.TrimSuffix(f.JSONTag, ",omitempty")
+		fieldSigs = append(fieldSigs, fmt.Sprintf("%s:%s:%s", cleanJSON, cleanType, f.URLTag))
 	}
 	sort.Strings(fieldSigs)
 	return strings.Join(fieldSigs, "|")
