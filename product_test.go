@@ -157,6 +157,29 @@ func Test_UpdateSizeChart(t *testing.T) {
 	}
 }
 
+func Test_GetItemList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/product/get_item_list", app.APIURL),
+		httpmock.NewBytesResponder(200, loadFixture("get_item_list_resp.json")))
+
+	res, err := client.Product.GetItemList(shopID, GetItemListRequest{
+		Offset:     0,
+		PageSize:   10,
+		ItemStatus: []ItemStatus{ItemStatusNormal},
+	}, accessToken)
+	if err != nil {
+		t.Errorf("Product.GetItemList error: %s", err)
+	}
+
+	t.Logf("Product.GetItemList: %#v", res)
+
+	var expectedID uint64 = 12345
+	if res.Response.Item[0].ItemID != expectedID {
+		t.Errorf("ItemID returned %+v, expected %+v", res.Response.Item[0].ItemID, expectedID)
+	}
+}
 func Test_AddItem(t *testing.T) {
 	setup()
 	defer teardown()

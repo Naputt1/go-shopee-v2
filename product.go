@@ -23,6 +23,8 @@ type ProductService interface {
 	UpdateStock(uint64, UpdateStockRequest, string) (*UpdateStockResponse, error)
 	CategoryRecommend(uint64, string, string) (*CategoryRecommendResponse, error)
 	GetItemPromotion(uint64, []uint64, string) (*GetItemPromotionResponse, error)
+	// https://open.shopee.com/documents/v2/v2.product.get_item_list?module=89&type=1
+	GetItemList(sid uint64, opt GetItemListRequest, tok string) (*GetItemListResponse, error)
 }
 
 type GetCategoryResponse struct {
@@ -995,5 +997,73 @@ func (s *ProductServiceOp) UpdateTierVariation(sid uint64, data UpdateTierVariat
 		return nil, err
 	}
 	err = s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+type ItemStatus string
+
+const ItemStatusNormal ItemStatus = "NORMAL"
+const ItemStatusBanned ItemStatus = "BANNED"
+const ItemStatusUnlist ItemStatus = "UNLIST"
+const ItemStatusReviewing ItemStatus = "REVIEWING"
+const ItemStatusSellerDelete ItemStatus = "SELLER_DELETE"
+const ItemStatusShopeeDelete ItemStatus = "SHOPEE_DELETE"
+
+type GetItemListRequest struct {
+	// Specifies the starting entry of data to return in the current call. Default is 0. if data is more than one page, the offset can be some entry to start next call.
+	//
+	// Required
+	Offset int `url:"offset"`
+	// the size of one page.Max=100
+	//
+	// Required
+	PageSize int `url:"page_size"`
+	// The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_from field is the starting date range.
+	//
+	// Optional
+	UpdateTimeFrom uint64 `url:"update_time_from"`
+	// The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_to field is the ending date range
+	//
+	// Optional
+	UpdateTimeTo uint64 `url:"update_time_to"`
+	// NORALM/BANNED/UNLIST/REVIEWING/SELLER_DELETE/SHOPEE_DELETE
+	//
+	// Required
+	ItemStatus []ItemStatus `url:"item_status"`
+}
+
+type GetItemListResponse struct {
+	BaseResponse
+	Response GetItemListResponseData `json:"response"`
+}
+
+type GetItemListResponseDataItem struct {
+	// Shopee's unique identifier for an item.
+	ItemID uint64 `json:"item_id"`
+	// Enumerated type that defines the current status of the item. Applicable values: NORMAL, BANNED, UNLIST, REVIEWING, SELLER_DELETE, SHOPEE_DELETE.
+	ItemStatus ItemStatus `json:"item_status"`
+	// 	The update time of item.
+	UpdatedTime uint64 `json:"updated_time"`
+	Tag         struct {
+		// Indicate if the item is kit item.
+		Kit bool `json:"kit"`
+	} `json:"tag"`
+}
+
+type GetItemListResponseData struct {
+	Item []GetItemListResponseDataItem `json:"item"`
+	// total count of all items
+	TotalCount int `json:"total_count"`
+	// 	This is to indicate whether the item list is more than one page. If this value is true, you may want to continue to check next page to retrieve the rest of items.
+	HasNextPage bool `json:"has_next_page"`
+	// if has_next_page is true, this value need set to next request.offset
+	NextOffset int `json:"next_offset"`
+}
+
+func (s *ProductServiceOp) GetItemList(sid uint64, opt GetItemListRequest, tok string) (*GetItemListResponse, error) {
+	path := "/product/get_item_list"
+
+	resp := new(GetItemListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
