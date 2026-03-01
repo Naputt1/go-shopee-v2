@@ -71,9 +71,10 @@ type Client struct {
 	// BEGIN GENERATED SERVICES
 	Util          UtilService
 	Auth          AuthService
-	MediaSpace    MediaSpaceService
 	Product       ProductService
 	GlobalProduct GlobalProductService
+	MediaSpace    MediaSpaceService
+	Media         MediaService
 	Shop          ShopService
 	Merchant      MerchantService
 	Order         OrderService
@@ -119,9 +120,10 @@ func NewClient(app App, opts ...Option) *Client {
 	// BEGIN GENERATED SERVICES INIT
 	c.Util = &UtilServiceOp{client: c}
 	c.Auth = &AuthServiceOp{client: c}
-	c.MediaSpace = &MediaSpaceServiceOp{client: c}
 	c.Product = &ProductServiceOp{client: c}
 	c.GlobalProduct = &GlobalProductServiceOp{client: c}
+	c.MediaSpace = &MediaSpaceServiceOp{client: c}
+	c.Media = &MediaServiceOp{client: c}
 	c.Shop = &ShopServiceOp{client: c}
 	c.Merchant = &MerchantServiceOp{client: c}
 	c.Order = &OrderServiceOp{client: c}
@@ -563,7 +565,20 @@ func (c *Client) Upload(relPath, fieldname, filename string, resource interface{
 	return nil
 }
 
-// Creates a new file upload http request with optional extra params
+// UploadFromReader performs an upload from an io.Reader
+func (c *Client) UploadFromReader(relPath, fieldname, filename string, reader io.Reader, resource interface{}) error {
+	req, err := c.NewUploadFromReaderRequest(relPath, fieldname, filename, reader)
+	if err != nil {
+		return err
+	}
+
+	if _, err := c.doGetHeaders(req, resource, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewfileUploadRequest creates a new file upload http request with optional extra params
 func (c *Client) NewfileUploadRequest(relPath, paramName, filename string) (*http.Request, error) {
 	if strings.HasPrefix(relPath, "/") {
 		// make sure it's a relative path
@@ -595,6 +610,54 @@ func (c *Client) NewfileUploadRequest(relPath, paramName, filename string) (*htt
 		return nil, err
 	}
 	if _, err = io.Copy(part, file); err != nil {
+		return nil, err
+	}
+
+	err = writer.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", uri, body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("User-Agent", UserAgent)
+
+	c.makeSignature(req)
+
+	return req, nil
+}
+
+// NewUploadFromReaderRequest creates a new file upload http request from an io.Reader
+func (c *Client) NewUploadFromReaderRequest(relPath, paramName, filename string, reader io.Reader) (*http.Request, error) {
+	if strings.HasPrefix(relPath, "/") {
+		// make sure it's a relative path
+		relPath = strings.TrimLeft(relPath, "/")
+	}
+
+	relPath = path.Join("api/v2", relPath)
+
+	rel, err := url.Parse(relPath)
+	if err != nil {
+		return nil, err
+	}
+
+	// Make the full url based on the relative path
+	u := c.baseURL.ResolveReference(rel)
+	uri := u.String()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	part, err := writer.CreateFormFile(paramName, filepath.Base(filename))
+	if err != nil {
+		return nil, err
+	}
+	if _, err = io.Copy(part, reader); err != nil {
 		return nil, err
 	}
 

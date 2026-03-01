@@ -1,0 +1,8 @@
+{
+    "request_id": "mock_request_id",
+    "error": "",
+    "message": "",
+    "response": {
+        "is_block": false
+    }
+}

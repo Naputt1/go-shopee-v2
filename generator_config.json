@@ -18,7 +18,9 @@
     "ShopCategory": { "file_name": "shop_category.go" },
     "Returns": { "file_name": "returns.go" },
     "AccountHealth": { "file_name": "account_health.go" },
-    "Ads": { "file_name": "ads.go" },
+    "Ads": {
+      "file_name": "ads.go"
+    },
     "Public": { 
       "file_name": "public.go",
       "ignore_apis": [
@@ -29,12 +31,12 @@
     "Push": { "file_name": "push.go" },
     "SBS": { "file_name": "sbs.go" },
     "FBS": { "file_name": "fbs.go" },
-    "Livestream": { "file_name": "livestream.go" }
+    "Livestream": { "file_name": "livestream.go" },
+    "Media": { "file_name": "media.go" },
+    "MediaSpace": { "file_name": "media_space.go" }
   },
   "static_modules": {
     "Auth": { "file_name": "auth.go" },
-    "Media": { "file_name": "media_space.go" },
-    "MediaSpace": { "file_name": "media_space.go" },
     "Util": { "file_name": "utils.go" }
   },
   "type_overrides": {
