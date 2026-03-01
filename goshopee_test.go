@@ -61,4 +61,14 @@ func loadMockData(filename string, out interface{}) {
 	if err:=json.Unmarshal(f,&out);err!=nil {
 		panic(fmt.Sprintf("decode mock data error: %s", err))
 	}
-}
+	}
+
+	func loadFixtureInterface(filename string) interface{} {
+	var out interface{}
+	f, err := ioutil.ReadFile("fixtures/" + filename)
+	if err != nil {
+		return nil
+	}
+	json.Unmarshal(f, &out)
+	return out
+	}

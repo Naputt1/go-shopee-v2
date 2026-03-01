@@ -1,179 +1,458 @@
+// Code generated. DO NOT EDIT.
 package goshopee
 
 type LogisticsService interface {
-	GetChannelList(uint64, string) (*GetChannelListResponse, error)
-	GetShippingParameter(uint64, string,string) (*GetShippingParameterResponse, error)
-	ShipOrder(uint64, ShipOrderRequest, string) (*ShipOrderResponse, error)
+	// GetShippingParameter Use this api to get the parameter "info_needed" from the response to check if the order has pickup or dropoff or no integrate options. This api will also return the addresses and pickup time id options for the pickup method. For dropoff, it can return branch id, sender real name etc, depending on the 3PL requirements. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_parameter?module=95&type=1
+	GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error)
+	// GetMassShippingParameter Use this api to get parameter "info_needed" from response to check if order has pickup or dropoff or no integrate options. For pickup, will also return addresses and pickup time options. For dropoff, will also return branch id, sender real name etc, depending on 3PL requirements. Can only batch request for multiple packages under same product_location_id and logistics_channel_id. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+	// https://open.shopee.com/documents/v2/v2.logistics.get_mass_shipping_parameter?module=95&type=1
+	GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error)
+	// ShipOrder Use this api to initiate logistics including arrange pickup, dropoff or shipment for non-integrated logistic channels. Should call v2.logistics.get_shipping_parameter to fetch all required param first. It's recommended to initiate logistics one hour after the orders were placed.
+	// https://open.shopee.com/documents/v2/v2.logistics.ship_order?module=95&type=1
+	ShipOrder(sid uint64, req ShipOrderRequest, tok string) (*ShipOrderResponse, error)
+	// MassShipOrder Use this api to initiate logistics including arrange pickup, dropoff or shipment for non-integrated logistic channels. Should call v2.logistics.get_mass_shipping_parameter to fetch all required params first. It's recommended to initiate logistics one hour after the orders were placed since there is one-hour window buyer can cancel any order without request to seller. The API can only batch arrange shipment for multiple packages under the same product_location_id and same logistics_channel_id.
+	// https://open.shopee.com/documents/v2/v2.logistics.mass_ship_order?module=95&type=1
+	MassShipOrder(sid uint64, req MassShipOrderRequest, tok string) (*MassShipOrderResponse, error)
+	// UpdateShippingOrder For pickup method only, use this api to update pickup address and pickup time for orders in "RETRY_SHIP" status.
+	//
+	// https://open.shopee.com/documents/v2/v2.logistics.update_shipping_order?module=95&type=1
+	UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error)
+	// GetTrackingNumber After arranging shipment (v2.logistics.ship_order) for the integrated channel, use this api to get the tracking_number, which is a required parameter for creating shipping labels. The api response can return tracking_number empty, since this info is dependent from the 3PL, due to this it is allowed to keep calling the api within 5 minutes interval, until the tracking_number is returned.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_tracking_number?module=95&type=1
+	GetTrackingNumber(sid uint64, opt GetTrackingNumberRequest, tok string) (*GetTrackingNumberResponse, error)
+	// GetMassTrackingNumber After arranging shipment (v2.logistics.mass_ship_order) for the integrated channel, use this api to get the tracking_number, which is a required parameter for creating shipping labels. The api response can return tracking_number empty, since this info is dependent from the 3PL, due to this it is allowed to keep calling the api within 5 minutes interval, until the tracking_number is returned.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_mass_tracking_number?module=95&type=1
+	GetMassTrackingNumber(sid uint64, req GetMassTrackingNumberRequest, tok string) (*GetMassTrackingNumberResponse, error)
+	// GetShippingDocumentParameter Use this api to get the selectable shipping_document_type and suggested shipping_document_type.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_parameter?module=95&type=1
+	GetShippingDocumentParameter(sid uint64, req GetShippingDocumentParameterRequest, tok string) (*GetShippingDocumentParameterResponse, error)
+	// CreateShippingDocument Use this api to create shipping document task for each order or package and this API is only available after retrieving the tracking number.
+	// https://open.shopee.com/documents/v2/v2.logistics.create_shipping_document?module=95&type=1
+	CreateShippingDocument(sid uint64, req CreateShippingDocumentRequest, tok string) (*CreateShippingDocumentResponse, error)
+	// GetShippingDocumentResult Use this api to retrieve the status of the shipping document task. Document will be available for download only after the status change to 'READY'.
+	//
+	//
+	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_result?module=95&type=1
+	GetShippingDocumentResult(sid uint64, req GetShippingDocumentResultRequest, tok string) (*GetShippingDocumentResultResponse, error)
+	// DownloadShippingDocument Use this api to download shipping_document. You have to call v2.logistics.create_shipping_document to create a new shipping document task first and call v2.logistics.get_shipping_document_resut to get the task status second. If the task is READY, you can download this shipping document.
+	// https://open.shopee.com/documents/v2/v2.logistics.download_shipping_document?module=95&type=1
+	DownloadShippingDocument(sid uint64, req DownloadShippingDocumentRequest, tok string) (*DownloadShippingDocumentResponse, error)
+	// GetShippingDocumentDataInfo Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_data_info?module=95&type=1
+	GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error)
+	// GetTrackingInfo Use this api to get the logistics tracking information of an order.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_tracking_info?module=95&type=1
+	GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error)
+	// GetAddressList For integrated logistics channel, use this call to get pickup address for pickup mode order.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_address_list?module=95&type=1
+	GetAddressList(sid uint64, tok string) (*GetAddressListResponse, error)
+	// SetAddressConfig Use this API to set address config of your shop.
+	// https://open.shopee.com/documents/v2/v2.logistics.set_address_config?module=95&type=1
+	SetAddressConfig(sid uint64, req SetAddressConfigRequest, tok string) (*SetAddressConfigResponse, error)
+	// UpdateAddress Use this API to update the address of a shop.
+	// https://open.shopee.com/documents/v2/v2.logistics.update_address?module=95&type=1
+	UpdateAddress(sid uint64, req UpdateAddressRequest, tok string) (*UpdateAddressResponse, error)
+	// DeleteAddress Use this api to delete address.
+	// https://open.shopee.com/documents/v2/v2.logistics.delete_address?module=95&type=1
+	DeleteAddress(sid uint64, req DeleteAddressRequest, tok string) (*DeleteAddressResponse, error)
+	// GetChannelList Use this api to get all supported logistic channels.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_channel_list?module=95&type=1
+	GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error)
+	// UpdateChannel Use this api to update shop level logistics channel's configuration.
+	// https://open.shopee.com/documents/v2/v2.logistics.update_channel?module=95&type=1
+	UpdateChannel(sid uint64, req UpdateChannelRequest, tok string) (*UpdateChannelResponse, error)
+	// GetOperatingHours This API is utilized to retrieve the existing operating hours of sellers including Pickup Operating Hours,  Special Hours, Instant Operating Hours, and Shop Collection Operating Hours.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_operating_hours?module=95&type=1
+	GetOperatingHours(sid uint64, tok string) (*GetOperatingHoursResponse, error)
+	// GetOperatingHourRestrictions This API is designed to retrieve all restrictions related to inputting operating hours for the v2.logistics.update_operating_hours function. This API ensures that user are aware of any limitations or conditions that may affect their operating hours.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_operating_hour_restrictions?module=95&type=1
+	GetOperatingHourRestrictions(sid uint64, tok string) (*GetOperatingHourRestrictionsResponse, error)
+	// UpdateOperatingHours This API is designed to allow sellers to update their operating hours. It is essential that the values provided in this API align with the restrictions retrieved from the v2.logistics.get_operating_hour_restrictions API to ensure compliance with platform requirements. This API uses overwriting updates, when updating pickup operating hours, still need to include all parts even those not needing changes.
+	// https://open.shopee.com/documents/v2/v2.logistics.update_operating_hours?module=95&type=1
+	UpdateOperatingHours(sid uint64, req UpdateOperatingHoursRequest, tok string) (*UpdateOperatingHoursResponse, error)
+	// DeleteSpecialOperatingHour This API is used to delete a specific special operating hour for a seller. This API allows sellers to manage their operating hours by removing any special operating hours that are no longer needed. To use this API, the name of the special operating hour to be deleted should be obtained from the v2.logistics.get_operating_hours API.
+	// https://open.shopee.com/documents/v2/v2.logistics.delete_special_operating_hour?module=95&type=1
+	DeleteSpecialOperatingHour(sid uint64, req DeleteSpecialOperatingHourRequest, tok string) (*DeleteSpecialOperatingHourResponse, error)
+	// BatchUpdateTpfWarehouseTrackingStatus For CB orders that fulfilled by 3PF, support 3PF Warehouse Vendors to update the tpf_tracking_status when 3PF warehouse receive the order and complete the outbound of the package.
+	// CB orders that fulfilled by 3PF：
+	// v2.shop.get_shop_info  - shop_fulfillment_flag in {Pure - 3PF Shop,PFF - 3PF Shop,LFF Hybrid Shop}
+	// And
+	// v2.order.get_order_detail -  fulfillment_flag = fulfilled_by_local_seller
+	// https://open.shopee.com/documents/v2/v2.logistics.batch_update_tpf_warehouse_tracking_status?module=95&type=1
+	BatchUpdateTpfWarehouseTrackingStatus(sid uint64, req BatchUpdateTpfWarehouseTrackingStatusRequest, tok string) (*BatchUpdateTpfWarehouseTrackingStatusResponse, error)
+	// BatchShipOrder Use this api to batch initiate logistics including arrange pickup, dropoff or shipment for non-integrated logistic channels. Should call v2.logistics.get_shipping_parameter to fetch all required param first. It's recommended to initiate logistics one hour after the orders were placed since there is one-hour window buyer can cancel any order without request to seller.Only channel 90003 - Padrão in Brazil has the permission of this API.
+	//
+	//
+	// https://open.shopee.com/documents/v2/v2.logistics.batch_ship_order?module=95&type=1
+	BatchShipOrder(sid uint64, req BatchShipOrderRequest, tok string) (*BatchShipOrderResponse, error)
+	// UpdateTrackingStatus Only available for Brazil sellers. This API is only available for orders/parcels which are fulfilled by BR Seller Logistics channel (logistics_channel_id: 90021), Samsung (logistics_channel_id: 90025) and BR Instant Delivery channel (logistics_channel_id: 90026). The logistics_status will become LOGISTICS_REQUEST_CREATED after arrange shipment, and can call this API to update to: LOGISTICS_PICKUP_DONE, LOGISTICS_DELIVERY_DONE, LOGISTICS_DELIVERY_FAILED.
+	// https://open.shopee.com/documents/v2/v2.logistics.update_tracking_status?module=95&type=1
+	UpdateTrackingStatus(sid uint64, req UpdateTrackingStatusRequest, tok string) (*UpdateTrackingStatusResponse, error)
+	// GetBookingShippingParameter Use this api to get the parameter "info_needed" from the response to check if the booking has pickup or dropoff. This api will also return the addresses and pickup time id options for the pickup method. For dropoff, it can return branch id, sender real name etc, depending on the 3PL requirements.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_parameter?module=95&type=1
+	GetBookingShippingParameter(sid uint64, opt GetBookingShippingParameterRequest, tok string) (*GetBookingShippingParameterResponse, error)
+	// ShipBooking Use this api to initiate logistics including arrange pickup, dropoff. Should call v2.logistics.get_booking_shipping_parameter to fetch all required param first.
+	// https://open.shopee.com/documents/v2/v2.logistics.ship_booking?module=95&type=1
+	ShipBooking(sid uint64, req ShipBookingRequest, tok string) (*ShipBookingResponse, error)
+	// GetBookingTrackingNumber After arranging shipment (v2.logistics.ship_booking) for the integrated channel, use this api to get the tracking_number, which is a required parameter for creating shipping labels. The api response can return tracking_number empty, since this info is dependent from the 3PL, due to this it is allowed to keep calling the api within 5 minutes interval, until the tracking_number is returned.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_tracking_number?module=95&type=1
+	GetBookingTrackingNumber(sid uint64, opt GetBookingTrackingNumberRequest, tok string) (*GetBookingTrackingNumberResponse, error)
+	// GetBookingShippingDocumentParameter Use this api to get the selectable shipping_document_type and suggested shipping_document_type.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_document_parameter?module=95&type=1
+	GetBookingShippingDocumentParameter(sid uint64, req GetBookingShippingDocumentParameterRequest, tok string) (*GetBookingShippingDocumentParameterResponse, error)
+	// CreateBookingShippingDocument Use this api to create shipping document task for each booking and this API is only available after retrieving the tracking number.
+	// https://open.shopee.com/documents/v2/v2.logistics.create_booking_shipping_document?module=95&type=1
+	CreateBookingShippingDocument(sid uint64, req CreateBookingShippingDocumentRequest, tok string) (*CreateBookingShippingDocumentResponse, error)
+	// GetBookingShippingDocumentResult Use this api to retrieve the status of the shipping document task. Document will be available for download only after the status change to 'READY'.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_document_result?module=95&type=1
+	GetBookingShippingDocumentResult(sid uint64, req GetBookingShippingDocumentResultRequest, tok string) (*GetBookingShippingDocumentResultResponse, error)
+	// DownloadBookingShippingDocument Use this api to download shipping_document. You have to call v2.logistics.create_booking_shipping_document to create a new shipping document task first and call v2.logistics.get_booking_shipping_document_result to get the task status second. If the task is READY, you can download this shipping document.
+	// https://open.shopee.com/documents/v2/v2.logistics.download_booking_shipping_document?module=95&type=1
+	DownloadBookingShippingDocument(sid uint64, req DownloadBookingShippingDocumentRequest, tok string) (*DownloadBookingShippingDocumentResponse, error)
+	// GetBookingShippingDocumentDataInfo Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_document_data_info?module=95&type=1
+	GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error)
+	// GetBookingTrackingInfo Use this api to get the logistics tracking information of a booking.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_tracking_info?module=95&type=1
+	GetBookingTrackingInfo(sid uint64, opt GetBookingTrackingInfoRequest, tok string) (*GetBookingTrackingInfoResponse, error)
+	// DownloadToLabel Use the API to download the TO label that should be attached to the carton before drop-off at the warehouse (Only for TW channel_id:30029).
+	// https://open.shopee.com/documents/v2/v2.logistics.download_to_label?module=95&type=1
+	DownloadToLabel(sid uint64, req DownloadToLabelRequest, tok string) (*DownloadToLabelResponse, error)
+	// CreateShippingDocumentJob This API creates a shipping document job for selected documents. The system receives requests and returns a job ID along with success and failure details.
+	// https://open.shopee.com/documents/v2/v2.logistics.create_shipping_document_job?module=95&type=1
+	CreateShippingDocumentJob(sid uint64, req CreateShippingDocumentJobRequest, tok string) (*CreateShippingDocumentJobResponse, error)
+	// GetShippingDocumentJobStatus This API retrieves the status of a shipping document job using the job ID provided.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_job_status?module=95&type=1
+	GetShippingDocumentJobStatus(sid uint64, req GetShippingDocumentJobStatusRequest, tok string) (*GetShippingDocumentJobStatusResponse, error)
+	// DownloadShippingDocumentJob This API allows users to download the shipping document associated with a specific job ID. It checks the job status before proceeding with the download.
+	// https://open.shopee.com/documents/v2/v2.logistics.download_shipping_document_job?module=95&type=1
+	DownloadShippingDocumentJob(sid uint64, req DownloadShippingDocumentJobRequest, tok string) (*DownloadShippingDocumentJobResponse, error)
+	// UpdateSelfCollectionOrderLogistics Use this api to update the order status for buyer to collect the orders directly from your pharmacy. This includes indicating that order is ready for collection, and that the order has been picked up by the buyer. You should call v2.logistics.get_order_detail or v2.logistics.get_package_detail first to get the package_number of such orders.
+	// https://open.shopee.com/documents/v2/v2.logistics.update_self_collection_order_logistics?module=95&type=1
+	UpdateSelfCollectionOrderLogistics(sid uint64, req UpdateSelfCollectionOrderLogisticsRequest, tok string) (*UpdateSelfCollectionOrderLogisticsResponse, error)
+	// GetMartPackagingInfo [Only for ID mart seller] The API allows sellers to retrieve their current packaging fee settings.
+	// https://open.shopee.com/documents/v2/v2.logistics.get_mart_packaging_info?module=95&type=1
+	GetMartPackagingInfo(sid uint64, tok string) (*GetMartPackagingInfoResponse, error)
+	// SetMartPackagingInfo [Only for ID mart seller] This API allows sellers to set up their packaging fee info. Through this API, sellers can enable or disable packaging fees, and if enabled, specify the dimensions of the packaging and the associated fee. This ensures that sellers can configure their shipping costs accurately based on their packaging requirements.
+	// https://open.shopee.com/documents/v2/v2.logistics.set_mart_packaging_info?module=95&type=1
+	SetMartPackagingInfo(sid uint64, req SetMartPackagingInfoRequest, tok string) (*SetMartPackagingInfoResponse, error)
+	// UploadServiceablePolygon Only available for Brazil sellers. Use this API to upload KML file for shop level serviceability setting for BR Entrega Turbo channel (Channel ID: 90026). Please note that multiple Outlet Shops under the same Mart Shop cannot have overlapping service areas.
+	// https://open.shopee.com/documents/v2/v2.logistics.upload_serviceable_polygon?module=95&type=1
+	UploadServiceablePolygon(sid uint64, req UploadServiceablePolygonRequest, tok string) (*UploadServiceablePolygonResponse, error)
+	// CheckPolygonUpdateStatus Only available for Brazil sellers. Use this API to check the status of polygon file uploaded for BR Entrega Turbo channel (Channel ID: 90026) by querying the task_id returned via the v2.logistics.upload_serviceable_polygon.
+	// https://open.shopee.com/documents/v2/v2.logistics.check_polygon_update_status?module=95&type=1
+	CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error)
 }
 
-type LogisticsServiceOp struct{
+type LogisticsServiceOp struct {
 	client *Client
 }
 
-// https://open.shopee.com/documents?module=95&type=1&id=559&version=2
-type GetChannelListResponse struct {
-	BaseResponse
-
-	Response GetChannelListResponseData `json:"response"`
-}
-
-type GetChannelListResponseData struct {
-	LogisticsChannelList []LogisticsChannel `json:"logistics_channel_list"` // TODO: infact is logistics_channel_list ?
-}
-
-type LogisticsChannel struct {
-	LogisticsChannelID uint64 `json:"logistics_channel_id"`
-	LogisticsChannelName string `json:"logistics_channel_name"`
-	CODEnabled bool `json:"cod_enabled"`
-	Enabled bool `json:"enabled"`
-	FeeType string `json:"fee_type"`
-	SizeList []Size `json:"size_list"`
-	WeightLimit WeightLimit `json:"weight_limit"`
-	ItemMaxDimension ItemMaxDimension `json:"item_max_dimension"`
-	Preferred bool `json:"preferred"`
-	ForceEnabled bool `json:"force_enabled"` // TODO: infact in list
-	MaskChannelID uint64 `json:"mask_channel_id"` // TODO: infact no?
-	LogisticsDescription string `json:"logistics_description"` // TODO: infact no?
-	VolumeLimit VolumeLimit `json:"volume_limit"`
-}
-
-type Size struct {
-	SizeID string `json:"size_id"`
-	Name string `json:"name"`
-	DefaultPrice float64 `json:"default_price"`
-}
-
-type WeightLimit struct {
-	ItemMaxWeight float64 `json:"item_max_weight"`
-	ItemMinWeight float64 `json:"item_min_weight"`
-}
-
-type ItemMaxDimension struct {
-	Height float64 `json:"height"`
-	Width float64 `json:"width"`
-	Length float64 `json:"length"`
-	Unit string `json:"unit"`
-}
-
-type VolumeLimit struct {
-	ItemMaxVolume float64 `json:"item_max_volume"`
-	ItemMinVolume float64 `json:"item_min_volume"`
-}
-
-func (s *LogisticsServiceOp)GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error){
-	path := "/logistics/get_channel_list"
-
-	resp := new(GetChannelListResponse)
-	err := s.client.WithShop(sid,tok).Get(path, resp, nil)
-	return resp, err
-}
-
-type GetShippingParameterRequest struct {
-	OrderSN string `url:"order_sn"`
-}
-
-type GetShippingParameterResponse struct {
-	BaseResponse
-
-	Response GetShippingParameterResponseData `json:"response"`
-}
-
-type GetShippingParameterResponseData struct {
-	InfoNeeded GetShippingParameterResponseDataInfo `json:"info_needed"`
-	Dropoff Dropoff `json:"dropoff"`
-	Pickup Pickup `json:"pickup"`
-}
-
-type Pickup struct {
-	AddressList []LogisticsAddress `json:"address_list"`
-}
-
-type LogisticsAddress struct {
-	AddressID uint64 `json:"address_id"`
-	Region string `json:"region"`
-	State string `json:"state"`
-	City string `json:"city"`
-	Address string `json:"address"`
-	Zipcode string `json:"zipcode"`
-	District string `json:"district"`
-	Town string `json:"town"`
-	AddressFlag []string `json:"address_flag"`
-	TimeSlotList []TimeSlot `json:"time_slot_list"`
-}
-
-type TimeSlot struct {
-	Date int64 `json:"date"`
-	TimeText string `json:"time_text"`
-	PickupTimeID string `json:"pickup_time_id"`
-}
-
-type Dropoff struct {
-	BranchList []Branch `json:"branch_list"`
-}
-
-type Branch struct {
-	BranchID uint64 `json:"branch_id"`
-	Region string `json:"region"`
-	State string `json:"state"`
-	City string `json:"city"`
-	Address string `json:"address"`
-	Zipcode string `json:"zipcode"`
-	District string `json:"district"`
-	Town string `json:"town"`
-}
-
-type GetShippingParameterResponseDataInfo struct {
-	Dropoff []string `json:"dropoff"`
-	Pickup []string `json:"pickup"`
-	NonIntegrated []string `json:"non_integrated"`
-}
-
-func (s *LogisticsServiceOp)GetShippingParameter(sid uint64, ordersn, tok string) (*GetShippingParameterResponse, error){
+func (s *LogisticsServiceOp) GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error) {
 	path := "/logistics/get_shipping_parameter"
-	opt:=GetShippingParameterRequest{
-		OrderSN: ordersn,
-	}
-
 	resp := new(GetShippingParameterResponse)
-	err := s.client.WithShop(sid,tok).Get(path, resp, opt)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-type ShipOrderRequest struct {
-	OrderSN string `json:"order_sn"`
-	PackageNumber string `json:"package_number"`
-	Pickup *ShipOrderRequestPickup `json:"pickup,omitempty"`
-	Dropoff *ShipOrderRequestDropoff `json:"dropoff,omitempty"`
-	NonIntegrated *ShipOrderRequestNonIntegrated `json:"non_integrated,omitempty"`
+func (s *LogisticsServiceOp) GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error) {
+	path := "/logistics/get_mass_shipping_parameter"
+	resp := new(GetMassShippingParameterResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
 }
 
-type ShipOrderRequestNonIntegrated struct {
-	TrackingNumber string `json:"tracking_number"`
-}
-
-type ShipOrderRequestDropoff struct {
-	BranchID uint64 `json:"branch_id"`
-	SenderRealName string `json:"sender_real_name"`
-	TrackingNumber string `json:"tracking_number"`
-}
-
-type ShipOrderRequestPickup struct {
-	AddressID uint64 `json:"address_id"`
-	PickupTimeID string `json:"pickup_time_id"`
-	TrackingNumber string `json:"tracking_number"`
-}
-
-type ShipOrderResponse struct {
-	BaseResponse
-}
-
-func (s *LogisticsServiceOp)ShipOrder(sid uint64, data ShipOrderRequest, tok string)(*ShipOrderResponse,error){
+func (s *LogisticsServiceOp) ShipOrder(sid uint64, req ShipOrderRequest, tok string) (*ShipOrderResponse, error) {
 	path := "/logistics/ship_order"
 	resp := new(ShipOrderResponse)
-	req,err:=StructToMap(data)
-	if err!=nil {
-		return nil,err
-	}
-	err = s.client.WithShop(sid,tok).Post(path, req, resp)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) MassShipOrder(sid uint64, req MassShipOrderRequest, tok string) (*MassShipOrderResponse, error) {
+	path := "/logistics/mass_ship_order"
+	resp := new(MassShipOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error) {
+	path := "/logistics/update_shipping_order"
+	resp := new(UpdateShippingOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetTrackingNumber(sid uint64, opt GetTrackingNumberRequest, tok string) (*GetTrackingNumberResponse, error) {
+	path := "/logistics/get_tracking_number"
+	resp := new(GetTrackingNumberResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetMassTrackingNumber(sid uint64, req GetMassTrackingNumberRequest, tok string) (*GetMassTrackingNumberResponse, error) {
+	path := "/logistics/get_mass_tracking_number"
+	resp := new(GetMassTrackingNumberResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetShippingDocumentParameter(sid uint64, req GetShippingDocumentParameterRequest, tok string) (*GetShippingDocumentParameterResponse, error) {
+	path := "/logistics/get_shipping_document_parameter"
+	resp := new(GetShippingDocumentParameterResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) CreateShippingDocument(sid uint64, req CreateShippingDocumentRequest, tok string) (*CreateShippingDocumentResponse, error) {
+	path := "/logistics/create_shipping_document"
+	resp := new(CreateShippingDocumentResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetShippingDocumentResult(sid uint64, req GetShippingDocumentResultRequest, tok string) (*GetShippingDocumentResultResponse, error) {
+	path := "/logistics/get_shipping_document_result"
+	resp := new(GetShippingDocumentResultResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DownloadShippingDocument(sid uint64, req DownloadShippingDocumentRequest, tok string) (*DownloadShippingDocumentResponse, error) {
+	path := "/logistics/download_shipping_document"
+	resp := new(DownloadShippingDocumentResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error) {
+	path := "/logistics/get_shipping_document_data_info"
+	resp := new(GetShippingDocumentDataInfoResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error) {
+	path := "/logistics/get_tracking_info"
+	resp := new(GetTrackingInfoResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetAddressList(sid uint64, tok string) (*GetAddressListResponse, error) {
+	path := "/logistics/get_address_list"
+	resp := new(GetAddressListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) SetAddressConfig(sid uint64, req SetAddressConfigRequest, tok string) (*SetAddressConfigResponse, error) {
+	path := "/logistics/set_address_config"
+	resp := new(SetAddressConfigResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateAddress(sid uint64, req UpdateAddressRequest, tok string) (*UpdateAddressResponse, error) {
+	path := "/logistics/update_address"
+	resp := new(UpdateAddressResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DeleteAddress(sid uint64, req DeleteAddressRequest, tok string) (*DeleteAddressResponse, error) {
+	path := "/logistics/delete_address"
+	resp := new(DeleteAddressResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error) {
+	path := "/logistics/get_channel_list"
+	resp := new(GetChannelListResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateChannel(sid uint64, req UpdateChannelRequest, tok string) (*UpdateChannelResponse, error) {
+	path := "/logistics/update_channel"
+	resp := new(UpdateChannelResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetOperatingHours(sid uint64, tok string) (*GetOperatingHoursResponse, error) {
+	path := "/logistics/get_operating_hours"
+	resp := new(GetOperatingHoursResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetOperatingHourRestrictions(sid uint64, tok string) (*GetOperatingHourRestrictionsResponse, error) {
+	path := "/logistics/get_operating_hour_restrictions"
+	resp := new(GetOperatingHourRestrictionsResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateOperatingHours(sid uint64, req UpdateOperatingHoursRequest, tok string) (*UpdateOperatingHoursResponse, error) {
+	path := "/logistics/update_operating_hours"
+	resp := new(UpdateOperatingHoursResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DeleteSpecialOperatingHour(sid uint64, req DeleteSpecialOperatingHourRequest, tok string) (*DeleteSpecialOperatingHourResponse, error) {
+	path := "/logistics/delete_special_operating_hour"
+	resp := new(DeleteSpecialOperatingHourResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) BatchUpdateTpfWarehouseTrackingStatus(sid uint64, req BatchUpdateTpfWarehouseTrackingStatusRequest, tok string) (*BatchUpdateTpfWarehouseTrackingStatusResponse, error) {
+	path := "/logistics/batch_update_tpf_warehouse_tracking_status"
+	resp := new(BatchUpdateTpfWarehouseTrackingStatusResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) BatchShipOrder(sid uint64, req BatchShipOrderRequest, tok string) (*BatchShipOrderResponse, error) {
+	path := "/logistics/batch_ship_order"
+	resp := new(BatchShipOrderResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateTrackingStatus(sid uint64, req UpdateTrackingStatusRequest, tok string) (*UpdateTrackingStatusResponse, error) {
+	path := "/logistics/update_tracking_status"
+	resp := new(UpdateTrackingStatusResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingShippingParameter(sid uint64, opt GetBookingShippingParameterRequest, tok string) (*GetBookingShippingParameterResponse, error) {
+	path := "/logistics/get_booking_shipping_parameter"
+	resp := new(GetBookingShippingParameterResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) ShipBooking(sid uint64, req ShipBookingRequest, tok string) (*ShipBookingResponse, error) {
+	path := "/logistics/ship_booking"
+	resp := new(ShipBookingResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingTrackingNumber(sid uint64, opt GetBookingTrackingNumberRequest, tok string) (*GetBookingTrackingNumberResponse, error) {
+	path := "/logistics/get_booking_tracking_number"
+	resp := new(GetBookingTrackingNumberResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingShippingDocumentParameter(sid uint64, req GetBookingShippingDocumentParameterRequest, tok string) (*GetBookingShippingDocumentParameterResponse, error) {
+	path := "/logistics/get_booking_shipping_document_parameter"
+	resp := new(GetBookingShippingDocumentParameterResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) CreateBookingShippingDocument(sid uint64, req CreateBookingShippingDocumentRequest, tok string) (*CreateBookingShippingDocumentResponse, error) {
+	path := "/logistics/create_booking_shipping_document"
+	resp := new(CreateBookingShippingDocumentResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingShippingDocumentResult(sid uint64, req GetBookingShippingDocumentResultRequest, tok string) (*GetBookingShippingDocumentResultResponse, error) {
+	path := "/logistics/get_booking_shipping_document_result"
+	resp := new(GetBookingShippingDocumentResultResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DownloadBookingShippingDocument(sid uint64, req DownloadBookingShippingDocumentRequest, tok string) (*DownloadBookingShippingDocumentResponse, error) {
+	path := "/logistics/download_booking_shipping_document"
+	resp := new(DownloadBookingShippingDocumentResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error) {
+	path := "/logistics/get_booking_shipping_document_data_info"
+	resp := new(GetBookingShippingDocumentDataInfoResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetBookingTrackingInfo(sid uint64, opt GetBookingTrackingInfoRequest, tok string) (*GetBookingTrackingInfoResponse, error) {
+	path := "/logistics/get_booking_tracking_info"
+	resp := new(GetBookingTrackingInfoResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DownloadToLabel(sid uint64, req DownloadToLabelRequest, tok string) (*DownloadToLabelResponse, error) {
+	path := "/logistics/download_to_label"
+	resp := new(DownloadToLabelResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) CreateShippingDocumentJob(sid uint64, req CreateShippingDocumentJobRequest, tok string) (*CreateShippingDocumentJobResponse, error) {
+	path := "/logistics/create_shipping_document_job"
+	resp := new(CreateShippingDocumentJobResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetShippingDocumentJobStatus(sid uint64, req GetShippingDocumentJobStatusRequest, tok string) (*GetShippingDocumentJobStatusResponse, error) {
+	path := "/logistics/get_shipping_document_job_status"
+	resp := new(GetShippingDocumentJobStatusResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) DownloadShippingDocumentJob(sid uint64, req DownloadShippingDocumentJobRequest, tok string) (*DownloadShippingDocumentJobResponse, error) {
+	path := "/logistics/download_shipping_document_job"
+	resp := new(DownloadShippingDocumentJobResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UpdateSelfCollectionOrderLogistics(sid uint64, req UpdateSelfCollectionOrderLogisticsRequest, tok string) (*UpdateSelfCollectionOrderLogisticsResponse, error) {
+	path := "/logistics/update_self_collection_order_logistics"
+	resp := new(UpdateSelfCollectionOrderLogisticsResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) GetMartPackagingInfo(sid uint64, tok string) (*GetMartPackagingInfoResponse, error) {
+	path := "/logistics/get_mart_packaging_info"
+	resp := new(GetMartPackagingInfoResponse)
+	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) SetMartPackagingInfo(sid uint64, req SetMartPackagingInfoRequest, tok string) (*SetMartPackagingInfoResponse, error) {
+	path := "/logistics/set_mart_packaging_info"
+	resp := new(SetMartPackagingInfoResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) UploadServiceablePolygon(sid uint64, req UploadServiceablePolygonRequest, tok string) (*UploadServiceablePolygonResponse, error) {
+	path := "/logistics/upload_serviceable_polygon"
+	resp := new(UploadServiceablePolygonResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *LogisticsServiceOp) CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error) {
+	path := "/logistics/check_polygon_update_status"
+	resp := new(CheckPolygonUpdateStatusResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

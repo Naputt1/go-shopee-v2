@@ -1,0 +1,355 @@
+// Code generated. DO NOT EDIT.
+package goshopee
+
+type GlobalProductService interface {
+	// GetCategory Get global category. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_category?module=90&type=1
+	GetCategory(sid uint64, opt GlobalProductGetCategoryRequest, tok string) (*GlobalProductGetCategoryResponse, error)
+	// GetAttributeTree Get the mtsku attribute trees for categories
+	// https://open.shopee.com/documents/v2/v2.global_product.get_attribute_tree?module=90&type=1
+	GetAttributeTree(sid uint64, opt GlobalProductGetAttributeTreeRequest, tok string) (*GlobalProductGetAttributeTreeResponse, error)
+	// GetBrandList Use this call to get a list of brand. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_brand_list?module=90&type=1
+	GetBrandList(sid uint64, opt GlobalProductGetBrandListRequest, tok string) (*GlobalProductGetBrandListResponse, error)
+	// GetGlobalItemLimit Get global item upload control.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_global_item_limit?module=90&type=1
+	GetGlobalItemLimit(sid uint64, opt GetGlobalItemLimitRequest, tok string) (*GetGlobalItemLimitResponse, error)
+	// GetGlobalItemList Get global item id list. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_global_item_list?module=90&type=1
+	GetGlobalItemList(sid uint64, opt GetGlobalItemListRequest, tok string) (*GetGlobalItemListResponse, error)
+	// GetGlobalItemInfo Get global item info.Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_global_item_info?module=90&type=1
+	GetGlobalItemInfo(sid uint64, opt GetGlobalItemInfoRequest, tok string) (*GetGlobalItemInfoResponse, error)
+	// AddGlobalItem Add global item. Only for China mainland sellers using China Seller Centre(CNSC). More details in https://shopee.cn/cooperate/46/53/926.
+	// https://open.shopee.com/documents/v2/v2.global_product.add_global_item?module=90&type=1
+	AddGlobalItem(sid uint64, req AddGlobalItemRequest, tok string) (*AddGlobalItemResponse, error)
+	// UpdateGlobalItem Update global item. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.update_global_item?module=90&type=1
+	UpdateGlobalItem(sid uint64, req UpdateGlobalItemRequest, tok string) (*UpdateGlobalItemResponse, error)
+	// DeleteGlobalItem Delete global item. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.delete_global_item?module=90&type=1
+	DeleteGlobalItem(sid uint64, req DeleteGlobalItemRequest, tok string) (*DeleteGlobalItemResponse, error)
+	// InitTierVariation Only for China mainland sellers and Korean sellers. If you only define color, it is one tier, if you define color and size, it is two tier. Support two tier structures at most. This API can change no tier to one tier, no tier to two tier, one tier to two tier, two tier to one tier, one tier to no tier, two tier to no tier. Please create variants after an interval of 5 seconds after creating an item, as there may be a delay.
+	// https://open.shopee.com/documents/v2/v2.global_product.init_tier_variation?module=90&type=1
+	InitTierVariation(sid uint64, req GlobalProductInitTierVariationRequest, tok string) (*GlobalProductInitTierVariationResponse, error)
+	// UpdateTierVariation Update global product tier variation. Only for China mainland sellers and Korean sellers.This api can only be used without changing the tier structure, you can add options, delete options, and update the option image by this api.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.update_tier_variation?module=90&type=1
+	UpdateTierVariation(sid uint64, req GlobalProductUpdateTierVariationRequest, tok string) (*GlobalProductUpdateTierVariationResponse, error)
+	// AddGlobalModel Add global model. Only for China mainland sellers and Korean sellers.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.add_global_model?module=90&type=1
+	AddGlobalModel(sid uint64, req AddGlobalModelRequest, tok string) (*AddGlobalModelResponse, error)
+	// UpdateGlobalModel Update global model. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.update_global_model?module=90&type=1
+	UpdateGlobalModel(sid uint64, req UpdateGlobalModelRequest, tok string) (*UpdateGlobalModelResponse, error)
+	// DeleteGlobalModel Delete global model. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.delete_global_model?module=90&type=1
+	DeleteGlobalModel(sid uint64, req DeleteGlobalModelRequest, tok string) (*DeleteGlobalModelResponse, error)
+	// GetGlobalModelList Get global model list. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_global_model_list?module=90&type=1
+	GetGlobalModelList(sid uint64, opt GetGlobalModelListRequest, tok string) (*GetGlobalModelListResponse, error)
+	// SupportSizeChart Get category support size chart. Only for China mainland sellers and Korean sellers.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.support_size_chart?module=90&type=1
+	SupportSizeChart(sid uint64, opt SupportSizeChartRequest, tok string) (*SupportSizeChartResponse, error)
+	// UpdateSizeChart Update size chart for global item. Only for China mainland sellers and Korean sellers.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.update_size_chart?module=90&type=1
+	UpdateSizeChart(sid uint64, req UpdateSizeChartRequest, tok string) (*UpdateSizeChartResponse, error)
+	// CreatePublishTask Create publish task for global item. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.create_publish_task?module=90&type=1
+	CreatePublishTask(sid uint64, req CreatePublishTaskRequest, tok string) (*CreatePublishTaskResponse, error)
+	// GetPublishableShop Get publishable shop list for global item. Only for China mainland sellers and Korean sellers.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.get_publishable_shop?module=90&type=1
+	GetPublishableShop(sid uint64, opt GetPublishableShopRequest, tok string) (*GetPublishableShopResponse, error)
+	// GetPublishTaskResult Get publish task result for global item. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_publish_task_result?module=90&type=1
+	GetPublishTaskResult(sid uint64, opt GetPublishTaskResultRequest, tok string) (*GetPublishTaskResultResponse, error)
+	// GetPublishedList Get published item list of global item. Only for China mainland sellers and Korean sellers.
+	//
+	// https://open.shopee.com/documents/v2/v2.global_product.get_published_list?module=90&type=1
+	GetPublishedList(sid uint64, opt GetPublishedListRequest, tok string) (*GetPublishedListResponse, error)
+	// UpdatePrice Update global price. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.update_price?module=90&type=1
+	UpdatePrice(sid uint64, req GlobalProductUpdatePriceRequest, tok string) (*GlobalProductUpdatePriceResponse, error)
+	// UpdateStock Update global stock. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.update_stock?module=90&type=1
+	UpdateStock(sid uint64, req GlobalProductUpdateStockRequest, tok string) (*GlobalProductUpdateStockResponse, error)
+	// SetSyncField Set auto sync field. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.set_sync_field?module=90&type=1
+	SetSyncField(sid uint64, req SetSyncFieldRequest, tok string) (*SetSyncFieldResponse, error)
+	// GetGlobalItemId Get get_global_item_id by item_id. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_global_item_id?module=90&type=1
+	GetGlobalItemId(sid uint64, opt GetGlobalItemIdRequest, tok string) (*GetGlobalItemIdResponse, error)
+	// CategoryRecommend Recommend category by item name. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.category_recommend?module=90&type=1
+	CategoryRecommend(sid uint64, opt GlobalProductCategoryRecommendRequest, tok string) (*GlobalProductCategoryRecommendResponse, error)
+	// GetRecommendAttribute Get recommend attributes. Only for China mainland sellers and Korean sellers.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_recommend_attribute?module=90&type=1
+	GetRecommendAttribute(sid uint64, opt GlobalProductGetRecommendAttributeRequest, tok string) (*GlobalProductGetRecommendAttributeResponse, error)
+	// GetShopPublishableStatus Get publishable shop list for global item in pages.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_shop_publishable_status?module=90&type=1
+	GetShopPublishableStatus(sid uint64, opt GetShopPublishableStatusRequest, tok string) (*GetShopPublishableStatusResponse, error)
+	// GetVariations Get the standardized tier variation defined by Shopee, which is currently a three-layer tree structure. The top layer is variations, the second layer is groups, groups are used to divide options, and the third layer is options.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_variations?module=90&type=1
+	GetVariations(sid uint64, opt GlobalProductGetVariationsRequest, tok string) (*GlobalProductGetVariationsResponse, error)
+	// GetSizeChartDetail Get new size chart detail
+	// https://open.shopee.com/documents/v2/v2.global_product.get_size_chart_detail?module=90&type=1
+	GetSizeChartDetail(sid uint64, req GlobalProductGetSizeChartDetailRequest, tok string) (*GlobalProductGetSizeChartDetailResponse, error)
+	// GetSizeChartList Get size chat list
+	// https://open.shopee.com/documents/v2/v2.global_product.get_size_chart_list?module=90&type=1
+	GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error)
+	// SearchGlobalAttributeValueList this api is for searching attribute value list for attribute with support_search_value flag
+	// https://open.shopee.com/documents/v2/v2.global_product.search_global_attribute_value_list?module=90&type=1
+	SearchGlobalAttributeValueList(sid uint64, req SearchGlobalAttributeValueListRequest, tok string) (*SearchGlobalAttributeValueListResponse, error)
+	// GetLocalAdjustmentRate Retrieves the adjustment rate that converts CB stock price into local-warehouse price for a specific shop.
+	// https://open.shopee.com/documents/v2/v2.global_product.get_local_adjustment_rate?module=90&type=1
+	GetLocalAdjustmentRate(sid uint64, tok string) (*GetLocalAdjustmentRateResponse, error)
+	// UpdateLocalAdjustmentRate A multiplier that automatically converts your CB stock price into the local-warehouse price. It ensures your local inventory prices reflect regional costs, currency factors, and margin targets.
+	// https://open.shopee.com/documents/v2/v2.global_product.update_local_adjustment_rate?module=90&type=1
+	UpdateLocalAdjustmentRate(sid uint64, req UpdateLocalAdjustmentRateRequest, tok string) (*UpdateLocalAdjustmentRateResponse, error)
+}
+
+type GlobalProductServiceOp struct {
+	client *Client
+}
+
+func (s *GlobalProductServiceOp) GetCategory(sid uint64, opt GlobalProductGetCategoryRequest, tok string) (*GlobalProductGetCategoryResponse, error) {
+	path := "/global_product/get_category"
+	resp := new(GlobalProductGetCategoryResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetAttributeTree(sid uint64, opt GlobalProductGetAttributeTreeRequest, tok string) (*GlobalProductGetAttributeTreeResponse, error) {
+	path := "/global_product/get_attribute_tree"
+	resp := new(GlobalProductGetAttributeTreeResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetBrandList(sid uint64, opt GlobalProductGetBrandListRequest, tok string) (*GlobalProductGetBrandListResponse, error) {
+	path := "/global_product/get_brand_list"
+	resp := new(GlobalProductGetBrandListResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetGlobalItemLimit(sid uint64, opt GetGlobalItemLimitRequest, tok string) (*GetGlobalItemLimitResponse, error) {
+	path := "/global_product/get_global_item_limit"
+	resp := new(GetGlobalItemLimitResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetGlobalItemList(sid uint64, opt GetGlobalItemListRequest, tok string) (*GetGlobalItemListResponse, error) {
+	path := "/global_product/get_global_item_list"
+	resp := new(GetGlobalItemListResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetGlobalItemInfo(sid uint64, opt GetGlobalItemInfoRequest, tok string) (*GetGlobalItemInfoResponse, error) {
+	path := "/global_product/get_global_item_info"
+	resp := new(GetGlobalItemInfoResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) AddGlobalItem(sid uint64, req AddGlobalItemRequest, tok string) (*AddGlobalItemResponse, error) {
+	path := "/global_product/add_global_item"
+	resp := new(AddGlobalItemResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateGlobalItem(sid uint64, req UpdateGlobalItemRequest, tok string) (*UpdateGlobalItemResponse, error) {
+	path := "/global_product/update_global_item"
+	resp := new(UpdateGlobalItemResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) DeleteGlobalItem(sid uint64, req DeleteGlobalItemRequest, tok string) (*DeleteGlobalItemResponse, error) {
+	path := "/global_product/delete_global_item"
+	resp := new(DeleteGlobalItemResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) InitTierVariation(sid uint64, req GlobalProductInitTierVariationRequest, tok string) (*GlobalProductInitTierVariationResponse, error) {
+	path := "/global_product/init_tier_variation"
+	resp := new(GlobalProductInitTierVariationResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateTierVariation(sid uint64, req GlobalProductUpdateTierVariationRequest, tok string) (*GlobalProductUpdateTierVariationResponse, error) {
+	path := "/global_product/update_tier_variation"
+	resp := new(GlobalProductUpdateTierVariationResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) AddGlobalModel(sid uint64, req AddGlobalModelRequest, tok string) (*AddGlobalModelResponse, error) {
+	path := "/global_product/add_global_model"
+	resp := new(AddGlobalModelResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateGlobalModel(sid uint64, req UpdateGlobalModelRequest, tok string) (*UpdateGlobalModelResponse, error) {
+	path := "/global_product/update_global_model"
+	resp := new(UpdateGlobalModelResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) DeleteGlobalModel(sid uint64, req DeleteGlobalModelRequest, tok string) (*DeleteGlobalModelResponse, error) {
+	path := "/global_product/delete_global_model"
+	resp := new(DeleteGlobalModelResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetGlobalModelList(sid uint64, opt GetGlobalModelListRequest, tok string) (*GetGlobalModelListResponse, error) {
+	path := "/global_product/get_global_model_list"
+	resp := new(GetGlobalModelListResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) SupportSizeChart(sid uint64, opt SupportSizeChartRequest, tok string) (*SupportSizeChartResponse, error) {
+	path := "/global_product/support_size_chart"
+	resp := new(SupportSizeChartResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateSizeChart(sid uint64, req UpdateSizeChartRequest, tok string) (*UpdateSizeChartResponse, error) {
+	path := "/global_product/update_size_chart"
+	resp := new(UpdateSizeChartResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) CreatePublishTask(sid uint64, req CreatePublishTaskRequest, tok string) (*CreatePublishTaskResponse, error) {
+	path := "/global_product/create_publish_task"
+	resp := new(CreatePublishTaskResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetPublishableShop(sid uint64, opt GetPublishableShopRequest, tok string) (*GetPublishableShopResponse, error) {
+	path := "/global_product/get_publishable_shop"
+	resp := new(GetPublishableShopResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetPublishTaskResult(sid uint64, opt GetPublishTaskResultRequest, tok string) (*GetPublishTaskResultResponse, error) {
+	path := "/global_product/get_publish_task_result"
+	resp := new(GetPublishTaskResultResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetPublishedList(sid uint64, opt GetPublishedListRequest, tok string) (*GetPublishedListResponse, error) {
+	path := "/global_product/get_published_list"
+	resp := new(GetPublishedListResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdatePrice(sid uint64, req GlobalProductUpdatePriceRequest, tok string) (*GlobalProductUpdatePriceResponse, error) {
+	path := "/global_product/update_price"
+	resp := new(GlobalProductUpdatePriceResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateStock(sid uint64, req GlobalProductUpdateStockRequest, tok string) (*GlobalProductUpdateStockResponse, error) {
+	path := "/global_product/update_stock"
+	resp := new(GlobalProductUpdateStockResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) SetSyncField(sid uint64, req SetSyncFieldRequest, tok string) (*SetSyncFieldResponse, error) {
+	path := "/global_product/set_sync_field"
+	resp := new(SetSyncFieldResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetGlobalItemId(sid uint64, opt GetGlobalItemIdRequest, tok string) (*GetGlobalItemIdResponse, error) {
+	path := "/global_product/get_global_item_id"
+	resp := new(GetGlobalItemIdResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) CategoryRecommend(sid uint64, opt GlobalProductCategoryRecommendRequest, tok string) (*GlobalProductCategoryRecommendResponse, error) {
+	path := "/global_product/category_recommend"
+	resp := new(GlobalProductCategoryRecommendResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetRecommendAttribute(sid uint64, opt GlobalProductGetRecommendAttributeRequest, tok string) (*GlobalProductGetRecommendAttributeResponse, error) {
+	path := "/global_product/get_recommend_attribute"
+	resp := new(GlobalProductGetRecommendAttributeResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetShopPublishableStatus(sid uint64, opt GetShopPublishableStatusRequest, tok string) (*GetShopPublishableStatusResponse, error) {
+	path := "/global_product/get_shop_publishable_status"
+	resp := new(GetShopPublishableStatusResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetVariations(sid uint64, opt GlobalProductGetVariationsRequest, tok string) (*GlobalProductGetVariationsResponse, error) {
+	path := "/global_product/get_variations"
+	resp := new(GlobalProductGetVariationsResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetSizeChartDetail(sid uint64, req GlobalProductGetSizeChartDetailRequest, tok string) (*GlobalProductGetSizeChartDetailResponse, error) {
+	path := "/global_product/get_size_chart_detail"
+	resp := new(GlobalProductGetSizeChartDetailResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error) {
+	path := "/global_product/get_size_chart_list"
+	resp := new(GlobalProductGetSizeChartListResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) SearchGlobalAttributeValueList(sid uint64, req SearchGlobalAttributeValueListRequest, tok string) (*SearchGlobalAttributeValueListResponse, error) {
+	path := "/global_product/search_global_attribute_value_list"
+	resp := new(SearchGlobalAttributeValueListResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) GetLocalAdjustmentRate(sid uint64, tok string) (*GetLocalAdjustmentRateResponse, error) {
+	path := "/global_product/get_local_adjustment_rate"
+	resp := new(GetLocalAdjustmentRateResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
+	return resp, err
+}
+
+func (s *GlobalProductServiceOp) UpdateLocalAdjustmentRate(sid uint64, req UpdateLocalAdjustmentRateRequest, tok string) (*UpdateLocalAdjustmentRateResponse, error) {
+	path := "/global_product/update_local_adjustment_rate"
+	resp := new(UpdateLocalAdjustmentRateResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}

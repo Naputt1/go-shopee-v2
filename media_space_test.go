@@ -7,14 +7,14 @@ import (
 	"github.com/jarcoal/httpmock"
 )
 
-func Test_UploadImage(t *testing.T) {
+func Test_Media_UploadImage(t *testing.T) {
 	setup()
 	defer teardown()
 
 	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/media_space/upload_image",app.APIURL),
 		httpmock.NewBytesResponder(200, loadFixture("upload_image.json")))
 
-	res,err:=client.Media.UploadImage("fixtures/test.jpg")
+	res,err:=client.MediaSpace.UploadImage("fixtures/test.jpg")
 	if err!=nil {
 		t.Errorf("Media.UploadImage error: %s",err)
 	}

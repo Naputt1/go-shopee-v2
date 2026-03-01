@@ -68,15 +68,35 @@ type Client struct {
 	AccessToken string
 
 	// Services used for communicating with the API
-	Util      UtilService
-	Auth      AuthService
-	Media     MediaSpaceService
-	Product   ProductService
-	Logistics LogisticsService
-	Shop      ShopService
-	Discount  DiscountService
-	Order     OrderService
-	Merchant  MerchantService
+	// BEGIN GENERATED SERVICES
+	Util          UtilService
+	Auth          AuthService
+	MediaSpace    MediaSpaceService
+	Product       ProductService
+	GlobalProduct GlobalProductService
+	Shop          ShopService
+	Merchant      MerchantService
+	Order         OrderService
+	Logistics     LogisticsService
+	FirstMile     FirstMileService
+	Payment       PaymentService
+	Discount      DiscountService
+	BundleDeal    BundleDealService
+	AddOnDeal     AddOnDealService
+	Voucher       VoucherService
+	ShopFlashSale ShopFlashSaleService
+	FollowPrize   FollowPrizeService
+	TopPicks      TopPicksService
+	ShopCategory  ShopCategoryService
+	Returns       ReturnsService
+	AccountHealth AccountHealthService
+	Ads           AdsService
+	Public        PublicService
+	Push          PushService
+	SBS           SBSService
+	FBS           FBSService
+	Livestream    LivestreamService
+	// END GENERATED SERVICES
 }
 
 // NewClient returns a new Shopify API client with an already authenticated shopname and
@@ -96,15 +116,35 @@ func NewClient(app App, opts ...Option) *Client {
 		baseURL: baseURL,
 	}
 
+	// BEGIN GENERATED SERVICES INIT
 	c.Util = &UtilServiceOp{client: c}
 	c.Auth = &AuthServiceOp{client: c}
-	c.Media = &MediaSpaceServiceOp{client: c}
+	c.MediaSpace = &MediaSpaceServiceOp{client: c}
 	c.Product = &ProductServiceOp{client: c}
-	c.Logistics = &LogisticsServiceOp{client: c}
+	c.GlobalProduct = &GlobalProductServiceOp{client: c}
 	c.Shop = &ShopServiceOp{client: c}
-	c.Discount = &DiscountServiceOp{client: c}
-	c.Order = &OrderServiceOp{client: c}
 	c.Merchant = &MerchantServiceOp{client: c}
+	c.Order = &OrderServiceOp{client: c}
+	c.Logistics = &LogisticsServiceOp{client: c}
+	c.FirstMile = &FirstMileServiceOp{client: c}
+	c.Payment = &PaymentServiceOp{client: c}
+	c.Discount = &DiscountServiceOp{client: c}
+	c.BundleDeal = &BundleDealServiceOp{client: c}
+	c.AddOnDeal = &AddOnDealServiceOp{client: c}
+	c.Voucher = &VoucherServiceOp{client: c}
+	c.ShopFlashSale = &ShopFlashSaleServiceOp{client: c}
+	c.FollowPrize = &FollowPrizeServiceOp{client: c}
+	c.TopPicks = &TopPicksServiceOp{client: c}
+	c.ShopCategory = &ShopCategoryServiceOp{client: c}
+	c.Returns = &ReturnsServiceOp{client: c}
+	c.AccountHealth = &AccountHealthServiceOp{client: c}
+	c.Ads = &AdsServiceOp{client: c}
+	c.Public = &PublicServiceOp{client: c}
+	c.Push = &PushServiceOp{client: c}
+	c.SBS = &SBSServiceOp{client: c}
+	c.FBS = &FBSServiceOp{client: c}
+	c.Livestream = &LivestreamServiceOp{client: c}
+	// END GENERATED SERVICES INIT
 
 	// apply any options
 	for _, opt := range opts {
@@ -477,12 +517,6 @@ func (c *Client) createAndDoGetHeaders(method, relPath string, data, options, he
 	}
 
 	relPath = path.Join("api/v2", relPath)
-
-	if data != nil {
-		params := data.(map[string]interface{})
-		params["partner_id"] = c.app.PartnerID
-		data = params
-	}
 
 	req, err := c.NewRequest(method, relPath, data, options, headers)
 	if err != nil {

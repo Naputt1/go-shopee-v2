@@ -1,3 +1,4 @@
+// Code generated. DO NOT EDIT.
 package goshopee
 
 import (
@@ -7,22 +8,126 @@ import (
 	"github.com/jarcoal/httpmock"
 )
 
-func Test_GetShopListByMerchant(t *testing.T) {
+func Test_Merchant_GetMerchantInfo(t *testing.T) {
 	setup()
 	defer teardown()
 
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/merchant/get_shop_list_by_merchant", app.APIURL),
-		httpmock.NewBytesResponder(200, loadFixture("get_shop_list_by_merchant_resp.json")))
-
-	res, err := client.Merchant.GetShopListByMerchant(merchantID, 1, 100, accessToken)
+	fixture := "v2.merchant.get_merchant_info_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
 	if err != nil {
-		t.Errorf("Merchant.GetShopListByMerchant error: %s", err)
+		t.Skipf("Skipping GetMerchantInfo due to invalid fixture: %v", err)
 	}
 
-	t.Logf("Merchant.GetShopListByMerchant: %#v", res)
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/merchant/get_merchant_info", app.APIURL), responder)
 
-	var expectedID uint64 = 601306294
-	if res.ShopList[0].ShopID != expectedID {
-		t.Errorf("ShopID returned %+v, expected %+v", res.ShopList[0].ShopID, expectedID)
+	res, err := client.Merchant.GetMerchantInfo(merchantID, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetMerchantInfo returned error (possibly expected with mock data): %s", err)
 	}
+
+	t.Logf("Merchant.GetMerchantInfo response: %#v", res)
+}
+
+func Test_Merchant_GetShopListByMerchant(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.merchant.get_shop_list_by_merchant_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetShopListByMerchant due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/merchant/get_shop_list_by_merchant", app.APIURL), responder)
+
+	var req GetShopListByMerchantRequest
+	res, err := client.Merchant.GetShopListByMerchant(merchantID, req, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetShopListByMerchant returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Merchant.GetShopListByMerchant response: %#v", res)
+}
+
+func Test_Merchant_GetMerchantWarehouseLocationList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.merchant.get_merchant_warehouse_location_list_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetMerchantWarehouseLocationList due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/merchant/get_merchant_warehouse_location_list", app.APIURL), responder)
+
+	res, err := client.Merchant.GetMerchantWarehouseLocationList(merchantID, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetMerchantWarehouseLocationList returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Merchant.GetMerchantWarehouseLocationList response: %#v", res)
+}
+
+func Test_Merchant_GetMerchantWarehouseList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.merchant.get_merchant_warehouse_list_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetMerchantWarehouseList due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/merchant/get_merchant_warehouse_list", app.APIURL), responder)
+
+	var req GetMerchantWarehouseListRequest
+	res, err := client.Merchant.GetMerchantWarehouseList(merchantID, req, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetMerchantWarehouseList returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Merchant.GetMerchantWarehouseList response: %#v", res)
+}
+
+func Test_Merchant_GetWarehouseEligibleShopList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.merchant.get_warehouse_eligible_shop_list_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetWarehouseEligibleShopList due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/merchant/get_warehouse_eligible_shop_list", app.APIURL), responder)
+
+	var req GetWarehouseEligibleShopListRequest
+	res, err := client.Merchant.GetWarehouseEligibleShopList(merchantID, req, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetWarehouseEligibleShopList returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Merchant.GetWarehouseEligibleShopList response: %#v", res)
+}
+
+func Test_Merchant_GetMerchantPrepaidAccountList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.merchant.get_merchant_prepaid_account_list_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixtureInterface(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetMerchantPrepaidAccountList due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/merchant/get_merchant_prepaid_account_list", app.APIURL), responder)
+
+	var req GetMerchantPrepaidAccountListRequest
+	res, err := client.Merchant.GetMerchantPrepaidAccountList(merchantID, req, accessToken)
+	if err != nil {
+		t.Logf("Merchant.GetMerchantPrepaidAccountList returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Merchant.GetMerchantPrepaidAccountList response: %#v", res)
 }

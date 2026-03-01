@@ -2,6 +2,10 @@
 
 Shopee API v2 with golang
 
+> [!NOTE]
+> This is a fork of [passwind/go-shopee-v2](https://github.com/passwind/go-shopee-v2).
+> The types and methods in this repository are generated directly from the Shopee API documentation. The underlying implementation remains consistent with the original project.
+
 https://open.shopee.com/documents?module=87&type=2&id=58&version=2
 
 [go-shopee](https://github.com/passwind/go-shopee) for `Shopee API v1`

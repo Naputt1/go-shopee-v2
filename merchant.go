@@ -1,48 +1,71 @@
+// Code generated. DO NOT EDIT.
 package goshopee
 
-// https://open.shopee.com/documents/v2/v2.merchant.get_shop_list_by_merchant?module=93&type=1
 type MerchantService interface {
-	// GetMerchantInfo() (*GetMerchantInfoResponse, error)
-	GetShopListByMerchant(mid uint64, pageNo, pageSize int, tok string) (*GetShopListByMerchantResponse, error)
-}
-
-type GetShopListByMerchantResponse struct {
-	BaseResponse
-
-	IsCNSC   bool                                `json:"is_cnsc"`
-	ShopList []GetShopListByMerchantResponseData `json:"shop_list"`
-	More     bool                                `json:"more"`
-}
-
-type GetShopListByMerchantResponseData struct {
-	ShopID       uint64                                  `json:"shop_id"`
-	SIPAffiShops []GetShopListByMerchantResponseDataShop `json:"sip_affi_shops,omitempty"`
-	ShopIsCNSC   bool                                    `json:"shop_is_cnsc"`
-}
-
-type GetShopListByMerchantResponseDataShop struct {
-	AffiShopID uint64 `json:"affi_shop_id"`
+	// GetMerchantInfo Use this call to get information of merchant
+	// https://open.shopee.com/documents/v2/v2.merchant.get_merchant_info?module=93&type=1
+	GetMerchantInfo(sid uint64, tok string) (*GetMerchantInfoResponse, error)
+	// GetShopListByMerchant Use this call to get shop_list bound to merchant_id.
+	//
+	//
+	// https://open.shopee.com/documents/v2/v2.merchant.get_shop_list_by_merchant?module=93&type=1
+	GetShopListByMerchant(sid uint64, opt GetShopListByMerchantRequest, tok string) (*GetShopListByMerchantResponse, error)
+	// GetMerchantWarehouseLocationList get merchant warehouse location list
+	// https://open.shopee.com/documents/v2/v2.merchant.get_merchant_warehouse_location_list?module=93&type=1
+	GetMerchantWarehouseLocationList(sid uint64, tok string) (*GetMerchantWarehouseLocationListResponse, error)
+	// GetMerchantWarehouseList Get merchant warehouse with page
+	// https://open.shopee.com/documents/v2/v2.merchant.get_merchant_warehouse_list?module=93&type=1
+	GetMerchantWarehouseList(sid uint64, req GetMerchantWarehouseListRequest, tok string) (*GetMerchantWarehouseListResponse, error)
+	// GetWarehouseEligibleShopList Get eligible shop list by warehouse id
+	// https://open.shopee.com/documents/v2/v2.merchant.get_warehouse_eligible_shop_list?module=93&type=1
+	GetWarehouseEligibleShopList(sid uint64, req GetWarehouseEligibleShopListRequest, tok string) (*GetWarehouseEligibleShopListResponse, error)
+	// GetMerchantPrepaidAccountList Use this api to get seller’s courier prepaid account.
+	// https://open.shopee.com/documents/v2/v2.merchant.get_merchant_prepaid_account_list?module=93&type=1
+	GetMerchantPrepaidAccountList(sid uint64, opt GetMerchantPrepaidAccountListRequest, tok string) (*GetMerchantPrepaidAccountListResponse, error)
 }
 
 type MerchantServiceOp struct {
 	client *Client
 }
 
-type GetShopListByMerchantRequest struct {
-	PageNo   int `url:"page_no"`
-	PageSize int `url:"page_size"`
-	// MerchantID uint64 `url:"merchant_id"` add with token
+func (s *MerchantServiceOp) GetMerchantInfo(sid uint64, tok string) (*GetMerchantInfoResponse, error) {
+	path := "/merchant/get_merchant_info"
+	resp := new(GetMerchantInfoResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, nil)
+	return resp, err
 }
 
-func (s *MerchantServiceOp) GetShopListByMerchant(mid uint64, pageNo, pageSize int, tok string) (*GetShopListByMerchantResponse, error) {
+func (s *MerchantServiceOp) GetShopListByMerchant(sid uint64, opt GetShopListByMerchantRequest, tok string) (*GetShopListByMerchantResponse, error) {
 	path := "/merchant/get_shop_list_by_merchant"
-
-	opt := GetShopListByMerchantRequest{
-		PageNo:   pageNo,
-		PageSize: pageSize,
-	}
-
 	resp := new(GetShopListByMerchantResponse)
-	err := s.client.WithMerchant(mid, tok).Get(path, resp, opt)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
+	return resp, err
+}
+
+func (s *MerchantServiceOp) GetMerchantWarehouseLocationList(sid uint64, tok string) (*GetMerchantWarehouseLocationListResponse, error) {
+	path := "/merchant/get_merchant_warehouse_location_list"
+	resp := new(GetMerchantWarehouseLocationListResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
+	return resp, err
+}
+
+func (s *MerchantServiceOp) GetMerchantWarehouseList(sid uint64, req GetMerchantWarehouseListRequest, tok string) (*GetMerchantWarehouseListResponse, error) {
+	path := "/merchant/get_merchant_warehouse_list"
+	resp := new(GetMerchantWarehouseListResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *MerchantServiceOp) GetWarehouseEligibleShopList(sid uint64, req GetWarehouseEligibleShopListRequest, tok string) (*GetWarehouseEligibleShopListResponse, error) {
+	path := "/merchant/get_warehouse_eligible_shop_list"
+	resp := new(GetWarehouseEligibleShopListResponse)
+	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+func (s *MerchantServiceOp) GetMerchantPrepaidAccountList(sid uint64, opt GetMerchantPrepaidAccountListRequest, tok string) (*GetMerchantPrepaidAccountListResponse, error) {
+	path := "/merchant/get_merchant_prepaid_account_list"
+	resp := new(GetMerchantPrepaidAccountListResponse)
+	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }

@@ -1,0 +1,10 @@
+{
+	"error": "",
+	"message": "",
+	"request_id": "6745b892295d750abf83a29430510400",
+	"response": {
+		"holiday_mode_on": true,
+		"holiday_mode_mtime": 1763435974,
+		"debug_msg": ""
+	}
+}
