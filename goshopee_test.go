@@ -3,18 +3,18 @@ package goshopee
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"log/slog"
+	"os"
 
-	"github.com/caarlos0/env"
+	"github.com/caarlos0/env/v11"
 	"github.com/jarcoal/httpmock"
 	"github.com/joho/godotenv"
-	"github.com/prometheus/common/log"
 )
 
 const (
-	maxRetries     = 3
-	shopID = 1234567
-	merchantID = 0
+	maxRetries  = 3
+	shopID      = 1234567
+	merchantID  = 0
 	accessToken = "accesstoken"
 )
 
@@ -25,18 +25,21 @@ var (
 
 func setup() {
 	err := godotenv.Load()
-  if err != nil {
-    log.Warn("Error loading .env file")
+	if err != nil {
+		slog.Warn("Error loading .env file")
 		app = App{
-			PartnerID:      12345678,
-			PartnerKey:   "hush",
+			PartnerID:   12345678,
+			PartnerKey:  "hush",
 			RedirectURL: "https://example.com/callback",
-			APIURL: "https://partner.test-stable.shopeemobile.com",
+			APIURL:      "https://partner.test-stable.shopeemobile.com",
 		}
-  }else {
-		env.Parse(&app)
+	} else {
+		if err := env.Parse(&app); err != nil {
+			slog.Error("Error parsing env", "error", err)
+			os.Exit(1)
+		}
 	}
-	client = NewClient(app, 
+	client = NewClient(app,
 		WithRetry(maxRetries))
 	httpmock.ActivateNonDefault(client.Client)
 }
@@ -46,7 +49,7 @@ func teardown() {
 }
 
 func loadFixture(filename string) []byte {
-	f, err := ioutil.ReadFile("fixtures/" + filename)
+	f, err := os.ReadFile("fixtures/" + filename)
 	if err != nil {
 		panic(fmt.Sprintf("Cannot load fixture %v", filename))
 	}
@@ -54,21 +57,21 @@ func loadFixture(filename string) []byte {
 }
 
 func loadMockData(filename string, out interface{}) {
-	f, err := ioutil.ReadFile("fixtures/" + filename)
+	f, err := os.ReadFile("fixtures/" + filename)
 	if err != nil {
 		panic(fmt.Sprintf("Cannot load fixture %v", filename))
 	}
-	if err:=json.Unmarshal(f,&out);err!=nil {
+	if err := json.Unmarshal(f, &out); err != nil {
 		panic(fmt.Sprintf("decode mock data error: %s", err))
 	}
-	}
+}
 
-	func loadFixtureInterface(filename string) interface{} {
+func loadFixtureInterface(filename string) interface{} {
 	var out interface{}
-	f, err := ioutil.ReadFile("fixtures/" + filename)
+	f, err := os.ReadFile("fixtures/" + filename)
 	if err != nil {
 		return nil
 	}
 	json.Unmarshal(f, &out)
 	return out
-	}
+}
