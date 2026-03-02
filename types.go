@@ -10078,17 +10078,28 @@ type WorkingDayConfigMonday struct {
 	Operating_24HourToggle bool   `json:"operating_24_hour_toggle"` // [Required] <p>If the toggle value is true, the user can set the&nbsp;start_time&nbsp;to&nbsp;00:00&nbsp;and the&nbsp;end_time&nbsp;to&nbsp;23:59&nbsp;to indicate that the shop is operating 24 hours a day.</p>
 }
 
-type CampaignStatus string
+type OperationType string
 
 const (
-	CampaignStatusClosed    CampaignStatus = "closed"
-	CampaignStatusDeleted   CampaignStatus = "deleted"
-	CampaignStatusEnded     CampaignStatus = "ended"
-	CampaignStatusExpired   CampaignStatus = "expired"
-	CampaignStatusOngoing   CampaignStatus = "ongoing"
-	CampaignStatusPaused    CampaignStatus = "paused"
-	CampaignStatusScheduled CampaignStatus = "scheduled"
-	CampaignStatusUpcoming  CampaignStatus = "upcoming"
+	OperationTypeRetailer     OperationType = "1"
+	OperationTypeManufactorer OperationType = "2"
+)
+
+type ItemStatus string
+
+const (
+	ItemStatusBanned ItemStatus = "BANNED"
+	ItemStatusNormal ItemStatus = "NORMAL"
+	ItemStatusUnlist ItemStatus = "UNLIST"
+)
+
+type PromotionStatus string
+
+const (
+	PromotionStatusAll      PromotionStatus = "all"
+	PromotionStatusExpired  PromotionStatus = "expired"
+	PromotionStatusOngoing  PromotionStatus = "ongoing"
+	PromotionStatusUpcoming PromotionStatus = "upcoming"
 )
 
 type OrderStatus string
@@ -10102,6 +10113,52 @@ const (
 	OrderStatusReadyToShip    OrderStatus = "READY_TO_SHIP"
 	OrderStatusShipped        OrderStatus = "SHIPPED"
 	OrderStatusUnpaid         OrderStatus = "UNPAID"
+)
+
+type BookingStatus string
+
+const (
+	BookingStatusCancelled   BookingStatus = "CANCELLED"
+	BookingStatusMatched     BookingStatus = "MATCHED"
+	BookingStatusProcessed   BookingStatus = "PROCESSED"
+	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
+	BookingStatusShipped     BookingStatus = "SHIPPED"
+)
+
+type DescriptionType string
+
+const (
+	DescriptionTypeExtended DescriptionType = "extended"
+	DescriptionTypeNormal   DescriptionType = "normal"
+)
+
+type DescriptionElementFieldType string
+
+const (
+	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
+	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
+)
+
+type InvoiceOption string
+
+const (
+	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
+	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
+	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
+	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+)
+
+type CampaignStatus string
+
+const (
+	CampaignStatusClosed    CampaignStatus = "closed"
+	CampaignStatusDeleted   CampaignStatus = "deleted"
+	CampaignStatusEnded     CampaignStatus = "ended"
+	CampaignStatusExpired   CampaignStatus = "expired"
+	CampaignStatusOngoing   CampaignStatus = "ongoing"
+	CampaignStatusPaused    CampaignStatus = "paused"
+	CampaignStatusScheduled CampaignStatus = "scheduled"
+	CampaignStatusUpcoming  CampaignStatus = "upcoming"
 )
 
 type LogisticsStatus string
@@ -10133,62 +10190,6 @@ const (
 	ReturnStatusSellerDispute ReturnStatus = "SELLER_DISPUTE"
 )
 
-type BookingStatus string
-
-const (
-	BookingStatusCancelled   BookingStatus = "CANCELLED"
-	BookingStatusMatched     BookingStatus = "MATCHED"
-	BookingStatusProcessed   BookingStatus = "PROCESSED"
-	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
-	BookingStatusShipped     BookingStatus = "SHIPPED"
-)
-
-type DescriptionType string
-
-const (
-	DescriptionTypeExtended DescriptionType = "extended"
-	DescriptionTypeNormal   DescriptionType = "normal"
-)
-
-type TaxType int
-
-const (
-	TaxTypeNoTax   TaxType = 0
-	TaxTypeTaxable TaxType = 1
-	TaxTypeTaxFree TaxType = 2
-)
-
-type OperationType string
-
-const (
-	OperationTypeRetailer     OperationType = "1"
-	OperationTypeManufactorer OperationType = "2"
-)
-
-type ItemStatus string
-
-const (
-	ItemStatusBanned ItemStatus = "BANNED"
-	ItemStatusNormal ItemStatus = "NORMAL"
-	ItemStatusUnlist ItemStatus = "UNLIST"
-)
-
-type PromotionStatus string
-
-const (
-	PromotionStatusAll      PromotionStatus = "all"
-	PromotionStatusExpired  PromotionStatus = "expired"
-	PromotionStatusOngoing  PromotionStatus = "ongoing"
-	PromotionStatusUpcoming PromotionStatus = "upcoming"
-)
-
-type DescriptionElementFieldType string
-
-const (
-	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
-	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
-)
-
 type WarrantyTime string
 
 const (
@@ -10197,11 +10198,10 @@ const (
 	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
 )
 
-type InvoiceOption string
+type TaxType int
 
 const (
-	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
-	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
-	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
-	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+	TaxTypeNoTax   TaxType = 0
+	TaxTypeTaxable TaxType = 1
+	TaxTypeTaxFree TaxType = 2
 )
