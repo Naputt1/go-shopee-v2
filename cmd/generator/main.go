@@ -15,12 +15,12 @@ import (
 )
 
 type Config struct {
-	Modules         map[string]ModuleConfig   `json:"modules"`
-	StaticModules   map[string]ModuleConfig   `json:"static_modules"`
-	TypeOverrides   map[string]string         `json:"type_overrides"`
-	TypeDefinitions map[string]TypeDefinition `json:"type_definitions"`
+	Modules             map[string]ModuleConfig      `json:"modules"`
+	StaticModules       map[string]ModuleConfig      `json:"static_modules"`
+	TypeOverrides       map[string]string            `json:"type_overrides"`
+	StructTypeOverrides map[string]map[string]string `json:"struct_type_overrides"` // StructName -> FieldName -> Type
+	TypeDefinitions     map[string]TypeDefinition    `json:"type_definitions"`
 }
-
 type ModuleConfig struct {
 	FileName   string   `json:"file_name"`
 	IgnoreAPIs []string `json:"ignore_apis"`
@@ -689,12 +689,56 @@ func getStructSignature(s StructData) string {
 }
 
 func mapType(shopeeType, fieldName string, children []Param, chain []string, config Config, isRequest bool, requiredStr string) string {
+	// 1. Try struct-specific override
+	if len(chain) > 0 {
+		// Try using the last part of the chain (which is usually the field name of the parent)
+		rawName := chain[len(chain)-1]
+		structName := toCamelCase(rawName)
+
+		// Handle list suffixes as mapType does for newChain
+		if strings.HasSuffix(structName, "List") && len(structName) > 4 {
+			structName = strings.TrimSuffix(structName, "List")
+		}
+
+		if overrides, ok := config.StructTypeOverrides[structName]; ok {
+			if override, ok := overrides[fieldName]; ok {
+				if strings.HasSuffix(shopeeType, "[]") && !strings.HasPrefix(override, "[]") {
+					return "[]" + override
+				}
+				return override
+			}
+		}
+
+		// Also try the final picked name if we can guess it
+		// For GetItemBaseInfoResponseDataItem, the chain might be ["Product", "GetItemBaseInfo", "ResponseData", "ItemList"]
+		// pickName will join them and eventually get GetItemBaseInfoResponseDataItem
+		var parts []string
+		for _, p := range chain {
+			parts = append(parts, toCamelCase(p))
+		}
+
+		// Start from end to try shorter versions like pickName does
+		for i := 1; i <= len(parts); i++ {
+			candidate := strings.Join(parts[len(parts)-i:], "")
+			if overrides, ok := config.StructTypeOverrides[candidate]; ok {
+				if override, ok := overrides[fieldName]; ok {
+					if strings.HasSuffix(shopeeType, "[]") && !strings.HasPrefix(override, "[]") {
+						return "[]" + override
+					}
+					return override
+				}
+			}
+		}
+	}
+
+	// 2. Fallback to global field name override
 	if override, ok := config.TypeOverrides[fieldName]; ok {
 		if strings.HasSuffix(shopeeType, "[]") && !strings.HasPrefix(override, "[]") {
 			return "[]" + override
 		}
 		return override
 	}
+
 	switch shopeeType {
 	case "int", "int32", "int64", "timestamp":
 		return "int64"
