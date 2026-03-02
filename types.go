@@ -987,8 +987,8 @@ type Category struct {
 }
 
 type CategoryRecommendRequest struct {
-	ItemName          string  `json:"item_name" url:"item_name"`                               // [Required] name of item
-	ProductCoverImage *string `json:"product_cover_image,omitempty" url:"product_cover_image"` // [Optional] <p>Please use the image id returned by v2.media_space.upload_image api, we will ignore if this field is empty string<br /></p>
+	ItemName          string  `json:"item_name" url:"item_name"`                                         // [Required] name of item
+	ProductCoverImage *string `json:"product_cover_image,omitempty" url:"product_cover_image,omitempty"` // [Optional] <p>Please use the image id returned by v2.media_space.upload_image api, we will ignore if this field is empty string<br /></p>
 }
 
 type CategoryRecommendResponse struct {
@@ -2543,9 +2543,9 @@ type GetAllCpcAdsHourlyPerformanceResponseData struct {
 }
 
 type GetAllVehicleListRequest struct {
-	PageSize int64   `json:"page_size" url:"page_size"`         // [Required] <p>The size of one page. Max=100</p>
-	Offset   *int64  `json:"offset,omitempty" url:"offset"`     // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.<br /></p>
-	Language *string `json:"language,omitempty" url:"language"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ; BR: en / pt-br ; MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data<br /></p>
+	PageSize int64   `json:"page_size" url:"page_size"`                   // [Required] <p>The size of one page. Max=100</p>
+	Offset   *int64  `json:"offset,omitempty" url:"offset,omitempty"`     // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.<br /></p>
+	Language *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ; BR: en / pt-br ; MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data<br /></p>
 }
 
 type GetAllVehicleListResponse struct {
@@ -2574,8 +2574,8 @@ type GetAppPushConfigResponseData struct {
 }
 
 type GetAttributeTreeRequest struct {
-	CategoryIdList []int64 `json:"category_id_list" url:"category_id_list"` // [Required] <p>max count is 20</p>
-	Language       *string `json:"language,omitempty" url:"language"`       // [Optional] <p>Language<br />Support Lanuage:<br />"SG": [        "en",        "zh-Hans",        "ms"      ],&nbsp;</p><p>"MY": [        "en",        "zh-Hans",        "ms"      ], <br />"PH": [        "en",        "zh-Hans"      ], <br />"VN": [        "vn",        "en"      ], <br />"ID": [        "id",        "en"      ], <br />"TH": [        "th",        "en"      ], <br />"BR": [        "pt-BR",        "en"      ], <br />"MX": [        "es-MX",        "en"      ], <br />"CO": [        "es-CO",        "en"      ], <br />"CL": [        "es-CL",        "en"      ], <br />"TW": [        "zh-Hant",        "zh-Hans",        "en"      ],<br />"IN": [        "en",        "hi"      ]<br /></p>
+	CategoryIdList []int64 `json:"category_id_list" url:"category_id_list"`     // [Required] <p>max count is 20</p>
+	Language       *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>Language<br />Support Lanuage:<br />"SG": [        "en",        "zh-Hans",        "ms"      ],&nbsp;</p><p>"MY": [        "en",        "zh-Hans",        "ms"      ], <br />"PH": [        "en",        "zh-Hans"      ], <br />"VN": [        "vn",        "en"      ], <br />"ID": [        "id",        "en"      ], <br />"TH": [        "th",        "en"      ], <br />"BR": [        "pt-BR",        "en"      ], <br />"MX": [        "es-MX",        "en"      ], <br />"CO": [        "es-CO",        "en"      ], <br />"CL": [        "es-CL",        "en"      ], <br />"TW": [        "zh-Hant",        "zh-Hans",        "en"      ],<br />"IN": [        "en",        "hi"      ]<br /></p>
 }
 
 type GetAttributeTreeResponse struct {
@@ -2644,8 +2644,8 @@ type GetBillingTransactionInfoResponseData struct {
 }
 
 type GetBookingDetailRequest struct {
-	BookingSnList          string  `json:"booking_sn_list" url:"booking_sn_list"`                             // [Required] <p>The set of booking_sn. If there are multiple booking_sn, you need to use English comma to connect them. limit [1,50]<br /></p>
-	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields"` // [Optional] <p>The response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them. Available values:&nbsp;item_list,cancel_by,cancel_reason,fulfillment_flag,pickup_done_time,shipping_carrier, recipient_address, dropshipper, dropshipper_phone<br /></p>
+	BookingSnList          string  `json:"booking_sn_list" url:"booking_sn_list"`                                       // [Required] <p>The set of booking_sn. If there are multiple booking_sn, you need to use English comma to connect them. limit [1,50]<br /></p>
+	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields,omitempty"` // [Optional] <p>The response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them. Available values:&nbsp;item_list,cancel_by,cancel_reason,fulfillment_flag,pickup_done_time,shipping_carrier, recipient_address, dropshipper, dropshipper_phone<br /></p>
 }
 
 type GetBookingDetailResponse struct {
@@ -2678,12 +2678,12 @@ type GetBookingDetailResponseDataBooking struct {
 }
 
 type GetBookingListRequest struct {
-	TimeRangeField string         `json:"time_range_field" url:"time_range_field"`       // [Required] <p>The kind of time_from and time_to.&nbsp;Available value: create_time, update_time.<br /></p>
-	TimeFrom       int64          `json:"time_from" url:"time_from"`                     // [Required] <p>The time_from and time_to fields specify a date range for retrieving bookings (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.<br /></p>
-	TimeTo         int64          `json:"time_to" url:"time_to"`                         // [Required] <p>The time_from and time_to fields specify a date range for retrieving bookings (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.</p>
-	PageSize       int64          `json:"page_size" url:"page_size"`                     // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.<br /></p>
-	Cursor         *string        `json:"cursor,omitempty" url:"cursor"`                 // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.<br /></p>
-	BookingStatus  *BookingStatus `json:"booking_status,omitempty" url:"booking_status"` // [Optional] <p>The booking_status filter for retrieving bookings and each one only every request. Available value: READY_TO_SHIP/PROCESSED/SHIPPED/CANCELLED/MATCHED<br /></p>
+	TimeRangeField string         `json:"time_range_field" url:"time_range_field"`                 // [Required] <p>The kind of time_from and time_to.&nbsp;Available value: create_time, update_time.<br /></p>
+	TimeFrom       int64          `json:"time_from" url:"time_from"`                               // [Required] <p>The time_from and time_to fields specify a date range for retrieving bookings (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.<br /></p>
+	TimeTo         int64          `json:"time_to" url:"time_to"`                                   // [Required] <p>The time_from and time_to fields specify a date range for retrieving bookings (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.</p>
+	PageSize       int64          `json:"page_size" url:"page_size"`                               // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.<br /></p>
+	Cursor         *string        `json:"cursor,omitempty" url:"cursor,omitempty"`                 // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.<br /></p>
+	BookingStatus  *BookingStatus `json:"booking_status,omitempty" url:"booking_status,omitempty"` // [Optional] <p>The booking_status filter for retrieving bookings and each one only every request. Available value: READY_TO_SHIP/PROCESSED/SHIPPED/CANCELLED/MATCHED<br /></p>
 }
 
 type GetBookingListResponse struct {
@@ -2852,11 +2852,11 @@ type GetBrShopOnboardingInfoResponseData struct {
 }
 
 type GetBrandListRequest struct {
-	Offset     int64   `json:"offset" url:"offset"`               // [Required] Specifies the starting entry of data to return in the current call. Default is 0. If data is more than one page,this field needs to be replaced with "next_offset" to request,and the offset can be some entry to start next call.
-	PageSize   int64   `json:"page_size" url:"page_size"`         // [Required] the size of one page.Max=100
-	CategoryId int64   `json:"category_id" url:"category_id"`     // [Required] ID of category.
-	Status     int64   `json:"status" url:"status"`               // [Required] Brand status , 1: normal brand, 2: pending brand
-	Language   *string `json:"language,omitempty" url:"language"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ;  BR: en / pt-br ;  MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data</p>
+	Offset     int64   `json:"offset" url:"offset"`                         // [Required] Specifies the starting entry of data to return in the current call. Default is 0. If data is more than one page,this field needs to be replaced with "next_offset" to request,and the offset can be some entry to start next call.
+	PageSize   int64   `json:"page_size" url:"page_size"`                   // [Required] the size of one page.Max=100
+	CategoryId int64   `json:"category_id" url:"category_id"`               // [Required] ID of category.
+	Status     int64   `json:"status" url:"status"`                         // [Required] Brand status , 1: normal brand, 2: pending brand
+	Language   *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ;  BR: en / pt-br ;  MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data</p>
 }
 
 type GetBrandListResponse struct {
@@ -2887,9 +2887,9 @@ type GetBundleDealItemResponseData struct {
 }
 
 type GetBundleDealListRequest struct {
-	PageSize   *int64 `json:"page_size,omitempty" url:"page_size"`     // [Optional] Data paging, representing the data size of each page, the maximum is 1000, the default is 20
-	TimeStatus *int64 `json:"time_status,omitempty" url:"time_status"` // [Optional] The Status of bundle deal，all=1；upcoming=2；ongoing=3，expired=4 , the default is 1
-	PageNo     *int64 `json:"page_no,omitempty" url:"page_no"`         // [Optional] Data paging, represents the page number, starting from 1, the default is 1
+	PageSize   *int64 `json:"page_size,omitempty" url:"page_size,omitempty"`     // [Optional] Data paging, representing the data size of each page, the maximum is 1000, the default is 20
+	TimeStatus *int64 `json:"time_status,omitempty" url:"time_status,omitempty"` // [Optional] The Status of bundle deal，all=1；upcoming=2；ongoing=3，expired=4 , the default is 1
+	PageNo     *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`         // [Optional] Data paging, represents the page number, starting from 1, the default is 1
 }
 
 type GetBundleDealListResponse struct {
@@ -2930,7 +2930,7 @@ type GetBuyerInvoiceInfoResponse struct {
 }
 
 type GetCategoryRequest struct {
-	Language *string `json:"language,omitempty" url:"language"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ;  BR: en / pt-br ;  MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL .Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data</p>
+	Language *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ;  BR: en / pt-br ;  MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL .Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data</p>
 }
 
 type GetCategoryResponse struct {
@@ -2956,10 +2956,10 @@ type GetChannelListResponseData struct {
 }
 
 type GetCommentRequest struct {
-	ItemId    *int64 `json:"item_id,omitempty" url:"item_id"`       // [Optional] The identity of product item.
-	CommentId *int64 `json:"comment_id,omitempty" url:"comment_id"` // [Optional] The identity of comment.
-	Cursor    string `json:"cursor" url:"cursor"`                   // [Required] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
-	PageSize  int64  `json:"page_size" url:"page_size"`             // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.
+	ItemId    *int64 `json:"item_id,omitempty" url:"item_id,omitempty"`       // [Optional] The identity of product item.
+	CommentId *int64 `json:"comment_id,omitempty" url:"comment_id,omitempty"` // [Optional] The identity of comment.
+	Cursor    string `json:"cursor" url:"cursor"`                             // [Required] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	PageSize  int64  `json:"page_size" url:"page_size"`                       // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.
 }
 
 type GetCommentResponse struct {
@@ -2974,7 +2974,7 @@ type GetCommentResponseData struct {
 }
 
 type GetCourierDeliveryChannelListRequest struct {
-	Region *string `json:"region,omitempty" url:"region"` // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value: CN</p>
+	Region *string `json:"region,omitempty" url:"region,omitempty"` // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value: CN</p>
 }
 
 type GetCourierDeliveryChannelListResponse struct {
@@ -2993,9 +2993,9 @@ type GetCourierDeliveryChannelListResponseDataLogisticsChannel struct {
 }
 
 type GetCourierDeliveryDetailRequest struct {
-	BindingId string  `json:"binding_id" url:"binding_id"`         // [Required] <p>Binding ID</p>
-	Cursor    *string `json:"cursor,omitempty" url:"cursor"`       // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.</p>
-	PageSize  *int64  `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 50].<br /></p>
+	BindingId string  `json:"binding_id" url:"binding_id"`                   // [Required] <p>Binding ID</p>
+	Cursor    *string `json:"cursor,omitempty" url:"cursor,omitempty"`       // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.</p>
+	PageSize  *int64  `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 50].<br /></p>
 }
 
 type GetCourierDeliveryDetailResponse struct {
@@ -3045,14 +3045,14 @@ type GetCourierDeliveryWaybillResponseData struct {
 }
 
 type GetCreateProductAdBudgetSuggestionRequest struct {
-	ReferenceId               string   `json:"reference_id" url:"reference_id"`                                           // [Required] <p>A random string used to prevent duplicate ads. If an ads is created successfully, subsequent request using the same reference id will fail<br /></p>
-	ProductSelection          string   `json:"product_selection" url:"product_selection"`                                 // [Required] <p>auto,manual - for Auto product ads or Manual Product Ads</p>
-	CampaignPlacement         string   `json:"campaign_placement" url:"campaign_placement"`                               // [Required] <p>search, discovery, all<br /></p>
-	BiddingMethod             string   `json:"bidding_method" url:"bidding_method"`                                       // [Required] <p>Bidding Method of product ad: auto, manual</p>
-	EnhancedCpc               *string  `json:"enhanced_cpc,omitempty" url:"enhanced_cpc"`                                 // [Optional] <p>Enhanced CPC functionality toggle. Values supported "true"/"false". Mandatory for product_selection=manual, bidding_method=manual</p>
-	DiscoveryAdsLocationNames *string  `json:"discovery_ads_location_names,omitempty" url:"discovery_ads_location_names"` // [Optional] <p>List of comma separated location values from: daily_discover, you_may_also_like.<br /></p><p>Mandatory for product_selection=manual, product_placement={all|discovery}, bidding_method=manual</p>
-	RoasTarget                *float64 `json:"roas_target,omitempty" url:"roas_target"`                                   // [Optional] <p>the ROAS target for each campaign with auto bidding. If 0, GMV Max / ROI feature is not enabled</p>
-	ItemId                    *int64   `json:"item_id,omitempty" url:"item_id"`                                           // [Optional] <p>Product ID. Mandatory for product_selection=manual</p>
+	ReferenceId               string   `json:"reference_id" url:"reference_id"`                                                     // [Required] <p>A random string used to prevent duplicate ads. If an ads is created successfully, subsequent request using the same reference id will fail<br /></p>
+	ProductSelection          string   `json:"product_selection" url:"product_selection"`                                           // [Required] <p>auto,manual - for Auto product ads or Manual Product Ads</p>
+	CampaignPlacement         string   `json:"campaign_placement" url:"campaign_placement"`                                         // [Required] <p>search, discovery, all<br /></p>
+	BiddingMethod             string   `json:"bidding_method" url:"bidding_method"`                                                 // [Required] <p>Bidding Method of product ad: auto, manual</p>
+	EnhancedCpc               *string  `json:"enhanced_cpc,omitempty" url:"enhanced_cpc,omitempty"`                                 // [Optional] <p>Enhanced CPC functionality toggle. Values supported "true"/"false". Mandatory for product_selection=manual, bidding_method=manual</p>
+	DiscoveryAdsLocationNames *string  `json:"discovery_ads_location_names,omitempty" url:"discovery_ads_location_names,omitempty"` // [Optional] <p>List of comma separated location values from: daily_discover, you_may_also_like.<br /></p><p>Mandatory for product_selection=manual, product_placement={all|discovery}, bidding_method=manual</p>
+	RoasTarget                *float64 `json:"roas_target,omitempty" url:"roas_target,omitempty"`                                   // [Optional] <p>the ROAS target for each campaign with auto bidding. If 0, GMV Max / ROI feature is not enabled</p>
+	ItemId                    *int64   `json:"item_id,omitempty" url:"item_id,omitempty"`                                           // [Optional] <p>Product ID. Mandatory for product_selection=manual</p>
 }
 
 type GetCreateProductAdBudgetSuggestionResponse struct {
@@ -3096,7 +3096,7 @@ type GetCurrentInventoryResponseDataItem struct {
 
 type GetDetailRequest struct {
 	FirstMileTrackingNumber string  `json:"first_mile_tracking_number" url:"first_mile_tracking_number"` // [Required] The first mile tracking number.
-	Cursor                  *string `json:"cursor,omitempty" url:"cursor"`                               // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	Cursor                  *string `json:"cursor,omitempty" url:"cursor,omitempty"`                     // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
 }
 
 type GetDetailResponse struct {
@@ -3142,11 +3142,11 @@ type GetDirectItemListResponseDataList struct {
 }
 
 type GetDirectShopRecommendedPriceRequest struct {
-	MainItemId           int64                                       `json:"main_item_id" url:"main_item_id"`                                 // [Required]
-	DirectShopRegions    []string                                    `json:"direct_shop_regions" url:"direct_shop_regions"`                   // [Required] <p>Direct shop regions.</p>
-	CategoryId           *int64                                      `json:"category_id,omitempty" url:"category_id"`                         // [Optional] <pre>Main_item's category.</pre>
-	ModelList            []GetDirectShopRecommendedPriceRequestModel `json:"model_list,omitempty" url:"model_list"`                           // [Optional] <p>Main model model info.</p>
-	EnabledChannelIdList []int64                                     `json:"enabled_channel_id_list,omitempty" url:"enabled_channel_id_list"` // [Optional] <p>direct shop enabled channel</p>
+	MainItemId           int64                                       `json:"main_item_id" url:"main_item_id"`                                           // [Required]
+	DirectShopRegions    []string                                    `json:"direct_shop_regions" url:"direct_shop_regions"`                             // [Required] <p>Direct shop regions.</p>
+	CategoryId           *int64                                      `json:"category_id,omitempty" url:"category_id,omitempty"`                         // [Optional] <pre>Main_item's category.</pre>
+	ModelList            []GetDirectShopRecommendedPriceRequestModel `json:"model_list,omitempty" url:"model_list,omitempty"`                           // [Optional] <p>Main model model info.</p>
+	EnabledChannelIdList []int64                                     `json:"enabled_channel_id_list,omitempty" url:"enabled_channel_id_list,omitempty"` // [Optional] <p>direct shop enabled channel</p>
 }
 
 type GetDirectShopRecommendedPriceRequestModel struct {
@@ -3379,7 +3379,7 @@ type GetGlobalItemInfoResponseData struct {
 }
 
 type GetGlobalItemLimitRequest struct {
-	CategoryId *int64 `json:"category_id,omitempty" url:"category_id"` // [Optional]
+	CategoryId *int64 `json:"category_id,omitempty" url:"category_id,omitempty"` // [Optional]
 }
 
 type GetGlobalItemLimitResponse struct {
@@ -3408,10 +3408,10 @@ type GetGlobalItemLimitResponseDataDtsLimit struct {
 }
 
 type GetGlobalItemListRequest struct {
-	Offset         *string `json:"offset,omitempty" url:"offset"`                     // [Optional] Specifies the starting entry of data to return in the current call. Default is null. if data is more than one page, the offset can be some entry to start next call.
-	PageSize       int64   `json:"page_size" url:"page_size"`                         // [Required] The size of one page. Limit is [1,50].
-	UpdateTimeFrom *int64  `json:"update_time_from,omitempty" url:"update_time_from"` // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_from field is the starting date range.
-	UpdateTimeTo   *int64  `json:"update_time_to,omitempty" url:"update_time_to"`     // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_to field is the ending date range
+	Offset         *string `json:"offset,omitempty" url:"offset,omitempty"`                     // [Optional] Specifies the starting entry of data to return in the current call. Default is null. if data is more than one page, the offset can be some entry to start next call.
+	PageSize       int64   `json:"page_size" url:"page_size"`                                   // [Required] The size of one page. Limit is [1,50].
+	UpdateTimeFrom *int64  `json:"update_time_from,omitempty" url:"update_time_from,omitempty"` // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_from field is the starting date range.
+	UpdateTimeTo   *int64  `json:"update_time_to,omitempty" url:"update_time_to,omitempty"`     // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_to field is the ending date range
 }
 
 type GetGlobalItemListResponse struct {
@@ -3496,7 +3496,7 @@ type GetIncomeDetailResponse struct {
 }
 
 type GetIncomeOverviewRequest struct {
-	IncomeStatus *int64 `json:"income_status,omitempty" url:"income_status"` // [Optional] <p><b><u>Status of Seller Income payout (Enum - Desc)</u></b></p><p><br /></p><p><b><u>Local Shop</u></b></p><p>1 -Released</p><p>2 - Pending</p><p><b><u><br /></u></b></p><p><b><u>CB Shop</u></b></p><p>0 - To Release</p><p>1 -&nbsp;Released</p><p>2 - Pending</p><p><br /></p><p>Note: By default, if Income Status was not provided in the request params (non mandatory), API response will return all values for all Income status based on either Local/CB</p>
+	IncomeStatus *int64 `json:"income_status,omitempty" url:"income_status,omitempty"` // [Optional] <p><b><u>Status of Seller Income payout (Enum - Desc)</u></b></p><p><br /></p><p><b><u>Local Shop</u></b></p><p>1 -Released</p><p>2 - Pending</p><p><b><u><br /></u></b></p><p><b><u>CB Shop</u></b></p><p>0 - To Release</p><p>1 -&nbsp;Released</p><p>2 - Pending</p><p><br /></p><p>Note: By default, if Income Status was not provided in the request params (non mandatory), API response will return all values for all Income status based on either Local/CB</p>
 }
 
 type GetIncomeOverviewResponse struct {
@@ -3545,9 +3545,9 @@ type GetIncomeStatementResponseData struct {
 }
 
 type GetItemBaseInfoRequest struct {
-	ItemIdList          []int64 `json:"item_id_list" url:"item_id_list"`                             // [Required] item_id list; limit [0,50]
-	NeedTaxInfo         *bool   `json:"need_tax_info,omitempty" url:"need_tax_info"`                 // [Optional] if true will response tax_info
-	NeedComplaintPolicy *bool   `json:"need_complaint_policy,omitempty" url:"need_complaint_policy"` // [Optional] if true will response complaint_policy
+	ItemIdList          []int64 `json:"item_id_list" url:"item_id_list"`                                       // [Required] item_id list; limit [0,50]
+	NeedTaxInfo         *bool   `json:"need_tax_info,omitempty" url:"need_tax_info,omitempty"`                 // [Optional] if true will response tax_info
+	NeedComplaintPolicy *bool   `json:"need_complaint_policy,omitempty" url:"need_complaint_policy,omitempty"` // [Optional] if true will response complaint_policy
 }
 
 type GetItemBaseInfoResponse struct {
@@ -3679,7 +3679,7 @@ type GetItemInstallmentStatusResponseData struct {
 }
 
 type GetItemLimitRequest struct {
-	CategoryId *int64 `json:"category_id,omitempty" url:"category_id"` // [Optional] <p>Shopee's unique identifier for a category.<br /></p>
+	CategoryId *int64 `json:"category_id,omitempty" url:"category_id,omitempty"` // [Optional] <p>Shopee's unique identifier for a category.<br /></p>
 }
 
 type GetItemLimitResponse struct {
@@ -3725,11 +3725,11 @@ type GetItemListByContentDiagnosisResponseData struct {
 }
 
 type GetItemListRequest struct {
-	Offset         int64      `json:"offset" url:"offset"`                               // [Required] Specifies the starting entry of data to return in the current call. Default is 0. if data is more than one page, the offset can be some entry to start next call.
-	PageSize       int64      `json:"page_size" url:"page_size"`                         // [Required] the size of one page.Max=100
-	UpdateTimeFrom *int64     `json:"update_time_from,omitempty" url:"update_time_from"` // [Optional]  The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_from field is the starting date range.
-	UpdateTimeTo   *int64     `json:"update_time_to,omitempty" url:"update_time_to"`     // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_to field is the ending date range
-	ItemStatus     ItemStatus `json:"item_status" url:"item_status"`                     // [Required] <p>NORMAL/BANNED/UNLIST/<b><font color="#c24f4a">REVIEWING/SELLER_DELETE/SHOPEE_DELETE</font></b></p><p>If you want to search multiple status, please upload the url like this: item_status=NORMAL&amp;item_status=BANNED</p>
+	Offset         int64        `json:"offset" url:"offset"`                                         // [Required] Specifies the starting entry of data to return in the current call. Default is 0. if data is more than one page, the offset can be some entry to start next call.
+	PageSize       int64        `json:"page_size" url:"page_size"`                                   // [Required] the size of one page.Max=100
+	UpdateTimeFrom *int64       `json:"update_time_from,omitempty" url:"update_time_from,omitempty"` // [Optional]  The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_from field is the starting date range.
+	UpdateTimeTo   *int64       `json:"update_time_to,omitempty" url:"update_time_to,omitempty"`     // [Optional] The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the item update time). The update_time_to field is the ending date range
+	ItemStatus     []ItemStatus `json:"item_status" url:"item_status"`                               // [Required] <p>NORMAL/BANNED/UNLIST/<b><font color="#c24f4a">REVIEWING/SELLER_DELETE/SHOPEE_DELETE</font></b></p><p>If you want to search multiple status, please upload the url like this: item_status=NORMAL&amp;item_status=BANNED</p>
 }
 
 type GetItemListResponse struct {
@@ -3785,9 +3785,9 @@ type GetItemSetItemListResponseData struct {
 }
 
 type GetItemSetListRequest struct {
-	Offset   int64   `json:"offset" url:"offset"`             // [Required] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
-	PageSize int64   `json:"page_size" url:"page_size"`       // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.</p>
-	Keyword  *string `json:"keyword,omitempty" url:"keyword"` // [Optional] <p>Search the item set with it's name matching the keyword.</p>
+	Offset   int64   `json:"offset" url:"offset"`                       // [Required] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
+	PageSize int64   `json:"page_size" url:"page_size"`                 // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.</p>
+	Keyword  *string `json:"keyword,omitempty" url:"keyword,omitempty"` // [Optional] <p>Search the item set with it's name matching the keyword.</p>
 }
 
 type GetItemSetListResponse struct {
@@ -3845,7 +3845,7 @@ type GetKitItemInfoResponseData struct {
 }
 
 type GetKitItemLimitRequest struct {
-	CategoryId *int64 `json:"category_id,omitempty" url:"category_id"` // [Optional] <p>Shopee's unique identifier for a category.<br /></p>
+	CategoryId *int64 `json:"category_id,omitempty" url:"category_id,omitempty"` // [Optional] <p>Shopee's unique identifier for a category.<br /></p>
 }
 
 type GetKitItemLimitResponse struct {
@@ -3867,8 +3867,8 @@ type GetKitItemLimitResponseData struct {
 }
 
 type GetLateOrdersRequest struct {
-	PageNo   *int64 `json:"page_no,omitempty" url:"page_no"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
+	PageNo   *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
 }
 
 type GetLateOrdersResponse struct {
@@ -3882,8 +3882,8 @@ type GetLateOrdersResponseData struct {
 }
 
 type GetLatestCommentListRequest struct {
-	SessionId int64  `json:"session_id" url:"session_id"`   // [Required] <p>The identifier of livestream session.</p>
-	Offset    *int64 `json:"offset,omitempty" url:"offset"` // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
+	SessionId int64  `json:"session_id" url:"session_id"`             // [Required] <p>The identifier of livestream session.</p>
+	Offset    *int64 `json:"offset,omitempty" url:"offset,omitempty"` // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
 }
 
 type GetLatestCommentListResponse struct {
@@ -3904,9 +3904,9 @@ type GetLatestCommentListResponseDataList struct {
 }
 
 type GetLikeItemListRequest struct {
-	Offset   int64   `json:"offset" url:"offset"`             // [Required] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
-	PageSize int64   `json:"page_size" url:"page_size"`       // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.</p>
-	Keyword  *string `json:"keyword,omitempty" url:"keyword"` // [Optional] <p>Search items with name matching this keyword.</p>
+	Offset   int64   `json:"offset" url:"offset"`                       // [Required] <p>Specifies the starting entry of data to return in the current call. Default is 0, if data is more than one page, the offset can be some entry to start next call.</p>
+	PageSize int64   `json:"page_size" url:"page_size"`                 // [Required] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. The limit of page_size if between 1 and 100.</p>
+	Keyword  *string `json:"keyword,omitempty" url:"keyword,omitempty"` // [Optional] <p>Search items with name matching this keyword.</p>
 }
 
 type GetLikeItemListResponse struct {
@@ -3929,8 +3929,8 @@ type GetLikeItemListResponseDataList struct {
 }
 
 type GetListingsWithIssuesRequest struct {
-	PageNo   *int64 `json:"page_no,omitempty" url:"page_no"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
+	PageNo   *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
 }
 
 type GetListingsWithIssuesResponse struct {
@@ -4116,8 +4116,8 @@ type GetMerchantWarehouseLocationListResponseData struct {
 }
 
 type GetMerchantsByPartnerRequest struct {
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.
-	PageNo   *int64 `json:"page_no,omitempty" url:"page_no"`     // [Optional] Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.
+	PageNo   *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.
 }
 
 type GetMerchantsByPartnerResponse struct {
@@ -4127,9 +4127,9 @@ type GetMerchantsByPartnerResponse struct {
 }
 
 type GetMetricSourceDetailRequest struct {
-	MetricId int64  `json:"metric_id" url:"metric_id"`           // [Required] <p>ID of metric. Supported values:&nbsp;</p><p>1: Late Shipment Rate (All Channels)</p><p>3:&nbsp;Non-Fulfilment Rate (All Channels)</p><p>4:&nbsp;Preparation Time</p><p>12:&nbsp;Pre-order Listing %</p><p>15:&nbsp;Days of Pre-order Listing Violation</p><p>25:&nbsp;Fast Handover Rate</p><p>28:&nbsp;On-time Pickup Failure Rate Violation Value<br /></p><p>42:&nbsp;Cancellation Rate (All Channels)</p><p>43:&nbsp;Return-refund Rate (All Channels)</p><p>52:&nbsp;Severe Listing Violations</p><p>53:&nbsp;Other Listing Violations</p><p>85: Late Shipment Rate (NDD)<br /></p><p>88:&nbsp;Non-fulfilment Rate (NDD<br /></p><p>91:&nbsp;Cancellation Rate (NDD)<br /></p><p>92:&nbsp;Return-refund Rate (NDD)</p><p>96: % SDD Listings</p><p>97: % NDD Listings</p><p>2001: Fast Handover Rate - SLS</p><p>2002: Fast Handover Rate - FBS<br /></p><p>2003: Fast Handover Rate - 3PF</p><p>2030: % HD Listings</p><p>2031: % HD Free Shipping Enabled</p><p>2032:&nbsp;Saturday Shipment</p><p>2033:&nbsp;Preparation Time PS</p>
-	PageNo   *int64 `json:"page_no,omitempty" url:"page_no"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.<br /></p>
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
+	MetricId int64  `json:"metric_id" url:"metric_id"`                     // [Required] <p>ID of metric. Supported values:&nbsp;</p><p>1: Late Shipment Rate (All Channels)</p><p>3:&nbsp;Non-Fulfilment Rate (All Channels)</p><p>4:&nbsp;Preparation Time</p><p>12:&nbsp;Pre-order Listing %</p><p>15:&nbsp;Days of Pre-order Listing Violation</p><p>25:&nbsp;Fast Handover Rate</p><p>28:&nbsp;On-time Pickup Failure Rate Violation Value<br /></p><p>42:&nbsp;Cancellation Rate (All Channels)</p><p>43:&nbsp;Return-refund Rate (All Channels)</p><p>52:&nbsp;Severe Listing Violations</p><p>53:&nbsp;Other Listing Violations</p><p>85: Late Shipment Rate (NDD)<br /></p><p>88:&nbsp;Non-fulfilment Rate (NDD<br /></p><p>91:&nbsp;Cancellation Rate (NDD)<br /></p><p>92:&nbsp;Return-refund Rate (NDD)</p><p>96: % SDD Listings</p><p>97: % NDD Listings</p><p>2001: Fast Handover Rate - SLS</p><p>2002: Fast Handover Rate - FBS<br /></p><p>2003: Fast Handover Rate - 3PF</p><p>2030: % HD Listings</p><p>2031: % HD Free Shipping Enabled</p><p>2032:&nbsp;Saturday Shipment</p><p>2033:&nbsp;Preparation Time PS</p>
+	PageNo   *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.<br /></p>
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
 }
 
 type GetMetricSourceDetailResponse struct {
@@ -4210,9 +4210,9 @@ type GetOperatingHoursResponse struct {
 }
 
 type GetOrderDetailRequest struct {
-	OrderSnList               string  `json:"order_sn_list" url:"order_sn_list"`                                         // [Required] The set of order_sn. If there are multiple order_sn, you need to use English comma to connect them. limit [1,50]
-	RequestOrderStatusPending *bool   `json:"request_order_status_pending,omitempty" url:"request_order_status_pending"` // [Optional] <p>Compatible parameter during migration period, send True will let API support PENDING status and return&nbsp; pending_terms, send False or don’t send will fallback to old logic</p>
-	ResponseOptionalFields    *string `json:"response_optional_fields,omitempty" url:"response_optional_fields"`         // [Optional] <p>a response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them.  Available values: buyer_user_id,buyer_username,estimated_shipping_fee,recipient_address,actual_shipping_fee ,goods_to_declare,note,note_update_time,item_list,pay_time,dropshipper, dropshipper_phone,split_up,buyer_cancel_reason,cancel_by,cancel_reason,actual_shipping_fee_confirmed,buyer_cpf_id,fulfillment_flag,pickup_done_time,package_list,shipping_carrier,payment_method,total_amount,buyer_username,invoice_data,order_chargeable_weight_gram,return_request_due_date,edt,payment_info</p>
+	OrderSnList               string  `json:"order_sn_list" url:"order_sn_list"`                                                   // [Required] The set of order_sn. If there are multiple order_sn, you need to use English comma to connect them. limit [1,50]
+	RequestOrderStatusPending *bool   `json:"request_order_status_pending,omitempty" url:"request_order_status_pending,omitempty"` // [Optional] <p>Compatible parameter during migration period, send True will let API support PENDING status and return&nbsp; pending_terms, send False or don’t send will fallback to old logic</p>
+	ResponseOptionalFields    *string `json:"response_optional_fields,omitempty" url:"response_optional_fields,omitempty"`         // [Optional] <p>a response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them.  Available values: buyer_user_id,buyer_username,estimated_shipping_fee,recipient_address,actual_shipping_fee ,goods_to_declare,note,note_update_time,item_list,pay_time,dropshipper, dropshipper_phone,split_up,buyer_cancel_reason,cancel_by,cancel_reason,actual_shipping_fee_confirmed,buyer_cpf_id,fulfillment_flag,pickup_done_time,package_list,shipping_carrier,payment_method,total_amount,buyer_username,invoice_data,order_chargeable_weight_gram,return_request_due_date,edt,payment_info,international_label</p>
 }
 
 type GetOrderDetailResponse struct {
@@ -4279,18 +4279,19 @@ type GetOrderDetailResponseDataOrder struct {
 	IsBuyerShopCollection      bool              `json:"is_buyer_shop_collection"`      // [Required] <p>To indicate if this order is buyer self collection at store order</p>
 	BuyerProofOfCollection     []string          `json:"buyer_proof_of_collection"`     // [Required] <p>The image url of the buyer self collection at the store.</p>
 	HotListingOrder            bool              `json:"hot_listing_order"`             // [Required] <p>[Only for PH,TH,VN,MY,BR,TW] True if the order includes hot listing item.</p>
+	IsInternational            bool              `json:"is_international"`              // [Required] <p>[Only for BR] Indicate if the order is SIP order. This field will only be returned if international_label is included in response_optional_field in the request.</p>
 }
 
 type GetOrderListRequest struct {
-	TimeRangeField            string       `json:"time_range_field" url:"time_range_field"`                                   // [Required] The kind of time_from and time_to. Available value: create_time, update_time.
-	TimeFrom                  int64        `json:"time_from" url:"time_from"`                                                 // [Required] The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.
-	TimeTo                    int64        `json:"time_to" url:"time_to"`                                                     // [Required] The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.
-	PageSize                  int64        `json:"page_size" url:"page_size"`                                                 // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
-	Cursor                    *string      `json:"cursor,omitempty" url:"cursor"`                                             // [Optional] <p>Specifies the starting entry of data to return in the current call. The default is empty. If the data is more than one page, the offset can be some entry to start the next call.</p>
-	OrderStatus               *OrderStatus `json:"order_status,omitempty" url:"order_status"`                                 // [Optional] The order_status filter for retriveing orders and each one only every request. Available value: UNPAID/READY_TO_SHIP/PROCESSED/SHIPPED/COMPLETED/IN_CANCEL/CANCELLED/INVOICE_PENDING
-	ResponseOptionalFields    *string      `json:"response_optional_fields,omitempty" url:"response_optional_fields"`         // [Optional] Optional fields in response. Available value: order_status.
-	RequestOrderStatusPending *bool        `json:"request_order_status_pending,omitempty" url:"request_order_status_pending"` // [Optional] <p>Compatible parameter during migration period, send True will let API support PENDING status, send False or don’t send will fallback to old logic.<br /></p>
-	LogisticsChannelId        *int64       `json:"logistics_channel_id,omitempty" url:"logistics_channel_id"`                 // [Optional] <p>The identity of logistic channel. Valid only for BR.<br /></p>
+	TimeRangeField            string       `json:"time_range_field" url:"time_range_field"`                                             // [Required] The kind of time_from and time_to. Available value: create_time, update_time.
+	TimeFrom                  int64        `json:"time_from" url:"time_from"`                                                           // [Required] The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.
+	TimeTo                    int64        `json:"time_to" url:"time_to"`                                                               // [Required] The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field). The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.
+	PageSize                  int64        `json:"page_size" url:"page_size"`                                                           // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
+	Cursor                    *string      `json:"cursor,omitempty" url:"cursor,omitempty"`                                             // [Optional] <p>Specifies the starting entry of data to return in the current call. The default is empty. If the data is more than one page, the offset can be some entry to start the next call.</p>
+	OrderStatus               *OrderStatus `json:"order_status,omitempty" url:"order_status,omitempty"`                                 // [Optional] The order_status filter for retriveing orders and each one only every request. Available value: UNPAID/READY_TO_SHIP/PROCESSED/SHIPPED/COMPLETED/IN_CANCEL/CANCELLED/INVOICE_PENDING
+	ResponseOptionalFields    *string      `json:"response_optional_fields,omitempty" url:"response_optional_fields,omitempty"`         // [Optional] Optional fields in response. Available value: order_status.
+	RequestOrderStatusPending *bool        `json:"request_order_status_pending,omitempty" url:"request_order_status_pending,omitempty"` // [Optional] <p>Compatible parameter during migration period, send True will let API support PENDING status, send False or don’t send will fallback to old logic.<br /></p>
+	LogisticsChannelId        *int64       `json:"logistics_channel_id,omitempty" url:"logistics_channel_id,omitempty"`                 // [Optional] <p>The identity of logistic channel. Valid only for BR.<br /></p>
 }
 
 type GetOrderListResponse struct {
@@ -4363,9 +4364,9 @@ type GetPayoutInfoResponseData struct {
 }
 
 type GetPenaltyPointHistoryRequest struct {
-	PageNo        *int64 `json:"page_no,omitempty" url:"page_no"`               // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
-	PageSize      *int64 `json:"page_size,omitempty" url:"page_size"`           // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
-	ViolationType *int64 `json:"violation_type,omitempty" url:"violation_type"` // [Optional] <p>Applicable values:&nbsp;</p><p>5: High Late Shipment Rate</p><p>6: High Non-fulfilment Rate</p><p>7: High number of non-fulfilled orders</p><p>8: High number of late shipped orders</p><p>9: Prohibited Listings</p><p>10: Counterfeit / IP infringement</p><p>11: Spam</p><p>12: Copy/Steal images</p><p>13: Re-uploading deleted listings with no change</p><p>14: Bought counterfeit from mall</p><p>15: Counterfeit caught by Shopee</p><p>16: High percentage of pre-order listings</p><p>17: Confirmed Fraud attempts (total)</p><p>18: Confirmed Fraud attempts per week (All with vouchers only)</p><p>19: Fake return address</p><p>20: Shipping fraud/abuse</p><p>21: High No. of Non-responded Chat</p><p>22: Rude chat replies</p><p>23: Request buyer to cancel order</p><p>24: Rude reply to buyer's review</p><p>25: Violate Return/Refund policy</p><p>101: Tier Reason</p><p>3026: Misuse of Shopee’s IP</p><p>3028: Violate Shop Name Regulations</p><p>3030: Direct transactions outside of the Shopee platform</p><p>3032: Shipping empty / incomplete parcels</p><p>3034: Severe Violations on Shopee Feed</p><p>3036: Severe Violations on Shopee LIVE</p><p>3038: Misuse of Local Vendor Tag</p><p>3040: Use of misleading shop tag in listing image</p><p>3042: Counterfeit / IP Infringement test</p><p>3044: Repeat Offender - IP infringement and Counterfeit listings</p><p>3046: Violation of Live Animals Selling Policy</p><p>3048: Chat Spam</p><p>3050: High Overseas Return Refunds Rate</p><p>3052: Privacy breach in buyer's review reply</p><p>3054: Order Brushing</p><p>3056: porn image</p><p>3058: Incorrect Product Categories</p><p>3060: Extremely High Non-Fulfilment Rate</p><p>3062: Penalty of Affiliate Marketing Solution (AMS) Overdue Invoice Payment</p><p>3064: Government-related listing</p><p>3066: Listing invalid gifted items</p><p>3068: High non-fulfilment rate (Next Day Delivery Orders)</p><p>3070: High Late Shipment Rate (Next Day Delivery Orders)</p><p>3072: OPFR Violation Value</p><p>3074: Direct transactions outside Shopee platform via chat</p><p>3090: Prohibited Listings-Extreme Violations</p><p>3091: Prohibited Listings-High Violations</p><p>3092: Prohibited Listings-Mid Violations</p><p>3093: Prohibited Listings-Low Violations</p><p>3094: Counterfeit Listings-Extreme Violations</p><p>3095: Counterfeit Listings-High Violations</p><p>3096: Counterfeit Listings-Mid Violations</p><p>3097: Counterfeit Listings-Low Violations</p><p>3098: Spam Listings-Extreme Violations</p><p>3099: Spam Listings-High Violations</p><p>3100: Spam Listings-Mid Violations</p><p>3101: Spam Listings-Low Violations</p><p>3145: Return/Refund Rate (Non-integrated Channel)</p><p>4130: Poor Product Quality</p>
+	PageNo        *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`               // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
+	PageSize      *int64 `json:"page_size,omitempty" url:"page_size,omitempty"`           // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
+	ViolationType *int64 `json:"violation_type,omitempty" url:"violation_type,omitempty"` // [Optional] <p>Applicable values:&nbsp;</p><p>5: High Late Shipment Rate</p><p>6: High Non-fulfilment Rate</p><p>7: High number of non-fulfilled orders</p><p>8: High number of late shipped orders</p><p>9: Prohibited Listings</p><p>10: Counterfeit / IP infringement</p><p>11: Spam</p><p>12: Copy/Steal images</p><p>13: Re-uploading deleted listings with no change</p><p>14: Bought counterfeit from mall</p><p>15: Counterfeit caught by Shopee</p><p>16: High percentage of pre-order listings</p><p>17: Confirmed Fraud attempts (total)</p><p>18: Confirmed Fraud attempts per week (All with vouchers only)</p><p>19: Fake return address</p><p>20: Shipping fraud/abuse</p><p>21: High No. of Non-responded Chat</p><p>22: Rude chat replies</p><p>23: Request buyer to cancel order</p><p>24: Rude reply to buyer's review</p><p>25: Violate Return/Refund policy</p><p>101: Tier Reason</p><p>3026: Misuse of Shopee’s IP</p><p>3028: Violate Shop Name Regulations</p><p>3030: Direct transactions outside of the Shopee platform</p><p>3032: Shipping empty / incomplete parcels</p><p>3034: Severe Violations on Shopee Feed</p><p>3036: Severe Violations on Shopee LIVE</p><p>3038: Misuse of Local Vendor Tag</p><p>3040: Use of misleading shop tag in listing image</p><p>3042: Counterfeit / IP Infringement test</p><p>3044: Repeat Offender - IP infringement and Counterfeit listings</p><p>3046: Violation of Live Animals Selling Policy</p><p>3048: Chat Spam</p><p>3050: High Overseas Return Refunds Rate</p><p>3052: Privacy breach in buyer's review reply</p><p>3054: Order Brushing</p><p>3056: porn image</p><p>3058: Incorrect Product Categories</p><p>3060: Extremely High Non-Fulfilment Rate</p><p>3062: Penalty of Affiliate Marketing Solution (AMS) Overdue Invoice Payment</p><p>3064: Government-related listing</p><p>3066: Listing invalid gifted items</p><p>3068: High non-fulfilment rate (Next Day Delivery Orders)</p><p>3070: High Late Shipment Rate (Next Day Delivery Orders)</p><p>3072: OPFR Violation Value</p><p>3074: Direct transactions outside Shopee platform via chat</p><p>3090: Prohibited Listings-Extreme Violations</p><p>3091: Prohibited Listings-High Violations</p><p>3092: Prohibited Listings-Mid Violations</p><p>3093: Prohibited Listings-Low Violations</p><p>3094: Counterfeit Listings-Extreme Violations</p><p>3095: Counterfeit Listings-High Violations</p><p>3096: Counterfeit Listings-Mid Violations</p><p>3097: Counterfeit Listings-Low Violations</p><p>3098: Spam Listings-Extreme Violations</p><p>3099: Spam Listings-High Violations</p><p>3100: Spam Listings-Mid Violations</p><p>3101: Spam Listings-Low Violations</p><p>3145: Return/Refund Rate (Non-integrated Channel)</p><p>4130: Poor Product Quality</p>
 }
 
 type GetPenaltyPointHistoryResponse struct {
@@ -4379,8 +4380,8 @@ type GetPenaltyPointHistoryResponseData struct {
 }
 
 type GetPendingBuyerInvoiceOrderListRequest struct {
-	Cursor   *string `json:"cursor,omitempty" url:"cursor"` // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
-	PageSize int64   `json:"page_size" url:"page_size"`     // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
+	Cursor   *string `json:"cursor,omitempty" url:"cursor,omitempty"` // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	PageSize int64   `json:"page_size" url:"page_size"`               // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
 }
 
 type GetPendingBuyerInvoiceOrderListResponse struct {
@@ -4440,9 +4441,9 @@ type GetProductCertificationRuleResponseData struct {
 }
 
 type GetProductLevelCampaignIdListRequest struct {
-	AdType *string `json:"ad_type,omitempty" url:"ad_type"` // [Optional] <p>Any of ["","all","auto","manual"]</p>
-	Offset *int64  `json:"offset,omitempty" url:"offset"`   // [Optional] <p>offset</p>
-	Limit  *int64  `json:"limit,omitempty" url:"limit"`     // [Optional] <p>limit</p>
+	AdType *string `json:"ad_type,omitempty" url:"ad_type,omitempty"` // [Optional] <p>Any of ["","all","auto","manual"]</p>
+	Offset *int64  `json:"offset,omitempty" url:"offset,omitempty"`   // [Optional] <p>offset</p>
+	Limit  *int64  `json:"limit,omitempty" url:"limit,omitempty"`     // [Optional] <p>limit</p>
 }
 
 type GetProductLevelCampaignIdListResponse struct {
@@ -4533,8 +4534,8 @@ type GetPublishTaskResultResponseDataSuccess struct {
 }
 
 type GetPublishableShopRequest struct {
-	GlobalItemId int64   `json:"global_item_id" url:"global_item_id"`       // [Required] Id of global item.
-	ShopIdList   []int64 `json:"shop_id_list,omitempty" url:"shop_id_list"` // [Optional] <p>Shop id list for checking if the shop is publishable.If not input the list, will return the first 300 publishable shop list in response<br /></p>
+	GlobalItemId int64   `json:"global_item_id" url:"global_item_id"`                 // [Required] Id of global item.
+	ShopIdList   []int64 `json:"shop_id_list,omitempty" url:"shop_id_list,omitempty"` // [Optional] <p>Shop id list for checking if the shop is publishable.If not input the list, will return the first 300 publishable shop list in response<br /></p>
 }
 
 type GetPublishableShopResponse struct {
@@ -4547,8 +4548,8 @@ type GetPublishableShopResponseData struct {
 }
 
 type GetPublishedListRequest struct {
-	GlobalItemId int64   `json:"global_item_id" url:"global_item_id"`       // [Required] Id of global item.
-	ShopIdList   []int64 `json:"shop_id_list,omitempty" url:"shop_id_list"` // [Optional] <p>Shop id list for checking if the shop is publishable.If not input the list, will return the first 300 publishable shop list in response after the&nbsp;migration period.<br /></p>
+	GlobalItemId int64   `json:"global_item_id" url:"global_item_id"`                 // [Required] Id of global item.
+	ShopIdList   []int64 `json:"shop_id_list,omitempty" url:"shop_id_list,omitempty"` // [Optional] <p>Shop id list for checking if the shop is publishable.If not input the list, will return the first 300 publishable shop list in response after the&nbsp;migration period.<br /></p>
 }
 
 type GetPublishedListResponse struct {
@@ -4561,9 +4562,9 @@ type GetPublishedListResponseData struct {
 }
 
 type GetPunishmentHistoryRequest struct {
-	PageNo           *int64 `json:"page_no,omitempty" url:"page_no"`           // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
-	PageSize         *int64 `json:"page_size,omitempty" url:"page_size"`       // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
-	PunishmentStatus int64  `json:"punishment_status" url:"punishment_status"` // [Required] <p>The status of punishment. Applicable values:&nbsp;</p><p>1: Ongoing</p><p>2: Ended<br /></p>
+	PageNo           *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] <p>Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.&nbsp;</p><p><br /></p><p>Default is 1.</p>
+	PageSize         *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.&nbsp;</p><p><br /></p><p>The limit of page_size if between 1 and 100. Default is 10.</p>
+	PunishmentStatus int64  `json:"punishment_status" url:"punishment_status"`     // [Required] <p>The status of punishment. Applicable values:&nbsp;</p><p>1: Ongoing</p><p>2: Ended<br /></p>
 }
 
 type GetPunishmentHistoryResponse struct {
@@ -4593,9 +4594,9 @@ type GetRecentItemListResponseData struct {
 }
 
 type GetRecommendAttributeRequest struct {
-	ItemName     string `json:"item_name" url:"item_name"`                     // [Required] name of item
-	CoverImageId *int64 `json:"cover_image_id,omitempty" url:"cover_image_id"` // [Optional] Cover image id of item
-	CategoryId   int64  `json:"category_id" url:"category_id"`                 // [Required] ID of category
+	ItemName     string `json:"item_name" url:"item_name"`                               // [Required] name of item
+	CoverImageId *int64 `json:"cover_image_id,omitempty" url:"cover_image_id,omitempty"` // [Optional] Cover image id of item
+	CategoryId   int64  `json:"category_id" url:"category_id"`                           // [Required] ID of category
 }
 
 type GetRecommendAttributeResponse struct {
@@ -4620,8 +4621,8 @@ type GetRecommendedItemListResponseData struct {
 }
 
 type GetRecommendedKeywordListRequest struct {
-	ItemId       int64   `json:"item_id" url:"item_id"`                       // [Required] <p>Shopee's unique identifier for an item.<br /></p>
-	InputKeyword *string `json:"input_keyword,omitempty" url:"input_keyword"` // [Optional] <p>The keyword seller typed in the manually add keyword window.<br /></p>
+	ItemId       int64   `json:"item_id" url:"item_id"`                                 // [Required] <p>Shopee's unique identifier for an item.<br /></p>
+	InputKeyword *string `json:"input_keyword,omitempty" url:"input_keyword,omitempty"` // [Optional] <p>The keyword seller typed in the manually add keyword window.<br /></p>
 }
 
 type GetRecommendedKeywordListResponse struct {
@@ -4719,16 +4720,16 @@ type GetReturnDisputeReasonResponseData struct {
 }
 
 type GetReturnListRequest struct {
-	PageNo                   int64   `json:"page_no" url:"page_no"`                                                 // [Required] Specifies the starting entry of data to return in the current call. Default is 0. if data is more than one page, the offset can be some entry to start next call.
-	PageSize                 int64   `json:"page_size" url:"page_size"`                                             // [Required] if many items are available to retrieve, you may need to call GetReturnList multiple times to retrieve all the data. Each result set is returned as a page of entries. Default is 40. Use the Pagination filters to control the maximum number of entries (<= 100) to retrieve per page (i.e., per call), the offset number to start next call. This integer value is usUed to specify the maximum number of entries to return in a single ""page"" of data.
-	CreateTimeFrom           *int64  `json:"create_time_from,omitempty" url:"create_time_from"`                     // [Optional] The create_time_from and create_time_to fields specify a date range for retrieving orders (based on the order create time). The create_time_from field is the starting date range. The maximum date range that may be specified with the create_time_from and create_time_to fields is 15 days.
-	CreateTimeTo             *int64  `json:"create_time_to,omitempty" url:"create_time_to"`                         // [Optional] The create_time_from and create_time_to fields specify a date range for retrieving orders (based on the order create time). The create_time_from field is the starting date range. The maximum date range that may be specified with the create_time_from and create_time_to fields is 15 days.
-	UpdateTimeFrom           *int64  `json:"update_time_from,omitempty" url:"update_time_from"`                     // [Optional] <p>The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the last return updated time). The update_time_from field is the starting date range. The maximum date range that may be specified with the update_time_from and update_time_to fields is 15 days. update_time_from should be &gt;= create_time_from<br /></p>
-	UpdateTimeTo             *int64  `json:"update_time_to,omitempty" url:"update_time_to"`                         // [Optional] <p>The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the last return updated time). The update_time_from field is the starting date range. The maximum date range that may be specified with the update_time_from and update_time_to fields is 15 days. update_time_from should be &gt;= create_time_from<br /></p>
-	Status                   *string `json:"status,omitempty" url:"status"`                                         // [Optional] This is for filtering return request by return status. See "Data Definition - ReturnStatus"
-	NegotiationStatus        *string `json:"negotiation_status,omitempty" url:"negotiation_status"`                 // [Optional] This is for filtering return request by counter status. See "Data Definition - NegotiationStatus"
-	SellerProofStatus        *string `json:"seller_proof_status,omitempty" url:"seller_proof_status"`               // [Optional] <p>This is for filtering return request by proof status. See "Data Definition - SellerProofStatus"</p>
-	SellerCompensationStatus *string `json:"seller_compensation_status,omitempty" url:"seller_compensation_status"` // [Optional] This is for filtering return request by compensation status. See "Data Definition - SellerCompensationStatus"
+	PageNo                   int64   `json:"page_no" url:"page_no"`                                                           // [Required] Specifies the starting entry of data to return in the current call. Default is 0. if data is more than one page, the offset can be some entry to start next call.
+	PageSize                 int64   `json:"page_size" url:"page_size"`                                                       // [Required] if many items are available to retrieve, you may need to call GetReturnList multiple times to retrieve all the data. Each result set is returned as a page of entries. Default is 40. Use the Pagination filters to control the maximum number of entries (<= 100) to retrieve per page (i.e., per call), the offset number to start next call. This integer value is usUed to specify the maximum number of entries to return in a single ""page"" of data.
+	CreateTimeFrom           *int64  `json:"create_time_from,omitempty" url:"create_time_from,omitempty"`                     // [Optional] The create_time_from and create_time_to fields specify a date range for retrieving orders (based on the order create time). The create_time_from field is the starting date range. The maximum date range that may be specified with the create_time_from and create_time_to fields is 15 days.
+	CreateTimeTo             *int64  `json:"create_time_to,omitempty" url:"create_time_to,omitempty"`                         // [Optional] The create_time_from and create_time_to fields specify a date range for retrieving orders (based on the order create time). The create_time_from field is the starting date range. The maximum date range that may be specified with the create_time_from and create_time_to fields is 15 days.
+	UpdateTimeFrom           *int64  `json:"update_time_from,omitempty" url:"update_time_from,omitempty"`                     // [Optional] <p>The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the last return updated time). The update_time_from field is the starting date range. The maximum date range that may be specified with the update_time_from and update_time_to fields is 15 days. update_time_from should be &gt;= create_time_from<br /></p>
+	UpdateTimeTo             *int64  `json:"update_time_to,omitempty" url:"update_time_to,omitempty"`                         // [Optional] <p>The update_time_from and update_time_to fields specify a date range for retrieving orders (based on the last return updated time). The update_time_from field is the starting date range. The maximum date range that may be specified with the update_time_from and update_time_to fields is 15 days. update_time_from should be &gt;= create_time_from<br /></p>
+	Status                   *string `json:"status,omitempty" url:"status,omitempty"`                                         // [Optional] This is for filtering return request by return status. See "Data Definition - ReturnStatus"
+	NegotiationStatus        *string `json:"negotiation_status,omitempty" url:"negotiation_status,omitempty"`                 // [Optional] This is for filtering return request by counter status. See "Data Definition - NegotiationStatus"
+	SellerProofStatus        *string `json:"seller_proof_status,omitempty" url:"seller_proof_status,omitempty"`               // [Optional] <p>This is for filtering return request by proof status. See "Data Definition - SellerProofStatus"</p>
+	SellerCompensationStatus *string `json:"seller_compensation_status,omitempty" url:"seller_compensation_status,omitempty"` // [Optional] This is for filtering return request by compensation status. See "Data Definition - SellerCompensationStatus"
 }
 
 type GetReturnListResponse struct {
@@ -4838,8 +4839,8 @@ type GetSessionMetricResponseData struct {
 }
 
 type GetShipmentListRequest struct {
-	Cursor   *string `json:"cursor,omitempty" url:"cursor"` // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
-	PageSize int64   `json:"page_size" url:"page_size"`     // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
+	Cursor   *string `json:"cursor,omitempty" url:"cursor,omitempty"` // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	PageSize int64   `json:"page_size" url:"page_size"`               // [Required] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
 }
 
 type GetShipmentListResponse struct {
@@ -4941,8 +4942,8 @@ type GetShippingDocumentResultResponseDataResult struct {
 }
 
 type GetShippingParameterRequest struct {
-	OrderSn       string  `json:"order_sn" url:"order_sn"`                       // [Required] Shopee's unique identifier for an order.
-	PackageNumber *string `json:"package_number,omitempty" url:"package_number"` // [Optional] <p>Shopee's unique identifier for the package under an order. You should't fill the field with empty string when there is't a package number.<br /></p>
+	OrderSn       string  `json:"order_sn" url:"order_sn"`                                 // [Required] Shopee's unique identifier for an order.
+	PackageNumber *string `json:"package_number,omitempty" url:"package_number,omitempty"` // [Optional] <p>Shopee's unique identifier for the package under an order. You should't fill the field with empty string when there is't a package number.<br /></p>
 }
 
 type GetShippingParameterResponse struct {
@@ -5083,8 +5084,8 @@ type GetShopListByMerchantResponse struct {
 }
 
 type GetShopNotificationRequest struct {
-	Cursor   *int64 `json:"cursor,omitempty" url:"cursor"`       // [Optional] <p>The last notification_id returned on the page. When using the cursor, notifications will start with the one following this cursor notification. If no cursor is provided, the latest message from the shop will be returned.<br /></p>
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>Default 10; maximum 50</p>
+	Cursor   *int64 `json:"cursor,omitempty" url:"cursor,omitempty"`       // [Optional] <p>The last notification_id returned on the page. When using the cursor, notifications will start with the one following this cursor notification. If no cursor is provided, the latest message from the shop will be returned.<br /></p>
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>Default 10; maximum 50</p>
 }
 
 type GetShopNotificationResponse struct {
@@ -5137,8 +5138,8 @@ type GetShopeeIpRangesResponse struct {
 }
 
 type GetShopsByPartnerRequest struct {
-	PageSize *int64 `json:"page_size,omitempty" url:"page_size"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.
-	PageNo   *int64 `json:"page_no,omitempty" url:"page_no"`     // [Optional] Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.
+	PageSize *int64 `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call), and the "page_no" to start next call. This integer value is used to specify the maximum number of entries to return in a single "page" of data.
+	PageNo   *int64 `json:"page_no,omitempty" url:"page_no,omitempty"`     // [Optional] Specifies the page number of data to return in the current call. Starting from 1. if data is more than one page, the page_no can be some entry to start next call.
 }
 
 type GetShopsByPartnerResponse struct {
@@ -5170,7 +5171,7 @@ type GetShowItemResponseDataItem struct {
 }
 
 type GetSipDiscountsRequest struct {
-	Region *string `json:"region,omitempty" url:"region"` // [Optional] <p>The region of SIP affiliate shop that needs to get discount information.</p><p>If do not pass, will return the discount information set for all SIP affiliate shops.</p>
+	Region *string `json:"region,omitempty" url:"region,omitempty"` // [Optional] <p>The region of SIP affiliate shop that needs to get discount information.</p><p>If do not pass, will return the discount information set for all SIP affiliate shops.</p>
 }
 
 type GetSipDiscountsResponse struct {
@@ -5198,9 +5199,9 @@ type GetSizeChartDetailResponseData struct {
 }
 
 type GetSizeChartListRequest struct {
-	CategoryId int64   `json:"category_id" url:"category_id"` // [Required] <p>category id under this shop<br /></p>
-	PageSize   int64   `json:"page_size" url:"page_size"`     // [Required] <p>the size of one page.&nbsp;Max=50.<br /></p>
-	Cursor     *string `json:"cursor,omitempty" url:"cursor"` // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the cursor can be some entry to start next call.<br /></p>
+	CategoryId int64   `json:"category_id" url:"category_id"`           // [Required] <p>category id under this shop<br /></p>
+	PageSize   int64   `json:"page_size" url:"page_size"`               // [Required] <p>the size of one page.&nbsp;Max=50.<br /></p>
+	Cursor     *string `json:"cursor,omitempty" url:"cursor,omitempty"` // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the cursor can be some entry to start next call.<br /></p>
 }
 
 type GetSizeChartListResponse struct {
@@ -5230,8 +5231,8 @@ type GetSspInfoResponseData struct {
 }
 
 type GetSspListRequest struct {
-	PageSize *int64  `json:"page_size,omitempty" url:"page_size"` // [Optional] <p>The size of one page.</p><p>The limit of page_size is [1,20], and default page_size is 10.<br /></p>
-	Offset   *string `json:"offset,omitempty" url:"offset"`       // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "", if data is more than one page, the offset can be some entry to start next call.<br /></p>
+	PageSize *int64  `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>The size of one page.</p><p>The limit of page_size is [1,20], and default page_size is 10.<br /></p>
+	Offset   *string `json:"offset,omitempty" url:"offset,omitempty"`       // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "", if data is more than one page, the offset can be some entry to start next call.<br /></p>
 }
 
 type GetSspListResponse struct {
@@ -5370,8 +5371,8 @@ type GetTotalBalanceResponseData struct {
 }
 
 type GetTrackingInfoRequest struct {
-	OrderSn       string  `json:"order_sn" url:"order_sn"`                       // [Required] <p>Shopee's unique identifier for an order.</p>
-	PackageNumber *string `json:"package_number,omitempty" url:"package_number"` // [Optional] <p>Shopee's unique identifier for the package under an order. You shouldn't fill the field with empty string when there is a package number.</p>
+	OrderSn       string  `json:"order_sn" url:"order_sn"`                                 // [Required] <p>Shopee's unique identifier for an order.</p>
+	PackageNumber *string `json:"package_number,omitempty" url:"package_number,omitempty"` // [Optional] <p>Shopee's unique identifier for the package under an order. You shouldn't fill the field with empty string when there is a package number.</p>
 }
 
 type GetTrackingInfoResponse struct {
@@ -5390,10 +5391,10 @@ type GetTrackingInfoResponseData struct {
 }
 
 type GetTrackingNumberListRequest struct {
-	FromDate string  `json:"from_date" url:"from_date"`           // [Required] The start time of declare_date.
-	ToDate   string  `json:"to_date" url:"to_date"`               // [Required] The end time of declare_date.
-	PageSize *int64  `json:"page_size,omitempty" url:"page_size"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 50]
-	Cursor   *string `json:"cursor,omitempty" url:"cursor"`       // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	FromDate string  `json:"from_date" url:"from_date"`                     // [Required] The start time of declare_date.
+	ToDate   string  `json:"to_date" url:"to_date"`                         // [Required] The end time of declare_date.
+	PageSize *int64  `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 50]
+	Cursor   *string `json:"cursor,omitempty" url:"cursor,omitempty"`       // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
 }
 
 type GetTrackingNumberListResponse struct {
@@ -5408,9 +5409,9 @@ type GetTrackingNumberListResponseData struct {
 }
 
 type GetTrackingNumberRequest struct {
-	OrderSn                string  `json:"order_sn" url:"order_sn"`                                           // [Required] Shopee's unique identifier for an order.
-	PackageNumber          *string `json:"package_number,omitempty" url:"package_number"`                     // [Optional] Shopee's unique identifier for the package under an order. You should't fill the field with empty string when there isn't a package number.
-	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields"` // [Optional] Indicate response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them. Available values: plp_number, first_mile_tracking_number,last_mile_tracking_number
+	OrderSn                string  `json:"order_sn" url:"order_sn"`                                                     // [Required] Shopee's unique identifier for an order.
+	PackageNumber          *string `json:"package_number,omitempty" url:"package_number,omitempty"`                     // [Optional] Shopee's unique identifier for the package under an order. You should't fill the field with empty string when there isn't a package number.
+	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields,omitempty"` // [Optional] Indicate response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them. Available values: plp_number, first_mile_tracking_number,last_mile_tracking_number
 }
 
 type GetTrackingNumberResponse struct {
@@ -5428,7 +5429,7 @@ type GetTrackingNumberResponseData struct {
 }
 
 type GetTransitWarehouseListRequest struct {
-	Region *string `json:"region,omitempty" url:"region"` // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value:&nbsp;CN.</p>
+	Region *string `json:"region,omitempty" url:"region,omitempty"` // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value:&nbsp;CN.</p>
 }
 
 type GetTransitWarehouseListResponse struct {
@@ -5441,9 +5442,9 @@ type GetTransitWarehouseListResponseData struct {
 }
 
 type GetUnbindOrderListRequest struct {
-	Cursor                 *string `json:"cursor,omitempty" url:"cursor"`                                     // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
-	PageSize               *int64  `json:"page_size,omitempty" url:"page_size"`                               // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 100]
-	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields"` // [Optional] <p>Indicate response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them.  Available values: logistics_status,package_number.</p>
+	Cursor                 *string `json:"cursor,omitempty" url:"cursor,omitempty"`                                     // [Optional] Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the offset can be some entry to start next call.
+	PageSize               *int64  `json:"page_size,omitempty" url:"page_size,omitempty"`                               // [Optional] Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call). This integer value is used to specify the maximum number of entries to return in a single "page" of data. limit [1, 100]
+	ResponseOptionalFields *string `json:"response_optional_fields,omitempty" url:"response_optional_fields,omitempty"` // [Optional] <p>Indicate response fields you want to get. Please select from the below response parameters. If you input an object field, all the params under it will be included automatically in the response. If there are multiple response fields you want to get, you need to use English comma to connect them.  Available values: logistics_status,package_number.</p>
 }
 
 type GetUnbindOrderListResponse struct {
@@ -5474,10 +5475,10 @@ type GetVariationsResponse struct {
 
 type GetVehicleListByCompatibilityDetailRequest struct {
 	CompatibilityDetails string  `json:"compatibility_details" url:"compatibility_details"` // [Required] <p>To inform compatibility list, can be equal to Brand, Model, Year, or Version.<br /></p><p><br /></p><p>Pass the&nbsp;<b>compatibility_details="Brand"</b> to get all brand list;</p><p>Pass the <b>compatibility_details="Model" and brand_id=1234</b> to get all model list under brand_id=1234;<br /></p><p>Pass the&nbsp;<b>compatibility_details="Year" and brand_id=1234 and model_id=2345</b> to get all year list under brand_id=1234 and model_id=2345;</p><p>Pass the&nbsp;<b>compatibility_details="Version" and brand_id=1234 and model_id=2345 and year_id=3456</b> to get all version list under brand_id=1234 and model_id=2345 and year_id=3456.<br /></p>
-	BrandId              *int64  `json:"brand_id,omitempty" url:"brand_id"`                 // [Optional] <p>ID of the brand.<br /></p>
-	ModelId              *int64  `json:"model_id,omitempty" url:"model_id"`                 // [Optional] <p>ID of the model.<br /></p>
-	YearId               *int64  `json:"year_id,omitempty" url:"year_id"`                   // [Optional] <p>ID of the year.<br /></p>
-	Language             *string `json:"language,omitempty" url:"language"`                 // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ; BR: en / pt-br ; MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data.<br /></p>
+	BrandId              *int64  `json:"brand_id,omitempty" url:"brand_id,omitempty"`       // [Optional] <p>ID of the brand.<br /></p>
+	ModelId              *int64  `json:"model_id,omitempty" url:"model_id,omitempty"`       // [Optional] <p>ID of the model.<br /></p>
+	YearId               *int64  `json:"year_id,omitempty" url:"year_id,omitempty"`         // [Optional] <p>ID of the year.<br /></p>
+	Language             *string `json:"language,omitempty" url:"language,omitempty"`       // [Optional] <p>If language is not uploaded, the default language=en, the following are the languages supported by different markets SG: en ; MY: en / ms-my / zh-hans ; TH: en / th ; VN: en / vi ; PH: en ; TW: en / zh-hant ; ID: en / id ; BR: en / pt-br ; MX: en / es-mx ; CO: en/es-CO ; CL: en/es-CL. Note: For markets that have already launched global tree, Crossboard shop only support returning en and zh-hans language data.<br /></p>
 }
 
 type GetVehicleListByCompatibilityDetailResponse struct {
@@ -5584,7 +5585,7 @@ type GetWalletTransactionListResponseData struct {
 }
 
 type GetWarehouseDetailRequest struct {
-	WarehouseType *int64 `json:"warehouse_type,omitempty" url:"warehouse_type"` // [Optional] <p>Type of warehouse. Applicable values:&nbsp;</p><p>- 1: Pickup Warehouse</p><p>- 2: Return Warehouse</p><p><br /></p><p>Default value is 1 (Pickup Warehouse)</p>
+	WarehouseType *int64 `json:"warehouse_type,omitempty" url:"warehouse_type,omitempty"` // [Optional] <p>Type of warehouse. Applicable values:&nbsp;</p><p>- 1: Pickup Warehouse</p><p>- 2: Return Warehouse</p><p><br /></p><p>Default value is 1 (Pickup Warehouse)</p>
 }
 
 type GetWarehouseDetailResponse struct {
@@ -5699,8 +5700,8 @@ type GlobalModelStockInfo struct {
 }
 
 type GlobalProductCategoryRecommendRequest struct {
-	GlobalItemName          string  `json:"global_item_name" url:"global_item_name"`                               // [Required] name of item
-	GlobalProductCoverImage *string `json:"global_product_cover_image,omitempty" url:"global_product_cover_image"` // [Optional] <p>Please use the image id returned by v2.media_space.upload_image api, we will ignore if this field is empty string<br /></p>
+	GlobalItemName          string  `json:"global_item_name" url:"global_item_name"`                                         // [Required] name of item
+	GlobalProductCoverImage *string `json:"global_product_cover_image,omitempty" url:"global_product_cover_image,omitempty"` // [Optional] <p>Please use the image id returned by v2.media_space.upload_image api, we will ignore if this field is empty string<br /></p>
 }
 
 type GlobalProductCategoryRecommendResponse struct {
@@ -5713,8 +5714,8 @@ type GlobalProductCategoryRecommendResponseData struct {
 }
 
 type GlobalProductGetAttributeTreeRequest struct {
-	CategoryIdList []int64 `json:"category_id_list" url:"category_id_list"` // [Required] <p>Max count is 20</p>
-	Language       *string `json:"language,omitempty" url:"language"`       // [Optional] <p>Language</p><p>Support Lanuage:</p><p>"SG": [ "en", "zh-Hans", "ms" ],&nbsp;</p><p>"MY": [ "en", "zh-Hans", "ms" ],</p><p>"PH": [ "en", "zh-Hans" ],</p><p>"VN": [ "vn", "en" ],</p><p>"ID": [ "id", "en" ],</p><p>"TH": [ "th", "en" ],</p><p>"BR": [ "pt-BR", "en" ],</p><p>"MX": [ "es-MX", "en" ],</p><p>"CO": [ "es-CO", "en" ],</p><p>"CL": [ "es-CL", "en" ],</p><p>"TW": [ "zh-Hant", "zh-Hans", "en" ],</p><p>"IN": [ "en", "hi" ]</p>
+	CategoryIdList []int64 `json:"category_id_list" url:"category_id_list"`     // [Required] <p>Max count is 20</p>
+	Language       *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>Language</p><p>Support Lanuage:</p><p>"SG": [ "en", "zh-Hans", "ms" ],&nbsp;</p><p>"MY": [ "en", "zh-Hans", "ms" ],</p><p>"PH": [ "en", "zh-Hans" ],</p><p>"VN": [ "vn", "en" ],</p><p>"ID": [ "id", "en" ],</p><p>"TH": [ "th", "en" ],</p><p>"BR": [ "pt-BR", "en" ],</p><p>"MX": [ "es-MX", "en" ],</p><p>"CO": [ "es-CO", "en" ],</p><p>"CL": [ "es-CL", "en" ],</p><p>"TW": [ "zh-Hant", "zh-Hans", "en" ],</p><p>"IN": [ "en", "hi" ]</p>
 }
 
 type GlobalProductGetAttributeTreeResponse struct {
@@ -5747,7 +5748,7 @@ type GlobalProductGetBrandListResponseData struct {
 }
 
 type GlobalProductGetCategoryRequest struct {
-	Language *string `json:"language,omitempty" url:"language"` // [Optional] <p>Display language. Language should be one of "zh-hans", "en"</p>
+	Language *string `json:"language,omitempty" url:"language,omitempty"` // [Optional] <p>Display language. Language should be one of "zh-hans", "en"</p>
 }
 
 type GlobalProductGetCategoryResponse struct {
@@ -5760,9 +5761,9 @@ type GlobalProductGetCategoryResponseData struct {
 }
 
 type GlobalProductGetRecommendAttributeRequest struct {
-	GlobalItemName string  `json:"global_item_name" url:"global_item_name"`       // [Required] Name of item.
-	CategoryId     int64   `json:"category_id" url:"category_id"`                 // [Required] ID of category.
-	CoverImageId   *string `json:"cover_image_id,omitempty" url:"cover_image_id"` // [Optional] ID of image.
+	GlobalItemName string  `json:"global_item_name" url:"global_item_name"`                 // [Required] Name of item.
+	CategoryId     int64   `json:"category_id" url:"category_id"`                           // [Required] ID of category.
+	CoverImageId   *string `json:"cover_image_id,omitempty" url:"cover_image_id,omitempty"` // [Optional] ID of image.
 }
 
 type GlobalProductGetRecommendAttributeResponse struct {
@@ -8261,13 +8262,13 @@ type SearchGlobalAttributeValueListResponseData struct {
 }
 
 type SearchItemRequest struct {
-	Offset          *string     `json:"offset,omitempty" url:"offset"`                     // [Optional] Specifies the starting entry of data to return in the current call. Default is empty. if data is more than one page, the offset can be some entry to start next call.
-	PageSize        int64       `json:"page_size" url:"page_size"`                         // [Required] the size of one page.
-	ItemName        *string     `json:"item_name,omitempty" url:"item_name"`               // [Optional] name of item.
-	AttributeStatus *int64      `json:"attribute_status,omitempty" url:"attribute_status"` // [Optional] 1:get item lack of requires attribute.   2:get item lack of optional attribute.
-	ItemSku         *string     `json:"item_sku,omitempty" url:"item_sku"`                 // [Optional] <p>sku. If you search for item_sku and item_name at the same time, only the results that match item_sku will be returned. If you search for item_sku and attribute_status at the same time, the results that match both item_sku and attribute_status will be returned.<br /></p>
-	ItemStatus      *ItemStatus `json:"item_status,omitempty" url:"item_status"`           // [Optional] <p>NORMAL/BANNED/UNLIST/<b><font color="#c24f4a">REVIEWING/SELLER_DELETE/SHOPEE_DELETE</font></b></p><p>If you want to search multiple status, please upload the url like this: item_status=NORMAL&amp;item_status=BANNED<br /></p>
-	DeboostOnly     *bool       `json:"deboost_only,omitempty" url:"deboost_only"`         // [Optional] <p>If deboost_only is true, then API will return items whose deboost is true, if deboost_only is empty or false, then API will return items whose deboost is true and false simultaneously<br /></p>
+	Offset          *string      `json:"offset,omitempty" url:"offset,omitempty"`                     // [Optional] Specifies the starting entry of data to return in the current call. Default is empty. if data is more than one page, the offset can be some entry to start next call.
+	PageSize        int64        `json:"page_size" url:"page_size"`                                   // [Required] the size of one page.
+	ItemName        *string      `json:"item_name,omitempty" url:"item_name,omitempty"`               // [Optional] name of item.
+	AttributeStatus *int64       `json:"attribute_status,omitempty" url:"attribute_status,omitempty"` // [Optional] 1:get item lack of requires attribute.   2:get item lack of optional attribute.
+	ItemSku         *string      `json:"item_sku,omitempty" url:"item_sku,omitempty"`                 // [Optional] <p>sku. If you search for item_sku and item_name at the same time, only the results that match item_sku will be returned. If you search for item_sku and attribute_status at the same time, the results that match both item_sku and attribute_status will be returned.<br /></p>
+	ItemStatus      []ItemStatus `json:"item_status,omitempty" url:"item_status,omitempty"`           // [Optional] <p>NORMAL/BANNED/UNLIST/<b><font color="#c24f4a">REVIEWING/SELLER_DELETE/SHOPEE_DELETE</font></b></p><p>If you want to search multiple status, please upload the url like this: item_status=NORMAL&amp;item_status=BANNED<br /></p>
+	DeboostOnly     *bool        `json:"deboost_only,omitempty" url:"deboost_only,omitempty"`         // [Optional] <p>If deboost_only is true, then API will return items whose deboost is true, if deboost_only is empty or false, then API will return items whose deboost is true and false simultaneously<br /></p>
 }
 
 type SearchItemResponse struct {
@@ -10078,13 +10079,6 @@ type WorkingDayConfigMonday struct {
 	Operating_24HourToggle bool   `json:"operating_24_hour_toggle"` // [Required] <p>If the toggle value is true, the user can set the&nbsp;start_time&nbsp;to&nbsp;00:00&nbsp;and the&nbsp;end_time&nbsp;to&nbsp;23:59&nbsp;to indicate that the shop is operating 24 hours a day.</p>
 }
 
-type OperationType string
-
-const (
-	OperationTypeRetailer     OperationType = "1"
-	OperationTypeManufactorer OperationType = "2"
-)
-
 type ItemStatus string
 
 const (
@@ -10113,52 +10107,6 @@ const (
 	OrderStatusReadyToShip    OrderStatus = "READY_TO_SHIP"
 	OrderStatusShipped        OrderStatus = "SHIPPED"
 	OrderStatusUnpaid         OrderStatus = "UNPAID"
-)
-
-type BookingStatus string
-
-const (
-	BookingStatusCancelled   BookingStatus = "CANCELLED"
-	BookingStatusMatched     BookingStatus = "MATCHED"
-	BookingStatusProcessed   BookingStatus = "PROCESSED"
-	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
-	BookingStatusShipped     BookingStatus = "SHIPPED"
-)
-
-type DescriptionType string
-
-const (
-	DescriptionTypeExtended DescriptionType = "extended"
-	DescriptionTypeNormal   DescriptionType = "normal"
-)
-
-type DescriptionElementFieldType string
-
-const (
-	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
-	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
-)
-
-type InvoiceOption string
-
-const (
-	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
-	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
-	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
-	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
-)
-
-type CampaignStatus string
-
-const (
-	CampaignStatusClosed    CampaignStatus = "closed"
-	CampaignStatusDeleted   CampaignStatus = "deleted"
-	CampaignStatusEnded     CampaignStatus = "ended"
-	CampaignStatusExpired   CampaignStatus = "expired"
-	CampaignStatusOngoing   CampaignStatus = "ongoing"
-	CampaignStatusPaused    CampaignStatus = "paused"
-	CampaignStatusScheduled CampaignStatus = "scheduled"
-	CampaignStatusUpcoming  CampaignStatus = "upcoming"
 )
 
 type LogisticsStatus string
@@ -10190,6 +10138,20 @@ const (
 	ReturnStatusSellerDispute ReturnStatus = "SELLER_DISPUTE"
 )
 
+type DescriptionType string
+
+const (
+	DescriptionTypeExtended DescriptionType = "extended"
+	DescriptionTypeNormal   DescriptionType = "normal"
+)
+
+type DescriptionElementFieldType string
+
+const (
+	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
+	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
+)
+
 type WarrantyTime string
 
 const (
@@ -10198,10 +10160,49 @@ const (
 	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
 )
 
+type CampaignStatus string
+
+const (
+	CampaignStatusClosed    CampaignStatus = "closed"
+	CampaignStatusDeleted   CampaignStatus = "deleted"
+	CampaignStatusEnded     CampaignStatus = "ended"
+	CampaignStatusExpired   CampaignStatus = "expired"
+	CampaignStatusOngoing   CampaignStatus = "ongoing"
+	CampaignStatusPaused    CampaignStatus = "paused"
+	CampaignStatusScheduled CampaignStatus = "scheduled"
+	CampaignStatusUpcoming  CampaignStatus = "upcoming"
+)
+
+type BookingStatus string
+
+const (
+	BookingStatusCancelled   BookingStatus = "CANCELLED"
+	BookingStatusMatched     BookingStatus = "MATCHED"
+	BookingStatusProcessed   BookingStatus = "PROCESSED"
+	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
+	BookingStatusShipped     BookingStatus = "SHIPPED"
+)
+
+type InvoiceOption string
+
+const (
+	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
+	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
+	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
+	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+)
+
 type TaxType int
 
 const (
 	TaxTypeNoTax   TaxType = 0
 	TaxTypeTaxable TaxType = 1
 	TaxTypeTaxFree TaxType = 2
+)
+
+type OperationType string
+
+const (
+	OperationTypeRetailer     OperationType = "1"
+	OperationTypeManufactorer OperationType = "2"
 )

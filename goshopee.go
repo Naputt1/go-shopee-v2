@@ -747,7 +747,7 @@ const (
 	ErrProductCommentLengthInvalid                            = "product.comment_length_invalid"                                   // Comment length should be between 1 and 500. Please update the comment.
 	ErrProductDuplicateCommentId                              = "product.duplicate_comment_id"                                     // Duplicate comment id { cmm_id}.
 	ErrProductDuplicateRequest                                = "product.duplicate_request"                                        // You has replied this comment already.
-	ErrProductErrorBusi                                       = "product.error_busi"                                               // The GTIN code is mandatory, please check and upload again. | Please input the correct TS Mark (TD Mark) to upload your product, and refer to the SEH article - https://seller.shopee.tw/edu/article/19732 if you have any questions. | Upload failed, please upload a more standard size chart image.
+	ErrProductErrorBusi                                       = "product.error_busi"                                               // The GTIN code is mandatory, please check and upload again. | Please input the correct TS Mark (TD Mark) to upload your product, and refer to the SEH article - https://seller.shopee.tw/edu/article/19732 if you have any questions. | Medicine list ID is mandatory for products in Prescription/OTC category. | Please input the correct medicine list ID. | Upload failed, please upload a more standard size chart image.
 	ErrProductErrorNotExist                                   = "product.error_not_exist"                                          // The Comment you replied does not exist.
 	ErrProductErrorPermission                                 = "product.error_permission"                                         // Reply comment failed. Shop token invalid, please try to re-auth to partner.
 	ErrProductGetCmtFailed                                    = "product.get_cmt_failed"                                           // Get comment failed. Please try again later.
@@ -882,6 +882,10 @@ type Client struct {
 	ShopID      uint64
 	MerchantID  uint64
 	AccessToken string
+
+	RefreshToken   string
+	OnTokenRefresh func(res *RefreshAccessTokenResponse, meta interface{})
+	Meta           interface{}
 
 	// Services used for communicating with the API
 	// BEGIN GENERATED SERVICES
@@ -1079,6 +1083,38 @@ func (c *Client) NewRequest(method, relPath string, body, options, headers inter
 			return nil, err
 		}
 
+		// Shopee V2 GET requests expect lists as JSON array strings
+		// e.g. item_id_list=[123,456] instead of item_id_list=123&item_id_list=456
+		jsonListParams := []string{
+			"category_id_list",
+			"main_item_id",
+			"direct_item_id",
+			"shop_id_list",
+			"enabled_channel_id_list",
+		}
+		for _, param := range jsonListParams {
+			if values, ok := optionsQuery[param]; ok && len(values) > 1 {
+				optionsQuery.Set(param, "["+strings.Join(values, ",")+"]")
+			} else if ok && len(values) == 1 && strings.Contains(values[0], ",") {
+				// Already joined or potentially a single value that needs brackets
+				// but usually go-querystring with a slice of 1 element still needs brackets for Shopee
+				if !strings.HasPrefix(values[0], "[") {
+					optionsQuery.Set(param, "["+values[0]+"]")
+				}
+			} else if ok && len(values) == 1 {
+				// Single value in a slice is encoded as "val", but Shopee might want "[val]"
+				if !strings.HasPrefix(values[0], "[") {
+					optionsQuery.Set(param, "["+values[0]+"]")
+				}
+			}
+		}
+
+		// item_id_list for get_item_base_info seems to want comma-separated WITHOUT brackets
+		// because of error: strconv.ParseUint: parsing "[844121713"
+		if values, ok := optionsQuery["item_id_list"]; ok && len(values) > 0 {
+			optionsQuery.Set("item_id_list", strings.Join(values, ","))
+		}
+
 		for k, values := range u.Query() {
 			for _, v := range values {
 				optionsQuery.Add(k, v)
@@ -1127,6 +1163,21 @@ func (c *Client) WithToken(tok string) *Client {
 	return c
 }
 
+func (c *Client) WithRefreshToken(tok string) *Client {
+	c.RefreshToken = tok
+	return c
+}
+
+func (c *Client) WithOnTokenRefresh(fn func(res *RefreshAccessTokenResponse, meta interface{})) *Client {
+	c.OnTokenRefresh = fn
+	return c
+}
+
+func (c *Client) WithMeta(meta interface{}) *Client {
+	c.Meta = meta
+	return c
+}
+
 // https://open.shopee.com/documents?module=87&type=2&id=58&version=2
 func (c *Client) makeSignature(req *http.Request) (string, int64) {
 	ts := time.Now().Unix()
@@ -1137,18 +1188,23 @@ func (c *Client) makeSignature(req *http.Request) (string, int64) {
 	u := req.URL
 
 	query := u.Query()
-	query.Add("partner_id", fmt.Sprintf("%v", c.app.PartnerID))
+	query.Set("partner_id", fmt.Sprintf("%v", c.app.PartnerID))
 
-	if c.ShopID != 0 {
+	isPublicApi := false
+	if strings.Contains(path, "/auth/token/get") || strings.Contains(path, "/auth/access_token/get") {
+		isPublicApi = true
+	}
+
+	if c.ShopID != 0 && !isPublicApi {
 		// Shop APIs: partner_id, api path, timestamp, access_token, shop_id
 		baseStr = fmt.Sprintf("%d%s%d%s%d", c.app.PartnerID, path, ts, c.AccessToken, c.ShopID)
-		query.Add("shop_id", fmt.Sprintf("%v", c.ShopID))
-		query.Add("access_token", c.AccessToken)
-	} else if c.MerchantID != 0 {
+		query.Set("shop_id", fmt.Sprintf("%v", c.ShopID))
+		query.Set("access_token", c.AccessToken)
+	} else if c.MerchantID != 0 && !isPublicApi {
 		// Merchant APIs: partner_id, api path, timestamp, access_token, merchant_id
 		baseStr = fmt.Sprintf("%d%s%d%s%d", c.app.PartnerID, path, ts, c.AccessToken, c.MerchantID)
-		query.Add("merchant_id", fmt.Sprintf("%v", c.MerchantID))
-		query.Add("access_token", c.AccessToken)
+		query.Set("merchant_id", fmt.Sprintf("%v", c.MerchantID))
+		query.Set("access_token", c.AccessToken)
 	} else {
 		// Public APIs: partner_id, api path, timestamp
 		baseStr = fmt.Sprintf("%d%s%d", c.app.PartnerID, path, ts)
@@ -1157,8 +1213,8 @@ func (c *Client) makeSignature(req *http.Request) (string, int64) {
 	h.Write([]byte(baseStr))
 	result := hex.EncodeToString(h.Sum(nil))
 
-	query.Add("timestamp", fmt.Sprintf("%v", ts))
-	query.Add("sign", result)
+	query.Set("timestamp", fmt.Sprintf("%v", ts))
+	query.Set("sign", result)
 
 	u.RawQuery = query.Encode()
 	req.URL = u
@@ -1178,6 +1234,7 @@ func (c *Client) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (
 	for {
 		c.attempts++
 
+		fmt.Printf("DEBUG: doGetHeaders calling Do, URL: %s\n", req.URL.String())
 		resp, err = c.Client.Do(req)
 		c.logResponse(resp)
 		if err != nil {
@@ -1187,6 +1244,48 @@ func (c *Client) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (
 		respErr := CheckResponseError(resp)
 		if respErr == nil {
 			break // no errors, break out of the retry loop
+		}
+
+		fmt.Printf("DEBUG: doGetHeaders respErr: %T, value: %v\n", respErr, respErr)
+
+		// handle auto token refresh if refresh token is present and the error is token related
+		if c.RefreshToken != "" && !strings.Contains(req.URL.Path, "/auth/access_token/get") {
+			var shopeeErr string
+			if re, ok := respErr.(ResponseError); ok {
+				shopeeErr = re.ShopeeError
+			} else if re, ok := respErr.(*ResponseError); ok {
+				shopeeErr = re.ShopeeError
+			}
+
+			if shopeeErr == "error_invalid_access_token" || shopeeErr == "error_access_token_expired" || shopeeErr == "invalid_access_token" || shopeeErr == "invalid_acceess_token" {
+				fmt.Printf("DEBUG: Entering refresh token logic for error: %s\n", shopeeErr)
+				refreshRes, err := c.Auth.RefreshAccessToken(c.ShopID, c.MerchantID, c.RefreshToken)
+				if err == nil {
+					fmt.Printf("DEBUG: Token refresh successful. New AccessToken: %s...\n", refreshRes.AccessToken[:10])
+					c.AccessToken = refreshRes.AccessToken
+					c.RefreshToken = refreshRes.RefreshToken
+					if c.OnTokenRefresh != nil {
+						c.OnTokenRefresh(refreshRes, c.Meta)
+					}
+
+					// resign the request
+					c.makeSignature(req)
+
+					// retry scenario, close resp and any continue will retry
+					resp.Body.Close()
+					continue
+				} else {
+					fmt.Printf("DEBUG: Token refresh failed: %v\n", err)
+				}
+			} else if shopeeErr != "" {
+				fmt.Printf("DEBUG: Shopee error %s does not match refreshable errors\n", shopeeErr)
+			}
+		} else {
+			if strings.Contains(req.URL.Path, "/auth/access_token/get") {
+				// skip refresh logic for refresh call itself
+			} else if c.RefreshToken == "" {
+				fmt.Println("DEBUG: Skipping refresh logic because RefreshToken is empty in client")
+			}
 		}
 
 		// retry scenario, close resp and any continue will retry
@@ -1227,7 +1326,7 @@ func (c *Client) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (
 
 	if v != nil {
 		decoder := json.NewDecoder(resp.Body)
-		err := decoder.Decode(&v)
+		err := decoder.Decode(v)
 		if err != nil {
 			return nil, err
 		}
@@ -1314,6 +1413,10 @@ func CheckResponseError(r *http.Response) error {
 	if len(bodyBytes) > 0 {
 		err := json.Unmarshal(bodyBytes, &shopeeError)
 		if err != nil {
+			// If status is 200 OK, and it doesn't look like JSON error, assume success
+			if r.StatusCode == http.StatusOK {
+				return nil
+			}
 			return ResponseDecodingError{
 				Body:    bodyBytes,
 				Message: err.Error(),
@@ -1346,13 +1449,6 @@ func CheckResponseError(r *http.Response) error {
 // parameters like created_at_min
 // Any data returned from Shopify will be marshalled into resource argument.
 func (c *Client) CreateAndDo(method, relPath string, data, options, headers, resource interface{}) error {
-	defer func() {
-		// clear for next call
-		c.ShopID = 0
-		c.MerchantID = 0
-		c.AccessToken = ""
-	}()
-
 	_, err := c.createAndDoGetHeaders(method, relPath, data, options, headers, resource)
 	if err != nil {
 		return err

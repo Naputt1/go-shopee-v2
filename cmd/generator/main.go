@@ -563,6 +563,10 @@ func generateStruct(chain []string, params []Param, isGet bool, config Config, i
 		required := isParamRequired(p.Required)
 		desc := p.Description
 		jsonTag := p.Name
+		urlTag := ""
+		if isGet && isRequest {
+			urlTag = p.Name
+		}
 
 		if required {
 			desc = "[Required] " + desc
@@ -572,16 +576,17 @@ func generateStruct(chain []string, params []Param, isGet bool, config Config, i
 				fieldType = "*" + fieldType
 			}
 			jsonTag += ",omitempty"
+			if urlTag != "" {
+				urlTag += ",omitempty"
+			}
 		}
 
 		field := FieldData{
 			Name:        fieldName,
 			Type:        fieldType,
 			JSONTag:     jsonTag,
+			URLTag:      urlTag,
 			Description: desc,
-		}
-		if isGet && isRequest {
-			field.URLTag = p.Name
 		}
 		s.Fields = append(s.Fields, field)
 	}
@@ -685,9 +690,11 @@ func getStructSignature(s StructData) string {
 
 func mapType(shopeeType, fieldName string, children []Param, chain []string, config Config, isRequest bool, requiredStr string) string {
 	if override, ok := config.TypeOverrides[fieldName]; ok {
+		if strings.HasSuffix(shopeeType, "[]") && !strings.HasPrefix(override, "[]") {
+			return "[]" + override
+		}
 		return override
 	}
-
 	switch shopeeType {
 	case "int", "int32", "int64", "timestamp":
 		return "int64"

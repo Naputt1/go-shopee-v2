@@ -1,0 +1,35 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "response": {
+        "criteria": [
+            {
+                "criteria_id": 1,
+                "min_product_rating": 4.5,
+                "min_likes": 10,
+                "must_not_pre_order": true,
+                "min_order_total": 5,
+                "max_days_to_ship": 2,
+                "min_repetition_day": 7,
+                "min_promo_stock": 10,
+                "max_promo_stock": 100,
+                "min_discount": 10
+            }
+        ],
+        "pair_ids": [
+            {
+                "criteria_id": 1,
+                "category_list": [
+                    {
+                        "category_id": 0,
+                        "name": "All",
+                        "parent_id": 0
+                    }
+                ]
+            }
+        ],
+        "overlap_block_category_ids": []
+    }
+}

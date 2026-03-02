@@ -1,0 +1,9 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "response": {
+        "local_adjustment_rate": 1.1
+    }
+}
