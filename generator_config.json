@@ -58,6 +58,11 @@
     "is_activated": "bool",
     "has_next_page": "bool"
   },
+  "struct_type_overrides": {
+    "GetItemBaseInfoResponseDataItem": {
+      "deboost": "BoolString"
+    }
+  },
   "type_definitions": {
     "ItemStatus": {
       "base_type": "string",

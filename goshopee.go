@@ -1624,3 +1624,33 @@ func (c *Client) NewUploadFromReaderRequest(relPath, paramName, filename string,
 
 	return req, nil
 }
+
+// BoolString is a custom type that handles Shopee's string boolean values (e.g., "TRUE", "FALSE")
+type BoolString bool
+
+func (bs *BoolString) UnmarshalJSON(data []byte) error {
+	s := strings.Trim(string(data), "\"")
+	if strings.ToUpper(s) == "TRUE" {
+		*bs = true
+		return nil
+	}
+	if strings.ToUpper(s) == "FALSE" {
+		*bs = false
+		return nil
+	}
+
+	// Fallback to standard bool unmarshal
+	var b bool
+	if err := json.Unmarshal(data, &b); err != nil {
+		return err
+	}
+	*bs = BoolString(b)
+	return nil
+}
+
+func (bs BoolString) String() string {
+	if bs {
+		return "TRUE"
+	}
+	return "FALSE"
+}
