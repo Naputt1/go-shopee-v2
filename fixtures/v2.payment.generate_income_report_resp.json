@@ -1,0 +1,9 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "response": {
+        "id": 12345
+    }
+}

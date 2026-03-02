@@ -1,0 +1,23 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "response": {
+        "transaction_list": [
+            {
+                "status": "COMPLETED",
+                "transaction_type": "ORDER_INCOME",
+                "amount": 100.0,
+                "current_balance": 1000.0,
+                "create_time": 1677648000,
+                "order_sn": "SN123",
+                "refund_sn": "",
+                "withdrawal_type": "",
+                "transaction_fee": 2.0,
+                "description": "Payment for order"
+            }
+        ],
+        "more": false
+    }
+}

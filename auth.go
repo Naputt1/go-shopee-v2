@@ -54,7 +54,8 @@ func (s *AuthServiceOp)GetCancelAuthURL() (string,error) {
 func (s *AuthServiceOp)GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse,error){
 	path := "/auth/token/get"
 	params := map[string]interface{}{
-		"code": code,
+		"code":       code,
+		"partner_id": s.client.app.PartnerID,
 	}
 	if sid!=0{
 		params["shop_id"]=sid
@@ -71,6 +72,7 @@ func (s *AuthServiceOp)RefreshAccessToken(sid uint64, aid uint64, refresh string
 	path := "/auth/access_token/get"
 	params := map[string]interface{}{
 		"refresh_token": refresh,
+		"partner_id":    s.client.app.PartnerID,
 	}
 	if sid!=0{
 		params["shop_id"]=sid

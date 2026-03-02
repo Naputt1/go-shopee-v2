@@ -1,0 +1,12 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "response": {
+        "id": 12345,
+        "file_name": "income_report.csv",
+        "status": 2,
+        "generated_time": 1677648000
+    }
+}

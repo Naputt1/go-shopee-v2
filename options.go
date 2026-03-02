@@ -29,3 +29,21 @@ func WithProxy(proxyHost string) Option {
 		c.Client.Transport = &http.Transport{Proxy: http.ProxyURL(proxyURL)}
 	}
 }
+
+func WithRefreshToken(refreshToken string) Option {
+	return func(c *Client) {
+		c.RefreshToken = refreshToken
+	}
+}
+
+func WithOnTokenRefresh(fn func(res *RefreshAccessTokenResponse, meta interface{})) Option {
+	return func(c *Client) {
+		c.OnTokenRefresh = fn
+	}
+}
+
+func WithMeta(meta interface{}) Option {
+	return func(c *Client) {
+		c.Meta = meta
+	}
+}

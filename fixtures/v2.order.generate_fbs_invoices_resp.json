@@ -1,0 +1,13 @@
+{
+    "request_id": "req123",
+    "error": "",
+    "message": "",
+    "warning": "",
+    "result_list": [
+        {
+            "request_id": 12345,
+            "fail_error": "",
+            "fail_message": ""
+        }
+    ]
+}
