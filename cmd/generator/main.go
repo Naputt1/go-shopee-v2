@@ -48,14 +48,20 @@ type Item struct {
 }
 
 type APIInfo struct {
-	APIName        string `json:"api_name"`
-	APIType        string `json:"api_type"`
-	Define         string `json:"define"`
-	Params         string `json:"params"` // JSON string
-	Path           string `json:"path"`
-	RequestSample  string `json:"request_sample"`  // JSON string
-	ResponseSample string `json:"response_sample"` // JSON string
-	ModuleID       int    `json:"module_id"`
+	APIName        string     `json:"api_name"`
+	APIType        string     `json:"api_type"`
+	Define         string     `json:"define"`
+	Params         string     `json:"params"` // JSON string
+	Path           string     `json:"path"`
+	RequestSample  string     `json:"request_sample"`  // JSON string
+	ResponseSample string     `json:"response_sample"` // JSON string
+	ModuleID       int        `json:"module_id"`
+	ErrorList      []ErrorDoc `json:"error_list"`
+}
+
+type ErrorDoc struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 type Sample struct {
@@ -112,8 +118,15 @@ type TemplateData struct {
 	Methods     []MethodData
 	Structs     []StructData
 	Constants   []ConstantData
+	Errors      []ErrorConst
 	IsAppend    bool
 	HasUpload   bool
+}
+
+type ErrorConst struct {
+	Name        string
+	Value       string
+	Description string
 }
 
 type ConstantData struct {
@@ -148,6 +161,7 @@ var (
 	allGeneratedStructs     = make(map[string]StructData) // name -> struct data
 	structNamesToSignatures = make(map[string]string)     // name -> signature
 	seenFiles               = make(map[string]bool)       // Track files seen in THIS run
+	globalErrors            = make(map[string]ErrorConst) // GoName -> ErrorConst
 )
 
 func main() {
@@ -209,6 +223,32 @@ func main() {
 				var params Params
 				if info.Params != "" {
 					json.Unmarshal([]byte(info.Params), &params)
+				}
+
+				// Capture business errors
+				for _, e := range info.ErrorList {
+					code := strings.TrimSpace(e.Name)
+					if code != "" {
+						name := "Err" + toCamelCase(strings.NewReplacer(".", "_", "-", "_").Replace(code))
+						existing, ok := globalErrors[name]
+						if ok {
+							// Merge descriptions
+							if !strings.Contains(existing.Description, e.Description) {
+								existing.Description += " | " + e.Description
+							}
+							// Prefer code with underscore over dot if they conflict
+							if strings.Contains(existing.Value, ".") && strings.Contains(code, "_") {
+								existing.Value = code
+							}
+							globalErrors[name] = existing
+						} else {
+							globalErrors[name] = ErrorConst{
+								Name:        name,
+								Value:       code,
+								Description: e.Description,
+							}
+						}
+					}
 				}
 
 				parts := strings.Split(item.Name, ".")
@@ -910,6 +950,23 @@ func updateGoshopee(services []ServiceInfo) {
 	startMarker = "// BEGIN GENERATED SERVICES INIT"
 	endMarker = "// END GENERATED SERVICES INIT"
 	newContent = replaceBetween(newContent, startMarker, endMarker, serviceInit.String()+"\t")
+
+	// Generate Error Constants
+	var errorConsts bytes.Buffer
+	var errCodes []string
+	for code := range globalErrors {
+		errCodes = append(errCodes, code)
+	}
+	sort.Strings(errCodes)
+
+	for _, name := range errCodes {
+		ec := globalErrors[name]
+		errorConsts.WriteString(fmt.Sprintf("\t%s = \"%s\" // %s\n", ec.Name, ec.Value, strings.ReplaceAll(ec.Description, "\n", " ")))
+	}
+
+	startMarker = "// BEGIN GENERATED ERRORS"
+	endMarker = "// END GENERATED ERRORS"
+	newContent = replaceBetween(newContent, startMarker, endMarker, errorConsts.String())
 
 	ioutil.WriteFile("goshopee.go", []byte(newContent), 0644)
 	formatFile("goshopee.go")
