@@ -21,7 +21,7 @@
     "Ads": {
       "file_name": "ads.go"
     },
-    "Public": { 
+    "Public": {
       "file_name": "public.go",
       "ignore_apis": [
         "v2.public.get_access_token",
@@ -61,6 +61,9 @@
   "struct_type_overrides": {
     "GetItemBaseInfoResponseDataItem": {
       "deboost": "BoolString"
+    },
+    "ShopeeStock": {
+      "stock": "int64"
     }
   },
   "type_definitions": {

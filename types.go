@@ -4180,7 +4180,7 @@ type GetModelListResponseDataModel struct {
 	ModelSku              string                       `json:"model_sku"`                // [Required] SKU of this model. the length should be under 100.
 	ModelStatus           string                       `json:"model_status"`             // [Required] <p>The model status. Should be&nbsp;MODEL_NORMAL or&nbsp;MODEL_UNAVAILABLE.&nbsp;MODEL_NORMAL models can be sold on the buyer's side, and MODEL_UNAVAILABLE models cannot be sold on the buyer's side.</p>
 	PreOrder              *PreOrder                    `json:"pre_order"`                // [Required] (Only whitelisted users can use)
-	StockInfoV2           *ModelStockInfoV2            `json:"stock_info_v2"`            // [Required] <p>new stock info.<br /></p><p>Please check this FAQ for more detail:&nbsp;<a href="https://open.shopee.com/faq?top=162&amp;sub=166&amp;page=1&amp;faq=230" target="_blank" style="font-size:14px;">https://open.shopee.com/faq?top=162&amp;sub=166&amp;page=1&amp;faq=230</a></p>
+	StockInfoV2           *StockInfoV2                 `json:"stock_info_v2"`            // [Required] <p>new stock info.<br /></p><p>Please check this FAQ for more detail:&nbsp;<a href="https://open.shopee.com/faq?top=162&amp;sub=166&amp;page=1&amp;faq=230" target="_blank" style="font-size:14px;">https://open.shopee.com/faq?top=162&amp;sub=166&amp;page=1&amp;faq=230</a></p>
 	GtinCode              string                       `json:"gtin_code"`                // [Required] <p><b><font color="#c24f4a">(Only TW seller and BR local seller available)</font></b> gtin code.</p>
 	Weight                string                       `json:"weight"`                   // [Required] <p>The weight of this model, the unit is KG.</p><p>If don't set the weight of this model, will use the weight of item by default.</p>
 	Dimension             *Dimension                   `json:"dimension"`                // [Required] <p>The dimension of this model.</p><p>If don't set the dimension of this model, will use the dimension of item by default.</p>
@@ -6628,13 +6628,6 @@ type ModelSetting struct {
 	Gtin      string      `json:"gtin"`       // [Required] <p>GTIN of this model.</p>
 }
 
-type ModelStockInfoV2 struct {
-	SummaryInfo  *SummaryInfo             `json:"summary_info"`  // [Required] <p>stock summary Info<br /></p>
-	SellerStock  []StockInfoV2SellerStock `json:"seller_stock"`  // [Required] <p>Seller-managed stock<br /></p>
-	ShopeeStock  []ShopeeStock            `json:"shopee_stock"`  // [Required] <p>Shopee warehouse stock<br /></p>
-	AdvanceStock *AdvanceStock            `json:"advance_stock"` // [Required] <p>Only for PH/VN/ID/MY local selected shops.</p>
-}
-
 type Models struct {
 	ModelId         int64   `json:"model_id"`          // [Required] <p>If the item has variation, this param is necessary.</p>
 	InputPromoPrice float64 `json:"input_promo_price"` // [Required] <p>promotion price without tax<br /></p>
@@ -8655,11 +8648,6 @@ type ShopSync struct {
 	DaysToShip                 bool   `json:"days_to_ship"`                   // [Required] sync days to ship info
 }
 
-type ShopeeStock struct {
-	LocationId string `json:"location_id"` // [Required] <p>location id<br /></p>
-	Stock      string `json:"stock"`       // [Required] <p>stock<br /></p>
-}
-
 type SipAffiShops struct {
 	Region     string `json:"region"`       // [Required] Affiliate Shop's area
 	AffiShopId int64  `json:"affi_shop_id"` // [Required] Affiliate shop's id
@@ -8837,9 +8825,9 @@ type StockInfo struct {
 }
 
 type StockInfoV2 struct {
-	SummaryInfo  *SummaryInfo             `json:"summary_info"`  // [Required] <p>stock summary info<br /></p>
-	SellerStock  []StockInfoV2SellerStock `json:"seller_stock"`  // [Required] <p>seller stock<br /></p>
-	ShopeeStock  []SellerStock            `json:"shopee_stock"`  // [Required] <p>shopee stock<br /></p>
+	SummaryInfo  *SummaryInfo             `json:"summary_info"`  // [Required] <p>stock summary Info<br /></p>
+	SellerStock  []StockInfoV2SellerStock `json:"seller_stock"`  // [Required] <p>Seller-managed stock<br /></p>
+	ShopeeStock  []SellerStock            `json:"shopee_stock"`  // [Required] <p>Shopee warehouse stock<br /></p>
 	AdvanceStock *AdvanceStock            `json:"advance_stock"` // [Required] <p>Only for PH/VN/ID/MY local selected shops.</p>
 }
 
@@ -10079,56 +10067,12 @@ type WorkingDayConfigMonday struct {
 	Operating_24HourToggle bool   `json:"operating_24_hour_toggle"` // [Required] <p>If the toggle value is true, the user can set the&nbsp;start_time&nbsp;to&nbsp;00:00&nbsp;and the&nbsp;end_time&nbsp;to&nbsp;23:59&nbsp;to indicate that the shop is operating 24 hours a day.</p>
 }
 
-type InvoiceOption string
-
-const (
-	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
-	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
-	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
-	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
-)
-
 type ItemStatus string
 
 const (
 	ItemStatusBanned ItemStatus = "BANNED"
 	ItemStatusNormal ItemStatus = "NORMAL"
 	ItemStatusUnlist ItemStatus = "UNLIST"
-)
-
-type CampaignStatus string
-
-const (
-	CampaignStatusClosed    CampaignStatus = "closed"
-	CampaignStatusDeleted   CampaignStatus = "deleted"
-	CampaignStatusEnded     CampaignStatus = "ended"
-	CampaignStatusExpired   CampaignStatus = "expired"
-	CampaignStatusOngoing   CampaignStatus = "ongoing"
-	CampaignStatusPaused    CampaignStatus = "paused"
-	CampaignStatusScheduled CampaignStatus = "scheduled"
-	CampaignStatusUpcoming  CampaignStatus = "upcoming"
-)
-
-type DescriptionElementFieldType string
-
-const (
-	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
-	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
-)
-
-type TaxType int
-
-const (
-	TaxTypeNoTax   TaxType = 0
-	TaxTypeTaxable TaxType = 1
-	TaxTypeTaxFree TaxType = 2
-)
-
-type OperationType string
-
-const (
-	OperationTypeRetailer     OperationType = "1"
-	OperationTypeManufactorer OperationType = "2"
 )
 
 type PromotionStatus string
@@ -10169,6 +10113,53 @@ const (
 	LogisticsStatusRequestCreated  LogisticsStatus = "LOGISTICS_REQUEST_CREATED"
 )
 
+type BookingStatus string
+
+const (
+	BookingStatusCancelled   BookingStatus = "CANCELLED"
+	BookingStatusMatched     BookingStatus = "MATCHED"
+	BookingStatusProcessed   BookingStatus = "PROCESSED"
+	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
+	BookingStatusShipped     BookingStatus = "SHIPPED"
+)
+
+type DescriptionElementFieldType string
+
+const (
+	DescriptionElementFieldTypeImage DescriptionElementFieldType = "image"
+	DescriptionElementFieldTypeText  DescriptionElementFieldType = "text"
+)
+
+type WarrantyTime string
+
+const (
+	WarrantyTimeOneYear      WarrantyTime = "ONE_YEAR"
+	WarrantyTimeOverTwoYears WarrantyTime = "OVER_TWO_YEARS"
+	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
+)
+
+type InvoiceOption string
+
+const (
+	InvoiceOptionNonVat          InvoiceOption = "NON_VAT_INVOICES"
+	InvoiceOptionNoInvoice       InvoiceOption = "NO_INVOICE"
+	InvoiceOptionVat             InvoiceOption = "VAT_INVOICES"
+	InvoiceOptionVatMarginScheme InvoiceOption = "VAT_MARGIN_SCHEME_INVOICES"
+)
+
+type CampaignStatus string
+
+const (
+	CampaignStatusClosed    CampaignStatus = "closed"
+	CampaignStatusDeleted   CampaignStatus = "deleted"
+	CampaignStatusEnded     CampaignStatus = "ended"
+	CampaignStatusExpired   CampaignStatus = "expired"
+	CampaignStatusOngoing   CampaignStatus = "ongoing"
+	CampaignStatusPaused    CampaignStatus = "paused"
+	CampaignStatusScheduled CampaignStatus = "scheduled"
+	CampaignStatusUpcoming  CampaignStatus = "upcoming"
+)
+
 type ReturnStatus string
 
 const (
@@ -10182,16 +10173,6 @@ const (
 	ReturnStatusSellerDispute ReturnStatus = "SELLER_DISPUTE"
 )
 
-type BookingStatus string
-
-const (
-	BookingStatusCancelled   BookingStatus = "CANCELLED"
-	BookingStatusMatched     BookingStatus = "MATCHED"
-	BookingStatusProcessed   BookingStatus = "PROCESSED"
-	BookingStatusReadyToShip BookingStatus = "READY_TO_SHIP"
-	BookingStatusShipped     BookingStatus = "SHIPPED"
-)
-
 type DescriptionType string
 
 const (
@@ -10199,10 +10180,17 @@ const (
 	DescriptionTypeNormal   DescriptionType = "normal"
 )
 
-type WarrantyTime string
+type TaxType int
 
 const (
-	WarrantyTimeOneYear      WarrantyTime = "ONE_YEAR"
-	WarrantyTimeOverTwoYears WarrantyTime = "OVER_TWO_YEARS"
-	WarrantyTimeTwoYears     WarrantyTime = "TWO_YEARS"
+	TaxTypeNoTax   TaxType = 0
+	TaxTypeTaxable TaxType = 1
+	TaxTypeTaxFree TaxType = 2
+)
+
+type OperationType string
+
+const (
+	OperationTypeRetailer     OperationType = "1"
+	OperationTypeManufactorer OperationType = "2"
 )
