@@ -85,6 +85,7 @@ type Param struct {
 type MethodData struct {
 	Name         string
 	Path         string
+	FullPath     string
 	Method       string // GET or POST
 	APIType      string // Shop or Merchant
 	Description  string
@@ -292,9 +293,13 @@ func main() {
 					fixtureName = strings.ReplaceAll(fixtureName, "__", "_")
 				}
 
+				relPath := strings.TrimPrefix(info.Path, "/api/v2/")
+				relPath = strings.TrimPrefix(relPath, "/")
+
 				method := &MethodData{
 					Name:         methodName,
-					Path:         strings.TrimPrefix(info.Path, "/api/v2/"),
+					Path:         relPath,
+					FullPath:     "/api/v2/" + relPath,
 					Method:       "POST",
 					APIType:      info.APIType,
 					Description:  info.Define,
@@ -845,6 +850,7 @@ import (
 type {{.ModuleName}}Service interface {
 {{- range .Methods}}
 	// {{.Name}} {{replace .Description "\n" "\n\t// "}}
+	// Path: {{.FullPath}}
 	// {{.DocURL}}
 {{- if .IsUpload}}
 	{{.Name}}(sid uint64, filename string, tok string) (*{{.ResponseType}}, error)
@@ -861,6 +867,9 @@ type {{.ModuleName}}ServiceOp[T any] struct {
 
 {{range .Methods}}
 {{- if .IsUpload}}
+// {{.Name}} {{replace .Description "\n" "\n// "}}
+// Path: {{.FullPath}}
+// {{.DocURL}}
 func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}(sid uint64, filename string, tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
@@ -872,6 +881,9 @@ func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}(sid uint64, filename string, to
 	return resp, err
 }
 
+// {{.Name}}FromReader {{replace .Description "\n" "\n// "}}
+// Path: {{.FullPath}}
+// {{.DocURL}}
 func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}FromReader(sid uint64, filename string, reader io.Reader, tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
@@ -883,6 +895,9 @@ func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}FromReader(sid uint64, filename 
 	return resp, err
 }
 {{- else}}
+// {{.Name}} {{replace .Description "\n" "\n// "}}
+// Path: {{.FullPath}}
+// {{.DocURL}}
 func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}(sid uint64, {{if .RequestType}}{{if .IsGet}}opt{{else}}req{{end}} {{.RequestType}}, {{end}}tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
