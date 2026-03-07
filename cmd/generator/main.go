@@ -100,8 +100,9 @@ type MethodData struct {
 }
 
 type StructData struct {
-	Name   string
-	Fields []FieldData
+	Name     string
+	Fields   []FieldData
+	FileName string
 }
 
 type FieldData struct {
@@ -364,7 +365,7 @@ func main() {
 	for i := range apiContexts {
 		ctx := &apiContexts[i]
 		chain := []string{ctx.ModName, ctx.Method.Name, "Request"}
-		reqStruct := generateStruct(chain, ctx.Params.RequestParams, ctx.Method.IsGet, config, true)
+		reqStruct := generateStruct(chain, ctx.Params.RequestParams, ctx.Method.IsGet, config, true, ctx.ModConfig.FileName)
 		if reqStruct.Name != "" {
 			allGeneratedStructs[reqStruct.Name] = reqStruct
 		}
@@ -381,6 +382,7 @@ func main() {
 			Fields: []FieldData{
 				{Name: "", Type: "BaseResponse", JSONTag: ",inline", Description: "Common response fields"},
 			},
+			FileName: ctx.ModConfig.FileName,
 		}
 
 		commonFields := map[string]bool{
@@ -397,7 +399,7 @@ func main() {
 
 			if p.Name == "response" {
 				respDataChain := []string{ctx.ModName, ctx.Method.Name, "ResponseData"}
-				dataResp := generateStruct(respDataChain, p.Children, false, config, false)
+				dataResp := generateStruct(respDataChain, p.Children, false, config, false, ctx.ModConfig.FileName)
 				if dataResp.Name != "" {
 					allGeneratedStructs[dataResp.Name] = dataResp
 					mainResp.Fields = append(mainResp.Fields, FieldData{
@@ -417,7 +419,7 @@ func main() {
 			} else {
 				// Field outside of "response"
 				fieldName := toCamelCase(p.Name)
-				fieldType := mapType(p.Type, p.Name, p.Children, []string{ctx.ModName, ctx.Method.Name, "Response"}, config, false, p.Required)
+				fieldType := mapType(p.Type, p.Name, p.Children, []string{ctx.ModName, ctx.Method.Name, "Response"}, config, false, p.Required, ctx.ModConfig.FileName)
 				mainResp.Fields = append(mainResp.Fields, FieldData{
 					Name:        fieldName,
 					Type:        fieldType,
@@ -463,12 +465,20 @@ func main() {
 			Methods:     methods,
 			HasUpload:   hasUpload,
 		}
-		renderModule(fileName, data)
+		// Refactor: use .gen.go suffix
+		genFileName := strings.TrimSuffix(fileName, ".go") + ".gen.go"
+		renderModule(genFileName, data)
 		renderTest(strings.TrimSuffix(fileName, ".go")+"_test.go", data)
 	}
 
-	if err := generateSharedTypesFile(config); err != nil {
-		fmt.Printf("Error generating types.go: %v\n", err)
+	// Refactor: Split types into module-specific files
+	if err := generateTypeFiles(config); err != nil {
+		fmt.Printf("Error generating type files: %v\n", err)
+	}
+
+	// Refactor: generate errors file
+	if err := generateErrorsFile(); err != nil {
+		fmt.Printf("Error generating errors.gen.go: %v\n", err)
 	}
 
 	// Add static services first
@@ -546,19 +556,21 @@ func isParamRequired(req string) bool {
 	return req == "yes" || req == "true"
 }
 
-func generateStruct(chain []string, params []Param, isGet bool, config Config, isRequest bool) StructData {
+func generateStruct(chain []string, params []Param, isGet bool, config Config, isRequest bool, fileName string) StructData {
 	if len(chain) == 0 {
 		return StructData{}
 	}
 
-	s := StructData{}
+	s := StructData{
+		FileName: fileName,
+	}
 	for _, p := range params {
 		if p.Name == "partner_id" || p.Name == "shop_id" || p.Name == "merchant_id" || p.Name == "access_token" || p.Name == "timestamp" || p.Name == "sign" {
 			continue
 		}
 
 		fieldName := toCamelCase(p.Name)
-		fieldType := mapType(p.Type, p.Name, p.Children, chain, config, isRequest, p.Required)
+		fieldType := mapType(p.Type, p.Name, p.Children, chain, config, isRequest, p.Required, fileName)
 
 		required := isParamRequired(p.Required)
 		desc := p.Description
@@ -688,7 +700,7 @@ func getStructSignature(s StructData) string {
 	return strings.Join(fieldSigs, "|")
 }
 
-func mapType(shopeeType, fieldName string, children []Param, chain []string, config Config, isRequest bool, requiredStr string) string {
+func mapType(shopeeType, fieldName string, children []Param, chain []string, config Config, isRequest bool, requiredStr string, fileName string) string {
 	// 1. Try struct-specific override
 	if len(chain) > 0 {
 		// Try using the last part of the chain (which is usually the field name of the parent)
@@ -753,7 +765,7 @@ func mapType(shopeeType, fieldName string, children []Param, chain []string, con
 			return "interface{}"
 		}
 		newChain := append(chain, fieldName)
-		subStruct := generateStruct(newChain, children, false, config, isRequest)
+		subStruct := generateStruct(newChain, children, false, config, isRequest, fileName)
 		if subStruct.Name == "" {
 			return "interface{}"
 		}
@@ -767,7 +779,7 @@ func mapType(shopeeType, fieldName string, children []Param, chain []string, con
 			shortName = strings.TrimSuffix(shortName, "List")
 		}
 		newChain := append(chain, shortName)
-		subStruct := generateStruct(newChain, children, false, config, isRequest)
+		subStruct := generateStruct(newChain, children, false, config, isRequest, fileName)
 		if subStruct.Name == "" {
 			return "[]interface{}"
 		}
@@ -821,15 +833,15 @@ func renderModule(fileName string, data TemplateData) error {
 	data.IsAppend = isAppend
 	seenFiles[fileName] = true
 
-	tmpl := `{{if not .IsAppend}}// Code generated by Shopee API Generator. DO NOT EDIT.
-package goshopee
+	// Refactor: remove generated comment header
+	tmpl := `package goshopee
 
 {{if .HasUpload -}}
 import (
 	"io"
 )
 {{- end}}
-{{end}}
+
 type {{.ModuleName}}Service interface {
 {{- range .Methods}}
 	// {{.Name}} {{replace .Description "\n" "\n\t// "}}
@@ -916,8 +928,8 @@ func renderTest(fileName string, data TemplateData) error {
 	data.IsAppend = isAppend
 	seenFiles[fileName] = true
 
-	tmpl := `{{if not .IsAppend}}// Code generated by Shopee API Generator. DO NOT EDIT.
-package goshopee
+	// Refactor: remove generated comment header
+	tmpl := `package goshopee
 
 import (
 	"fmt"
@@ -925,7 +937,7 @@ import (
 
 	"github.com/jarcoal/httpmock"
 )
-{{end}}
+
 {{range .Methods}}
 func Test_{{$.ModuleName}}_{{.Name}}(t *testing.T) {
 	setup()
@@ -978,6 +990,49 @@ func Test_{{$.ModuleName}}_{{.Name}}(t *testing.T) {
 	return nil
 }
 
+func generateErrorsFile() error {
+	var errorConsts bytes.Buffer
+	var errCodes []string
+	for code := range globalErrors {
+		errCodes = append(errCodes, code)
+	}
+	sort.Strings(errCodes)
+
+	for _, name := range errCodes {
+		ec := globalErrors[name]
+		errorConsts.WriteString(fmt.Sprintf("\t%s = \"%s\" // %s\n", ec.Name, ec.Value, strings.ReplaceAll(ec.Description, "\n", " ")))
+	}
+
+	tmpl := `package goshopee
+
+const (
+{{.Errors}}
+)
+`
+	t, err := template.New("errors").Parse(tmpl)
+	if err != nil {
+		return err
+	}
+
+	f, err := os.Create("errors.gen.go")
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	data := struct {
+		Errors string
+	}{
+		Errors: errorConsts.String(),
+	}
+
+	if err := t.Execute(f, data); err != nil {
+		return err
+	}
+	formatFile("errors.gen.go")
+	return nil
+}
+
 func updateGoshopee(services []ServiceInfo) {
 	content, err := os.ReadFile("goshopee.go")
 	if err != nil {
@@ -1002,22 +1057,10 @@ func updateGoshopee(services []ServiceInfo) {
 	endMarker = "// END GENERATED SERVICES INIT"
 	newContent = replaceBetween(newContent, startMarker, endMarker, serviceInit.String()+"\t")
 
-	// Generate Error Constants
-	var errorConsts bytes.Buffer
-	var errCodes []string
-	for code := range globalErrors {
-		errCodes = append(errCodes, code)
-	}
-	sort.Strings(errCodes)
-
-	for _, name := range errCodes {
-		ec := globalErrors[name]
-		errorConsts.WriteString(fmt.Sprintf("\t%s = \"%s\" // %s\n", ec.Name, ec.Value, strings.ReplaceAll(ec.Description, "\n", " ")))
-	}
-
+	// Refactor: Remove generated errors from goshopee.go as they are now in errors.gen.go
 	startMarker = "// BEGIN GENERATED ERRORS"
 	endMarker = "// END GENERATED ERRORS"
-	newContent = replaceBetween(newContent, startMarker, endMarker, errorConsts.String())
+	newContent = replaceBetween(newContent, startMarker, endMarker, "")
 
 	os.WriteFile("goshopee.go", []byte(newContent), 0644)
 	formatFile("goshopee.go")
@@ -1038,39 +1081,18 @@ func replaceBetween(content, startMarker, endMarker, replacement string) string 
 	return content[:startIdx] + replacement + content[endIdx:]
 }
 
-func generateSharedTypesFile(config Config) error {
-	data := TemplateData{
-		PackageName: "goshopee",
-	}
-
-	var structNames []string
-	for name := range allGeneratedStructs {
-		structNames = append(structNames, name)
-	}
-	sort.Strings(structNames)
-
-	for _, name := range structNames {
-		data.Structs = append(data.Structs, allGeneratedStructs[name])
-	}
-
-	for typeName, def := range config.TypeDefinitions {
-		constData := ConstantData{
-			TypeName: typeName,
-			BaseType: def.BaseType,
+func generateTypeFiles(config Config) error {
+	// Group structs by FileName
+	fileStructs := make(map[string][]StructData)
+	for _, s := range allGeneratedStructs {
+		fileName := s.FileName
+		if fileName == "" {
+			fileName = "shared.go"
 		}
-		var valKeys []string
-		for k := range def.Values {
-			valKeys = append(valKeys, k)
-		}
-		sort.Strings(valKeys)
-		for _, k := range valKeys {
-			constData.Values = append(constData.Values, ConstantValue{Name: def.Values[k], Value: k})
-		}
-		data.Constants = append(data.Constants, constData)
+		fileStructs[fileName] = append(fileStructs[fileName], s)
 	}
 
-	tmpl := `// Code generated. DO NOT EDIT.
-package {{.PackageName}}
+	tmpl := `package goshopee
 
 {{range .Structs}}
 type {{.Name}} struct {
@@ -1078,16 +1100,6 @@ type {{.Name}} struct {
 	{{if .Name}}{{.Name}} {{.Type}}{{else}}{{.Type}}{{end}} ` + "`" + `{{if .JSONTag}}json:"{{.JSONTag}}"{{end}}{{if .URLTag}} url:"{{.URLTag}}"{{end}}` + "`" + ` // {{replace .Description "\n" " "}}
 {{- end}}
 }
-{{end}}
-
-{{range $const := .Constants}}
-type {{$const.TypeName}} {{$const.BaseType}}
-
-const (
-{{- range $val := .Values}}
-	{{$val.Name}} {{$const.TypeName}} = {{if eq $const.BaseType "string"}}"{{$val.Value}}"{{else}}{{$val.Value}}{{end}}
-{{- end}}
-)
 {{end}}
 `
 	t, err := template.New("types").Funcs(template.FuncMap{
@@ -1099,15 +1111,83 @@ const (
 		return err
 	}
 
-	f, err := os.Create("types.go")
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+	for fileName, structs := range fileStructs {
+		sort.Slice(structs, func(i, j int) bool {
+			return structs[i].Name < structs[j].Name
+		})
 
-	if err := t.Execute(f, data); err != nil {
-		return err
+		data := TemplateData{
+			PackageName: "goshopee",
+			Structs:     structs,
+		}
+
+		genFileName := strings.TrimSuffix(fileName, ".go") + ".type.gen.go"
+		f, err := os.Create(genFileName)
+		if err != nil {
+			return err
+		}
+		if err := t.Execute(f, data); err != nil {
+			f.Close()
+			return err
+		}
+		f.Close()
+		formatFile(genFileName)
 	}
-	formatFile("types.go")
+
+	// Generate common.type.gen.go for TypeDefinitions
+	if len(config.TypeDefinitions) > 0 {
+		var typeNames []string
+		for typeName := range config.TypeDefinitions {
+			typeNames = append(typeNames, typeName)
+		}
+		sort.Strings(typeNames)
+
+		var constants []ConstantData
+		for _, typeName := range typeNames {
+			def := config.TypeDefinitions[typeName]
+			constData := ConstantData{
+				TypeName: typeName,
+				BaseType: def.BaseType,
+			}
+			var valKeys []string
+			for k := range def.Values {
+				valKeys = append(valKeys, k)
+			}
+			sort.Strings(valKeys)
+			for _, k := range valKeys {
+				constData.Values = append(constData.Values, ConstantValue{Name: def.Values[k], Value: k})
+			}
+			constants = append(constants, constData)
+		}
+
+		constTmpl := `package goshopee
+
+{{range $const := .Constants}}
+type {{$const.TypeName}} {{$const.BaseType}}
+
+const (
+{{- range $val := .Values}}
+	{{$val.Name}} {{$const.TypeName}} = {{if eq $const.BaseType "string"}}"{{$val.Value}}"{{else}}{{$val.Value}}{{end}}
+{{- end}}
+)
+{{end}}
+`
+		ct, err := template.New("consts").Parse(constTmpl)
+		if err != nil {
+			return err
+		}
+
+		f, err := os.Create("common.type.gen.go")
+		if err != nil {
+			return err
+		}
+		if err := ct.Execute(f, struct{ Constants []ConstantData }{Constants: constants}); err != nil {
+			f.Close()
+			return err
+		}
+		f.Close()
+		formatFile("common.type.gen.go")
+	}
+
 	return nil
 }

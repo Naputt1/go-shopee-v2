@@ -1,7 +1,7 @@
 {
   "modules": {
     "Product": { "file_name": "product.go" },
-    "GlobalProduct(CB seller only)": { "file_name": "global_product.go" },
+    "GlobalProduct": { "file_name": "global_product.go" },
     "Shop": { "file_name": "shop.go" },
     "Merchant": { "file_name": "merchant.go" },
     "Order": { "file_name": "order.go" },
