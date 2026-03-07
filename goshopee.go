@@ -932,7 +932,7 @@ func NewClient[T any](app App, opts ...Option[T]) *Client[T] {
 	}
 
 	c := &Client[T]{
-		Client:  &http.Client{},
+		Client:  &http.Client{Timeout: time.Duration(defaultHttpTimeout) * time.Second},
 		log:     &LeveledLogger{},
 		app:     app,
 		baseURL: baseURL,
