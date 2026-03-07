@@ -2,15 +2,19 @@ package goshopee
 
 type TopPicksService interface {
 	// GetTopPicksList get one TopPicks
+	// Path: /api/v2/top_picks/get_top_picks_list
 	// https://open.shopee.com/documents/v2/v2.top_picks.get_top_picks_list?module=100&type=1
 	GetTopPicksList(sid uint64, tok string) (*GetTopPicksListResponse, error)
 	// AddTopPicks add one collection
+	// Path: /api/v2/top_picks/add_top_picks
 	// https://open.shopee.com/documents/v2/v2.top_picks.add_top_picks?module=100&type=1
 	AddTopPicks(sid uint64, req AddTopPicksRequest, tok string) (*AddTopPicksResponse, error)
 	// UpdateTopPicks update a collection info
+	// Path: /api/v2/top_picks/update_top_picks
 	// https://open.shopee.com/documents/v2/v2.top_picks.update_top_picks?module=100&type=1
 	UpdateTopPicks(sid uint64, req UpdateTopPicksRequest, tok string) (*UpdateTopPicksResponse, error)
 	// DeleteTopPicks delete a collection
+	// Path: /api/v2/top_picks/delete_top_picks
 	// https://open.shopee.com/documents/v2/v2.top_picks.delete_top_picks?module=100&type=1
 	DeleteTopPicks(sid uint64, req DeleteTopPicksRequest, tok string) (*DeleteTopPicksResponse, error)
 }
@@ -19,6 +23,9 @@ type TopPicksServiceOp[T any] struct {
 	client *Client[T]
 }
 
+// GetTopPicksList get one TopPicks
+// Path: /api/v2/top_picks/get_top_picks_list
+// https://open.shopee.com/documents/v2/v2.top_picks.get_top_picks_list?module=100&type=1
 func (s *TopPicksServiceOp[T]) GetTopPicksList(sid uint64, tok string) (*GetTopPicksListResponse, error) {
 	path := "/top_picks/get_top_picks_list"
 	resp := new(GetTopPicksListResponse)
@@ -26,6 +33,9 @@ func (s *TopPicksServiceOp[T]) GetTopPicksList(sid uint64, tok string) (*GetTopP
 	return resp, err
 }
 
+// AddTopPicks add one collection
+// Path: /api/v2/top_picks/add_top_picks
+// https://open.shopee.com/documents/v2/v2.top_picks.add_top_picks?module=100&type=1
 func (s *TopPicksServiceOp[T]) AddTopPicks(sid uint64, req AddTopPicksRequest, tok string) (*AddTopPicksResponse, error) {
 	path := "/top_picks/add_top_picks"
 	resp := new(AddTopPicksResponse)
@@ -33,6 +43,9 @@ func (s *TopPicksServiceOp[T]) AddTopPicks(sid uint64, req AddTopPicksRequest, t
 	return resp, err
 }
 
+// UpdateTopPicks update a collection info
+// Path: /api/v2/top_picks/update_top_picks
+// https://open.shopee.com/documents/v2/v2.top_picks.update_top_picks?module=100&type=1
 func (s *TopPicksServiceOp[T]) UpdateTopPicks(sid uint64, req UpdateTopPicksRequest, tok string) (*UpdateTopPicksResponse, error) {
 	path := "/top_picks/update_top_picks"
 	resp := new(UpdateTopPicksResponse)
@@ -40,6 +53,9 @@ func (s *TopPicksServiceOp[T]) UpdateTopPicks(sid uint64, req UpdateTopPicksRequ
 	return resp, err
 }
 
+// DeleteTopPicks delete a collection
+// Path: /api/v2/top_picks/delete_top_picks
+// https://open.shopee.com/documents/v2/v2.top_picks.delete_top_picks?module=100&type=1
 func (s *TopPicksServiceOp[T]) DeleteTopPicks(sid uint64, req DeleteTopPicksRequest, tok string) (*DeleteTopPicksResponse, error) {
 	path := "/top_picks/delete_top_picks"
 	resp := new(DeleteTopPicksResponse)

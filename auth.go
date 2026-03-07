@@ -4,10 +4,21 @@ import "fmt"
 
 // https://open.shopee.com/documents?module=87&type=2&id=58&version=2
 type AuthService interface {
-	GetAuthURL() (string,error)
-	GetCancelAuthURL() (string,error)
-	GetAccessToken(uint64,uint64,string) (*AccessTokenResponse,error)
-	RefreshAccessToken(uint64,uint64,string) (*RefreshAccessTokenResponse,error)
+	// GetAuthURL returns the URL to authorize the app.
+	// Path: /api/v2/shop/auth_partner
+	GetAuthURL() (string, error)
+
+	// GetCancelAuthURL returns the URL to cancel the authorization.
+	// Path: /api/v2/shop/cancel_auth_partner
+	GetCancelAuthURL() (string, error)
+
+	// GetAccessToken gets the access token.
+	// Path: /api/v2/auth/token/get
+	GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse, error)
+
+	// RefreshAccessToken refreshes the access token.
+	// Path: /api/v2/auth/access_token/get
+	RefreshAccessToken(sid uint64, aid uint64, refresh string) (*RefreshAccessTokenResponse, error)
 }
 
 type AccessTokenResponse struct {
@@ -35,23 +46,29 @@ type AuthServiceOp[T any] struct {
 	client *Client[T]
 }
 
-func (s *AuthServiceOp[T])GetAuthURL() (string,error) {
+// GetAuthURL returns the URL to authorize the app.
+// Path: /api/v2/shop/auth_partner
+func (s *AuthServiceOp[T]) GetAuthURL() (string, error) {
 	rurl := s.client.app.RedirectURL
-	path:="/api/v2/shop/auth_partner"
-	sign,ts,_ := s.client.Util.Sign(path)
-	aurl := fmt.Sprintf("%s%s?partner_id=%d&timestamp=%d&sign=%s&redirect=%s", s.client.app.APIURL,path, s.client.app.PartnerID,ts,sign, rurl)
-	return aurl,nil
+	path := "/api/v2/shop/auth_partner"
+	sign, ts, _ := s.client.Util.Sign(path)
+	aurl := fmt.Sprintf("%s%s?partner_id=%d&timestamp=%d&sign=%s&redirect=%s", s.client.app.APIURL, path, s.client.app.PartnerID, ts, sign, rurl)
+	return aurl, nil
 }
 
-func (s *AuthServiceOp[T])GetCancelAuthURL() (string,error) {
+// GetCancelAuthURL returns the URL to cancel the authorization.
+// Path: /api/v2/shop/cancel_auth_partner
+func (s *AuthServiceOp[T]) GetCancelAuthURL() (string, error) {
 	rurl := s.client.app.RedirectURL
-	path:="/api/v2/shop/cancel_auth_partner"
-	sign,ts,_ := s.client.Util.Sign(path)
-	aurl := fmt.Sprintf("%s%s?partner_id=%d&timestamp=%d&sign=%s&redirect=%s", s.client.app.APIURL,path, s.client.app.PartnerID,ts,sign, rurl)
-	return aurl,nil
+	path := "/api/v2/shop/cancel_auth_partner"
+	sign, ts, _ := s.client.Util.Sign(path)
+	aurl := fmt.Sprintf("%s%s?partner_id=%d&timestamp=%d&sign=%s&redirect=%s", s.client.app.APIURL, path, s.client.app.PartnerID, ts, sign, rurl)
+	return aurl, nil
 }
 
-func (s *AuthServiceOp[T])GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse,error){
+// GetAccessToken gets the access token.
+// Path: /api/v2/auth/token/get
+func (s *AuthServiceOp[T]) GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse, error) {
 	path := "/auth/token/get"
 	params := map[string]interface{}{
 		"code":       code,
@@ -68,7 +85,9 @@ func (s *AuthServiceOp[T])GetAccessToken(sid uint64, aid uint64, code string) (*
 	return resp, err
 }
 
-func (s *AuthServiceOp[T])RefreshAccessToken(sid uint64, aid uint64, refresh string) (*RefreshAccessTokenResponse,error){
+// RefreshAccessToken refreshes the access token.
+// Path: /api/v2/auth/access_token/get
+func (s *AuthServiceOp[T]) RefreshAccessToken(sid uint64, aid uint64, refresh string) (*RefreshAccessTokenResponse, error) {
 	path := "/auth/access_token/get"
 	params := map[string]interface{}{
 		"refresh_token": refresh,

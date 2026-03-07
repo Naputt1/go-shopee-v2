@@ -3,21 +3,27 @@ package goshopee
 type AccountHealthService interface {
 	// GetShopPerformance The data metrics of shop performance.
 	//
+	// Path: /api/v2/account_health/get_shop_performance
 	// https://open.shopee.com/documents/v2/v2.account_health.get_shop_performance?module=103&type=1
 	GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error)
 	// GetMetricSourceDetail Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.
+	// Path: /api/v2/account_health/get_metric_source_detail
 	// https://open.shopee.com/documents/v2/v2.account_health.get_metric_source_detail?module=103&type=1
 	GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error)
 	// GetPenaltyPointHistory Get the penalty point records generated in the current quarter.
+	// Path: /api/v2/account_health/get_penalty_point_history
 	// https://open.shopee.com/documents/v2/v2.account_health.get_penalty_point_history?module=103&type=1
 	GetPenaltyPointHistory(sid uint64, opt GetPenaltyPointHistoryRequest, tok string) (*GetPenaltyPointHistoryResponse, error)
 	// GetPunishmentHistory Get the punishment records generated in the current quarter.
+	// Path: /api/v2/account_health/get_punishment_history
 	// https://open.shopee.com/documents/v2/v2.account_health.get_punishment_history?module=103&type=1
 	GetPunishmentHistory(sid uint64, opt GetPunishmentHistoryRequest, tok string) (*GetPunishmentHistoryResponse, error)
 	// GetListingsWithIssues Get the Problematic Listings to improve the listings to avoid incurring penalty points.
+	// Path: /api/v2/account_health/get_listings_with_issues
 	// https://open.shopee.com/documents/v2/v2.account_health.get_listings_with_issues?module=103&type=1
 	GetListingsWithIssues(sid uint64, opt GetListingsWithIssuesRequest, tok string) (*GetListingsWithIssuesResponse, error)
 	// GetLateOrders Get the Late Orders to take action to avoid order cancellation and penalty points.
+	// Path: /api/v2/account_health/get_late_orders
 	// https://open.shopee.com/documents/v2/v2.account_health.get_late_orders?module=103&type=1
 	GetLateOrders(sid uint64, opt GetLateOrdersRequest, tok string) (*GetLateOrdersResponse, error)
 }
@@ -26,6 +32,10 @@ type AccountHealthServiceOp[T any] struct {
 	client *Client[T]
 }
 
+// GetShopPerformance The data metrics of shop performance.
+//
+// Path: /api/v2/account_health/get_shop_performance
+// https://open.shopee.com/documents/v2/v2.account_health.get_shop_performance?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error) {
 	path := "/account_health/get_shop_performance"
 	resp := new(GetShopPerformanceResponse)
@@ -33,6 +43,9 @@ func (s *AccountHealthServiceOp[T]) GetShopPerformance(sid uint64, tok string) (
 	return resp, err
 }
 
+// GetMetricSourceDetail Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.
+// Path: /api/v2/account_health/get_metric_source_detail
+// https://open.shopee.com/documents/v2/v2.account_health.get_metric_source_detail?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error) {
 	path := "/account_health/get_metric_source_detail"
 	resp := new(GetMetricSourceDetailResponse)
@@ -40,6 +53,9 @@ func (s *AccountHealthServiceOp[T]) GetMetricSourceDetail(sid uint64, opt GetMet
 	return resp, err
 }
 
+// GetPenaltyPointHistory Get the penalty point records generated in the current quarter.
+// Path: /api/v2/account_health/get_penalty_point_history
+// https://open.shopee.com/documents/v2/v2.account_health.get_penalty_point_history?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetPenaltyPointHistory(sid uint64, opt GetPenaltyPointHistoryRequest, tok string) (*GetPenaltyPointHistoryResponse, error) {
 	path := "/account_health/get_penalty_point_history"
 	resp := new(GetPenaltyPointHistoryResponse)
@@ -47,6 +63,9 @@ func (s *AccountHealthServiceOp[T]) GetPenaltyPointHistory(sid uint64, opt GetPe
 	return resp, err
 }
 
+// GetPunishmentHistory Get the punishment records generated in the current quarter.
+// Path: /api/v2/account_health/get_punishment_history
+// https://open.shopee.com/documents/v2/v2.account_health.get_punishment_history?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetPunishmentHistory(sid uint64, opt GetPunishmentHistoryRequest, tok string) (*GetPunishmentHistoryResponse, error) {
 	path := "/account_health/get_punishment_history"
 	resp := new(GetPunishmentHistoryResponse)
@@ -54,6 +73,9 @@ func (s *AccountHealthServiceOp[T]) GetPunishmentHistory(sid uint64, opt GetPuni
 	return resp, err
 }
 
+// GetListingsWithIssues Get the Problematic Listings to improve the listings to avoid incurring penalty points.
+// Path: /api/v2/account_health/get_listings_with_issues
+// https://open.shopee.com/documents/v2/v2.account_health.get_listings_with_issues?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetListingsWithIssues(sid uint64, opt GetListingsWithIssuesRequest, tok string) (*GetListingsWithIssuesResponse, error) {
 	path := "/account_health/get_listings_with_issues"
 	resp := new(GetListingsWithIssuesResponse)
@@ -61,6 +83,9 @@ func (s *AccountHealthServiceOp[T]) GetListingsWithIssues(sid uint64, opt GetLis
 	return resp, err
 }
 
+// GetLateOrders Get the Late Orders to take action to avoid order cancellation and penalty points.
+// Path: /api/v2/account_health/get_late_orders
+// https://open.shopee.com/documents/v2/v2.account_health.get_late_orders?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetLateOrders(sid uint64, opt GetLateOrdersRequest, tok string) (*GetLateOrdersResponse, error) {
 	path := "/account_health/get_late_orders"
 	resp := new(GetLateOrdersResponse)
