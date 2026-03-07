@@ -38,88 +38,88 @@ type MediaSpaceService interface {
 	UploadImageFromReader(sid uint64, filename string, reader io.Reader, tok string) (*SharedUploadImageResponse, error)
 }
 
-type MediaSpaceServiceOp struct {
-	client *Client
+type MediaSpaceServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *MediaSpaceServiceOp) InitVideoUpload(sid uint64, filename string, tok string) (*InitVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) InitVideoUpload(sid uint64, filename string, tok string) (*InitVideoUploadResponse, error) {
 	path := "/media_space/init_video_upload"
 	resp := new(InitVideoUploadResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) InitVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*InitVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) InitVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*InitVideoUploadResponse, error) {
 	path := "/media_space/init_video_upload"
 	resp := new(InitVideoUploadResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) UploadVideoPart(sid uint64, filename string, tok string) (*UploadVideoPartResponse, error) {
+func (s *MediaSpaceServiceOp[T]) UploadVideoPart(sid uint64, filename string, tok string) (*UploadVideoPartResponse, error) {
 	path := "/media_space/upload_video_part"
 	resp := new(UploadVideoPartResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) UploadVideoPartFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadVideoPartResponse, error) {
+func (s *MediaSpaceServiceOp[T]) UploadVideoPartFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadVideoPartResponse, error) {
 	path := "/media_space/upload_video_part"
 	resp := new(UploadVideoPartResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) CompleteVideoUpload(sid uint64, filename string, tok string) (*CompleteVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) CompleteVideoUpload(sid uint64, filename string, tok string) (*CompleteVideoUploadResponse, error) {
 	path := "/media_space/complete_video_upload"
 	resp := new(CompleteVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) CompleteVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*CompleteVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) CompleteVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*CompleteVideoUploadResponse, error) {
 	path := "/media_space/complete_video_upload"
 	resp := new(CompleteVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) GetVideoUploadResult(sid uint64, filename string, tok string) (*GetVideoUploadResultResponse, error) {
+func (s *MediaSpaceServiceOp[T]) GetVideoUploadResult(sid uint64, filename string, tok string) (*GetVideoUploadResultResponse, error) {
 	path := "/media_space/get_video_upload_result"
 	resp := new(GetVideoUploadResultResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) GetVideoUploadResultFromReader(sid uint64, filename string, reader io.Reader, tok string) (*GetVideoUploadResultResponse, error) {
+func (s *MediaSpaceServiceOp[T]) GetVideoUploadResultFromReader(sid uint64, filename string, reader io.Reader, tok string) (*GetVideoUploadResultResponse, error) {
 	path := "/media_space/get_video_upload_result"
 	resp := new(GetVideoUploadResultResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) CancelVideoUpload(sid uint64, filename string, tok string) (*CancelVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) CancelVideoUpload(sid uint64, filename string, tok string) (*CancelVideoUploadResponse, error) {
 	path := "/media_space/cancel_video_upload"
 	resp := new(CancelVideoUploadResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) CancelVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*CancelVideoUploadResponse, error) {
+func (s *MediaSpaceServiceOp[T]) CancelVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*CancelVideoUploadResponse, error) {
 	path := "/media_space/cancel_video_upload"
 	resp := new(CancelVideoUploadResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) UploadImage(sid uint64, filename string, tok string) (*SharedUploadImageResponse, error) {
+func (s *MediaSpaceServiceOp[T]) UploadImage(sid uint64, filename string, tok string) (*SharedUploadImageResponse, error) {
 	path := "/media_space/upload_image"
 	resp := new(SharedUploadImageResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaSpaceServiceOp) UploadImageFromReader(sid uint64, filename string, reader io.Reader, tok string) (*SharedUploadImageResponse, error) {
+func (s *MediaSpaceServiceOp[T]) UploadImageFromReader(sid uint64, filename string, reader io.Reader, tok string) (*SharedUploadImageResponse, error) {
 	path := "/media_space/upload_image"
 	resp := new(SharedUploadImageResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)

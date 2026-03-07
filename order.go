@@ -77,158 +77,158 @@ type OrderService interface {
 	DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error)
 }
 
-type OrderServiceOp struct {
-	client *Client
+type OrderServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *OrderServiceOp) GetOrderList(sid uint64, opt GetOrderListRequest, tok string) (*GetOrderListResponse, error) {
+func (s *OrderServiceOp[T]) GetOrderList(sid uint64, opt GetOrderListRequest, tok string) (*GetOrderListResponse, error) {
 	path := "/order/get_order_list"
 	resp := new(GetOrderListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error) {
+func (s *OrderServiceOp[T]) GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error) {
 	path := "/order/get_order_detail"
 	resp := new(GetOrderDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetShipmentList(sid uint64, opt GetShipmentListRequest, tok string) (*GetShipmentListResponse, error) {
+func (s *OrderServiceOp[T]) GetShipmentList(sid uint64, opt GetShipmentListRequest, tok string) (*GetShipmentListResponse, error) {
 	path := "/order/get_shipment_list"
 	resp := new(GetShipmentListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) SearchPackageList(sid uint64, req SearchPackageListRequest, tok string) (*SearchPackageListResponse, error) {
+func (s *OrderServiceOp[T]) SearchPackageList(sid uint64, req SearchPackageListRequest, tok string) (*SearchPackageListResponse, error) {
 	path := "/order/search_package_list"
 	resp := new(SearchPackageListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error) {
+func (s *OrderServiceOp[T]) GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error) {
 	path := "/order/get_package_detail"
 	resp := new(GetPackageDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) SplitOrder(sid uint64, req SplitOrderRequest, tok string) (*SplitOrderResponse, error) {
+func (s *OrderServiceOp[T]) SplitOrder(sid uint64, req SplitOrderRequest, tok string) (*SplitOrderResponse, error) {
 	path := "/order/split_order"
 	resp := new(SplitOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) UnsplitOrder(sid uint64, req UnsplitOrderRequest, tok string) (*UnsplitOrderResponse, error) {
+func (s *OrderServiceOp[T]) UnsplitOrder(sid uint64, req UnsplitOrderRequest, tok string) (*UnsplitOrderResponse, error) {
 	path := "/order/unsplit_order"
 	resp := new(UnsplitOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error) {
+func (s *OrderServiceOp[T]) CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error) {
 	path := "/order/cancel_order"
 	resp := new(CancelOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) HandleBuyerCancellation(sid uint64, req HandleBuyerCancellationRequest, tok string) (*HandleBuyerCancellationResponse, error) {
+func (s *OrderServiceOp[T]) HandleBuyerCancellation(sid uint64, req HandleBuyerCancellationRequest, tok string) (*HandleBuyerCancellationResponse, error) {
 	path := "/order/handle_buyer_cancellation"
 	resp := new(HandleBuyerCancellationResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) SetNote(sid uint64, req SetNoteRequest, tok string) (*SetNoteResponse, error) {
+func (s *OrderServiceOp[T]) SetNote(sid uint64, req SetNoteRequest, tok string) (*SetNoteResponse, error) {
 	path := "/order/set_note"
 	resp := new(SetNoteResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetPendingBuyerInvoiceOrderList(sid uint64, opt GetPendingBuyerInvoiceOrderListRequest, tok string) (*GetPendingBuyerInvoiceOrderListResponse, error) {
+func (s *OrderServiceOp[T]) GetPendingBuyerInvoiceOrderList(sid uint64, opt GetPendingBuyerInvoiceOrderListRequest, tok string) (*GetPendingBuyerInvoiceOrderListResponse, error) {
 	path := "/order/get_pending_buyer_invoice_order_list"
 	resp := new(GetPendingBuyerInvoiceOrderListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error) {
+func (s *OrderServiceOp[T]) GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error) {
 	path := "/order/get_buyer_invoice_info"
 	resp := new(GetBuyerInvoiceInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) UploadInvoiceDoc(sid uint64, filename string, tok string) (*UploadInvoiceDocResponse, error) {
+func (s *OrderServiceOp[T]) UploadInvoiceDoc(sid uint64, filename string, tok string) (*UploadInvoiceDocResponse, error) {
 	path := "/order/upload_invoice_doc"
 	resp := new(UploadInvoiceDocResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) UploadInvoiceDocFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadInvoiceDocResponse, error) {
+func (s *OrderServiceOp[T]) UploadInvoiceDocFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadInvoiceDocResponse, error) {
 	path := "/order/upload_invoice_doc"
 	resp := new(UploadInvoiceDocResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) DownloadInvoiceDoc(sid uint64, opt DownloadInvoiceDocRequest, tok string) (*DownloadInvoiceDocResponse, error) {
+func (s *OrderServiceOp[T]) DownloadInvoiceDoc(sid uint64, opt DownloadInvoiceDocRequest, tok string) (*DownloadInvoiceDocResponse, error) {
 	path := "/order/download_invoice_doc"
 	resp := new(DownloadInvoiceDocResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) HandlePrescriptionCheck(sid uint64, req HandlePrescriptionCheckRequest, tok string) (*HandlePrescriptionCheckResponse, error) {
+func (s *OrderServiceOp[T]) HandlePrescriptionCheck(sid uint64, req HandlePrescriptionCheckRequest, tok string) (*HandlePrescriptionCheckResponse, error) {
 	path := "/order/handle_prescription_check"
 	resp := new(HandlePrescriptionCheckResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetWarehouseFilterConfig(sid uint64, tok string) (*GetWarehouseFilterConfigResponse, error) {
+func (s *OrderServiceOp[T]) GetWarehouseFilterConfig(sid uint64, tok string) (*GetWarehouseFilterConfigResponse, error) {
 	path := "/order/get_warehouse_filter_config"
 	resp := new(GetWarehouseFilterConfigResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetBookingList(sid uint64, opt GetBookingListRequest, tok string) (*GetBookingListResponse, error) {
+func (s *OrderServiceOp[T]) GetBookingList(sid uint64, opt GetBookingListRequest, tok string) (*GetBookingListResponse, error) {
 	path := "/order/get_booking_list"
 	resp := new(GetBookingListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetBookingDetail(sid uint64, opt GetBookingDetailRequest, tok string) (*GetBookingDetailResponse, error) {
+func (s *OrderServiceOp[T]) GetBookingDetail(sid uint64, opt GetBookingDetailRequest, tok string) (*GetBookingDetailResponse, error) {
 	path := "/order/get_booking_detail"
 	resp := new(GetBookingDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GenerateFbsInvoices(sid uint64, req GenerateFbsInvoicesRequest, tok string) (*GenerateFbsInvoicesResponse, error) {
+func (s *OrderServiceOp[T]) GenerateFbsInvoices(sid uint64, req GenerateFbsInvoicesRequest, tok string) (*GenerateFbsInvoicesResponse, error) {
 	path := "/order/generate_fbs_invoices"
 	resp := new(GenerateFbsInvoicesResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) GetFbsInvoicesResult(sid uint64, req GetFbsInvoicesResultRequest, tok string) (*GetFbsInvoicesResultResponse, error) {
+func (s *OrderServiceOp[T]) GetFbsInvoicesResult(sid uint64, req GetFbsInvoicesResultRequest, tok string) (*GetFbsInvoicesResultResponse, error) {
 	path := "/order/get_fbs_invoices_result"
 	resp := new(GetFbsInvoicesResultResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *OrderServiceOp) DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error) {
+func (s *OrderServiceOp[T]) DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error) {
 	path := "/order/download_fbs_invoices"
 	resp := new(DownloadFbsInvoicesResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

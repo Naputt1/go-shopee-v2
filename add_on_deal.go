@@ -46,102 +46,102 @@ type AddOnDealService interface {
 	EndAddOnDeal(sid uint64, req EndAddOnDealRequest, tok string) (*EndAddOnDealResponse, error)
 }
 
-type AddOnDealServiceOp struct {
-	client *Client
+type AddOnDealServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *AddOnDealServiceOp) AddAddOnDeal(sid uint64, req AddAddOnDealRequest, tok string) (*AddAddOnDealResponse, error) {
+func (s *AddOnDealServiceOp[T]) AddAddOnDeal(sid uint64, req AddAddOnDealRequest, tok string) (*AddAddOnDealResponse, error) {
 	path := "/add_on_deal/add_add_on_deal"
 	resp := new(AddAddOnDealResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) AddAddOnDealMainItem(sid uint64, req AddAddOnDealMainItemRequest, tok string) (*AddAddOnDealMainItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) AddAddOnDealMainItem(sid uint64, req AddAddOnDealMainItemRequest, tok string) (*AddAddOnDealMainItemResponse, error) {
 	path := "/add_on_deal/add_add_on_deal_main_item"
 	resp := new(AddAddOnDealMainItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) AddAddOnDealSubItem(sid uint64, req AddAddOnDealSubItemRequest, tok string) (*AddAddOnDealSubItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) AddAddOnDealSubItem(sid uint64, req AddAddOnDealSubItemRequest, tok string) (*AddAddOnDealSubItemResponse, error) {
 	path := "/add_on_deal/add_add_on_deal_sub_item"
 	resp := new(AddAddOnDealSubItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) DeleteAddOnDeal(sid uint64, req DeleteAddOnDealRequest, tok string) (*DeleteAddOnDealResponse, error) {
+func (s *AddOnDealServiceOp[T]) DeleteAddOnDeal(sid uint64, req DeleteAddOnDealRequest, tok string) (*DeleteAddOnDealResponse, error) {
 	path := "/add_on_deal/delete_add_on_deal"
 	resp := new(DeleteAddOnDealResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) DeleteAddOnDealMainItem(sid uint64, req DeleteAddOnDealMainItemRequest, tok string) (*DeleteAddOnDealMainItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) DeleteAddOnDealMainItem(sid uint64, req DeleteAddOnDealMainItemRequest, tok string) (*DeleteAddOnDealMainItemResponse, error) {
 	path := "/add_on_deal/delete_add_on_deal_main_item"
 	resp := new(DeleteAddOnDealMainItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) DeleteAddOnDealSubItem(sid uint64, req DeleteAddOnDealSubItemRequest, tok string) (*DeleteAddOnDealSubItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) DeleteAddOnDealSubItem(sid uint64, req DeleteAddOnDealSubItemRequest, tok string) (*DeleteAddOnDealSubItemResponse, error) {
 	path := "/add_on_deal/delete_add_on_deal_sub_item"
 	resp := new(DeleteAddOnDealSubItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) GetAddOnDealList(sid uint64, req GetAddOnDealListRequest, tok string) (*GetAddOnDealListResponse, error) {
+func (s *AddOnDealServiceOp[T]) GetAddOnDealList(sid uint64, req GetAddOnDealListRequest, tok string) (*GetAddOnDealListResponse, error) {
 	path := "/add_on_deal/get_add_on_deal_list"
 	resp := new(GetAddOnDealListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) GetAddOnDeal(sid uint64, req GetAddOnDealRequest, tok string) (*GetAddOnDealResponse, error) {
+func (s *AddOnDealServiceOp[T]) GetAddOnDeal(sid uint64, req GetAddOnDealRequest, tok string) (*GetAddOnDealResponse, error) {
 	path := "/add_on_deal/get_add_on_deal"
 	resp := new(GetAddOnDealResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) GetAddOnDealMainItem(sid uint64, req GetAddOnDealMainItemRequest, tok string) (*GetAddOnDealMainItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) GetAddOnDealMainItem(sid uint64, req GetAddOnDealMainItemRequest, tok string) (*GetAddOnDealMainItemResponse, error) {
 	path := "/add_on_deal/get_add_on_deal_main_item"
 	resp := new(GetAddOnDealMainItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) GetAddOnDealSubItem(sid uint64, req GetAddOnDealSubItemRequest, tok string) (*GetAddOnDealSubItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) GetAddOnDealSubItem(sid uint64, req GetAddOnDealSubItemRequest, tok string) (*GetAddOnDealSubItemResponse, error) {
 	path := "/add_on_deal/get_add_on_deal_sub_item"
 	resp := new(GetAddOnDealSubItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) UpdateAddOnDeal(sid uint64, req UpdateAddOnDealRequest, tok string) (*UpdateAddOnDealResponse, error) {
+func (s *AddOnDealServiceOp[T]) UpdateAddOnDeal(sid uint64, req UpdateAddOnDealRequest, tok string) (*UpdateAddOnDealResponse, error) {
 	path := "/add_on_deal/update_add_on_deal"
 	resp := new(UpdateAddOnDealResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) UpdateAddOnDealMainItem(sid uint64, req UpdateAddOnDealMainItemRequest, tok string) (*UpdateAddOnDealMainItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) UpdateAddOnDealMainItem(sid uint64, req UpdateAddOnDealMainItemRequest, tok string) (*UpdateAddOnDealMainItemResponse, error) {
 	path := "/add_on_deal/update_add_on_deal_main_item"
 	resp := new(UpdateAddOnDealMainItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) UpdateAddOnDealSubItem(sid uint64, req UpdateAddOnDealSubItemRequest, tok string) (*UpdateAddOnDealSubItemResponse, error) {
+func (s *AddOnDealServiceOp[T]) UpdateAddOnDealSubItem(sid uint64, req UpdateAddOnDealSubItemRequest, tok string) (*UpdateAddOnDealSubItemResponse, error) {
 	path := "/add_on_deal/update_add_on_deal_sub_item"
 	resp := new(UpdateAddOnDealSubItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AddOnDealServiceOp) EndAddOnDeal(sid uint64, req EndAddOnDealRequest, tok string) (*EndAddOnDealResponse, error) {
+func (s *AddOnDealServiceOp[T]) EndAddOnDeal(sid uint64, req EndAddOnDealRequest, tok string) (*EndAddOnDealResponse, error) {
 	path := "/add_on_deal/end_add_on_deal"
 	resp := new(EndAddOnDealResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

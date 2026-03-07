@@ -22,46 +22,46 @@ type VoucherService interface {
 	GetVoucherList(sid uint64, req GetVoucherListRequest, tok string) (*GetVoucherListResponse, error)
 }
 
-type VoucherServiceOp struct {
-	client *Client
+type VoucherServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *VoucherServiceOp) AddVoucher(sid uint64, req AddVoucherRequest, tok string) (*AddVoucherResponse, error) {
+func (s *VoucherServiceOp[T]) AddVoucher(sid uint64, req AddVoucherRequest, tok string) (*AddVoucherResponse, error) {
 	path := "/voucher/add_voucher"
 	resp := new(AddVoucherResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *VoucherServiceOp) DeleteVoucher(sid uint64, req DeleteVoucherRequest, tok string) (*DeleteVoucherResponse, error) {
+func (s *VoucherServiceOp[T]) DeleteVoucher(sid uint64, req DeleteVoucherRequest, tok string) (*DeleteVoucherResponse, error) {
 	path := "/voucher/delete_voucher"
 	resp := new(DeleteVoucherResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *VoucherServiceOp) EndVoucher(sid uint64, req EndVoucherRequest, tok string) (*EndVoucherResponse, error) {
+func (s *VoucherServiceOp[T]) EndVoucher(sid uint64, req EndVoucherRequest, tok string) (*EndVoucherResponse, error) {
 	path := "/voucher/end_voucher"
 	resp := new(EndVoucherResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *VoucherServiceOp) UpdateVoucher(sid uint64, req UpdateVoucherRequest, tok string) (*UpdateVoucherResponse, error) {
+func (s *VoucherServiceOp[T]) UpdateVoucher(sid uint64, req UpdateVoucherRequest, tok string) (*UpdateVoucherResponse, error) {
 	path := "/voucher/update_voucher"
 	resp := new(UpdateVoucherResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *VoucherServiceOp) GetVoucher(sid uint64, req GetVoucherRequest, tok string) (*GetVoucherResponse, error) {
+func (s *VoucherServiceOp[T]) GetVoucher(sid uint64, req GetVoucherRequest, tok string) (*GetVoucherResponse, error) {
 	path := "/voucher/get_voucher"
 	resp := new(GetVoucherResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *VoucherServiceOp) GetVoucherList(sid uint64, req GetVoucherListRequest, tok string) (*GetVoucherListResponse, error) {
+func (s *VoucherServiceOp[T]) GetVoucherList(sid uint64, req GetVoucherListRequest, tok string) (*GetVoucherListResponse, error) {
 	path := "/voucher/get_voucher_list"
 	resp := new(GetVoucherListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

@@ -31,11 +31,11 @@ type RefreshAccessTokenResponse struct {
 	ShopID uint64 `json:"shop_id"`
 }
 
-type AuthServiceOp struct {
-	client *Client
+type AuthServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *AuthServiceOp)GetAuthURL() (string,error) {
+func (s *AuthServiceOp[T])GetAuthURL() (string,error) {
 	rurl := s.client.app.RedirectURL
 	path:="/api/v2/shop/auth_partner"
 	sign,ts,_ := s.client.Util.Sign(path)
@@ -43,7 +43,7 @@ func (s *AuthServiceOp)GetAuthURL() (string,error) {
 	return aurl,nil
 }
 
-func (s *AuthServiceOp)GetCancelAuthURL() (string,error) {
+func (s *AuthServiceOp[T])GetCancelAuthURL() (string,error) {
 	rurl := s.client.app.RedirectURL
 	path:="/api/v2/shop/cancel_auth_partner"
 	sign,ts,_ := s.client.Util.Sign(path)
@@ -51,7 +51,7 @@ func (s *AuthServiceOp)GetCancelAuthURL() (string,error) {
 	return aurl,nil
 }
 
-func (s *AuthServiceOp)GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse,error){
+func (s *AuthServiceOp[T])GetAccessToken(sid uint64, aid uint64, code string) (*AccessTokenResponse,error){
 	path := "/auth/token/get"
 	params := map[string]interface{}{
 		"code":       code,
@@ -68,7 +68,7 @@ func (s *AuthServiceOp)GetAccessToken(sid uint64, aid uint64, code string) (*Acc
 	return resp, err
 }
 
-func (s *AuthServiceOp)RefreshAccessToken(sid uint64, aid uint64, refresh string) (*RefreshAccessTokenResponse,error){
+func (s *AuthServiceOp[T])RefreshAccessToken(sid uint64, aid uint64, refresh string) (*RefreshAccessTokenResponse,error){
 	path := "/auth/access_token/get"
 	params := map[string]interface{}{
 		"refresh_token": refresh,

@@ -16,32 +16,32 @@ type PushService interface {
 	ConfirmConsumedLostPushMessage(sid uint64, req ConfirmConsumedLostPushMessageRequest, tok string) (*ConfirmConsumedLostPushMessageResponse, error)
 }
 
-type PushServiceOp struct {
-	client *Client
+type PushServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *PushServiceOp) SetAppPushConfig(sid uint64, req SetAppPushConfigRequest, tok string) (*SetAppPushConfigResponse, error) {
+func (s *PushServiceOp[T]) SetAppPushConfig(sid uint64, req SetAppPushConfigRequest, tok string) (*SetAppPushConfigResponse, error) {
 	path := "/push/set_app_push_config"
 	resp := new(SetAppPushConfigResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PushServiceOp) GetAppPushConfig(sid uint64, tok string) (*GetAppPushConfigResponse, error) {
+func (s *PushServiceOp[T]) GetAppPushConfig(sid uint64, tok string) (*GetAppPushConfigResponse, error) {
 	path := "/push/get_app_push_config"
 	resp := new(GetAppPushConfigResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *PushServiceOp) GetLostPushMessage(sid uint64, tok string) (*GetLostPushMessageResponse, error) {
+func (s *PushServiceOp[T]) GetLostPushMessage(sid uint64, tok string) (*GetLostPushMessageResponse, error) {
 	path := "/push/get_lost_push_message"
 	resp := new(GetLostPushMessageResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *PushServiceOp) ConfirmConsumedLostPushMessage(sid uint64, req ConfirmConsumedLostPushMessageRequest, tok string) (*ConfirmConsumedLostPushMessageResponse, error) {
+func (s *PushServiceOp[T]) ConfirmConsumedLostPushMessage(sid uint64, req ConfirmConsumedLostPushMessageRequest, tok string) (*ConfirmConsumedLostPushMessageResponse, error) {
 	path := "/push/confirm_consumed_lost_push_message"
 	resp := new(ConfirmConsumedLostPushMessageResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)

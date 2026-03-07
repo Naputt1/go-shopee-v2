@@ -19,39 +19,39 @@ type SBSService interface {
 	GetStockMovement(sid uint64, req GetStockMovementRequest, tok string) (*GetStockMovementResponse, error)
 }
 
-type SBSServiceOp struct {
-	client *Client
+type SBSServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *SBSServiceOp) GetBoundWhsInfo(sid uint64, tok string) (*GetBoundWhsInfoResponse, error) {
+func (s *SBSServiceOp[T]) GetBoundWhsInfo(sid uint64, tok string) (*GetBoundWhsInfoResponse, error) {
 	path := "/sbs/get_bound_whs_info"
 	resp := new(GetBoundWhsInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *SBSServiceOp) GetCurrentInventory(sid uint64, req GetCurrentInventoryRequest, tok string) (*GetCurrentInventoryResponse, error) {
+func (s *SBSServiceOp[T]) GetCurrentInventory(sid uint64, req GetCurrentInventoryRequest, tok string) (*GetCurrentInventoryResponse, error) {
 	path := "/sbs/get_current_inventory"
 	resp := new(GetCurrentInventoryResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *SBSServiceOp) GetExpiryReport(sid uint64, req GetExpiryReportRequest, tok string) (*GetExpiryReportResponse, error) {
+func (s *SBSServiceOp[T]) GetExpiryReport(sid uint64, req GetExpiryReportRequest, tok string) (*GetExpiryReportResponse, error) {
 	path := "/sbs/get_expiry_report"
 	resp := new(GetExpiryReportResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *SBSServiceOp) GetStockAging(sid uint64, req GetStockAgingRequest, tok string) (*GetStockAgingResponse, error) {
+func (s *SBSServiceOp[T]) GetStockAging(sid uint64, req GetStockAgingRequest, tok string) (*GetStockAgingResponse, error) {
 	path := "/sbs/get_stock_aging"
 	resp := new(GetStockAgingResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *SBSServiceOp) GetStockMovement(sid uint64, req GetStockMovementRequest, tok string) (*GetStockMovementResponse, error) {
+func (s *SBSServiceOp[T]) GetStockMovement(sid uint64, req GetStockMovementRequest, tok string) (*GetStockMovementResponse, error) {
 	path := "/sbs/get_stock_movement"
 	resp := new(GetStockMovementResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

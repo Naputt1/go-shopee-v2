@@ -57,123 +57,123 @@ type ReturnsService interface {
 	GetReverseTrackingInfo(sid uint64, opt GetReverseTrackingInfoRequest, tok string) (*GetReverseTrackingInfoResponse, error)
 }
 
-type ReturnsServiceOp struct {
-	client *Client
+type ReturnsServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *ReturnsServiceOp) GetReturnList(sid uint64, opt GetReturnListRequest, tok string) (*GetReturnListResponse, error) {
+func (s *ReturnsServiceOp[T]) GetReturnList(sid uint64, opt GetReturnListRequest, tok string) (*GetReturnListResponse, error) {
 	path := "/returns/get_return_list"
 	resp := new(GetReturnListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) GetReturnDetail(sid uint64, opt GetReturnDetailRequest, tok string) (*GetReturnDetailResponse, error) {
+func (s *ReturnsServiceOp[T]) GetReturnDetail(sid uint64, opt GetReturnDetailRequest, tok string) (*GetReturnDetailResponse, error) {
 	path := "/returns/get_return_detail"
 	resp := new(GetReturnDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) Confirm(sid uint64, req ConfirmRequest, tok string) (*ConfirmResponse, error) {
+func (s *ReturnsServiceOp[T]) Confirm(sid uint64, req ConfirmRequest, tok string) (*ConfirmResponse, error) {
 	path := "/returns/confirm"
 	resp := new(ConfirmResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) Dispute(sid uint64, req DisputeRequest, tok string) (*DisputeResponse, error) {
+func (s *ReturnsServiceOp[T]) Dispute(sid uint64, req DisputeRequest, tok string) (*DisputeResponse, error) {
 	path := "/returns/dispute"
 	resp := new(DisputeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) GetAvailableSolutions(sid uint64, opt GetAvailableSolutionsRequest, tok string) (*GetAvailableSolutionsResponse, error) {
+func (s *ReturnsServiceOp[T]) GetAvailableSolutions(sid uint64, opt GetAvailableSolutionsRequest, tok string) (*GetAvailableSolutionsResponse, error) {
 	path := "/returns/get_available_solutions"
 	resp := new(GetAvailableSolutionsResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) Offer(sid uint64, req OfferRequest, tok string) (*OfferResponse, error) {
+func (s *ReturnsServiceOp[T]) Offer(sid uint64, req OfferRequest, tok string) (*OfferResponse, error) {
 	path := "/returns/offer"
 	resp := new(OfferResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) AcceptOffer(sid uint64, req AcceptOfferRequest, tok string) (*AcceptOfferResponse, error) {
+func (s *ReturnsServiceOp[T]) AcceptOffer(sid uint64, req AcceptOfferRequest, tok string) (*AcceptOfferResponse, error) {
 	path := "/returns/accept_offer"
 	resp := new(AcceptOfferResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) ConvertImage(sid uint64, req ConvertImageRequest, tok string) (*ConvertImageResponse, error) {
+func (s *ReturnsServiceOp[T]) ConvertImage(sid uint64, req ConvertImageRequest, tok string) (*ConvertImageResponse, error) {
 	path := "/returns/convert_image"
 	resp := new(ConvertImageResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) UploadProof(sid uint64, filename string, tok string) (*UploadProofResponse, error) {
+func (s *ReturnsServiceOp[T]) UploadProof(sid uint64, filename string, tok string) (*UploadProofResponse, error) {
 	path := "/returns/upload_proof"
 	resp := new(UploadProofResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) UploadProofFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadProofResponse, error) {
+func (s *ReturnsServiceOp[T]) UploadProofFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadProofResponse, error) {
 	path := "/returns/upload_proof"
 	resp := new(UploadProofResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) QueryProof(sid uint64, opt QueryProofRequest, tok string) (*QueryProofResponse, error) {
+func (s *ReturnsServiceOp[T]) QueryProof(sid uint64, opt QueryProofRequest, tok string) (*QueryProofResponse, error) {
 	path := "/returns/query_proof"
 	resp := new(QueryProofResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) GetReturnDisputeReason(sid uint64, opt GetReturnDisputeReasonRequest, tok string) (*GetReturnDisputeReasonResponse, error) {
+func (s *ReturnsServiceOp[T]) GetReturnDisputeReason(sid uint64, opt GetReturnDisputeReasonRequest, tok string) (*GetReturnDisputeReasonResponse, error) {
 	path := "/returns/get_return_dispute_reason"
 	resp := new(GetReturnDisputeReasonResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) CancelDispute(sid uint64, req CancelDisputeRequest, tok string) (*CancelDisputeResponse, error) {
+func (s *ReturnsServiceOp[T]) CancelDispute(sid uint64, req CancelDisputeRequest, tok string) (*CancelDisputeResponse, error) {
 	path := "/returns/cancel_dispute"
 	resp := new(CancelDisputeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) GetShippingCarrier(sid uint64, opt GetShippingCarrierRequest, tok string) (*GetShippingCarrierResponse, error) {
+func (s *ReturnsServiceOp[T]) GetShippingCarrier(sid uint64, opt GetShippingCarrierRequest, tok string) (*GetShippingCarrierResponse, error) {
 	path := "/returns/get_shipping_carrier"
 	resp := new(GetShippingCarrierResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) UploadShippingProof(sid uint64, filename string, tok string) (*UploadShippingProofResponse, error) {
+func (s *ReturnsServiceOp[T]) UploadShippingProof(sid uint64, filename string, tok string) (*UploadShippingProofResponse, error) {
 	path := "/returns/upload_shipping_proof"
 	resp := new(UploadShippingProofResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) UploadShippingProofFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadShippingProofResponse, error) {
+func (s *ReturnsServiceOp[T]) UploadShippingProofFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadShippingProofResponse, error) {
 	path := "/returns/upload_shipping_proof"
 	resp := new(UploadShippingProofResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *ReturnsServiceOp) GetReverseTrackingInfo(sid uint64, opt GetReverseTrackingInfoRequest, tok string) (*GetReverseTrackingInfoResponse, error) {
+func (s *ReturnsServiceOp[T]) GetReverseTrackingInfo(sid uint64, opt GetReverseTrackingInfoRequest, tok string) (*GetReverseTrackingInfoResponse, error) {
 	path := "/returns/get_reverse_tracking_info"
 	resp := new(GetReverseTrackingInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
