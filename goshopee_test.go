@@ -20,7 +20,7 @@ const (
 )
 
 var (
-	client *Client
+	client *Client[any]
 	app    App
 )
 
@@ -40,8 +40,8 @@ func setup() {
 			os.Exit(1)
 		}
 	}
-	client = NewClient(app,
-		WithRetry(maxRetries))
+	client = NewClient[any](app,
+		WithRetry[any](maxRetries))
 	httpmock.ActivateNonDefault(client.Client)
 }
 
@@ -111,3 +111,51 @@ func TestCheckResponseError(t *testing.T) {
 	}
 }
 
+func TestGenericMeta(t *testing.T) {
+	type MyMeta struct {
+		ID   int
+		Name string
+	}
+
+	meta := MyMeta{ID: 123, Name: "Test"}
+	app := App{
+		APIURL: "https://example.com",
+	}
+
+	var capturedMeta MyMeta
+	c := NewClient(app,
+		WithMeta(meta),
+		WithOnTokenRefresh(func(res *RefreshAccessTokenResponse, m MyMeta) {
+			capturedMeta = m
+		}),
+	)
+
+	if c.Meta.ID != 123 {
+		t.Errorf("Expected meta ID 123, got %d", c.Meta.ID)
+	}
+
+	// Trigger token refresh callback manually if possible, or just check the type safety
+	c.OnTokenRefresh(nil, c.Meta)
+	if capturedMeta.ID != 123 {
+		t.Errorf("Expected captured meta ID 123, got %d", capturedMeta.ID)
+	}
+}
+
+func TestNewDefaultClient(t *testing.T) {
+	app := App{
+		APIURL: "https://example.com",
+	}
+
+	c := NewDefaultClient(app,
+		WithRetryDefault(3),
+		WithMetaDefault("some meta"),
+	)
+
+	if c.retries != 3 {
+		t.Errorf("Expected retries 3, got %d", c.retries)
+	}
+
+	if c.Meta != "some meta" {
+		t.Errorf("Expected meta 'some meta', got %v", c.Meta)
+	}
+}

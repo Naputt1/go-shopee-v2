@@ -10,7 +10,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -854,7 +853,6 @@ type App struct {
 	PartnerKey  string `env:"SHOPEE_PARTNER_KEY"`
 	RedirectURL string `env:"SHOPEE_REDIRECT_URL"`
 	APIURL      string `env:"SHOPEE_API_URL"`
-	Client      *Client
 }
 
 type RateLimitInfo struct {
@@ -864,7 +862,7 @@ type RateLimitInfo struct {
 }
 
 // Client manages communication with the Shopify API.
-type Client struct {
+type Client[T any] struct {
 	Client *http.Client
 	log    LeveledLoggerInterface
 
@@ -884,8 +882,8 @@ type Client struct {
 	AccessToken string
 
 	RefreshToken   string
-	OnTokenRefresh func(res *RefreshAccessTokenResponse, meta interface{})
-	Meta           interface{}
+	OnTokenRefresh func(res *RefreshAccessTokenResponse, meta T)
+	Meta           T
 
 	// Services used for communicating with the API
 	// BEGIN GENERATED SERVICES
@@ -920,17 +918,20 @@ type Client struct {
 	// END GENERATED SERVICES
 }
 
+// DefaultClient is a non-generic version of the Client
+type DefaultClient = Client[any]
+
 // NewClient returns a new Shopify API client with an already authenticated shopname and
 // token. The shopName parameter is the shop's myshopify domain,
 // e.g. "theshop.myshopify.com", or simply "theshop"
 // a.NewClient(shopName, token, opts) is equivalent to NewClient(a, shopName, token, opts)
-func NewClient(app App, opts ...Option) *Client {
+func NewClient[T any](app App, opts ...Option[T]) *Client[T] {
 	baseURL, err := url.Parse(app.APIURL)
 	if err != nil {
 		panic(err)
 	}
 
-	c := &Client{
+	c := &Client[T]{
 		Client:  &http.Client{},
 		log:     &LeveledLogger{},
 		app:     app,
@@ -938,34 +939,34 @@ func NewClient(app App, opts ...Option) *Client {
 	}
 
 	// BEGIN GENERATED SERVICES INIT
-	c.Util = &UtilServiceOp{client: c}
-	c.Auth = &AuthServiceOp{client: c}
-	c.Product = &ProductServiceOp{client: c}
-	c.GlobalProduct = &GlobalProductServiceOp{client: c}
-	c.MediaSpace = &MediaSpaceServiceOp{client: c}
-	c.Media = &MediaServiceOp{client: c}
-	c.Shop = &ShopServiceOp{client: c}
-	c.Merchant = &MerchantServiceOp{client: c}
-	c.Order = &OrderServiceOp{client: c}
-	c.Logistics = &LogisticsServiceOp{client: c}
-	c.FirstMile = &FirstMileServiceOp{client: c}
-	c.Payment = &PaymentServiceOp{client: c}
-	c.Discount = &DiscountServiceOp{client: c}
-	c.BundleDeal = &BundleDealServiceOp{client: c}
-	c.AddOnDeal = &AddOnDealServiceOp{client: c}
-	c.Voucher = &VoucherServiceOp{client: c}
-	c.ShopFlashSale = &ShopFlashSaleServiceOp{client: c}
-	c.FollowPrize = &FollowPrizeServiceOp{client: c}
-	c.TopPicks = &TopPicksServiceOp{client: c}
-	c.ShopCategory = &ShopCategoryServiceOp{client: c}
-	c.Returns = &ReturnsServiceOp{client: c}
-	c.AccountHealth = &AccountHealthServiceOp{client: c}
-	c.Ads = &AdsServiceOp{client: c}
-	c.Public = &PublicServiceOp{client: c}
-	c.Push = &PushServiceOp{client: c}
-	c.SBS = &SBSServiceOp{client: c}
-	c.FBS = &FBSServiceOp{client: c}
-	c.Livestream = &LivestreamServiceOp{client: c}
+	c.Util = &UtilServiceOp[T]{client: c}
+	c.Auth = &AuthServiceOp[T]{client: c}
+	c.Product = &ProductServiceOp[T]{client: c}
+	c.GlobalProduct = &GlobalProductServiceOp[T]{client: c}
+	c.MediaSpace = &MediaSpaceServiceOp[T]{client: c}
+	c.Media = &MediaServiceOp[T]{client: c}
+	c.Shop = &ShopServiceOp[T]{client: c}
+	c.Merchant = &MerchantServiceOp[T]{client: c}
+	c.Order = &OrderServiceOp[T]{client: c}
+	c.Logistics = &LogisticsServiceOp[T]{client: c}
+	c.FirstMile = &FirstMileServiceOp[T]{client: c}
+	c.Payment = &PaymentServiceOp[T]{client: c}
+	c.Discount = &DiscountServiceOp[T]{client: c}
+	c.BundleDeal = &BundleDealServiceOp[T]{client: c}
+	c.AddOnDeal = &AddOnDealServiceOp[T]{client: c}
+	c.Voucher = &VoucherServiceOp[T]{client: c}
+	c.ShopFlashSale = &ShopFlashSaleServiceOp[T]{client: c}
+	c.FollowPrize = &FollowPrizeServiceOp[T]{client: c}
+	c.TopPicks = &TopPicksServiceOp[T]{client: c}
+	c.ShopCategory = &ShopCategoryServiceOp[T]{client: c}
+	c.Returns = &ReturnsServiceOp[T]{client: c}
+	c.AccountHealth = &AccountHealthServiceOp[T]{client: c}
+	c.Ads = &AdsServiceOp[T]{client: c}
+	c.Public = &PublicServiceOp[T]{client: c}
+	c.Push = &PushServiceOp[T]{client: c}
+	c.SBS = &SBSServiceOp[T]{client: c}
+	c.FBS = &FBSServiceOp[T]{client: c}
+	c.Livestream = &LivestreamServiceOp[T]{client: c}
 	// END GENERATED SERVICES INIT
 
 	// apply any options
@@ -974,6 +975,11 @@ func NewClient(app App, opts ...Option) *Client {
 	}
 
 	return c
+}
+
+// NewDefaultClient returns a new Shopify API client with any as meta type
+func NewDefaultClient(app App, opts ...DefaultOption) *DefaultClient {
+	return NewClient(app, opts...)
 }
 
 // A general response error that follows a similar layout to Shopify's response
@@ -1067,7 +1073,7 @@ type RateLimitError struct {
 // be resolved to the BaseURL of the Client. Relative URLS should always be
 // specified without a preceding slash. If specified, the value pointed to by
 // body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(method, relPath string, body, options, headers interface{}) (*http.Request, error) {
+func (c *Client[T]) NewRequest(method, relPath string, body, options, headers interface{}) (*http.Request, error) {
 	rel, err := url.Parse(relPath)
 	if err != nil {
 		return nil, err
@@ -1146,40 +1152,40 @@ func (c *Client) NewRequest(method, relPath string, body, options, headers inter
 	return req, nil
 }
 
-func (c *Client) WithShop(sid uint64, tok string) *Client {
+func (c *Client[T]) WithShop(sid uint64, tok string) *Client[T] {
 	c.ShopID = sid
 	c.AccessToken = tok
 	return c
 }
 
-func (c *Client) WithMerchant(mid uint64, tok string) *Client {
+func (c *Client[T]) WithMerchant(mid uint64, tok string) *Client[T] {
 	c.MerchantID = mid
 	c.AccessToken = tok
 	return c
 }
 
-func (c *Client) WithToken(tok string) *Client {
+func (c *Client[T]) WithToken(tok string) *Client[T] {
 	c.AccessToken = tok
 	return c
 }
 
-func (c *Client) WithRefreshToken(tok string) *Client {
+func (c *Client[T]) WithRefreshToken(tok string) *Client[T] {
 	c.RefreshToken = tok
 	return c
 }
 
-func (c *Client) WithOnTokenRefresh(fn func(res *RefreshAccessTokenResponse, meta interface{})) *Client {
+func (c *Client[T]) WithOnTokenRefresh(fn func(res *RefreshAccessTokenResponse, meta T)) *Client[T] {
 	c.OnTokenRefresh = fn
 	return c
 }
 
-func (c *Client) WithMeta(meta interface{}) *Client {
+func (c *Client[T]) WithMeta(meta T) *Client[T] {
 	c.Meta = meta
 	return c
 }
 
 // https://open.shopee.com/documents?module=87&type=2&id=58&version=2
-func (c *Client) makeSignature(req *http.Request) (string, int64) {
+func (c *Client[T]) makeSignature(req *http.Request) (string, int64) {
 	ts := time.Now().Unix()
 	path := req.URL.Path
 
@@ -1223,7 +1229,7 @@ func (c *Client) makeSignature(req *http.Request) (string, int64) {
 }
 
 // doGetHeaders executes a request, decoding the response into `v` and also returns any response headers.
-func (c *Client) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (http.Header, error) {
+func (c *Client[T]) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (http.Header, error) {
 	var resp *http.Response
 	var err error
 
@@ -1336,7 +1342,7 @@ func (c *Client) doGetHeaders(req *http.Request, v interface{}, skipBody bool) (
 }
 
 // skipBody: if upload image, skip log its binary
-func (c *Client) logRequest(req *http.Request, skipBody bool) {
+func (c *Client[T]) logRequest(req *http.Request, skipBody bool) {
 	if req == nil {
 		return
 	}
@@ -1348,7 +1354,7 @@ func (c *Client) logRequest(req *http.Request, skipBody bool) {
 	}
 }
 
-func (c *Client) logResponse(res *http.Response) {
+func (c *Client[T]) logResponse(res *http.Response) {
 	if res == nil {
 		return
 	}
@@ -1356,15 +1362,15 @@ func (c *Client) logResponse(res *http.Response) {
 	c.logBody(&res.Body, "RESP: %s")
 }
 
-func (c *Client) logBody(body *io.ReadCloser, format string) {
+func (c *Client[T]) logBody(body *io.ReadCloser, format string) {
 	if body == nil || *body == nil {
 		return
 	}
-	b, _ := ioutil.ReadAll(*body)
+	b, _ := io.ReadAll(*body)
 	if len(b) > 0 {
 		c.log.Debugf(format, string(b))
 	}
-	*body = ioutil.NopCloser(bytes.NewBuffer(b))
+	*body = io.NopCloser(bytes.NewBuffer(b))
 }
 
 func wrapSpecificError(r *http.Response, err ResponseError) error {
@@ -1400,14 +1406,14 @@ func CheckResponseError(r *http.Response) error {
 		RequestID string `json:"request_id"`
 	}{}
 
-	bodyBytes, err := ioutil.ReadAll(r.Body)
+	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
 		return err
 	}
 
 	defer func() {
 		// already read out, reload for next process
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 	}()
 
 	if len(bodyBytes) > 0 {
@@ -1448,7 +1454,7 @@ func CheckResponseError(r *http.Response) error {
 // The options argument is used for specifying request options such as search
 // parameters like created_at_min
 // Any data returned from Shopify will be marshalled into resource argument.
-func (c *Client) CreateAndDo(method, relPath string, data, options, headers, resource interface{}) error {
+func (c *Client[T]) CreateAndDo(method, relPath string, data, options, headers, resource interface{}) error {
 	_, err := c.createAndDoGetHeaders(method, relPath, data, options, headers, resource)
 	if err != nil {
 		return err
@@ -1457,7 +1463,7 @@ func (c *Client) CreateAndDo(method, relPath string, data, options, headers, res
 }
 
 // createAndDoGetHeaders creates an executes a request while returning the response headers.
-func (c *Client) createAndDoGetHeaders(method, relPath string, data, options, headers, resource interface{}) (http.Header, error) {
+func (c *Client[T]) createAndDoGetHeaders(method, relPath string, data, options, headers, resource interface{}) (http.Header, error) {
 	if strings.HasPrefix(relPath, "/") {
 		// make sure it's a relative path
 		relPath = strings.TrimLeft(relPath, "/")
@@ -1475,30 +1481,30 @@ func (c *Client) createAndDoGetHeaders(method, relPath string, data, options, he
 
 // Get performs a GET request for the given path and saves the result in the
 // given resource.
-func (c *Client) Get(path string, resource, options interface{}) error {
+func (c *Client[T]) Get(path string, resource, options interface{}) error {
 	return c.CreateAndDo("GET", path, nil, options, nil, resource)
 }
 
 // Post performs a POST request for the given path and saves the result in the
 // given resource.
-func (c *Client) Post(path string, data, resource interface{}) error {
+func (c *Client[T]) Post(path string, data, resource interface{}) error {
 	return c.CreateAndDo("POST", path, data, nil, nil, resource)
 }
 
 // Put performs a PUT request for the given path and saves the result in the
 // given resource.
-func (c *Client) Put(path string, data, resource interface{}) error {
+func (c *Client[T]) Put(path string, data, resource interface{}) error {
 	return c.CreateAndDo("PUT", path, data, nil, nil, resource)
 }
 
 // Delete performs a DELETE request for the given path
-func (c *Client) Delete(path string) error {
+func (c *Client[T]) Delete(path string) error {
 	return c.CreateAndDo("DELETE", path, nil, nil, nil, nil)
 }
 
 // Upload performs a Upload request for the given path and saves the result in the
 // given resource.
-func (c *Client) Upload(relPath, fieldname, filename string, resource interface{}) error {
+func (c *Client[T]) Upload(relPath, fieldname, filename string, resource interface{}) error {
 	req, err := c.NewfileUploadRequest(relPath, fieldname, filename)
 	if err != nil {
 		return err
@@ -1511,7 +1517,7 @@ func (c *Client) Upload(relPath, fieldname, filename string, resource interface{
 }
 
 // UploadFromReader performs an upload from an io.Reader
-func (c *Client) UploadFromReader(relPath, fieldname, filename string, reader io.Reader, resource interface{}) error {
+func (c *Client[T]) UploadFromReader(relPath, fieldname, filename string, reader io.Reader, resource interface{}) error {
 	req, err := c.NewUploadFromReaderRequest(relPath, fieldname, filename, reader)
 	if err != nil {
 		return err
@@ -1524,7 +1530,7 @@ func (c *Client) UploadFromReader(relPath, fieldname, filename string, reader io
 }
 
 // NewfileUploadRequest creates a new file upload http request with optional extra params
-func (c *Client) NewfileUploadRequest(relPath, paramName, filename string) (*http.Request, error) {
+func (c *Client[T]) NewfileUploadRequest(relPath, paramName, filename string) (*http.Request, error) {
 	if strings.HasPrefix(relPath, "/") {
 		// make sure it's a relative path
 		relPath = strings.TrimLeft(relPath, "/")
@@ -1578,7 +1584,7 @@ func (c *Client) NewfileUploadRequest(relPath, paramName, filename string) (*htt
 }
 
 // NewUploadFromReaderRequest creates a new file upload http request from an io.Reader
-func (c *Client) NewUploadFromReaderRequest(relPath, paramName, filename string, reader io.Reader) (*http.Request, error) {
+func (c *Client[T]) NewUploadFromReaderRequest(relPath, paramName, filename string, reader io.Reader) (*http.Request, error) {
 	if strings.HasPrefix(relPath, "/") {
 		// make sure it's a relative path
 		relPath = strings.TrimLeft(relPath, "/")

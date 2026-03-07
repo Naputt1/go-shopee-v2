@@ -62,130 +62,130 @@ type PaymentService interface {
 	GetIncomeDetail(sid uint64, req GetIncomeDetailRequest, tok string) (*GetIncomeDetailResponse, error)
 }
 
-type PaymentServiceOp struct {
-	client *Client
+type PaymentServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *PaymentServiceOp) GetEscrowDetail(sid uint64, req GetEscrowDetailRequest, tok string) (*GetEscrowDetailResponse, error) {
+func (s *PaymentServiceOp[T]) GetEscrowDetail(sid uint64, req GetEscrowDetailRequest, tok string) (*GetEscrowDetailResponse, error) {
 	path := "/payment/get_escrow_detail"
 	resp := new(GetEscrowDetailResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) SetShopInstallmentStatus(sid uint64, req SetShopInstallmentStatusRequest, tok string) (*SetShopInstallmentStatusResponse, error) {
+func (s *PaymentServiceOp[T]) SetShopInstallmentStatus(sid uint64, req SetShopInstallmentStatusRequest, tok string) (*SetShopInstallmentStatusResponse, error) {
 	path := "/payment/set_shop_installment_status"
 	resp := new(SetShopInstallmentStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetShopInstallmentStatus(sid uint64, tok string) (*GetShopInstallmentStatusResponse, error) {
+func (s *PaymentServiceOp[T]) GetShopInstallmentStatus(sid uint64, tok string) (*GetShopInstallmentStatusResponse, error) {
 	path := "/payment/get_shop_installment_status"
 	resp := new(GetShopInstallmentStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetPayoutDetail(sid uint64, req GetPayoutDetailRequest, tok string) (*GetPayoutDetailResponse, error) {
+func (s *PaymentServiceOp[T]) GetPayoutDetail(sid uint64, req GetPayoutDetailRequest, tok string) (*GetPayoutDetailResponse, error) {
 	path := "/payment/get_payout_detail"
 	resp := new(GetPayoutDetailResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) SetItemInstallmentStatus(sid uint64, req SetItemInstallmentStatusRequest, tok string) (*SetItemInstallmentStatusResponse, error) {
+func (s *PaymentServiceOp[T]) SetItemInstallmentStatus(sid uint64, req SetItemInstallmentStatusRequest, tok string) (*SetItemInstallmentStatusResponse, error) {
 	path := "/payment/set_item_installment_status"
 	resp := new(SetItemInstallmentStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetItemInstallmentStatus(sid uint64, req GetItemInstallmentStatusRequest, tok string) (*GetItemInstallmentStatusResponse, error) {
+func (s *PaymentServiceOp[T]) GetItemInstallmentStatus(sid uint64, req GetItemInstallmentStatusRequest, tok string) (*GetItemInstallmentStatusResponse, error) {
 	path := "/payment/get_item_installment_status"
 	resp := new(GetItemInstallmentStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetPaymentMethodList(sid uint64, tok string) (*GetPaymentMethodListResponse, error) {
+func (s *PaymentServiceOp[T]) GetPaymentMethodList(sid uint64, tok string) (*GetPaymentMethodListResponse, error) {
 	path := "/payment/get_payment_method_list"
 	resp := new(GetPaymentMethodListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetWalletTransactionList(sid uint64, req GetWalletTransactionListRequest, tok string) (*GetWalletTransactionListResponse, error) {
+func (s *PaymentServiceOp[T]) GetWalletTransactionList(sid uint64, req GetWalletTransactionListRequest, tok string) (*GetWalletTransactionListResponse, error) {
 	path := "/payment/get_wallet_transaction_list"
 	resp := new(GetWalletTransactionListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetEscrowList(sid uint64, req GetEscrowListRequest, tok string) (*GetEscrowListResponse, error) {
+func (s *PaymentServiceOp[T]) GetEscrowList(sid uint64, req GetEscrowListRequest, tok string) (*GetEscrowListResponse, error) {
 	path := "/payment/get_escrow_list"
 	resp := new(GetEscrowListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetPayoutInfo(sid uint64, req GetPayoutInfoRequest, tok string) (*GetPayoutInfoResponse, error) {
+func (s *PaymentServiceOp[T]) GetPayoutInfo(sid uint64, req GetPayoutInfoRequest, tok string) (*GetPayoutInfoResponse, error) {
 	path := "/payment/get_payout_info"
 	resp := new(GetPayoutInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetBillingTransactionInfo(sid uint64, req GetBillingTransactionInfoRequest, tok string) (*GetBillingTransactionInfoResponse, error) {
+func (s *PaymentServiceOp[T]) GetBillingTransactionInfo(sid uint64, req GetBillingTransactionInfoRequest, tok string) (*GetBillingTransactionInfoResponse, error) {
 	path := "/payment/get_billing_transaction_info"
 	resp := new(GetBillingTransactionInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetEscrowDetailBatch(sid uint64, req GetEscrowDetailBatchRequest, tok string) (*GetEscrowDetailBatchResponse, error) {
+func (s *PaymentServiceOp[T]) GetEscrowDetailBatch(sid uint64, req GetEscrowDetailBatchRequest, tok string) (*GetEscrowDetailBatchResponse, error) {
 	path := "/payment/get_escrow_detail_batch"
 	resp := new(GetEscrowDetailBatchResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GenerateIncomeStatement(sid uint64, opt GenerateIncomeStatementRequest, tok string) (*GenerateIncomeStatementResponse, error) {
+func (s *PaymentServiceOp[T]) GenerateIncomeStatement(sid uint64, opt GenerateIncomeStatementRequest, tok string) (*GenerateIncomeStatementResponse, error) {
 	path := "/payment/generate_income_statement"
 	resp := new(GenerateIncomeStatementResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetIncomeStatement(sid uint64, opt GetIncomeStatementRequest, tok string) (*GetIncomeStatementResponse, error) {
+func (s *PaymentServiceOp[T]) GetIncomeStatement(sid uint64, opt GetIncomeStatementRequest, tok string) (*GetIncomeStatementResponse, error) {
 	path := "/payment/get_income_statement"
 	resp := new(GetIncomeStatementResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GenerateIncomeReport(sid uint64, req GenerateIncomeReportRequest, tok string) (*GenerateIncomeReportResponse, error) {
+func (s *PaymentServiceOp[T]) GenerateIncomeReport(sid uint64, req GenerateIncomeReportRequest, tok string) (*GenerateIncomeReportResponse, error) {
 	path := "/payment/generate_income_report"
 	resp := new(GenerateIncomeReportResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetIncomeReport(sid uint64, req GetIncomeReportRequest, tok string) (*GetIncomeReportResponse, error) {
+func (s *PaymentServiceOp[T]) GetIncomeReport(sid uint64, req GetIncomeReportRequest, tok string) (*GetIncomeReportResponse, error) {
 	path := "/payment/get_income_report"
 	resp := new(GetIncomeReportResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetIncomeOverview(sid uint64, opt GetIncomeOverviewRequest, tok string) (*GetIncomeOverviewResponse, error) {
+func (s *PaymentServiceOp[T]) GetIncomeOverview(sid uint64, opt GetIncomeOverviewRequest, tok string) (*GetIncomeOverviewResponse, error) {
 	path := "/payment/get_income_overview"
 	resp := new(GetIncomeOverviewResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *PaymentServiceOp) GetIncomeDetail(sid uint64, req GetIncomeDetailRequest, tok string) (*GetIncomeDetailResponse, error) {
+func (s *PaymentServiceOp[T]) GetIncomeDetail(sid uint64, req GetIncomeDetailRequest, tok string) (*GetIncomeDetailResponse, error) {
 	path := "/payment/get_income_detail"
 	resp := new(GetIncomeDetailResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

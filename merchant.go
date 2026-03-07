@@ -24,46 +24,46 @@ type MerchantService interface {
 	GetMerchantPrepaidAccountList(sid uint64, opt GetMerchantPrepaidAccountListRequest, tok string) (*GetMerchantPrepaidAccountListResponse, error)
 }
 
-type MerchantServiceOp struct {
-	client *Client
+type MerchantServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *MerchantServiceOp) GetMerchantInfo(sid uint64, tok string) (*GetMerchantInfoResponse, error) {
+func (s *MerchantServiceOp[T]) GetMerchantInfo(sid uint64, tok string) (*GetMerchantInfoResponse, error) {
 	path := "/merchant/get_merchant_info"
 	resp := new(GetMerchantInfoResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *MerchantServiceOp) GetShopListByMerchant(sid uint64, opt GetShopListByMerchantRequest, tok string) (*GetShopListByMerchantResponse, error) {
+func (s *MerchantServiceOp[T]) GetShopListByMerchant(sid uint64, opt GetShopListByMerchantRequest, tok string) (*GetShopListByMerchantResponse, error) {
 	path := "/merchant/get_shop_list_by_merchant"
 	resp := new(GetShopListByMerchantResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *MerchantServiceOp) GetMerchantWarehouseLocationList(sid uint64, tok string) (*GetMerchantWarehouseLocationListResponse, error) {
+func (s *MerchantServiceOp[T]) GetMerchantWarehouseLocationList(sid uint64, tok string) (*GetMerchantWarehouseLocationListResponse, error) {
 	path := "/merchant/get_merchant_warehouse_location_list"
 	resp := new(GetMerchantWarehouseLocationListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *MerchantServiceOp) GetMerchantWarehouseList(sid uint64, req GetMerchantWarehouseListRequest, tok string) (*GetMerchantWarehouseListResponse, error) {
+func (s *MerchantServiceOp[T]) GetMerchantWarehouseList(sid uint64, req GetMerchantWarehouseListRequest, tok string) (*GetMerchantWarehouseListResponse, error) {
 	path := "/merchant/get_merchant_warehouse_list"
 	resp := new(GetMerchantWarehouseListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *MerchantServiceOp) GetWarehouseEligibleShopList(sid uint64, req GetWarehouseEligibleShopListRequest, tok string) (*GetWarehouseEligibleShopListResponse, error) {
+func (s *MerchantServiceOp[T]) GetWarehouseEligibleShopList(sid uint64, req GetWarehouseEligibleShopListRequest, tok string) (*GetWarehouseEligibleShopListResponse, error) {
 	path := "/merchant/get_warehouse_eligible_shop_list"
 	resp := new(GetWarehouseEligibleShopListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *MerchantServiceOp) GetMerchantPrepaidAccountList(sid uint64, opt GetMerchantPrepaidAccountListRequest, tok string) (*GetMerchantPrepaidAccountListResponse, error) {
+func (s *MerchantServiceOp[T]) GetMerchantPrepaidAccountList(sid uint64, opt GetMerchantPrepaidAccountListRequest, tok string) (*GetMerchantPrepaidAccountListResponse, error) {
 	path := "/merchant/get_merchant_prepaid_account_list"
 	resp := new(GetMerchantPrepaidAccountListResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)

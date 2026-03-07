@@ -32,67 +32,67 @@ type ShopService interface {
 	SetShopHolidayMode(sid uint64, req SetShopHolidayModeRequest, tok string) (*SetShopHolidayModeResponse, error)
 }
 
-type ShopServiceOp struct {
-	client *Client
+type ShopServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *ShopServiceOp) GetShopInfo(sid uint64, tok string) (*GetShopInfoResponse, error) {
+func (s *ShopServiceOp[T]) GetShopInfo(sid uint64, tok string) (*GetShopInfoResponse, error) {
 	path := "/shop/get_shop_info"
 	resp := new(GetShopInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetProfile(sid uint64, tok string) (*GetProfileResponse, error) {
+func (s *ShopServiceOp[T]) GetProfile(sid uint64, tok string) (*GetProfileResponse, error) {
 	path := "/shop/get_profile"
 	resp := new(GetProfileResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *ShopServiceOp) UpdateProfile(sid uint64, req UpdateProfileRequest, tok string) (*UpdateProfileResponse, error) {
+func (s *ShopServiceOp[T]) UpdateProfile(sid uint64, req UpdateProfileRequest, tok string) (*UpdateProfileResponse, error) {
 	path := "/shop/update_profile"
 	resp := new(UpdateProfileResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetWarehouseDetail(sid uint64, opt GetWarehouseDetailRequest, tok string) (*GetWarehouseDetailResponse, error) {
+func (s *ShopServiceOp[T]) GetWarehouseDetail(sid uint64, opt GetWarehouseDetailRequest, tok string) (*GetWarehouseDetailResponse, error) {
 	path := "/shop/get_warehouse_detail"
 	resp := new(GetWarehouseDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetShopNotification(sid uint64, opt GetShopNotificationRequest, tok string) (*GetShopNotificationResponse, error) {
+func (s *ShopServiceOp[T]) GetShopNotification(sid uint64, opt GetShopNotificationRequest, tok string) (*GetShopNotificationResponse, error) {
 	path := "/shop/get_shop_notification"
 	resp := new(GetShopNotificationResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetAuthorisedResellerBrand(sid uint64, opt GetAuthorisedResellerBrandRequest, tok string) (*GetAuthorisedResellerBrandResponse, error) {
+func (s *ShopServiceOp[T]) GetAuthorisedResellerBrand(sid uint64, opt GetAuthorisedResellerBrandRequest, tok string) (*GetAuthorisedResellerBrandResponse, error) {
 	path := "/shop/get_authorised_reseller_brand"
 	resp := new(GetAuthorisedResellerBrandResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetBrShopOnboardingInfo(sid uint64, tok string) (*GetBrShopOnboardingInfoResponse, error) {
+func (s *ShopServiceOp[T]) GetBrShopOnboardingInfo(sid uint64, tok string) (*GetBrShopOnboardingInfoResponse, error) {
 	path := "/shop/get_br_shop_onboarding_info"
 	resp := new(GetBrShopOnboardingInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *ShopServiceOp) GetShopHolidayMode(sid uint64, tok string) (*GetShopHolidayModeResponse, error) {
+func (s *ShopServiceOp[T]) GetShopHolidayMode(sid uint64, tok string) (*GetShopHolidayModeResponse, error) {
 	path := "/shop/get_shop_holiday_mode"
 	resp := new(GetShopHolidayModeResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *ShopServiceOp) SetShopHolidayMode(sid uint64, req SetShopHolidayModeRequest, tok string) (*SetShopHolidayModeResponse, error) {
+func (s *ShopServiceOp[T]) SetShopHolidayMode(sid uint64, req SetShopHolidayModeRequest, tok string) (*SetShopHolidayModeResponse, error) {
 	path := "/shop/set_shop_holiday_mode"
 	resp := new(SetShopHolidayModeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

@@ -22,46 +22,46 @@ type FollowPrizeService interface {
 	GetFollowPrizeList(sid uint64, req GetFollowPrizeListRequest, tok string) (*GetFollowPrizeListResponse, error)
 }
 
-type FollowPrizeServiceOp struct {
-	client *Client
+type FollowPrizeServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *FollowPrizeServiceOp) AddFollowPrize(sid uint64, req AddFollowPrizeRequest, tok string) (*AddFollowPrizeResponse, error) {
+func (s *FollowPrizeServiceOp[T]) AddFollowPrize(sid uint64, req AddFollowPrizeRequest, tok string) (*AddFollowPrizeResponse, error) {
 	path := "/follow_prize/add_follow_prize"
 	resp := new(AddFollowPrizeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FollowPrizeServiceOp) DeleteFollowPrize(sid uint64, req DeleteFollowPrizeRequest, tok string) (*DeleteFollowPrizeResponse, error) {
+func (s *FollowPrizeServiceOp[T]) DeleteFollowPrize(sid uint64, req DeleteFollowPrizeRequest, tok string) (*DeleteFollowPrizeResponse, error) {
 	path := "/follow_prize/delete_follow_prize"
 	resp := new(DeleteFollowPrizeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FollowPrizeServiceOp) EndFollowPrize(sid uint64, req EndFollowPrizeRequest, tok string) (*EndFollowPrizeResponse, error) {
+func (s *FollowPrizeServiceOp[T]) EndFollowPrize(sid uint64, req EndFollowPrizeRequest, tok string) (*EndFollowPrizeResponse, error) {
 	path := "/follow_prize/end_follow_prize"
 	resp := new(EndFollowPrizeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FollowPrizeServiceOp) UpdateFollowPrize(sid uint64, req UpdateFollowPrizeRequest, tok string) (*UpdateFollowPrizeResponse, error) {
+func (s *FollowPrizeServiceOp[T]) UpdateFollowPrize(sid uint64, req UpdateFollowPrizeRequest, tok string) (*UpdateFollowPrizeResponse, error) {
 	path := "/follow_prize/update_follow_prize"
 	resp := new(UpdateFollowPrizeResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FollowPrizeServiceOp) GetFollowPrizeDetail(sid uint64, req GetFollowPrizeDetailRequest, tok string) (*GetFollowPrizeDetailResponse, error) {
+func (s *FollowPrizeServiceOp[T]) GetFollowPrizeDetail(sid uint64, req GetFollowPrizeDetailRequest, tok string) (*GetFollowPrizeDetailResponse, error) {
 	path := "/follow_prize/get_follow_prize_detail"
 	resp := new(GetFollowPrizeDetailResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FollowPrizeServiceOp) GetFollowPrizeList(sid uint64, req GetFollowPrizeListRequest, tok string) (*GetFollowPrizeListResponse, error) {
+func (s *FollowPrizeServiceOp[T]) GetFollowPrizeList(sid uint64, req GetFollowPrizeListRequest, tok string) (*GetFollowPrizeListResponse, error) {
 	path := "/follow_prize/get_follow_prize_list"
 	resp := new(GetFollowPrizeListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

@@ -75,165 +75,165 @@ type AdsService interface {
 	GetGmsItemPerformance(sid uint64, req GetGmsItemPerformanceRequest, tok string) (*GetGmsItemPerformanceResponse, error)
 }
 
-type AdsServiceOp struct {
-	client *Client
+type AdsServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *AdsServiceOp) GetTotalBalance(sid uint64, tok string) (*GetTotalBalanceResponse, error) {
+func (s *AdsServiceOp[T]) GetTotalBalance(sid uint64, tok string) (*GetTotalBalanceResponse, error) {
 	path := "/ads/get_total_balance"
 	resp := new(GetTotalBalanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetShopToggleInfo(sid uint64, tok string) (*GetShopToggleInfoResponse, error) {
+func (s *AdsServiceOp[T]) GetShopToggleInfo(sid uint64, tok string) (*GetShopToggleInfoResponse, error) {
 	path := "/ads/get_shop_toggle_info"
 	resp := new(GetShopToggleInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetRecommendedKeywordList(sid uint64, opt GetRecommendedKeywordListRequest, tok string) (*GetRecommendedKeywordListResponse, error) {
+func (s *AdsServiceOp[T]) GetRecommendedKeywordList(sid uint64, opt GetRecommendedKeywordListRequest, tok string) (*GetRecommendedKeywordListResponse, error) {
 	path := "/ads/get_recommended_keyword_list"
 	resp := new(GetRecommendedKeywordListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetRecommendedItemList(sid uint64, tok string) (*GetRecommendedItemListResponse, error) {
+func (s *AdsServiceOp[T]) GetRecommendedItemList(sid uint64, tok string) (*GetRecommendedItemListResponse, error) {
 	path := "/ads/get_recommended_item_list"
 	resp := new(GetRecommendedItemListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetAllCpcAdsHourlyPerformance(sid uint64, opt GetAllCpcAdsHourlyPerformanceRequest, tok string) (*GetAllCpcAdsHourlyPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetAllCpcAdsHourlyPerformance(sid uint64, opt GetAllCpcAdsHourlyPerformanceRequest, tok string) (*GetAllCpcAdsHourlyPerformanceResponse, error) {
 	path := "/ads/get_all_cpc_ads_hourly_performance"
 	resp := new(GetAllCpcAdsHourlyPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetAllCpcAdsDailyPerformance(sid uint64, opt GetAllCpcAdsDailyPerformanceRequest, tok string) (*GetAllCpcAdsDailyPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetAllCpcAdsDailyPerformance(sid uint64, opt GetAllCpcAdsDailyPerformanceRequest, tok string) (*GetAllCpcAdsDailyPerformanceResponse, error) {
 	path := "/ads/get_all_cpc_ads_daily_performance"
 	resp := new(GetAllCpcAdsDailyPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetProductCampaignDailyPerformance(sid uint64, opt GetProductCampaignDailyPerformanceRequest, tok string) (*GetProductCampaignDailyPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetProductCampaignDailyPerformance(sid uint64, opt GetProductCampaignDailyPerformanceRequest, tok string) (*GetProductCampaignDailyPerformanceResponse, error) {
 	path := "/ads/get_product_campaign_daily_performance"
 	resp := new(GetProductCampaignDailyPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetProductCampaignHourlyPerformance(sid uint64, opt GetProductCampaignHourlyPerformanceRequest, tok string) (*GetProductCampaignHourlyPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetProductCampaignHourlyPerformance(sid uint64, opt GetProductCampaignHourlyPerformanceRequest, tok string) (*GetProductCampaignHourlyPerformanceResponse, error) {
 	path := "/ads/get_product_campaign_hourly_performance"
 	resp := new(GetProductCampaignHourlyPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetProductLevelCampaignIdList(sid uint64, opt GetProductLevelCampaignIdListRequest, tok string) (*GetProductLevelCampaignIdListResponse, error) {
+func (s *AdsServiceOp[T]) GetProductLevelCampaignIdList(sid uint64, opt GetProductLevelCampaignIdListRequest, tok string) (*GetProductLevelCampaignIdListResponse, error) {
 	path := "/ads/get_product_level_campaign_id_list"
 	resp := new(GetProductLevelCampaignIdListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetProductLevelCampaignSettingInfo(sid uint64, opt GetProductLevelCampaignSettingInfoRequest, tok string) (*GetProductLevelCampaignSettingInfoResponse, error) {
+func (s *AdsServiceOp[T]) GetProductLevelCampaignSettingInfo(sid uint64, opt GetProductLevelCampaignSettingInfoRequest, tok string) (*GetProductLevelCampaignSettingInfoResponse, error) {
 	path := "/ads/get_product_level_campaign_setting_info"
 	resp := new(GetProductLevelCampaignSettingInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) CreateManualProductAds(sid uint64, req CreateManualProductAdsRequest, tok string) (*CreateManualProductAdsResponse, error) {
+func (s *AdsServiceOp[T]) CreateManualProductAds(sid uint64, req CreateManualProductAdsRequest, tok string) (*CreateManualProductAdsResponse, error) {
 	path := "/ads/create_manual_product_ads"
 	resp := new(CreateManualProductAdsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) EditManualProductAdKeywords(sid uint64, req EditManualProductAdKeywordsRequest, tok string) (*EditManualProductAdKeywordsResponse, error) {
+func (s *AdsServiceOp[T]) EditManualProductAdKeywords(sid uint64, req EditManualProductAdKeywordsRequest, tok string) (*EditManualProductAdKeywordsResponse, error) {
 	path := "/ads/edit_manual_product_ad_keywords"
 	resp := new(EditManualProductAdKeywordsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) EditManualProductAds(sid uint64, req EditManualProductAdsRequest, tok string) (*EditManualProductAdsResponse, error) {
+func (s *AdsServiceOp[T]) EditManualProductAds(sid uint64, req EditManualProductAdsRequest, tok string) (*EditManualProductAdsResponse, error) {
 	path := "/ads/edit_manual_product_ads"
 	resp := new(EditManualProductAdsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetCreateProductAdBudgetSuggestion(sid uint64, opt GetCreateProductAdBudgetSuggestionRequest, tok string) (*GetCreateProductAdBudgetSuggestionResponse, error) {
+func (s *AdsServiceOp[T]) GetCreateProductAdBudgetSuggestion(sid uint64, opt GetCreateProductAdBudgetSuggestionRequest, tok string) (*GetCreateProductAdBudgetSuggestionResponse, error) {
 	path := "/ads/get_create_product_ad_budget_suggestion"
 	resp := new(GetCreateProductAdBudgetSuggestionResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetProductRecommendedRoiTarget(sid uint64, opt GetProductRecommendedRoiTargetRequest, tok string) (*GetProductRecommendedRoiTargetResponse, error) {
+func (s *AdsServiceOp[T]) GetProductRecommendedRoiTarget(sid uint64, opt GetProductRecommendedRoiTargetRequest, tok string) (*GetProductRecommendedRoiTargetResponse, error) {
 	path := "/ads/get_product_recommended_roi_target"
 	resp := new(GetProductRecommendedRoiTargetResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetAdsFcilShopRate(sid uint64, tok string) (*GetAdsFcilShopRateResponse, error) {
+func (s *AdsServiceOp[T]) GetAdsFcilShopRate(sid uint64, tok string) (*GetAdsFcilShopRateResponse, error) {
 	path := "/ads/get_ads_facil_shop_rate"
 	resp := new(GetAdsFcilShopRateResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) CheckCreateGmsProductCampaignEligibility(sid uint64, tok string) (*CheckCreateGmsProductCampaignEligibilityResponse, error) {
+func (s *AdsServiceOp[T]) CheckCreateGmsProductCampaignEligibility(sid uint64, tok string) (*CheckCreateGmsProductCampaignEligibilityResponse, error) {
 	path := "/ads/check_create_gms_product_campaign_eligibility"
 	resp := new(CheckCreateGmsProductCampaignEligibilityResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *AdsServiceOp) CreateGmsProductCampaign(sid uint64, req CreateGmsProductCampaignRequest, tok string) (*CreateGmsProductCampaignResponse, error) {
+func (s *AdsServiceOp[T]) CreateGmsProductCampaign(sid uint64, req CreateGmsProductCampaignRequest, tok string) (*CreateGmsProductCampaignResponse, error) {
 	path := "/ads/create_gms_product_campaign"
 	resp := new(CreateGmsProductCampaignResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) EditGmsProductCampaign(sid uint64, req EditGmsProductCampaignRequest, tok string) (*EditGmsProductCampaignResponse, error) {
+func (s *AdsServiceOp[T]) EditGmsProductCampaign(sid uint64, req EditGmsProductCampaignRequest, tok string) (*EditGmsProductCampaignResponse, error) {
 	path := "/ads/edit_gms_product_campaign"
 	resp := new(EditGmsProductCampaignResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) ListGmsUserDeletedItem(sid uint64, req ListGmsUserDeletedItemRequest, tok string) (*ListGmsUserDeletedItemResponse, error) {
+func (s *AdsServiceOp[T]) ListGmsUserDeletedItem(sid uint64, req ListGmsUserDeletedItemRequest, tok string) (*ListGmsUserDeletedItemResponse, error) {
 	path := "/ads/list_gms_user_deleted_item"
 	resp := new(ListGmsUserDeletedItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) EditGmsItemProductCampaign(sid uint64, req EditGmsItemProductCampaignRequest, tok string) (*EditGmsItemProductCampaignResponse, error) {
+func (s *AdsServiceOp[T]) EditGmsItemProductCampaign(sid uint64, req EditGmsItemProductCampaignRequest, tok string) (*EditGmsItemProductCampaignResponse, error) {
 	path := "/ads/edit_gms_item_product_campaign"
 	resp := new(EditGmsItemProductCampaignResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetGmsCampaignPerformance(sid uint64, req GetGmsCampaignPerformanceRequest, tok string) (*GetGmsCampaignPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetGmsCampaignPerformance(sid uint64, req GetGmsCampaignPerformanceRequest, tok string) (*GetGmsCampaignPerformanceResponse, error) {
 	path := "/ads/get_gms_campaign_performance"
 	resp := new(GetGmsCampaignPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *AdsServiceOp) GetGmsItemPerformance(sid uint64, req GetGmsItemPerformanceRequest, tok string) (*GetGmsItemPerformanceResponse, error) {
+func (s *AdsServiceOp[T]) GetGmsItemPerformance(sid uint64, req GetGmsItemPerformanceRequest, tok string) (*GetGmsItemPerformanceResponse, error) {
 	path := "/ads/get_gms_item_performance"
 	resp := new(GetGmsItemPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

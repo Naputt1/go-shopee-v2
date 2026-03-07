@@ -16,32 +16,32 @@ type TopPicksService interface {
 	DeleteTopPicks(sid uint64, req DeleteTopPicksRequest, tok string) (*DeleteTopPicksResponse, error)
 }
 
-type TopPicksServiceOp struct {
-	client *Client
+type TopPicksServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *TopPicksServiceOp) GetTopPicksList(sid uint64, tok string) (*GetTopPicksListResponse, error) {
+func (s *TopPicksServiceOp[T]) GetTopPicksList(sid uint64, tok string) (*GetTopPicksListResponse, error) {
 	path := "/top_picks/get_top_picks_list"
 	resp := new(GetTopPicksListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *TopPicksServiceOp) AddTopPicks(sid uint64, req AddTopPicksRequest, tok string) (*AddTopPicksResponse, error) {
+func (s *TopPicksServiceOp[T]) AddTopPicks(sid uint64, req AddTopPicksRequest, tok string) (*AddTopPicksResponse, error) {
 	path := "/top_picks/add_top_picks"
 	resp := new(AddTopPicksResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *TopPicksServiceOp) UpdateTopPicks(sid uint64, req UpdateTopPicksRequest, tok string) (*UpdateTopPicksResponse, error) {
+func (s *TopPicksServiceOp[T]) UpdateTopPicks(sid uint64, req UpdateTopPicksRequest, tok string) (*UpdateTopPicksResponse, error) {
 	path := "/top_picks/update_top_picks"
 	resp := new(UpdateTopPicksResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *TopPicksServiceOp) DeleteTopPicks(sid uint64, req DeleteTopPicksRequest, tok string) (*DeleteTopPicksResponse, error) {
+func (s *TopPicksServiceOp[T]) DeleteTopPicks(sid uint64, req DeleteTopPicksRequest, tok string) (*DeleteTopPicksResponse, error) {
 	path := "/top_picks/delete_top_picks"
 	resp := new(DeleteTopPicksResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

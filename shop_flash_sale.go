@@ -37,81 +37,81 @@ type ShopFlashSaleService interface {
 	DeleteShopFlashSaleItems(sid uint64, req DeleteShopFlashSaleItemsRequest, tok string) (*DeleteShopFlashSaleItemsResponse, error)
 }
 
-type ShopFlashSaleServiceOp struct {
-	client *Client
+type ShopFlashSaleServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *ShopFlashSaleServiceOp) GetTimeSlotId(sid uint64, req GetTimeSlotIdRequest, tok string) (*GetTimeSlotIdResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) GetTimeSlotId(sid uint64, req GetTimeSlotIdRequest, tok string) (*GetTimeSlotIdResponse, error) {
 	path := "/shop_flash_sale/get_time_slot_id"
 	resp := new(GetTimeSlotIdResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) CreateShopFlashSale(sid uint64, req CreateShopFlashSaleRequest, tok string) (*CreateShopFlashSaleResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) CreateShopFlashSale(sid uint64, req CreateShopFlashSaleRequest, tok string) (*CreateShopFlashSaleResponse, error) {
 	path := "/shop_flash_sale/create_shop_flash_sale"
 	resp := new(CreateShopFlashSaleResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) GetItemCriteria(sid uint64, tok string) (*GetItemCriteriaResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) GetItemCriteria(sid uint64, tok string) (*GetItemCriteriaResponse, error) {
 	path := "/shop_flash_sale/get_item_criteria"
 	resp := new(GetItemCriteriaResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) AddShopFlashSaleItems(sid uint64, req AddShopFlashSaleItemsRequest, tok string) (*AddShopFlashSaleItemsResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) AddShopFlashSaleItems(sid uint64, req AddShopFlashSaleItemsRequest, tok string) (*AddShopFlashSaleItemsResponse, error) {
 	path := "/shop_flash_sale/add_shop_flash_sale_items"
 	resp := new(AddShopFlashSaleItemsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) GetShopFlashSaleList(sid uint64, req GetShopFlashSaleListRequest, tok string) (*GetShopFlashSaleListResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) GetShopFlashSaleList(sid uint64, req GetShopFlashSaleListRequest, tok string) (*GetShopFlashSaleListResponse, error) {
 	path := "/shop_flash_sale/get_shop_flash_sale_list"
 	resp := new(GetShopFlashSaleListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) GetShopFlashSale(sid uint64, req GetShopFlashSaleRequest, tok string) (*GetShopFlashSaleResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) GetShopFlashSale(sid uint64, req GetShopFlashSaleRequest, tok string) (*GetShopFlashSaleResponse, error) {
 	path := "/shop_flash_sale/get_shop_flash_sale"
 	resp := new(GetShopFlashSaleResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) GetShopFlashSaleItems(sid uint64, req GetShopFlashSaleItemsRequest, tok string) (*GetShopFlashSaleItemsResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) GetShopFlashSaleItems(sid uint64, req GetShopFlashSaleItemsRequest, tok string) (*GetShopFlashSaleItemsResponse, error) {
 	path := "/shop_flash_sale/get_shop_flash_sale_items"
 	resp := new(GetShopFlashSaleItemsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) UpdateShopFlashSale(sid uint64, req UpdateShopFlashSaleRequest, tok string) (*UpdateShopFlashSaleResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) UpdateShopFlashSale(sid uint64, req UpdateShopFlashSaleRequest, tok string) (*UpdateShopFlashSaleResponse, error) {
 	path := "/shop_flash_sale/update_shop_flash_sale"
 	resp := new(UpdateShopFlashSaleResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) UpdateShopFlashSaleItems(sid uint64, req UpdateShopFlashSaleItemsRequest, tok string) (*UpdateShopFlashSaleItemsResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) UpdateShopFlashSaleItems(sid uint64, req UpdateShopFlashSaleItemsRequest, tok string) (*UpdateShopFlashSaleItemsResponse, error) {
 	path := "/shop_flash_sale/update_shop_flash_sale_items"
 	resp := new(UpdateShopFlashSaleItemsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) DeleteShopFlashSale(sid uint64, req DeleteShopFlashSaleRequest, tok string) (*DeleteShopFlashSaleResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) DeleteShopFlashSale(sid uint64, req DeleteShopFlashSaleRequest, tok string) (*DeleteShopFlashSaleResponse, error) {
 	path := "/shop_flash_sale/delete_shop_flash_sale"
 	resp := new(DeleteShopFlashSaleResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopFlashSaleServiceOp) DeleteShopFlashSaleItems(sid uint64, req DeleteShopFlashSaleItemsRequest, tok string) (*DeleteShopFlashSaleItemsResponse, error) {
+func (s *ShopFlashSaleServiceOp[T]) DeleteShopFlashSaleItems(sid uint64, req DeleteShopFlashSaleItemsRequest, tok string) (*DeleteShopFlashSaleItemsResponse, error) {
 	path := "/shop_flash_sale/delete_shop_flash_sale_items"
 	resp := new(DeleteShopFlashSaleItemsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

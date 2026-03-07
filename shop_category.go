@@ -25,53 +25,53 @@ type ShopCategoryService interface {
 	DeleteItemList(sid uint64, req DeleteItemListRequest, tok string) (*DeleteItemListResponse, error)
 }
 
-type ShopCategoryServiceOp struct {
-	client *Client
+type ShopCategoryServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *ShopCategoryServiceOp) AddShopCategory(sid uint64, req AddShopCategoryRequest, tok string) (*AddShopCategoryResponse, error) {
+func (s *ShopCategoryServiceOp[T]) AddShopCategory(sid uint64, req AddShopCategoryRequest, tok string) (*AddShopCategoryResponse, error) {
 	path := "/shop_category/add_shop_category"
 	resp := new(AddShopCategoryResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) GetShopCategoryList(sid uint64, req GetShopCategoryListRequest, tok string) (*GetShopCategoryListResponse, error) {
+func (s *ShopCategoryServiceOp[T]) GetShopCategoryList(sid uint64, req GetShopCategoryListRequest, tok string) (*GetShopCategoryListResponse, error) {
 	path := "/shop_category/get_shop_category_list"
 	resp := new(GetShopCategoryListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) DeleteShopCategory(sid uint64, req DeleteShopCategoryRequest, tok string) (*DeleteShopCategoryResponse, error) {
+func (s *ShopCategoryServiceOp[T]) DeleteShopCategory(sid uint64, req DeleteShopCategoryRequest, tok string) (*DeleteShopCategoryResponse, error) {
 	path := "/shop_category/delete_shop_category"
 	resp := new(DeleteShopCategoryResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) UpdateShopCategory(sid uint64, req UpdateShopCategoryRequest, tok string) (*UpdateShopCategoryResponse, error) {
+func (s *ShopCategoryServiceOp[T]) UpdateShopCategory(sid uint64, req UpdateShopCategoryRequest, tok string) (*UpdateShopCategoryResponse, error) {
 	path := "/shop_category/update_shop_category"
 	resp := new(UpdateShopCategoryResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) AddItemList(sid uint64, req AddItemListRequest, tok string) (*AddItemListResponse, error) {
+func (s *ShopCategoryServiceOp[T]) AddItemList(sid uint64, req AddItemListRequest, tok string) (*AddItemListResponse, error) {
 	path := "/shop_category/add_item_list"
 	resp := new(AddItemListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) GetItemList(sid uint64, req ShopCategoryGetItemListRequest, tok string) (*ShopCategoryGetItemListResponse, error) {
+func (s *ShopCategoryServiceOp[T]) GetItemList(sid uint64, req ShopCategoryGetItemListRequest, tok string) (*ShopCategoryGetItemListResponse, error) {
 	path := "/shop_category/get_item_list"
 	resp := new(ShopCategoryGetItemListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ShopCategoryServiceOp) DeleteItemList(sid uint64, req DeleteItemListRequest, tok string) (*DeleteItemListResponse, error) {
+func (s *ShopCategoryServiceOp[T]) DeleteItemList(sid uint64, req DeleteItemListRequest, tok string) (*DeleteItemListResponse, error) {
 	path := "/shop_category/delete_item_list"
 	resp := new(DeleteItemListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

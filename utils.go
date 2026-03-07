@@ -13,11 +13,11 @@ type UtilService interface {
 	Sign(string) (string, int64,error)
 }
 
-type UtilServiceOp struct {
-	client *Client
+type UtilServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *UtilServiceOp)Sign(plainText string) (string,int64,error) {
+func (s *UtilServiceOp[T])Sign(plainText string) (string,int64,error) {
 	ts:=time.Now().Unix()
 	baseStr := fmt.Sprintf("%d%s%d",s.client.app.PartnerID,plainText,ts)
 	h := hmac.New(sha256.New, []byte(s.client.app.PartnerKey))

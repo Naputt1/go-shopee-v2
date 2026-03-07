@@ -55,116 +55,116 @@ type FirstMileService interface {
 	GetCourierDeliveryTrackingNumberList(sid uint64, req GetCourierDeliveryTrackingNumberListRequest, tok string) (*GetCourierDeliveryTrackingNumberListResponse, error)
 }
 
-type FirstMileServiceOp struct {
-	client *Client
+type FirstMileServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *FirstMileServiceOp) GetUnbindOrderList(sid uint64, opt GetUnbindOrderListRequest, tok string) (*GetUnbindOrderListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetUnbindOrderList(sid uint64, opt GetUnbindOrderListRequest, tok string) (*GetUnbindOrderListResponse, error) {
 	path := "/first_mile/get_unbind_order_list"
 	resp := new(GetUnbindOrderListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetDetail(sid uint64, opt GetDetailRequest, tok string) (*GetDetailResponse, error) {
+func (s *FirstMileServiceOp[T]) GetDetail(sid uint64, opt GetDetailRequest, tok string) (*GetDetailResponse, error) {
 	path := "/first_mile/get_detail"
 	resp := new(GetDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GenerateFirstMileTrackingNumber(sid uint64, req GenerateFirstMileTrackingNumberRequest, tok string) (*GenerateFirstMileTrackingNumberResponse, error) {
+func (s *FirstMileServiceOp[T]) GenerateFirstMileTrackingNumber(sid uint64, req GenerateFirstMileTrackingNumberRequest, tok string) (*GenerateFirstMileTrackingNumberResponse, error) {
 	path := "/first_mile/generate_first_mile_tracking_number"
 	resp := new(GenerateFirstMileTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) BindFirstMileTrackingNumber(sid uint64, req BindFirstMileTrackingNumberRequest, tok string) (*BindFirstMileTrackingNumberResponse, error) {
+func (s *FirstMileServiceOp[T]) BindFirstMileTrackingNumber(sid uint64, req BindFirstMileTrackingNumberRequest, tok string) (*BindFirstMileTrackingNumberResponse, error) {
 	path := "/first_mile/bind_first_mile_tracking_number"
 	resp := new(BindFirstMileTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) UnbindFirstMileTrackingNumber(sid uint64, req UnbindFirstMileTrackingNumberRequest, tok string) (*UnbindFirstMileTrackingNumberResponse, error) {
+func (s *FirstMileServiceOp[T]) UnbindFirstMileTrackingNumber(sid uint64, req UnbindFirstMileTrackingNumberRequest, tok string) (*UnbindFirstMileTrackingNumberResponse, error) {
 	path := "/first_mile/unbind_first_mile_tracking_number"
 	resp := new(UnbindFirstMileTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetTrackingNumberList(sid uint64, opt GetTrackingNumberListRequest, tok string) (*GetTrackingNumberListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetTrackingNumberList(sid uint64, opt GetTrackingNumberListRequest, tok string) (*GetTrackingNumberListResponse, error) {
 	path := "/first_mile/get_tracking_number_list"
 	resp := new(GetTrackingNumberListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetWaybill(sid uint64, req GetWaybillRequest, tok string) (*GetWaybillResponse, error) {
+func (s *FirstMileServiceOp[T]) GetWaybill(sid uint64, req GetWaybillRequest, tok string) (*GetWaybillResponse, error) {
 	path := "/first_mile/get_waybill"
 	resp := new(GetWaybillResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetChannelList(sid uint64, req GetChannelListRequest, tok string) (*FirstMileGetChannelListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetChannelList(sid uint64, req GetChannelListRequest, tok string) (*FirstMileGetChannelListResponse, error) {
 	path := "/first_mile/get_channel_list"
 	resp := new(FirstMileGetChannelListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetCourierDeliveryChannelList(sid uint64, opt GetCourierDeliveryChannelListRequest, tok string) (*GetCourierDeliveryChannelListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetCourierDeliveryChannelList(sid uint64, opt GetCourierDeliveryChannelListRequest, tok string) (*GetCourierDeliveryChannelListResponse, error) {
 	path := "/first_mile/get_courier_delivery_channel_list"
 	resp := new(GetCourierDeliveryChannelListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetTransitWarehouseList(sid uint64, opt GetTransitWarehouseListRequest, tok string) (*GetTransitWarehouseListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetTransitWarehouseList(sid uint64, opt GetTransitWarehouseListRequest, tok string) (*GetTransitWarehouseListResponse, error) {
 	path := "/first_mile/get_transit_warehouse_list"
 	resp := new(GetTransitWarehouseListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GenerateAndBindFirstMileTrackingNumber(sid uint64, req GenerateAndBindFirstMileTrackingNumberRequest, tok string) (*GenerateAndBindFirstMileTrackingNumberResponse, error) {
+func (s *FirstMileServiceOp[T]) GenerateAndBindFirstMileTrackingNumber(sid uint64, req GenerateAndBindFirstMileTrackingNumberRequest, tok string) (*GenerateAndBindFirstMileTrackingNumberResponse, error) {
 	path := "/first_mile/generate_and_bind_first_mile_tracking_number"
 	resp := new(GenerateAndBindFirstMileTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) BindCourierDeliveryFirstMileTrackingNumber(sid uint64, req BindCourierDeliveryFirstMileTrackingNumberRequest, tok string) (*BindCourierDeliveryFirstMileTrackingNumberResponse, error) {
+func (s *FirstMileServiceOp[T]) BindCourierDeliveryFirstMileTrackingNumber(sid uint64, req BindCourierDeliveryFirstMileTrackingNumberRequest, tok string) (*BindCourierDeliveryFirstMileTrackingNumberResponse, error) {
 	path := "/first_mile/bind_courier_delivery_first_mile_tracking_number"
 	resp := new(BindCourierDeliveryFirstMileTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) UnbindFirstMileTrackingNumberAll(sid uint64, req UnbindFirstMileTrackingNumberAllRequest, tok string) (*UnbindFirstMileTrackingNumberAllResponse, error) {
+func (s *FirstMileServiceOp[T]) UnbindFirstMileTrackingNumberAll(sid uint64, req UnbindFirstMileTrackingNumberAllRequest, tok string) (*UnbindFirstMileTrackingNumberAllResponse, error) {
 	path := "/first_mile/unbind_first_mile_tracking_number_all"
 	resp := new(UnbindFirstMileTrackingNumberAllResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetCourierDeliveryDetail(sid uint64, opt GetCourierDeliveryDetailRequest, tok string) (*GetCourierDeliveryDetailResponse, error) {
+func (s *FirstMileServiceOp[T]) GetCourierDeliveryDetail(sid uint64, opt GetCourierDeliveryDetailRequest, tok string) (*GetCourierDeliveryDetailResponse, error) {
 	path := "/first_mile/get_courier_delivery_detail"
 	resp := new(GetCourierDeliveryDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetCourierDeliveryWaybill(sid uint64, req GetCourierDeliveryWaybillRequest, tok string) (*GetCourierDeliveryWaybillResponse, error) {
+func (s *FirstMileServiceOp[T]) GetCourierDeliveryWaybill(sid uint64, req GetCourierDeliveryWaybillRequest, tok string) (*GetCourierDeliveryWaybillResponse, error) {
 	path := "/first_mile/get_courier_delivery_waybill"
 	resp := new(GetCourierDeliveryWaybillResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FirstMileServiceOp) GetCourierDeliveryTrackingNumberList(sid uint64, req GetCourierDeliveryTrackingNumberListRequest, tok string) (*GetCourierDeliveryTrackingNumberListResponse, error) {
+func (s *FirstMileServiceOp[T]) GetCourierDeliveryTrackingNumberList(sid uint64, req GetCourierDeliveryTrackingNumberListRequest, tok string) (*GetCourierDeliveryTrackingNumberListResponse, error) {
 	path := "/first_mile/get_courier_delivery_tracking_number_list"
 	resp := new(GetCourierDeliveryTrackingNumberListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

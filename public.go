@@ -16,32 +16,32 @@ type PublicService interface {
 	GetShopeeIpRanges(sid uint64, tok string) (*GetShopeeIpRangesResponse, error)
 }
 
-type PublicServiceOp struct {
-	client *Client
+type PublicServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *PublicServiceOp) GetShopsByPartner(sid uint64, opt GetShopsByPartnerRequest, tok string) (*GetShopsByPartnerResponse, error) {
+func (s *PublicServiceOp[T]) GetShopsByPartner(sid uint64, opt GetShopsByPartnerRequest, tok string) (*GetShopsByPartnerResponse, error) {
 	path := "/public/get_shops_by_partner"
 	resp := new(GetShopsByPartnerResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *PublicServiceOp) GetMerchantsByPartner(sid uint64, opt GetMerchantsByPartnerRequest, tok string) (*GetMerchantsByPartnerResponse, error) {
+func (s *PublicServiceOp[T]) GetMerchantsByPartner(sid uint64, opt GetMerchantsByPartnerRequest, tok string) (*GetMerchantsByPartnerResponse, error) {
 	path := "/public/get_merchants_by_partner"
 	resp := new(GetMerchantsByPartnerResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *PublicServiceOp) GetTokenByResendCode(sid uint64, req GetTokenByResendCodeRequest, tok string) (*GetTokenByResendCodeResponse, error) {
+func (s *PublicServiceOp[T]) GetTokenByResendCode(sid uint64, req GetTokenByResendCodeRequest, tok string) (*GetTokenByResendCodeResponse, error) {
 	path := "/public/get_token_by_resend_code"
 	resp := new(GetTokenByResendCodeResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *PublicServiceOp) GetShopeeIpRanges(sid uint64, tok string) (*GetShopeeIpRangesResponse, error) {
+func (s *PublicServiceOp[T]) GetShopeeIpRanges(sid uint64, tok string) (*GetShopeeIpRangesResponse, error) {
 	path := "/public/get_shopee_ip_ranges"
 	resp := new(GetShopeeIpRangesResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, nil)

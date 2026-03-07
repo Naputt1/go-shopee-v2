@@ -176,403 +176,403 @@ type ProductService interface {
 	GenerateKitImage(sid uint64, req GenerateKitImageRequest, tok string) (*GenerateKitImageResponse, error)
 }
 
-type ProductServiceOp struct {
-	client *Client
+type ProductServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *ProductServiceOp) GetCategory(sid uint64, opt GetCategoryRequest, tok string) (*GetCategoryResponse, error) {
+func (s *ProductServiceOp[T]) GetCategory(sid uint64, opt GetCategoryRequest, tok string) (*GetCategoryResponse, error) {
 	path := "/product/get_category"
 	resp := new(GetCategoryResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetAttributeTree(sid uint64, opt GetAttributeTreeRequest, tok string) (*GetAttributeTreeResponse, error) {
+func (s *ProductServiceOp[T]) GetAttributeTree(sid uint64, opt GetAttributeTreeRequest, tok string) (*GetAttributeTreeResponse, error) {
 	path := "/product/get_attribute_tree"
 	resp := new(GetAttributeTreeResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetBrandList(sid uint64, opt GetBrandListRequest, tok string) (*GetBrandListResponse, error) {
+func (s *ProductServiceOp[T]) GetBrandList(sid uint64, opt GetBrandListRequest, tok string) (*GetBrandListResponse, error) {
 	path := "/product/get_brand_list"
 	resp := new(GetBrandListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemLimit(sid uint64, opt GetItemLimitRequest, tok string) (*GetItemLimitResponse, error) {
+func (s *ProductServiceOp[T]) GetItemLimit(sid uint64, opt GetItemLimitRequest, tok string) (*GetItemLimitResponse, error) {
 	path := "/product/get_item_limit"
 	resp := new(GetItemLimitResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemList(sid uint64, opt GetItemListRequest, tok string) (*GetItemListResponse, error) {
+func (s *ProductServiceOp[T]) GetItemList(sid uint64, opt GetItemListRequest, tok string) (*GetItemListResponse, error) {
 	path := "/product/get_item_list"
 	resp := new(GetItemListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemBaseInfo(sid uint64, opt GetItemBaseInfoRequest, tok string) (*GetItemBaseInfoResponse, error) {
+func (s *ProductServiceOp[T]) GetItemBaseInfo(sid uint64, opt GetItemBaseInfoRequest, tok string) (*GetItemBaseInfoResponse, error) {
 	path := "/product/get_item_base_info"
 	resp := new(GetItemBaseInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemExtraInfo(sid uint64, opt GetItemExtraInfoRequest, tok string) (*GetItemExtraInfoResponse, error) {
+func (s *ProductServiceOp[T]) GetItemExtraInfo(sid uint64, opt GetItemExtraInfoRequest, tok string) (*GetItemExtraInfoResponse, error) {
 	path := "/product/get_item_extra_info"
 	resp := new(GetItemExtraInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) AddItem(sid uint64, req AddItemRequest, tok string) (*AddItemResponse, error) {
+func (s *ProductServiceOp[T]) AddItem(sid uint64, req AddItemRequest, tok string) (*AddItemResponse, error) {
 	path := "/product/add_item"
 	resp := new(AddItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateItem(sid uint64, req UpdateItemRequest, tok string) (*UpdateItemResponse, error) {
+func (s *ProductServiceOp[T]) UpdateItem(sid uint64, req UpdateItemRequest, tok string) (*UpdateItemResponse, error) {
 	path := "/product/update_item"
 	resp := new(UpdateItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) DeleteItem(sid uint64, req DeleteItemRequest, tok string) (*DeleteItemResponse, error) {
+func (s *ProductServiceOp[T]) DeleteItem(sid uint64, req DeleteItemRequest, tok string) (*DeleteItemResponse, error) {
 	path := "/product/delete_item"
 	resp := new(DeleteItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) InitTierVariation(sid uint64, req InitTierVariationRequest, tok string) (*InitTierVariationResponse, error) {
+func (s *ProductServiceOp[T]) InitTierVariation(sid uint64, req InitTierVariationRequest, tok string) (*InitTierVariationResponse, error) {
 	path := "/product/init_tier_variation"
 	resp := new(InitTierVariationResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateTierVariation(sid uint64, req UpdateTierVariationRequest, tok string) (*UpdateTierVariationResponse, error) {
+func (s *ProductServiceOp[T]) UpdateTierVariation(sid uint64, req UpdateTierVariationRequest, tok string) (*UpdateTierVariationResponse, error) {
 	path := "/product/update_tier_variation"
 	resp := new(UpdateTierVariationResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetModelList(sid uint64, opt GetModelListRequest, tok string) (*GetModelListResponse, error) {
+func (s *ProductServiceOp[T]) GetModelList(sid uint64, opt GetModelListRequest, tok string) (*GetModelListResponse, error) {
 	path := "/product/get_model_list"
 	resp := new(GetModelListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) AddModel(sid uint64, req AddModelRequest, tok string) (*AddModelResponse, error) {
+func (s *ProductServiceOp[T]) AddModel(sid uint64, req AddModelRequest, tok string) (*AddModelResponse, error) {
 	path := "/product/add_model"
 	resp := new(AddModelResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateModel(sid uint64, req UpdateModelRequest, tok string) (*UpdateModelResponse, error) {
+func (s *ProductServiceOp[T]) UpdateModel(sid uint64, req UpdateModelRequest, tok string) (*UpdateModelResponse, error) {
 	path := "/product/update_model"
 	resp := new(UpdateModelResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) DeleteModel(sid uint64, req DeleteModelRequest, tok string) (*DeleteModelResponse, error) {
+func (s *ProductServiceOp[T]) DeleteModel(sid uint64, req DeleteModelRequest, tok string) (*DeleteModelResponse, error) {
 	path := "/product/delete_model"
 	resp := new(DeleteModelResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UnlistItem(sid uint64, req UnlistItemRequest, tok string) (*UnlistItemResponse, error) {
+func (s *ProductServiceOp[T]) UnlistItem(sid uint64, req UnlistItemRequest, tok string) (*UnlistItemResponse, error) {
 	path := "/product/unlist_item"
 	resp := new(UnlistItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdatePrice(sid uint64, req UpdatePriceRequest, tok string) (*UpdatePriceResponse, error) {
+func (s *ProductServiceOp[T]) UpdatePrice(sid uint64, req UpdatePriceRequest, tok string) (*UpdatePriceResponse, error) {
 	path := "/product/update_price"
 	resp := new(UpdatePriceResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateStock(sid uint64, req UpdateStockRequest, tok string) (*UpdateStockResponse, error) {
+func (s *ProductServiceOp[T]) UpdateStock(sid uint64, req UpdateStockRequest, tok string) (*UpdateStockResponse, error) {
 	path := "/product/update_stock"
 	resp := new(UpdateStockResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) BoostItem(sid uint64, req BoostItemRequest, tok string) (*BoostItemResponse, error) {
+func (s *ProductServiceOp[T]) BoostItem(sid uint64, req BoostItemRequest, tok string) (*BoostItemResponse, error) {
 	path := "/product/boost_item"
 	resp := new(BoostItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetBoostedList(sid uint64, tok string) (*GetBoostedListResponse, error) {
+func (s *ProductServiceOp[T]) GetBoostedList(sid uint64, tok string) (*GetBoostedListResponse, error) {
 	path := "/product/get_boosted_list"
 	resp := new(GetBoostedListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemPromotion(sid uint64, opt GetItemPromotionRequest, tok string) (*GetItemPromotionResponse, error) {
+func (s *ProductServiceOp[T]) GetItemPromotion(sid uint64, opt GetItemPromotionRequest, tok string) (*GetItemPromotionResponse, error) {
 	path := "/product/get_item_promotion"
 	resp := new(GetItemPromotionResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateSipItemPrice(sid uint64, req UpdateSipItemPriceRequest, tok string) (*UpdateSipItemPriceResponse, error) {
+func (s *ProductServiceOp[T]) UpdateSipItemPrice(sid uint64, req UpdateSipItemPriceRequest, tok string) (*UpdateSipItemPriceResponse, error) {
 	path := "/product/update_sip_item_price"
 	resp := new(UpdateSipItemPriceResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) SearchItem(sid uint64, opt SearchItemRequest, tok string) (*SearchItemResponse, error) {
+func (s *ProductServiceOp[T]) SearchItem(sid uint64, opt SearchItemRequest, tok string) (*SearchItemResponse, error) {
 	path := "/product/search_item"
 	resp := new(SearchItemResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetComment(sid uint64, opt GetCommentRequest, tok string) (*GetCommentResponse, error) {
+func (s *ProductServiceOp[T]) GetComment(sid uint64, opt GetCommentRequest, tok string) (*GetCommentResponse, error) {
 	path := "/product/get_comment"
 	resp := new(GetCommentResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) ReplyComment(sid uint64, req ReplyCommentRequest, tok string) (*ReplyCommentResponse, error) {
+func (s *ProductServiceOp[T]) ReplyComment(sid uint64, req ReplyCommentRequest, tok string) (*ReplyCommentResponse, error) {
 	path := "/product/reply_comment"
 	resp := new(ReplyCommentResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) CategoryRecommend(sid uint64, opt CategoryRecommendRequest, tok string) (*CategoryRecommendResponse, error) {
+func (s *ProductServiceOp[T]) CategoryRecommend(sid uint64, opt CategoryRecommendRequest, tok string) (*CategoryRecommendResponse, error) {
 	path := "/product/category_recommend"
 	resp := new(CategoryRecommendResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) RegisterBrand(sid uint64, req RegisterBrandRequest, tok string) (*RegisterBrandResponse, error) {
+func (s *ProductServiceOp[T]) RegisterBrand(sid uint64, req RegisterBrandRequest, tok string) (*RegisterBrandResponse, error) {
 	path := "/product/register_brand"
 	resp := new(RegisterBrandResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetRecommendAttribute(sid uint64, opt GetRecommendAttributeRequest, tok string) (*GetRecommendAttributeResponse, error) {
+func (s *ProductServiceOp[T]) GetRecommendAttribute(sid uint64, opt GetRecommendAttributeRequest, tok string) (*GetRecommendAttributeResponse, error) {
 	path := "/product/get_recommend_attribute"
 	resp := new(GetRecommendAttributeResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetWeightRecommendation(sid uint64, req GetWeightRecommendationRequest, tok string) (*GetWeightRecommendationResponse, error) {
+func (s *ProductServiceOp[T]) GetWeightRecommendation(sid uint64, req GetWeightRecommendationRequest, tok string) (*GetWeightRecommendationResponse, error) {
 	path := "/product/get_weight_recommendation"
 	resp := new(GetWeightRecommendationResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetSizeChartList(sid uint64, opt GetSizeChartListRequest, tok string) (*GetSizeChartListResponse, error) {
+func (s *ProductServiceOp[T]) GetSizeChartList(sid uint64, opt GetSizeChartListRequest, tok string) (*GetSizeChartListResponse, error) {
 	path := "/product/get_size_chart_list"
 	resp := new(GetSizeChartListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetSizeChartDetail(sid uint64, opt GetSizeChartDetailRequest, tok string) (*GetSizeChartDetailResponse, error) {
+func (s *ProductServiceOp[T]) GetSizeChartDetail(sid uint64, opt GetSizeChartDetailRequest, tok string) (*GetSizeChartDetailResponse, error) {
 	path := "/product/get_size_chart_detail"
 	resp := new(GetSizeChartDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemViolationInfo(sid uint64, req GetItemViolationInfoRequest, tok string) (*GetItemViolationInfoResponse, error) {
+func (s *ProductServiceOp[T]) GetItemViolationInfo(sid uint64, req GetItemViolationInfoRequest, tok string) (*GetItemViolationInfoResponse, error) {
 	path := "/product/get_item_violation_info"
 	resp := new(GetItemViolationInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetVariations(sid uint64, opt GetVariationsRequest, tok string) (*GetVariationsResponse, error) {
+func (s *ProductServiceOp[T]) GetVariations(sid uint64, opt GetVariationsRequest, tok string) (*GetVariationsResponse, error) {
 	path := "/product/get_variation_tree"
 	resp := new(GetVariationsResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetAllVehicleList(sid uint64, opt GetAllVehicleListRequest, tok string) (*GetAllVehicleListResponse, error) {
+func (s *ProductServiceOp[T]) GetAllVehicleList(sid uint64, opt GetAllVehicleListRequest, tok string) (*GetAllVehicleListResponse, error) {
 	path := "/product/get_all_vehicle_list"
 	resp := new(GetAllVehicleListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetVehicleListByCompatibilityDetail(sid uint64, opt GetVehicleListByCompatibilityDetailRequest, tok string) (*GetVehicleListByCompatibilityDetailResponse, error) {
+func (s *ProductServiceOp[T]) GetVehicleListByCompatibilityDetail(sid uint64, opt GetVehicleListByCompatibilityDetailRequest, tok string) (*GetVehicleListByCompatibilityDetailResponse, error) {
 	path := "/product/get_vehicle_list_by_compatibility_detail"
 	resp := new(GetVehicleListByCompatibilityDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemContentDiagnosisResult(sid uint64, req GetItemContentDiagnosisResultRequest, tok string) (*GetItemContentDiagnosisResultResponse, error) {
+func (s *ProductServiceOp[T]) GetItemContentDiagnosisResult(sid uint64, req GetItemContentDiagnosisResultRequest, tok string) (*GetItemContentDiagnosisResultResponse, error) {
 	path := "/product/get_item_content_diagnosis_result"
 	resp := new(GetItemContentDiagnosisResultResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetItemListByContentDiagnosis(sid uint64, req GetItemListByContentDiagnosisRequest, tok string) (*GetItemListByContentDiagnosisResponse, error) {
+func (s *ProductServiceOp[T]) GetItemListByContentDiagnosis(sid uint64, req GetItemListByContentDiagnosisRequest, tok string) (*GetItemListByContentDiagnosisResponse, error) {
 	path := "/product/get_item_list_by_content_diagnosis"
 	resp := new(GetItemListByContentDiagnosisResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetKitItemLimit(sid uint64, opt GetKitItemLimitRequest, tok string) (*GetKitItemLimitResponse, error) {
+func (s *ProductServiceOp[T]) GetKitItemLimit(sid uint64, opt GetKitItemLimitRequest, tok string) (*GetKitItemLimitResponse, error) {
 	path := "/product/get_kit_item_limit"
 	resp := new(GetKitItemLimitResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) AddKitItem(sid uint64, req AddKitItemRequest, tok string) (*AddKitItemResponse, error) {
+func (s *ProductServiceOp[T]) AddKitItem(sid uint64, req AddKitItemRequest, tok string) (*AddKitItemResponse, error) {
 	path := "/product/add_kit_item"
 	resp := new(AddKitItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UpdateKitItem(sid uint64, req UpdateKitItemRequest, tok string) (*UpdateKitItemResponse, error) {
+func (s *ProductServiceOp[T]) UpdateKitItem(sid uint64, req UpdateKitItemRequest, tok string) (*UpdateKitItemResponse, error) {
 	path := "/product/update_kit_item"
 	resp := new(UpdateKitItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetKitItemInfo(sid uint64, opt GetKitItemInfoRequest, tok string) (*GetKitItemInfoResponse, error) {
+func (s *ProductServiceOp[T]) GetKitItemInfo(sid uint64, opt GetKitItemInfoRequest, tok string) (*GetKitItemInfoResponse, error) {
 	path := "/product/get_kit_item_info"
 	resp := new(GetKitItemInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetSspList(sid uint64, opt GetSspListRequest, tok string) (*GetSspListResponse, error) {
+func (s *ProductServiceOp[T]) GetSspList(sid uint64, opt GetSspListRequest, tok string) (*GetSspListResponse, error) {
 	path := "/product/get_ssp_list"
 	resp := new(GetSspListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetSspInfo(sid uint64, req GetSspInfoRequest, tok string) (*GetSspInfoResponse, error) {
+func (s *ProductServiceOp[T]) GetSspInfo(sid uint64, req GetSspInfoRequest, tok string) (*GetSspInfoResponse, error) {
 	path := "/product/get_ssp_info"
 	resp := new(GetSspInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) AddSspItem(sid uint64, req AddSspItemRequest, tok string) (*AddSspItemResponse, error) {
+func (s *ProductServiceOp[T]) AddSspItem(sid uint64, req AddSspItemRequest, tok string) (*AddSspItemResponse, error) {
 	path := "/product/add_ssp_item"
 	resp := new(AddSspItemResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) LinkSsp(sid uint64, req LinkSspRequest, tok string) (*LinkSspResponse, error) {
+func (s *ProductServiceOp[T]) LinkSsp(sid uint64, req LinkSspRequest, tok string) (*LinkSspResponse, error) {
 	path := "/product/link_ssp"
 	resp := new(LinkSspResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) UnlinkSsp(sid uint64, req UnlinkSspRequest, tok string) (*UnlinkSspResponse, error) {
+func (s *ProductServiceOp[T]) UnlinkSsp(sid uint64, req UnlinkSspRequest, tok string) (*UnlinkSspResponse, error) {
 	path := "/product/unlink_ssp"
 	resp := new(UnlinkSspResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetAitemByPitemId(sid uint64, opt GetAitemByPitemIdRequest, tok string) (*GetAitemByPitemIdResponse, error) {
+func (s *ProductServiceOp[T]) GetAitemByPitemId(sid uint64, opt GetAitemByPitemIdRequest, tok string) (*GetAitemByPitemIdResponse, error) {
 	path := "/product/get_aitem_by_pitem_id"
 	resp := new(GetAitemByPitemIdResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) SearchAttributeValueList(sid uint64, req SearchAttributeValueListRequest, tok string) (*SearchAttributeValueListResponse, error) {
+func (s *ProductServiceOp[T]) SearchAttributeValueList(sid uint64, req SearchAttributeValueListRequest, tok string) (*SearchAttributeValueListResponse, error) {
 	path := "/product/search_attribute_value_list"
 	resp := new(SearchAttributeValueListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetMainItemList(sid uint64, opt GetMainItemListRequest, tok string) (*GetMainItemListResponse, error) {
+func (s *ProductServiceOp[T]) GetMainItemList(sid uint64, opt GetMainItemListRequest, tok string) (*GetMainItemListResponse, error) {
 	path := "/product/get_main_item_list"
 	resp := new(GetMainItemListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetDirectItemList(sid uint64, opt GetDirectItemListRequest, tok string) (*GetDirectItemListResponse, error) {
+func (s *ProductServiceOp[T]) GetDirectItemList(sid uint64, opt GetDirectItemListRequest, tok string) (*GetDirectItemListResponse, error) {
 	path := "/product/get_direct_item_list"
 	resp := new(GetDirectItemListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetDirectShopRecommendedPrice(sid uint64, opt GetDirectShopRecommendedPriceRequest, tok string) (*GetDirectShopRecommendedPriceResponse, error) {
+func (s *ProductServiceOp[T]) GetDirectShopRecommendedPrice(sid uint64, opt GetDirectShopRecommendedPriceRequest, tok string) (*GetDirectShopRecommendedPriceResponse, error) {
 	path := "/product/get_direct_shop_recommended_price"
 	resp := new(GetDirectShopRecommendedPriceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetProductCertificationRule(sid uint64, req GetProductCertificationRuleRequest, tok string) (*GetProductCertificationRuleResponse, error) {
+func (s *ProductServiceOp[T]) GetProductCertificationRule(sid uint64, req GetProductCertificationRuleRequest, tok string) (*GetProductCertificationRuleResponse, error) {
 	path := "/product/get_product_certification_rule"
 	resp := new(GetProductCertificationRuleResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) PublishItemToOutletShop(sid uint64, tok string) (*PublishItemToOutletShopResponse, error) {
+func (s *ProductServiceOp[T]) PublishItemToOutletShop(sid uint64, tok string) (*PublishItemToOutletShopResponse, error) {
 	path := "/"
 	resp := new(PublishItemToOutletShopResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GetMartItemMappingById(sid uint64, req GetMartItemMappingByIdRequest, tok string) (*GetMartItemMappingByIdResponse, error) {
+func (s *ProductServiceOp[T]) GetMartItemMappingById(sid uint64, req GetMartItemMappingByIdRequest, tok string) (*GetMartItemMappingByIdResponse, error) {
 	path := "/product/get_mart_item_mapping_by_id"
 	resp := new(GetMartItemMappingByIdResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) SearchUnpackagedModelList(sid uint64, req SearchUnpackagedModelListRequest, tok string) (*SearchUnpackagedModelListResponse, error) {
+func (s *ProductServiceOp[T]) SearchUnpackagedModelList(sid uint64, req SearchUnpackagedModelListRequest, tok string) (*SearchUnpackagedModelListResponse, error) {
 	path := "/product/search_unpackaged_model_list"
 	resp := new(SearchUnpackagedModelListResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *ProductServiceOp) GenerateKitImage(sid uint64, req GenerateKitImageRequest, tok string) (*GenerateKitImageResponse, error) {
+func (s *ProductServiceOp[T]) GenerateKitImage(sid uint64, req GenerateKitImageRequest, tok string) (*GenerateKitImageResponse, error) {
 	path := "/product/generate_kit_image"
 	resp := new(GenerateKitImageResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

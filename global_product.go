@@ -112,242 +112,242 @@ type GlobalProductService interface {
 	UpdateLocalAdjustmentRate(sid uint64, req UpdateLocalAdjustmentRateRequest, tok string) (*UpdateLocalAdjustmentRateResponse, error)
 }
 
-type GlobalProductServiceOp struct {
-	client *Client
+type GlobalProductServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *GlobalProductServiceOp) GetCategory(sid uint64, opt GlobalProductGetCategoryRequest, tok string) (*GlobalProductGetCategoryResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetCategory(sid uint64, opt GlobalProductGetCategoryRequest, tok string) (*GlobalProductGetCategoryResponse, error) {
 	path := "/global_product/get_category"
 	resp := new(GlobalProductGetCategoryResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetAttributeTree(sid uint64, opt GlobalProductGetAttributeTreeRequest, tok string) (*GlobalProductGetAttributeTreeResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetAttributeTree(sid uint64, opt GlobalProductGetAttributeTreeRequest, tok string) (*GlobalProductGetAttributeTreeResponse, error) {
 	path := "/global_product/get_attribute_tree"
 	resp := new(GlobalProductGetAttributeTreeResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetBrandList(sid uint64, opt GlobalProductGetBrandListRequest, tok string) (*GlobalProductGetBrandListResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetBrandList(sid uint64, opt GlobalProductGetBrandListRequest, tok string) (*GlobalProductGetBrandListResponse, error) {
 	path := "/global_product/get_brand_list"
 	resp := new(GlobalProductGetBrandListResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetGlobalItemLimit(sid uint64, opt GetGlobalItemLimitRequest, tok string) (*GetGlobalItemLimitResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetGlobalItemLimit(sid uint64, opt GetGlobalItemLimitRequest, tok string) (*GetGlobalItemLimitResponse, error) {
 	path := "/global_product/get_global_item_limit"
 	resp := new(GetGlobalItemLimitResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetGlobalItemList(sid uint64, opt GetGlobalItemListRequest, tok string) (*GetGlobalItemListResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetGlobalItemList(sid uint64, opt GetGlobalItemListRequest, tok string) (*GetGlobalItemListResponse, error) {
 	path := "/global_product/get_global_item_list"
 	resp := new(GetGlobalItemListResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetGlobalItemInfo(sid uint64, opt GetGlobalItemInfoRequest, tok string) (*GetGlobalItemInfoResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetGlobalItemInfo(sid uint64, opt GetGlobalItemInfoRequest, tok string) (*GetGlobalItemInfoResponse, error) {
 	path := "/global_product/get_global_item_info"
 	resp := new(GetGlobalItemInfoResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) AddGlobalItem(sid uint64, req AddGlobalItemRequest, tok string) (*AddGlobalItemResponse, error) {
+func (s *GlobalProductServiceOp[T]) AddGlobalItem(sid uint64, req AddGlobalItemRequest, tok string) (*AddGlobalItemResponse, error) {
 	path := "/global_product/add_global_item"
 	resp := new(AddGlobalItemResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateGlobalItem(sid uint64, req UpdateGlobalItemRequest, tok string) (*UpdateGlobalItemResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateGlobalItem(sid uint64, req UpdateGlobalItemRequest, tok string) (*UpdateGlobalItemResponse, error) {
 	path := "/global_product/update_global_item"
 	resp := new(UpdateGlobalItemResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) DeleteGlobalItem(sid uint64, req DeleteGlobalItemRequest, tok string) (*DeleteGlobalItemResponse, error) {
+func (s *GlobalProductServiceOp[T]) DeleteGlobalItem(sid uint64, req DeleteGlobalItemRequest, tok string) (*DeleteGlobalItemResponse, error) {
 	path := "/global_product/delete_global_item"
 	resp := new(DeleteGlobalItemResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) InitTierVariation(sid uint64, req GlobalProductInitTierVariationRequest, tok string) (*GlobalProductInitTierVariationResponse, error) {
+func (s *GlobalProductServiceOp[T]) InitTierVariation(sid uint64, req GlobalProductInitTierVariationRequest, tok string) (*GlobalProductInitTierVariationResponse, error) {
 	path := "/global_product/init_tier_variation"
 	resp := new(GlobalProductInitTierVariationResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateTierVariation(sid uint64, req GlobalProductUpdateTierVariationRequest, tok string) (*GlobalProductUpdateTierVariationResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateTierVariation(sid uint64, req GlobalProductUpdateTierVariationRequest, tok string) (*GlobalProductUpdateTierVariationResponse, error) {
 	path := "/global_product/update_tier_variation"
 	resp := new(GlobalProductUpdateTierVariationResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) AddGlobalModel(sid uint64, req AddGlobalModelRequest, tok string) (*AddGlobalModelResponse, error) {
+func (s *GlobalProductServiceOp[T]) AddGlobalModel(sid uint64, req AddGlobalModelRequest, tok string) (*AddGlobalModelResponse, error) {
 	path := "/global_product/add_global_model"
 	resp := new(AddGlobalModelResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateGlobalModel(sid uint64, req UpdateGlobalModelRequest, tok string) (*UpdateGlobalModelResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateGlobalModel(sid uint64, req UpdateGlobalModelRequest, tok string) (*UpdateGlobalModelResponse, error) {
 	path := "/global_product/update_global_model"
 	resp := new(UpdateGlobalModelResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) DeleteGlobalModel(sid uint64, req DeleteGlobalModelRequest, tok string) (*DeleteGlobalModelResponse, error) {
+func (s *GlobalProductServiceOp[T]) DeleteGlobalModel(sid uint64, req DeleteGlobalModelRequest, tok string) (*DeleteGlobalModelResponse, error) {
 	path := "/global_product/delete_global_model"
 	resp := new(DeleteGlobalModelResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetGlobalModelList(sid uint64, opt GetGlobalModelListRequest, tok string) (*GetGlobalModelListResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetGlobalModelList(sid uint64, opt GetGlobalModelListRequest, tok string) (*GetGlobalModelListResponse, error) {
 	path := "/global_product/get_global_model_list"
 	resp := new(GetGlobalModelListResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) SupportSizeChart(sid uint64, opt SupportSizeChartRequest, tok string) (*SupportSizeChartResponse, error) {
+func (s *GlobalProductServiceOp[T]) SupportSizeChart(sid uint64, opt SupportSizeChartRequest, tok string) (*SupportSizeChartResponse, error) {
 	path := "/global_product/support_size_chart"
 	resp := new(SupportSizeChartResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateSizeChart(sid uint64, req UpdateSizeChartRequest, tok string) (*UpdateSizeChartResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateSizeChart(sid uint64, req UpdateSizeChartRequest, tok string) (*UpdateSizeChartResponse, error) {
 	path := "/global_product/update_size_chart"
 	resp := new(UpdateSizeChartResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) CreatePublishTask(sid uint64, req CreatePublishTaskRequest, tok string) (*CreatePublishTaskResponse, error) {
+func (s *GlobalProductServiceOp[T]) CreatePublishTask(sid uint64, req CreatePublishTaskRequest, tok string) (*CreatePublishTaskResponse, error) {
 	path := "/global_product/create_publish_task"
 	resp := new(CreatePublishTaskResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetPublishableShop(sid uint64, opt GetPublishableShopRequest, tok string) (*GetPublishableShopResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetPublishableShop(sid uint64, opt GetPublishableShopRequest, tok string) (*GetPublishableShopResponse, error) {
 	path := "/global_product/get_publishable_shop"
 	resp := new(GetPublishableShopResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetPublishTaskResult(sid uint64, opt GetPublishTaskResultRequest, tok string) (*GetPublishTaskResultResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetPublishTaskResult(sid uint64, opt GetPublishTaskResultRequest, tok string) (*GetPublishTaskResultResponse, error) {
 	path := "/global_product/get_publish_task_result"
 	resp := new(GetPublishTaskResultResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetPublishedList(sid uint64, opt GetPublishedListRequest, tok string) (*GetPublishedListResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetPublishedList(sid uint64, opt GetPublishedListRequest, tok string) (*GetPublishedListResponse, error) {
 	path := "/global_product/get_published_list"
 	resp := new(GetPublishedListResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdatePrice(sid uint64, req GlobalProductUpdatePriceRequest, tok string) (*GlobalProductUpdatePriceResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdatePrice(sid uint64, req GlobalProductUpdatePriceRequest, tok string) (*GlobalProductUpdatePriceResponse, error) {
 	path := "/global_product/update_price"
 	resp := new(GlobalProductUpdatePriceResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateStock(sid uint64, req GlobalProductUpdateStockRequest, tok string) (*GlobalProductUpdateStockResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateStock(sid uint64, req GlobalProductUpdateStockRequest, tok string) (*GlobalProductUpdateStockResponse, error) {
 	path := "/global_product/update_stock"
 	resp := new(GlobalProductUpdateStockResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) SetSyncField(sid uint64, req SetSyncFieldRequest, tok string) (*SetSyncFieldResponse, error) {
+func (s *GlobalProductServiceOp[T]) SetSyncField(sid uint64, req SetSyncFieldRequest, tok string) (*SetSyncFieldResponse, error) {
 	path := "/global_product/set_sync_field"
 	resp := new(SetSyncFieldResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetGlobalItemId(sid uint64, opt GetGlobalItemIdRequest, tok string) (*GetGlobalItemIdResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetGlobalItemId(sid uint64, opt GetGlobalItemIdRequest, tok string) (*GetGlobalItemIdResponse, error) {
 	path := "/global_product/get_global_item_id"
 	resp := new(GetGlobalItemIdResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) CategoryRecommend(sid uint64, opt GlobalProductCategoryRecommendRequest, tok string) (*GlobalProductCategoryRecommendResponse, error) {
+func (s *GlobalProductServiceOp[T]) CategoryRecommend(sid uint64, opt GlobalProductCategoryRecommendRequest, tok string) (*GlobalProductCategoryRecommendResponse, error) {
 	path := "/global_product/category_recommend"
 	resp := new(GlobalProductCategoryRecommendResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetRecommendAttribute(sid uint64, opt GlobalProductGetRecommendAttributeRequest, tok string) (*GlobalProductGetRecommendAttributeResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetRecommendAttribute(sid uint64, opt GlobalProductGetRecommendAttributeRequest, tok string) (*GlobalProductGetRecommendAttributeResponse, error) {
 	path := "/global_product/get_recommend_attribute"
 	resp := new(GlobalProductGetRecommendAttributeResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetShopPublishableStatus(sid uint64, opt GetShopPublishableStatusRequest, tok string) (*GetShopPublishableStatusResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetShopPublishableStatus(sid uint64, opt GetShopPublishableStatusRequest, tok string) (*GetShopPublishableStatusResponse, error) {
 	path := "/global_product/get_shop_publishable_status"
 	resp := new(GetShopPublishableStatusResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetVariations(sid uint64, opt GlobalProductGetVariationsRequest, tok string) (*GlobalProductGetVariationsResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetVariations(sid uint64, opt GlobalProductGetVariationsRequest, tok string) (*GlobalProductGetVariationsResponse, error) {
 	path := "/global_product/get_variations"
 	resp := new(GlobalProductGetVariationsResponse)
 	err := s.client.WithMerchant(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetSizeChartDetail(sid uint64, req GlobalProductGetSizeChartDetailRequest, tok string) (*GlobalProductGetSizeChartDetailResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetSizeChartDetail(sid uint64, req GlobalProductGetSizeChartDetailRequest, tok string) (*GlobalProductGetSizeChartDetailResponse, error) {
 	path := "/global_product/get_size_chart_detail"
 	resp := new(GlobalProductGetSizeChartDetailResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error) {
 	path := "/global_product/get_size_chart_list"
 	resp := new(GlobalProductGetSizeChartListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) SearchGlobalAttributeValueList(sid uint64, req SearchGlobalAttributeValueListRequest, tok string) (*SearchGlobalAttributeValueListResponse, error) {
+func (s *GlobalProductServiceOp[T]) SearchGlobalAttributeValueList(sid uint64, req SearchGlobalAttributeValueListRequest, tok string) (*SearchGlobalAttributeValueListResponse, error) {
 	path := "/global_product/search_global_attribute_value_list"
 	resp := new(SearchGlobalAttributeValueListResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) GetLocalAdjustmentRate(sid uint64, tok string) (*GetLocalAdjustmentRateResponse, error) {
+func (s *GlobalProductServiceOp[T]) GetLocalAdjustmentRate(sid uint64, tok string) (*GetLocalAdjustmentRateResponse, error) {
 	path := "/global_product/get_local_adjustment_rate"
 	resp := new(GetLocalAdjustmentRateResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *GlobalProductServiceOp) UpdateLocalAdjustmentRate(sid uint64, req UpdateLocalAdjustmentRateRequest, tok string) (*UpdateLocalAdjustmentRateResponse, error) {
+func (s *GlobalProductServiceOp[T]) UpdateLocalAdjustmentRate(sid uint64, req UpdateLocalAdjustmentRateRequest, tok string) (*UpdateLocalAdjustmentRateResponse, error) {
 	path := "/global_product/update_local_adjustment_rate"
 	resp := new(UpdateLocalAdjustmentRateResponse)
 	err := s.client.WithMerchant(sid, tok).Post(path, req, resp)

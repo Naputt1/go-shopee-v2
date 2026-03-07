@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"os/exec"
@@ -166,7 +166,7 @@ var (
 
 func main() {
 	// Load config
-	configData, err := ioutil.ReadFile("generator_config.json")
+	configData, err := os.ReadFile("generator_config.json")
 	if err != nil {
 		fmt.Printf("Error reading config: %v\n", err)
 		os.Exit(1)
@@ -325,7 +325,7 @@ func main() {
 				for _, s := range responseSamples {
 					if s.Type == "JSON" {
 						fixturePath := fmt.Sprintf("fixtures/%s", method.FixtureName)
-						ioutil.WriteFile(fixturePath, []byte(s.Value), 0644)
+						os.WriteFile(fixturePath, []byte(s.Value), 0644)
 					}
 				}
 			}
@@ -518,7 +518,7 @@ func fetchAPIInfo(apiName string) (*APIInfo, error) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -843,13 +843,13 @@ type {{.ModuleName}}Service interface {
 {{- end}}
 }
 
-type {{.ModuleName}}ServiceOp struct {
-	client *Client
+type {{.ModuleName}}ServiceOp[T any] struct {
+	client *Client[T]
 }
 
 {{range .Methods}}
 {{- if .IsUpload}}
-func (s *{{$.ModuleName}}ServiceOp) {{.Name}}(sid uint64, filename string, tok string) (*{{.ResponseType}}, error) {
+func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}(sid uint64, filename string, tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
 	{{if eq .APIType "Shop" -}}
@@ -860,7 +860,7 @@ func (s *{{$.ModuleName}}ServiceOp) {{.Name}}(sid uint64, filename string, tok s
 	return resp, err
 }
 
-func (s *{{$.ModuleName}}ServiceOp) {{.Name}}FromReader(sid uint64, filename string, reader io.Reader, tok string) (*{{.ResponseType}}, error) {
+func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}FromReader(sid uint64, filename string, reader io.Reader, tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
 	{{if eq .APIType "Shop" -}}
@@ -871,7 +871,7 @@ func (s *{{$.ModuleName}}ServiceOp) {{.Name}}FromReader(sid uint64, filename str
 	return resp, err
 }
 {{- else}}
-func (s *{{$.ModuleName}}ServiceOp) {{.Name}}(sid uint64, {{if .RequestType}}{{if .IsGet}}opt{{else}}req{{end}} {{.RequestType}}, {{end}}tok string) (*{{.ResponseType}}, error) {
+func (s *{{$.ModuleName}}ServiceOp[T]) {{.Name}}(sid uint64, {{if .RequestType}}{{if .IsGet}}opt{{else}}req{{end}} {{.RequestType}}, {{end}}tok string) (*{{.ResponseType}}, error) {
 	path := "/{{.Path}}"
 	resp := new({{.ResponseType}})
 	{{if eq .APIType "Shop" -}}
@@ -979,7 +979,7 @@ func Test_{{$.ModuleName}}_{{.Name}}(t *testing.T) {
 }
 
 func updateGoshopee(services []ServiceInfo) {
-	content, err := ioutil.ReadFile("goshopee.go")
+	content, err := os.ReadFile("goshopee.go")
 	if err != nil {
 		panic(err)
 	}
@@ -995,7 +995,7 @@ func updateGoshopee(services []ServiceInfo) {
 
 	var serviceInit bytes.Buffer
 	for _, s := range services {
-		serviceInit.WriteString(fmt.Sprintf("\tc.%s = &%s{client: c}\n", s.Name, s.Impl))
+		serviceInit.WriteString(fmt.Sprintf("\tc.%s = &%s[T]{client: c}\n", s.Name, s.Impl))
 	}
 
 	startMarker = "// BEGIN GENERATED SERVICES INIT"
@@ -1019,7 +1019,7 @@ func updateGoshopee(services []ServiceInfo) {
 	endMarker = "// END GENERATED ERRORS"
 	newContent = replaceBetween(newContent, startMarker, endMarker, errorConsts.String())
 
-	ioutil.WriteFile("goshopee.go", []byte(newContent), 0644)
+	os.WriteFile("goshopee.go", []byte(newContent), 0644)
 	formatFile("goshopee.go")
 }
 

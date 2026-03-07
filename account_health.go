@@ -23,46 +23,46 @@ type AccountHealthService interface {
 	GetLateOrders(sid uint64, opt GetLateOrdersRequest, tok string) (*GetLateOrdersResponse, error)
 }
 
-type AccountHealthServiceOp struct {
-	client *Client
+type AccountHealthServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *AccountHealthServiceOp) GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error) {
 	path := "/account_health/get_shop_performance"
 	resp := new(GetShopPerformanceResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *AccountHealthServiceOp) GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error) {
 	path := "/account_health/get_metric_source_detail"
 	resp := new(GetMetricSourceDetailResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AccountHealthServiceOp) GetPenaltyPointHistory(sid uint64, opt GetPenaltyPointHistoryRequest, tok string) (*GetPenaltyPointHistoryResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetPenaltyPointHistory(sid uint64, opt GetPenaltyPointHistoryRequest, tok string) (*GetPenaltyPointHistoryResponse, error) {
 	path := "/account_health/get_penalty_point_history"
 	resp := new(GetPenaltyPointHistoryResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AccountHealthServiceOp) GetPunishmentHistory(sid uint64, opt GetPunishmentHistoryRequest, tok string) (*GetPunishmentHistoryResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetPunishmentHistory(sid uint64, opt GetPunishmentHistoryRequest, tok string) (*GetPunishmentHistoryResponse, error) {
 	path := "/account_health/get_punishment_history"
 	resp := new(GetPunishmentHistoryResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AccountHealthServiceOp) GetListingsWithIssues(sid uint64, opt GetListingsWithIssuesRequest, tok string) (*GetListingsWithIssuesResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetListingsWithIssues(sid uint64, opt GetListingsWithIssuesRequest, tok string) (*GetListingsWithIssuesResponse, error) {
 	path := "/account_health/get_listings_with_issues"
 	resp := new(GetListingsWithIssuesResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *AccountHealthServiceOp) GetLateOrders(sid uint64, opt GetLateOrdersRequest, tok string) (*GetLateOrdersResponse, error) {
+func (s *AccountHealthServiceOp[T]) GetLateOrders(sid uint64, opt GetLateOrdersRequest, tok string) (*GetLateOrdersResponse, error) {
 	path := "/account_health/get_late_orders"
 	resp := new(GetLateOrdersResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)

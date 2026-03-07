@@ -32,88 +32,88 @@ type MediaService interface {
 	CancelVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaCancelVideoUploadResponse, error)
 }
 
-type MediaServiceOp struct {
-	client *Client
+type MediaServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *MediaServiceOp) UploadImage(sid uint64, filename string, tok string) (*MediaUploadImageResponse, error) {
+func (s *MediaServiceOp[T]) UploadImage(sid uint64, filename string, tok string) (*MediaUploadImageResponse, error) {
 	path := "/media/upload_image"
 	resp := new(MediaUploadImageResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) UploadImageFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaUploadImageResponse, error) {
+func (s *MediaServiceOp[T]) UploadImageFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaUploadImageResponse, error) {
 	path := "/media/upload_image"
 	resp := new(MediaUploadImageResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) InitVideoUpload(sid uint64, filename string, tok string) (*MediaInitVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) InitVideoUpload(sid uint64, filename string, tok string) (*MediaInitVideoUploadResponse, error) {
 	path := "/media/init_video_upload"
 	resp := new(MediaInitVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) InitVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaInitVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) InitVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaInitVideoUploadResponse, error) {
 	path := "/media/init_video_upload"
 	resp := new(MediaInitVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) UploadVideoPart(sid uint64, filename string, tok string) (*MediaUploadVideoPartResponse, error) {
+func (s *MediaServiceOp[T]) UploadVideoPart(sid uint64, filename string, tok string) (*MediaUploadVideoPartResponse, error) {
 	path := "/media/upload_video_part"
 	resp := new(MediaUploadVideoPartResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) UploadVideoPartFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaUploadVideoPartResponse, error) {
+func (s *MediaServiceOp[T]) UploadVideoPartFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaUploadVideoPartResponse, error) {
 	path := "/media/upload_video_part"
 	resp := new(MediaUploadVideoPartResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) CompleteVideoUpload(sid uint64, filename string, tok string) (*MediaCompleteVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) CompleteVideoUpload(sid uint64, filename string, tok string) (*MediaCompleteVideoUploadResponse, error) {
 	path := "/media/complete_video_upload"
 	resp := new(MediaCompleteVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) CompleteVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaCompleteVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) CompleteVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaCompleteVideoUploadResponse, error) {
 	path := "/media/complete_video_upload"
 	resp := new(MediaCompleteVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) GetVideoUploadResult(sid uint64, filename string, tok string) (*MediaGetVideoUploadResultResponse, error) {
+func (s *MediaServiceOp[T]) GetVideoUploadResult(sid uint64, filename string, tok string) (*MediaGetVideoUploadResultResponse, error) {
 	path := "/media/get_video_upload_result"
 	resp := new(MediaGetVideoUploadResultResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) GetVideoUploadResultFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaGetVideoUploadResultResponse, error) {
+func (s *MediaServiceOp[T]) GetVideoUploadResultFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaGetVideoUploadResultResponse, error) {
 	path := "/media/get_video_upload_result"
 	resp := new(MediaGetVideoUploadResultResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) CancelVideoUpload(sid uint64, filename string, tok string) (*MediaCancelVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) CancelVideoUpload(sid uint64, filename string, tok string) (*MediaCancelVideoUploadResponse, error) {
 	path := "/media/cancel_video_upload"
 	resp := new(MediaCancelVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *MediaServiceOp) CancelVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaCancelVideoUploadResponse, error) {
+func (s *MediaServiceOp[T]) CancelVideoUploadFromReader(sid uint64, filename string, reader io.Reader, tok string) (*MediaCancelVideoUploadResponse, error) {
 	path := "/media/cancel_video_upload"
 	resp := new(MediaCancelVideoUploadResponse)
 	err := s.client.WithMerchant(sid, tok).UploadFromReader(path, "image", filename, reader, resp)

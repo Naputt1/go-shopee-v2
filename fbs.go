@@ -16,32 +16,32 @@ type FBSService interface {
 	QueryBrSkuBlockStatus(sid uint64, req QueryBrSkuBlockStatusRequest, tok string) (*QueryBrSkuBlockStatusResponse, error)
 }
 
-type FBSServiceOp struct {
-	client *Client
+type FBSServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *FBSServiceOp) QueryBrShopEnrollmentStatus(sid uint64, tok string) (*QueryBrShopEnrollmentStatusResponse, error) {
+func (s *FBSServiceOp[T]) QueryBrShopEnrollmentStatus(sid uint64, tok string) (*QueryBrShopEnrollmentStatusResponse, error) {
 	path := "/fbs/query_br_shop_enrollment_status"
 	resp := new(QueryBrShopEnrollmentStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *FBSServiceOp) QueryBrShopInvoiceError(sid uint64, req QueryBrShopInvoiceErrorRequest, tok string) (*QueryBrShopInvoiceErrorResponse, error) {
+func (s *FBSServiceOp[T]) QueryBrShopInvoiceError(sid uint64, req QueryBrShopInvoiceErrorRequest, tok string) (*QueryBrShopInvoiceErrorResponse, error) {
 	path := "/fbs/query_br_shop_invoice_error"
 	resp := new(QueryBrShopInvoiceErrorResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *FBSServiceOp) QueryBrShopBlockStatus(sid uint64, tok string) (*QueryBrShopBlockStatusResponse, error) {
+func (s *FBSServiceOp[T]) QueryBrShopBlockStatus(sid uint64, tok string) (*QueryBrShopBlockStatusResponse, error) {
 	path := "/fbs/query_br_shop_block_status"
 	resp := new(QueryBrShopBlockStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *FBSServiceOp) QueryBrSkuBlockStatus(sid uint64, req QueryBrSkuBlockStatusRequest, tok string) (*QueryBrSkuBlockStatusResponse, error) {
+func (s *FBSServiceOp[T]) QueryBrSkuBlockStatus(sid uint64, req QueryBrSkuBlockStatusRequest, tok string) (*QueryBrSkuBlockStatusResponse, error) {
 	path := "/fbs/query_br_sku_block_status"
 	resp := new(QueryBrSkuBlockStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)

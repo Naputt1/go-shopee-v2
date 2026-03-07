@@ -150,319 +150,319 @@ type LogisticsService interface {
 	CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error)
 }
 
-type LogisticsServiceOp struct {
-	client *Client
+type LogisticsServiceOp[T any] struct {
+	client *Client[T]
 }
 
-func (s *LogisticsServiceOp) GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error) {
+func (s *LogisticsServiceOp[T]) GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error) {
 	path := "/logistics/get_shipping_parameter"
 	resp := new(GetShippingParameterResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error) {
+func (s *LogisticsServiceOp[T]) GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error) {
 	path := "/logistics/get_mass_shipping_parameter"
 	resp := new(GetMassShippingParameterResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) ShipOrder(sid uint64, req ShipOrderRequest, tok string) (*ShipOrderResponse, error) {
+func (s *LogisticsServiceOp[T]) ShipOrder(sid uint64, req ShipOrderRequest, tok string) (*ShipOrderResponse, error) {
 	path := "/logistics/ship_order"
 	resp := new(ShipOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) MassShipOrder(sid uint64, req MassShipOrderRequest, tok string) (*MassShipOrderResponse, error) {
+func (s *LogisticsServiceOp[T]) MassShipOrder(sid uint64, req MassShipOrderRequest, tok string) (*MassShipOrderResponse, error) {
 	path := "/logistics/mass_ship_order"
 	resp := new(MassShipOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error) {
 	path := "/logistics/update_shipping_order"
 	resp := new(UpdateShippingOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetTrackingNumber(sid uint64, opt GetTrackingNumberRequest, tok string) (*GetTrackingNumberResponse, error) {
+func (s *LogisticsServiceOp[T]) GetTrackingNumber(sid uint64, opt GetTrackingNumberRequest, tok string) (*GetTrackingNumberResponse, error) {
 	path := "/logistics/get_tracking_number"
 	resp := new(GetTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetMassTrackingNumber(sid uint64, req GetMassTrackingNumberRequest, tok string) (*GetMassTrackingNumberResponse, error) {
+func (s *LogisticsServiceOp[T]) GetMassTrackingNumber(sid uint64, req GetMassTrackingNumberRequest, tok string) (*GetMassTrackingNumberResponse, error) {
 	path := "/logistics/get_mass_tracking_number"
 	resp := new(GetMassTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetShippingDocumentParameter(sid uint64, req GetShippingDocumentParameterRequest, tok string) (*GetShippingDocumentParameterResponse, error) {
+func (s *LogisticsServiceOp[T]) GetShippingDocumentParameter(sid uint64, req GetShippingDocumentParameterRequest, tok string) (*GetShippingDocumentParameterResponse, error) {
 	path := "/logistics/get_shipping_document_parameter"
 	resp := new(GetShippingDocumentParameterResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) CreateShippingDocument(sid uint64, req CreateShippingDocumentRequest, tok string) (*CreateShippingDocumentResponse, error) {
+func (s *LogisticsServiceOp[T]) CreateShippingDocument(sid uint64, req CreateShippingDocumentRequest, tok string) (*CreateShippingDocumentResponse, error) {
 	path := "/logistics/create_shipping_document"
 	resp := new(CreateShippingDocumentResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetShippingDocumentResult(sid uint64, req GetShippingDocumentResultRequest, tok string) (*GetShippingDocumentResultResponse, error) {
+func (s *LogisticsServiceOp[T]) GetShippingDocumentResult(sid uint64, req GetShippingDocumentResultRequest, tok string) (*GetShippingDocumentResultResponse, error) {
 	path := "/logistics/get_shipping_document_result"
 	resp := new(GetShippingDocumentResultResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DownloadShippingDocument(sid uint64, req DownloadShippingDocumentRequest, tok string) (*DownloadShippingDocumentResponse, error) {
+func (s *LogisticsServiceOp[T]) DownloadShippingDocument(sid uint64, req DownloadShippingDocumentRequest, tok string) (*DownloadShippingDocumentResponse, error) {
 	path := "/logistics/download_shipping_document"
 	resp := new(DownloadShippingDocumentResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error) {
 	path := "/logistics/get_shipping_document_data_info"
 	resp := new(GetShippingDocumentDataInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error) {
 	path := "/logistics/get_tracking_info"
 	resp := new(GetTrackingInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetAddressList(sid uint64, tok string) (*GetAddressListResponse, error) {
+func (s *LogisticsServiceOp[T]) GetAddressList(sid uint64, tok string) (*GetAddressListResponse, error) {
 	path := "/logistics/get_address_list"
 	resp := new(GetAddressListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) SetAddressConfig(sid uint64, req SetAddressConfigRequest, tok string) (*SetAddressConfigResponse, error) {
+func (s *LogisticsServiceOp[T]) SetAddressConfig(sid uint64, req SetAddressConfigRequest, tok string) (*SetAddressConfigResponse, error) {
 	path := "/logistics/set_address_config"
 	resp := new(SetAddressConfigResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateAddress(sid uint64, req UpdateAddressRequest, tok string) (*UpdateAddressResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateAddress(sid uint64, req UpdateAddressRequest, tok string) (*UpdateAddressResponse, error) {
 	path := "/logistics/update_address"
 	resp := new(UpdateAddressResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DeleteAddress(sid uint64, req DeleteAddressRequest, tok string) (*DeleteAddressResponse, error) {
+func (s *LogisticsServiceOp[T]) DeleteAddress(sid uint64, req DeleteAddressRequest, tok string) (*DeleteAddressResponse, error) {
 	path := "/logistics/delete_address"
 	resp := new(DeleteAddressResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error) {
+func (s *LogisticsServiceOp[T]) GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error) {
 	path := "/logistics/get_channel_list"
 	resp := new(GetChannelListResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateChannel(sid uint64, req UpdateChannelRequest, tok string) (*UpdateChannelResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateChannel(sid uint64, req UpdateChannelRequest, tok string) (*UpdateChannelResponse, error) {
 	path := "/logistics/update_channel"
 	resp := new(UpdateChannelResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetOperatingHours(sid uint64, tok string) (*GetOperatingHoursResponse, error) {
+func (s *LogisticsServiceOp[T]) GetOperatingHours(sid uint64, tok string) (*GetOperatingHoursResponse, error) {
 	path := "/logistics/get_operating_hours"
 	resp := new(GetOperatingHoursResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetOperatingHourRestrictions(sid uint64, tok string) (*GetOperatingHourRestrictionsResponse, error) {
+func (s *LogisticsServiceOp[T]) GetOperatingHourRestrictions(sid uint64, tok string) (*GetOperatingHourRestrictionsResponse, error) {
 	path := "/logistics/get_operating_hour_restrictions"
 	resp := new(GetOperatingHourRestrictionsResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateOperatingHours(sid uint64, req UpdateOperatingHoursRequest, tok string) (*UpdateOperatingHoursResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateOperatingHours(sid uint64, req UpdateOperatingHoursRequest, tok string) (*UpdateOperatingHoursResponse, error) {
 	path := "/logistics/update_operating_hours"
 	resp := new(UpdateOperatingHoursResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DeleteSpecialOperatingHour(sid uint64, req DeleteSpecialOperatingHourRequest, tok string) (*DeleteSpecialOperatingHourResponse, error) {
+func (s *LogisticsServiceOp[T]) DeleteSpecialOperatingHour(sid uint64, req DeleteSpecialOperatingHourRequest, tok string) (*DeleteSpecialOperatingHourResponse, error) {
 	path := "/logistics/delete_special_operating_hour"
 	resp := new(DeleteSpecialOperatingHourResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) BatchUpdateTpfWarehouseTrackingStatus(sid uint64, req BatchUpdateTpfWarehouseTrackingStatusRequest, tok string) (*BatchUpdateTpfWarehouseTrackingStatusResponse, error) {
+func (s *LogisticsServiceOp[T]) BatchUpdateTpfWarehouseTrackingStatus(sid uint64, req BatchUpdateTpfWarehouseTrackingStatusRequest, tok string) (*BatchUpdateTpfWarehouseTrackingStatusResponse, error) {
 	path := "/logistics/batch_update_tpf_warehouse_tracking_status"
 	resp := new(BatchUpdateTpfWarehouseTrackingStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) BatchShipOrder(sid uint64, req BatchShipOrderRequest, tok string) (*BatchShipOrderResponse, error) {
+func (s *LogisticsServiceOp[T]) BatchShipOrder(sid uint64, req BatchShipOrderRequest, tok string) (*BatchShipOrderResponse, error) {
 	path := "/logistics/batch_ship_order"
 	resp := new(BatchShipOrderResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateTrackingStatus(sid uint64, req UpdateTrackingStatusRequest, tok string) (*UpdateTrackingStatusResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateTrackingStatus(sid uint64, req UpdateTrackingStatusRequest, tok string) (*UpdateTrackingStatusResponse, error) {
 	path := "/logistics/update_tracking_status"
 	resp := new(UpdateTrackingStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingShippingParameter(sid uint64, opt GetBookingShippingParameterRequest, tok string) (*GetBookingShippingParameterResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingShippingParameter(sid uint64, opt GetBookingShippingParameterRequest, tok string) (*GetBookingShippingParameterResponse, error) {
 	path := "/logistics/get_booking_shipping_parameter"
 	resp := new(GetBookingShippingParameterResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) ShipBooking(sid uint64, req ShipBookingRequest, tok string) (*ShipBookingResponse, error) {
+func (s *LogisticsServiceOp[T]) ShipBooking(sid uint64, req ShipBookingRequest, tok string) (*ShipBookingResponse, error) {
 	path := "/logistics/ship_booking"
 	resp := new(ShipBookingResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingTrackingNumber(sid uint64, opt GetBookingTrackingNumberRequest, tok string) (*GetBookingTrackingNumberResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingTrackingNumber(sid uint64, opt GetBookingTrackingNumberRequest, tok string) (*GetBookingTrackingNumberResponse, error) {
 	path := "/logistics/get_booking_tracking_number"
 	resp := new(GetBookingTrackingNumberResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingShippingDocumentParameter(sid uint64, req GetBookingShippingDocumentParameterRequest, tok string) (*GetBookingShippingDocumentParameterResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingShippingDocumentParameter(sid uint64, req GetBookingShippingDocumentParameterRequest, tok string) (*GetBookingShippingDocumentParameterResponse, error) {
 	path := "/logistics/get_booking_shipping_document_parameter"
 	resp := new(GetBookingShippingDocumentParameterResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) CreateBookingShippingDocument(sid uint64, req CreateBookingShippingDocumentRequest, tok string) (*CreateBookingShippingDocumentResponse, error) {
+func (s *LogisticsServiceOp[T]) CreateBookingShippingDocument(sid uint64, req CreateBookingShippingDocumentRequest, tok string) (*CreateBookingShippingDocumentResponse, error) {
 	path := "/logistics/create_booking_shipping_document"
 	resp := new(CreateBookingShippingDocumentResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingShippingDocumentResult(sid uint64, req GetBookingShippingDocumentResultRequest, tok string) (*GetBookingShippingDocumentResultResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingShippingDocumentResult(sid uint64, req GetBookingShippingDocumentResultRequest, tok string) (*GetBookingShippingDocumentResultResponse, error) {
 	path := "/logistics/get_booking_shipping_document_result"
 	resp := new(GetBookingShippingDocumentResultResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DownloadBookingShippingDocument(sid uint64, req DownloadBookingShippingDocumentRequest, tok string) (*DownloadBookingShippingDocumentResponse, error) {
+func (s *LogisticsServiceOp[T]) DownloadBookingShippingDocument(sid uint64, req DownloadBookingShippingDocumentRequest, tok string) (*DownloadBookingShippingDocumentResponse, error) {
 	path := "/logistics/download_booking_shipping_document"
 	resp := new(DownloadBookingShippingDocumentResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error) {
 	path := "/logistics/get_booking_shipping_document_data_info"
 	resp := new(GetBookingShippingDocumentDataInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetBookingTrackingInfo(sid uint64, opt GetBookingTrackingInfoRequest, tok string) (*GetBookingTrackingInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) GetBookingTrackingInfo(sid uint64, opt GetBookingTrackingInfoRequest, tok string) (*GetBookingTrackingInfoResponse, error) {
 	path := "/logistics/get_booking_tracking_info"
 	resp := new(GetBookingTrackingInfoResponse)
 	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DownloadToLabel(sid uint64, req DownloadToLabelRequest, tok string) (*DownloadToLabelResponse, error) {
+func (s *LogisticsServiceOp[T]) DownloadToLabel(sid uint64, req DownloadToLabelRequest, tok string) (*DownloadToLabelResponse, error) {
 	path := "/logistics/download_to_label"
 	resp := new(DownloadToLabelResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) CreateShippingDocumentJob(sid uint64, req CreateShippingDocumentJobRequest, tok string) (*CreateShippingDocumentJobResponse, error) {
+func (s *LogisticsServiceOp[T]) CreateShippingDocumentJob(sid uint64, req CreateShippingDocumentJobRequest, tok string) (*CreateShippingDocumentJobResponse, error) {
 	path := "/logistics/create_shipping_document_job"
 	resp := new(CreateShippingDocumentJobResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetShippingDocumentJobStatus(sid uint64, req GetShippingDocumentJobStatusRequest, tok string) (*GetShippingDocumentJobStatusResponse, error) {
+func (s *LogisticsServiceOp[T]) GetShippingDocumentJobStatus(sid uint64, req GetShippingDocumentJobStatusRequest, tok string) (*GetShippingDocumentJobStatusResponse, error) {
 	path := "/logistics/get_shipping_document_job_status"
 	resp := new(GetShippingDocumentJobStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) DownloadShippingDocumentJob(sid uint64, req DownloadShippingDocumentJobRequest, tok string) (*DownloadShippingDocumentJobResponse, error) {
+func (s *LogisticsServiceOp[T]) DownloadShippingDocumentJob(sid uint64, req DownloadShippingDocumentJobRequest, tok string) (*DownloadShippingDocumentJobResponse, error) {
 	path := "/logistics/download_shipping_document_job"
 	resp := new(DownloadShippingDocumentJobResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UpdateSelfCollectionOrderLogistics(sid uint64, req UpdateSelfCollectionOrderLogisticsRequest, tok string) (*UpdateSelfCollectionOrderLogisticsResponse, error) {
+func (s *LogisticsServiceOp[T]) UpdateSelfCollectionOrderLogistics(sid uint64, req UpdateSelfCollectionOrderLogisticsRequest, tok string) (*UpdateSelfCollectionOrderLogisticsResponse, error) {
 	path := "/logistics/update_self_collection_order_logistics"
 	resp := new(UpdateSelfCollectionOrderLogisticsResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) GetMartPackagingInfo(sid uint64, tok string) (*GetMartPackagingInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) GetMartPackagingInfo(sid uint64, tok string) (*GetMartPackagingInfoResponse, error) {
 	path := "/logistics/get_mart_packaging_info"
 	resp := new(GetMartPackagingInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, nil, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) SetMartPackagingInfo(sid uint64, req SetMartPackagingInfoRequest, tok string) (*SetMartPackagingInfoResponse, error) {
+func (s *LogisticsServiceOp[T]) SetMartPackagingInfo(sid uint64, req SetMartPackagingInfoRequest, tok string) (*SetMartPackagingInfoResponse, error) {
 	path := "/logistics/set_mart_packaging_info"
 	resp := new(SetMartPackagingInfoResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UploadServiceablePolygon(sid uint64, filename string, tok string) (*UploadServiceablePolygonResponse, error) {
+func (s *LogisticsServiceOp[T]) UploadServiceablePolygon(sid uint64, filename string, tok string) (*UploadServiceablePolygonResponse, error) {
 	path := "/logistics/upload_serviceable_polygon"
 	resp := new(UploadServiceablePolygonResponse)
 	err := s.client.WithShop(sid, tok).Upload(path, "image", filename, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) UploadServiceablePolygonFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadServiceablePolygonResponse, error) {
+func (s *LogisticsServiceOp[T]) UploadServiceablePolygonFromReader(sid uint64, filename string, reader io.Reader, tok string) (*UploadServiceablePolygonResponse, error) {
 	path := "/logistics/upload_serviceable_polygon"
 	resp := new(UploadServiceablePolygonResponse)
 	err := s.client.WithShop(sid, tok).UploadFromReader(path, "image", filename, reader, resp)
 	return resp, err
 }
 
-func (s *LogisticsServiceOp) CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error) {
+func (s *LogisticsServiceOp[T]) CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error) {
 	path := "/logistics/check_polygon_update_status"
 	resp := new(CheckPolygonUpdateStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
