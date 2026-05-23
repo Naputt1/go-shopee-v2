@@ -5,11 +5,11 @@ import (
 )
 
 type LogisticsService interface {
-	// GetShippingParameter Use this api to get the parameter "info_needed" from the response to check if the order has pickup or dropoff or no integrate options. This api will also return the addresses and pickup time id options for the pickup method. For dropoff, it can return branch id, sender real name etc, depending on the 3PL requirements. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+	// GetShippingParameter Use this api to check if the package support pickup, dropoff, or non-integrated method. For pickup, will return addresses and pickup time id options. For dropoff, will return branch id, sender real name etc, depending on 3PL requirements. [Please call this API when packages meet: 1) fulfillment status is LOGISTICS_READY; or 2) fulfillment status is LOGISTICS_PICKUP_RETRY; or 3) fulfillment status is LOGISTICS_REQUEST_CREATED and meet Instant Order Reschedule Pickup conditions]
 	// Path: /api/v2/logistics/get_shipping_parameter
 	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_parameter?module=95&type=1
 	GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error)
-	// GetMassShippingParameter Use this api to get parameter "info_needed" from response to check if order has pickup or dropoff or no integrate options. For pickup, will also return addresses and pickup time options. For dropoff, will also return branch id, sender real name etc, depending on 3PL requirements. Can only batch request for multiple packages under same product_location_id and logistics_channel_id. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+	// GetMassShippingParameter Use this api to check if package support pickup, dropoff, non-integrated. For pickup, return address and pickup time id options. For dropoff, return branch id, sender real name, etc. Can batch request for packages under same product_location_id and logistics_channel_id. [Please call it when packages meet: 1) fulfillment status is LOGISTICS_READY; or 2) fulfillment status is LOGISTICS_PICKUP_RETRY; or 3) fulfillment status is LOGISTICS_REQUEST_CREATED and meet Instant Order Reschedule conditions]
 	// Path: /api/v2/logistics/get_mass_shipping_parameter
 	// https://open.shopee.com/documents/v2/v2.logistics.get_mass_shipping_parameter?module=95&type=1
 	GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error)
@@ -21,8 +21,7 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/mass_ship_order
 	// https://open.shopee.com/documents/v2/v2.logistics.mass_ship_order?module=95&type=1
 	MassShipOrder(sid uint64, req MassShipOrderRequest, tok string) (*MassShipOrderResponse, error)
-	// UpdateShippingOrder For pickup method only, use this api to update pickup address and pickup time for orders in "RETRY_SHIP" status.
-	//
+	// UpdateShippingOrder For pickup method only, use this api to update pickup address and pickup time for packages meet: 1) package's fulfillment status is LOGISTICS_PICKUP_RETRY; or 2) package's fulfillment status is 'LOGISTICS_REQUEST_CREATED' and meets the Instant Order Reschedule Pickup conditions.
 	// Path: /api/v2/logistics/update_shipping_order
 	// https://open.shopee.com/documents/v2/v2.logistics.update_shipping_order?module=95&type=1
 	UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error)
@@ -76,7 +75,7 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/delete_address
 	// https://open.shopee.com/documents/v2/v2.logistics.delete_address?module=95&type=1
 	DeleteAddress(sid uint64, req DeleteAddressRequest, tok string) (*DeleteAddressResponse, error)
-	// GetChannelList Use this api to get all supported logistic channels.
+	// GetChannelList {"content":"<p>Use this api to get all supported logistic channels.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get all supported logistic channels."}]}]}
 	// Path: /api/v2/logistics/get_channel_list
 	// https://open.shopee.com/documents/v2/v2.logistics.get_channel_list?module=95&type=1
 	GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error)
@@ -191,13 +190,21 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/check_polygon_update_status
 	// https://open.shopee.com/documents/v2/v2.logistics.check_polygon_update_status?module=95&type=1
 	CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error)
+	// GetPauseStatus This API returns the pause status of logistics channels under the shop. Pausing allows the shop to temporarily prevent buyers from placing orders through specific logistics channels. The response includes whether a pause is currently active, the pause end time (if active), and the remaining daily pause quota in seconds (if inactive). Sellers need to refer to the support_pause field in v2.logistics.get_channel_list response to determine which channels are actually paused.
+	// Path: /api/v2/logistics/get_pause_status
+	// https://open.shopee.com/documents/v2/v2.logistics.get_pause_status?module=95&type=1
+	GetPauseStatus(sid uint64, tok string) (*GetPauseStatusResponse, error)
+	// SetPauseStatus Use this API to set the pause status of logistics channels under the shop. Pausing allows the shop to temporarily prevent buyers from placing orders through specific logistics channels. The response includes whether a pause is currently active, the pause end time (if active), and the remaining daily pause quota in seconds (if inactive). Note: The pause may take a few moments to take effect. Please check for any additional orders that may still be placed during this window.
+	// Path: /api/v2/logistics/set_pause_status
+	// https://open.shopee.com/documents/v2/v2.logistics.set_pause_status?module=95&type=1
+	SetPauseStatus(sid uint64, req SetPauseStatusRequest, tok string) (*SetPauseStatusResponse, error)
 }
 
 type LogisticsServiceOp[T any] struct {
 	client *Client[T]
 }
 
-// GetShippingParameter Use this api to get the parameter "info_needed" from the response to check if the order has pickup or dropoff or no integrate options. This api will also return the addresses and pickup time id options for the pickup method. For dropoff, it can return branch id, sender real name etc, depending on the 3PL requirements. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+// GetShippingParameter Use this api to check if the package support pickup, dropoff, or non-integrated method. For pickup, will return addresses and pickup time id options. For dropoff, will return branch id, sender real name etc, depending on 3PL requirements. [Please call this API when packages meet: 1) fulfillment status is LOGISTICS_READY; or 2) fulfillment status is LOGISTICS_PICKUP_RETRY; or 3) fulfillment status is LOGISTICS_REQUEST_CREATED and meet Instant Order Reschedule Pickup conditions]
 // Path: /api/v2/logistics/get_shipping_parameter
 // https://open.shopee.com/documents/v2/v2.logistics.get_shipping_parameter?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetShippingParameter(sid uint64, opt GetShippingParameterRequest, tok string) (*GetShippingParameterResponse, error) {
@@ -207,7 +214,7 @@ func (s *LogisticsServiceOp[T]) GetShippingParameter(sid uint64, opt GetShipping
 	return resp, err
 }
 
-// GetMassShippingParameter Use this api to get parameter "info_needed" from response to check if order has pickup or dropoff or no integrate options. For pickup, will also return addresses and pickup time options. For dropoff, will also return branch id, sender real name etc, depending on 3PL requirements. Can only batch request for multiple packages under same product_location_id and logistics_channel_id. [Please call this API when order status is READY_TO_SHIP or package logistics/fulfillment status is LOGISTICS_READY].
+// GetMassShippingParameter Use this api to check if package support pickup, dropoff, non-integrated. For pickup, return address and pickup time id options. For dropoff, return branch id, sender real name, etc. Can batch request for packages under same product_location_id and logistics_channel_id. [Please call it when packages meet: 1) fulfillment status is LOGISTICS_READY; or 2) fulfillment status is LOGISTICS_PICKUP_RETRY; or 3) fulfillment status is LOGISTICS_REQUEST_CREATED and meet Instant Order Reschedule conditions]
 // Path: /api/v2/logistics/get_mass_shipping_parameter
 // https://open.shopee.com/documents/v2/v2.logistics.get_mass_shipping_parameter?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetMassShippingParameter(sid uint64, req GetMassShippingParameterRequest, tok string) (*GetMassShippingParameterResponse, error) {
@@ -237,8 +244,7 @@ func (s *LogisticsServiceOp[T]) MassShipOrder(sid uint64, req MassShipOrderReque
 	return resp, err
 }
 
-// UpdateShippingOrder For pickup method only, use this api to update pickup address and pickup time for orders in "RETRY_SHIP" status.
-//
+// UpdateShippingOrder For pickup method only, use this api to update pickup address and pickup time for packages meet: 1) package's fulfillment status is LOGISTICS_PICKUP_RETRY; or 2) package's fulfillment status is 'LOGISTICS_REQUEST_CREATED' and meets the Instant Order Reschedule Pickup conditions.
 // Path: /api/v2/logistics/update_shipping_order
 // https://open.shopee.com/documents/v2/v2.logistics.update_shipping_order?module=95&type=1
 func (s *LogisticsServiceOp[T]) UpdateShippingOrder(sid uint64, req UpdateShippingOrderRequest, tok string) (*UpdateShippingOrderResponse, error) {
@@ -369,7 +375,7 @@ func (s *LogisticsServiceOp[T]) DeleteAddress(sid uint64, req DeleteAddressReque
 	return resp, err
 }
 
-// GetChannelList Use this api to get all supported logistic channels.
+// GetChannelList {"content":"<p>Use this api to get all supported logistic channels.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get all supported logistic channels."}]}]}
 // Path: /api/v2/logistics/get_channel_list
 // https://open.shopee.com/documents/v2/v2.logistics.get_channel_list?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetChannelList(sid uint64, tok string) (*GetChannelListResponse, error) {
@@ -650,6 +656,26 @@ func (s *LogisticsServiceOp[T]) UploadServiceablePolygonFromReader(sid uint64, f
 func (s *LogisticsServiceOp[T]) CheckPolygonUpdateStatus(sid uint64, req CheckPolygonUpdateStatusRequest, tok string) (*CheckPolygonUpdateStatusResponse, error) {
 	path := "/logistics/check_polygon_update_status"
 	resp := new(CheckPolygonUpdateStatusResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// GetPauseStatus This API returns the pause status of logistics channels under the shop. Pausing allows the shop to temporarily prevent buyers from placing orders through specific logistics channels. The response includes whether a pause is currently active, the pause end time (if active), and the remaining daily pause quota in seconds (if inactive). Sellers need to refer to the support_pause field in v2.logistics.get_channel_list response to determine which channels are actually paused.
+// Path: /api/v2/logistics/get_pause_status
+// https://open.shopee.com/documents/v2/v2.logistics.get_pause_status?module=95&type=1
+func (s *LogisticsServiceOp[T]) GetPauseStatus(sid uint64, tok string) (*GetPauseStatusResponse, error) {
+	path := "/logistics/get_pause_status"
+	resp := new(GetPauseStatusResponse)
+	err := s.client.WithShop(sid, tok).Get(path, resp, nil)
+	return resp, err
+}
+
+// SetPauseStatus Use this API to set the pause status of logistics channels under the shop. Pausing allows the shop to temporarily prevent buyers from placing orders through specific logistics channels. The response includes whether a pause is currently active, the pause end time (if active), and the remaining daily pause quota in seconds (if inactive). Note: The pause may take a few moments to take effect. Please check for any additional orders that may still be placed during this window.
+// Path: /api/v2/logistics/set_pause_status
+// https://open.shopee.com/documents/v2/v2.logistics.set_pause_status?module=95&type=1
+func (s *LogisticsServiceOp[T]) SetPauseStatus(sid uint64, req SetPauseStatusRequest, tok string) (*SetPauseStatusResponse, error) {
+	path := "/logistics/set_pause_status"
+	resp := new(SetPauseStatusResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

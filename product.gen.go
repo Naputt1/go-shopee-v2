@@ -230,6 +230,10 @@ type ProductService interface {
 	// Path: /api/v2/product/generate_kit_image
 	// https://open.shopee.com/documents/v2/v2.product.generate_kit_image?module=89&type=1
 	GenerateKitImage(sid uint64, req GenerateKitImageRequest, tok string) (*GenerateKitImageResponse, error)
+	// GetMartItemByOutletItemId {"content":"<p>Get the mapping information between a Mart item and its corresponding outlet item by outlet item ID.</p><p><br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get the mapping information between a Mart item and its corresponding outlet item by outlet item ID."}]},{"name":"paragraph","children":[{"name":"softBreak"},{"data":" "}]}]}
+	// Path: /api/v2/product/get_mart_item_by_outlet_item_id
+	// https://open.shopee.com/documents/v2/v2.product.get_mart_item_by_outlet_item_id?module=89&type=1
+	GetMartItemByOutletItemId(sid uint64, req GetMartItemByOutletItemIdRequest, tok string) (*GetMartItemByOutletItemIdResponse, error)
 }
 
 type ProductServiceOp[T any] struct {
@@ -803,6 +807,16 @@ func (s *ProductServiceOp[T]) SearchUnpackagedModelList(sid uint64, req SearchUn
 func (s *ProductServiceOp[T]) GenerateKitImage(sid uint64, req GenerateKitImageRequest, tok string) (*GenerateKitImageResponse, error) {
 	path := "/product/generate_kit_image"
 	resp := new(GenerateKitImageResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// GetMartItemByOutletItemId {"content":"<p>Get the mapping information between a Mart item and its corresponding outlet item by outlet item ID.</p><p><br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get the mapping information between a Mart item and its corresponding outlet item by outlet item ID."}]},{"name":"paragraph","children":[{"name":"softBreak"},{"data":" "}]}]}
+// Path: /api/v2/product/get_mart_item_by_outlet_item_id
+// https://open.shopee.com/documents/v2/v2.product.get_mart_item_by_outlet_item_id?module=89&type=1
+func (s *ProductServiceOp[T]) GetMartItemByOutletItemId(sid uint64, req GetMartItemByOutletItemIdRequest, tok string) (*GetMartItemByOutletItemIdResponse, error) {
+	path := "/product/get_mart_item_by_outlet_item_id"
+	resp := new(GetMartItemByOutletItemIdResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

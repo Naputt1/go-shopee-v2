@@ -32,6 +32,7 @@ type AddItemRequest struct {
 	SizeChartInfo        *SizeChartInfo     `json:"size_chart_info,omitempty"`        // [Optional]
 	CertificationInfo    *CertificationInfo `json:"certification_info,omitempty"`     // [Optional] <p>For PH product certification input<br />Required for some category and attribute option</p>
 	PurchaseLimitInfo    *PurchaseLimitInfo `json:"purchase_limit_info,omitempty"`    // [Optional] <p>purchase limit info</p>
+	MedicineId           *int64             `json:"medicine_id,omitempty"`            // [Optional] <p>[Only for ID local sellers] as a unique identifier for each standardized medicine, the medicine id can only be obtained offline</p>
 }
 
 type AddItemResponse struct {
@@ -265,7 +266,7 @@ type CertificationInfoCertification struct {
 
 type CertificationInfoCertificationCertificationProofs struct {
 	ImageId  string  `json:"image_id"`  // [Required] <p>The unique image ID of the certification proof, returned by the image upload API.</p>
-	Ratio    float64 `json:"ratio"`     // [Required] <p>image weight/ image height.<br /></p>
+	Ratio    float64 `json:"ratio"`     // [Required] <p>image weight/ image height.</p>
 	FileName string  `json:"file_name"` // [Required] <p>The name of the uploaded certification proof file.</p>
 	ImageUrl string  `json:"image_url"` // [Required] <p>The image url of the proof</p>
 }
@@ -578,9 +579,8 @@ type GetItemBaseInfoRequest struct {
 }
 
 type GetItemBaseInfoResponse struct {
-	BaseResponse      `json:",inline"`            // Common response fields
-	Response          GetItemBaseInfoResponseData `json:"response"`                     // Actual response data
-	CertificationInfo *ResponseCertificationInfo  `json:"certification_info,omitempty"` // <p>For PH product certification input<br />Required for some category and attribute option</p>
+	BaseResponse `json:",inline"`            // Common response fields
+	Response     GetItemBaseInfoResponseData `json:"response"` // Actual response data
 }
 
 type GetItemBaseInfoResponseData struct {
@@ -593,41 +593,42 @@ type GetItemBaseInfoResponseData struct {
 }
 
 type GetItemBaseInfoResponseDataItem struct {
-	ItemId                int64              `json:"item_id"`                  // [Required] Shopee's unique identifier for an item.
-	CategoryId            int64              `json:"category_id"`              // [Required] Shopee's unique identifier for a category.
-	ItemName              string             `json:"item_name"`                // [Required] Name of the item in local language.
-	Description           string             `json:"description"`              // [Required] if description_type is normal , Description information will be returned through this field，else description will be empty
-	ItemSku               string             `json:"item_sku"`                 // [Required] An item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.
-	CreateTime            int64              `json:"create_time"`              // [Required] Timestamp that indicates the date and time that the item was created.
-	UpdateTime            int64              `json:"update_time"`              // [Required] Timestamp that indicates the last time that there was a change in value of the item, such as price/stock change.
-	AttributeList         []ItemAttribute    `json:"attribute_list"`           // [Required]
-	PriceInfo             []PriceInfo        `json:"price_info"`               // [Required] If the item has models, price_info will not be returned. Please get the price of each model through the get_model_list api
-	Image                 *ItemImage         `json:"image"`                    // [Required]
-	Weight                string             `json:"weight"`                   // [Required] <p>The weight of this item, the unit is KG.</p><p>If set the weight of models under this item, will return the max weight of all models during the switching period to ensure system compatibility, please switch to call v2.product.get_model_list to get the weight of models.</p>
-	Dimension             *Dimension         `json:"dimension"`                // [Required] <p>The dimension of this item.</p><p>If set the dimension of models under this item, will return the dimension with largest volume calculated by height*length*width during the switching period to ensure system compatibility, please switch to call v2.product.get_model_list to get the dimension of models.</p>
-	LogisticInfo          []ItemLogisticInfo `json:"logistic_info"`            // [Required] The logistics list.
-	PreOrder              *PreOrder          `json:"pre_order"`                // [Required]
-	Wholesales            []Wholesales       `json:"wholesales"`               // [Required] The wholesales tier list.
-	Condition             string             `json:"condition"`                // [Required] Is it second-hand.
-	SizeChart             string             `json:"size_chart"`               // [Required] Url of size chart image.
-	ItemStatus            ItemStatus         `json:"item_status"`              // [Required] <p>Enumerated type that defines the current status of the item. Applicable values: NORMAL, BANNED, UNLIST,&nbsp;<b><font color="#c24f4a" style>SELLER_DELETE, SHOPEE_DELETE, REVIEWING</font></b>.<br /></p>
-	Deboost               BoolString         `json:"deboost"`                  // [Required] <p>If deboost is true, means that the item's search ranking is lowered.<br /></p>
-	HasModel              bool               `json:"has_model"`                // [Required] Does it contain model.
-	PromotionId           int64              `json:"promotion_id"`             // [Required] <p>The unique identifier of the promotion applied to the item.</p>
-	HasPromotion          bool               `json:"has_promotion"`            // [Required] <p>Indicates whether the item is currently under any ongoing promotion.</p>
-	VideoInfo             []VideoInfo        `json:"video_info"`               // [Required] Info of video list.
-	Brand                 *Brand             `json:"brand"`                    // [Required]
-	ItemDangerous         int64              `json:"item_dangerous"`           // [Required] This field is only applicable for local sellers in Indonesia and Malaysia. Use this field to identify whether a product is a dangerous product. 0 for non-dangerous product and 1 for dangerous product. For more information, please visit the market's respective Seller Education Hub.
-	GtinCode              string             `json:"gtin_code"`                // [Required] <p>gtin code for br region, will return this code only item has default model</p><p><br /></p><p>Note: gtin_code = "00" means that this item is&nbsp;“Item without GTIN”<br /></p>
-	SizeChartId           int64              `json:"size_chart_id"`            // [Required] <p>id of new size chart.<br /></p>
-	PromotionImage        *ItemImage         `json:"promotion_image"`          // [Required]
-	CompatibilityInfo     *CompatibilityInfo `json:"compatibility_info"`       // [Required]
-	ScheduledPublishTime  int64              `json:"scheduled_publish_time"`   // [Required] <p>Scheduled publish time of this item.</p>
-	AuthorisedBrandId     int64              `json:"authorised_brand_id"`      // [Required] <p>ID of authorised reseller brand.<br /></p>
-	SspId                 int64              `json:"ssp_id"`                   // [Required] <p>Shopee's unique identifier for Shopee&nbsp;Standard Product.<br /></p>
-	IsFulfillmentByShopee bool               `json:"is_fulfillment_by_shopee"` // [Required] <p>return true if the item only has a default model and it is FBS model</p>
-	Tag                   *Tag               `json:"tag"`                      // [Required]
-	PurchaseLimitInfo     *PurchaseLimitInfo `json:"purchase_limit_info"`      // [Required] <p>purchase limit info</p>
+	ItemId                int64                  `json:"item_id"`                  // [Required] Shopee's unique identifier for an item.
+	CategoryId            int64                  `json:"category_id"`              // [Required] Shopee's unique identifier for a category.
+	ItemName              string                 `json:"item_name"`                // [Required] Name of the item in local language.
+	Description           string                 `json:"description"`              // [Required] if description_type is normal , Description information will be returned through this field，else description will be empty
+	ItemSku               string                 `json:"item_sku"`                 // [Required] An item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.
+	CreateTime            int64                  `json:"create_time"`              // [Required] Timestamp that indicates the date and time that the item was created.
+	UpdateTime            int64                  `json:"update_time"`              // [Required] Timestamp that indicates the last time that there was a change in value of the item, such as price/stock change.
+	AttributeList         []ItemAttribute        `json:"attribute_list"`           // [Required]
+	PriceInfo             []PriceInfo            `json:"price_info"`               // [Required] If the item has models, price_info will not be returned. Please get the price of each model through the get_model_list api
+	Image                 *ItemImage             `json:"image"`                    // [Required]
+	Weight                string                 `json:"weight"`                   // [Required] <p>The weight of this item, the unit is KG.</p><p>If set the weight of models under this item, will return the max weight of all models during the switching period to ensure system compatibility, please switch to call v2.product.get_model_list to get the weight of models.</p>
+	Dimension             *Dimension             `json:"dimension"`                // [Required] <p>The dimension of this item.</p><p>If set the dimension of models under this item, will return the dimension with largest volume calculated by height*length*width during the switching period to ensure system compatibility, please switch to call v2.product.get_model_list to get the dimension of models.</p>
+	LogisticInfo          []ItemLogisticInfo     `json:"logistic_info"`            // [Required] The logistics list.
+	PreOrder              *PreOrder              `json:"pre_order"`                // [Required]
+	Wholesales            []Wholesales           `json:"wholesales"`               // [Required] The wholesales tier list.
+	Condition             string                 `json:"condition"`                // [Required] Is it second-hand.
+	SizeChart             string                 `json:"size_chart"`               // [Required] Url of size chart image.
+	ItemStatus            ItemStatus             `json:"item_status"`              // [Required] <p>Enumerated type that defines the current status of the item. Applicable values: NORMAL, BANNED, UNLIST,&nbsp;<b><font color="#c24f4a" style>SELLER_DELETE, SHOPEE_DELETE, REVIEWING</font></b>.<br /></p>
+	Deboost               BoolString             `json:"deboost"`                  // [Required] <p>If deboost is true, means that the item's search ranking is lowered.<br /></p>
+	HasModel              bool                   `json:"has_model"`                // [Required] Does it contain model.
+	HasPromotion          bool                   `json:"has_promotion"`            // [Required] <p>Indicates whether the item is currently under any ongoing promotion.</p>
+	VideoInfo             []VideoInfo            `json:"video_info"`               // [Required] Info of video list.
+	Brand                 *Brand                 `json:"brand"`                    // [Required]
+	ItemDangerous         int64                  `json:"item_dangerous"`           // [Required] This field is only applicable for local sellers in Indonesia and Malaysia. Use this field to identify whether a product is a dangerous product. 0 for non-dangerous product and 1 for dangerous product. For more information, please visit the market's respective Seller Education Hub.
+	GtinCode              string                 `json:"gtin_code"`                // [Required] <p>gtin code for br region, will return this code only item has default model</p><p><br /></p><p>Note: gtin_code = "00" means that this item is&nbsp;“Item without GTIN”<br /></p>
+	SizeChartId           int64                  `json:"size_chart_id"`            // [Required] <p>id of new size chart.<br /></p>
+	PromotionImage        *ItemImage             `json:"promotion_image"`          // [Required]
+	CompatibilityInfo     *CompatibilityInfo     `json:"compatibility_info"`       // [Required]
+	ScheduledPublishTime  int64                  `json:"scheduled_publish_time"`   // [Required] <p>Scheduled publish time of this item.</p>
+	AuthorisedBrandId     int64                  `json:"authorised_brand_id"`      // [Required] <p>ID of authorised reseller brand.<br /></p>
+	SspId                 int64                  `json:"ssp_id"`                   // [Required] <p>Shopee's unique identifier for Shopee&nbsp;Standard Product.<br /></p>
+	IsFulfillmentByShopee bool                   `json:"is_fulfillment_by_shopee"` // [Required] <p>return true if the item only has a default model and it is FBS model</p>
+	Tag                   *Tag                   `json:"tag"`                      // [Required]
+	PurchaseLimitInfo     *PurchaseLimitInfo     `json:"purchase_limit_info"`      // [Required] <p>purchase limit info</p>
+	MedicineId            int64                  `json:"medicine_id"`              // [Required] <p>[Only for ID local sellers] as a unique identifier for each standardized medicine.</p>
+	CertificationInfo     *ItemCertificationInfo `json:"certification_info"`       // [Required] <p>For PH product certification input<br />Required for some category and attribute option</p>
 }
 
 type GetItemContentDiagnosisResultRequest struct {
@@ -816,6 +817,19 @@ type GetMainItemListResponse struct {
 
 type GetMainItemListResponseData struct {
 	List []ResponseDataList `json:"list"` // [Required]
+}
+
+type GetMartItemByOutletItemIdRequest struct {
+	OutletItemId int64 `json:"outlet_item_id"` // [Required] <p>The item ID of the item in the outlet shop.</p>
+}
+
+type GetMartItemByOutletItemIdResponse struct {
+	BaseResponse `json:",inline"`                      // Common response fields
+	Response     GetMartItemByOutletItemIdResponseData `json:"response"` // Actual response data
+}
+
+type GetMartItemByOutletItemIdResponseData struct {
+	ItemMappingList []ItemMapping `json:"item_mapping_list"` // [Required] <p>A list of item mapping records between the Mart item and its corresponding outlet items.</p>
 }
 
 type GetMartItemMappingByIdRequest struct {
@@ -1045,6 +1059,17 @@ type ItemAttribute struct {
 	OriginalAttributeName string           `json:"original_attribute_name"` // [Required] The name of each attribute.
 	IsMandatory           bool             `json:"is_mandatory"`            // [Required] This is to indicate whether this attribute is mandantory.
 	AttributeValueList    []AttributeValue `json:"attribute_value_list"`    // [Required]
+}
+
+type ItemCertificationInfo struct {
+	CertificationList []ItemCertificationInfoCertification `json:"certification_list"` // [Required] <p>Array of certification records for the product, each containing type, certificate number, permit ID, and proof documents.</p>
+}
+
+type ItemCertificationInfoCertification struct {
+	PermitId            int64                                               `json:"permit_id"`            // [Required] <p>Permit ID, get from&nbsp;v2.product.get_product_certification_rule</p>
+	CertificationNo     string                                              `json:"certification_no"`     // [Required] <p>Certification No.</p>
+	ExpiryDate          int64                                               `json:"expiry_date"`          // [Required] <p>expiry timestamp</p>
+	CertificationProofs []CertificationInfoCertificationCertificationProofs `json:"certification_proofs"` // [Required] <p>An array of proof documents for the certification; each element represents one proof file.</p>
 }
 
 type ItemComment struct {
@@ -1425,17 +1450,6 @@ type RequestTaxInfo struct {
 	AdditionalInfo    *string        `json:"additional_info,omitempty"`     // [Optional] <p>Only for BR shop.</p><p>Include relevant information to display on Invoice.</p>
 	GroupItemInfo     *GroupItemInfo `json:"group_item_info,omitempty"`     // [Optional] <p>Only for BR shop.</p><p>Required if the item is a group item.</p>
 	ExportCfop        *string        `json:"export_cfop,omitempty"`         // [Optional] <p><br />7101 - for sales of self-produced goods</p><p>7102 - resale of third-party goods</p>
-}
-
-type ResponseCertificationInfo struct {
-	CertificationList []ResponseCertificationInfoCertification `json:"certification_list"` // [Required] <p>Array of certification records for the product, each containing type, certificate number, permit ID, and proof documents.</p><p><br /></p><p><br /></p>
-}
-
-type ResponseCertificationInfoCertification struct {
-	PermitId            int64                                               `json:"permit_id"`            // [Required] <p>Permit ID, get from&nbsp;v2.product.get_product_certification_rule<br /></p>
-	CertificationNo     string                                              `json:"certification_no"`     // [Required] <p>Certification No.</p>
-	ExpiryDate          int64                                               `json:"expiry_date"`          // [Required] <p>expiry timestamp</p>
-	CertificationProofs []CertificationInfoCertificationCertificationProofs `json:"certification_proofs"` // [Required] <p>An array of proof documents for the certification; each element represents one proof file.</p>
 }
 
 type ResponseDataComplaintPolicy struct {
@@ -1828,6 +1842,7 @@ type UpdateItemRequest struct {
 	SizeChartInfo        *SizeChartInfo            `json:"size_chart_info,omitempty"`        // [Optional] <p><br /></p>
 	CertificationInfo    *RequestCertificationInfo `json:"certification_info,omitempty"`     // [Optional] <p>For PH product certification input<br />Required for some category and attribute option</p>
 	PurchaseLimitInfo    *PurchaseLimitInfo        `json:"purchase_limit_info,omitempty"`    // [Optional] <p>purchase limit info</p>
+	MedicineId           *int64                    `json:"medicine_id,omitempty"`            // [Optional] <p>[Only for ID local sellers] as a unique identifier for each standardized medicine, the medicine id can only be obtained offline</p>
 }
 
 type UpdateItemResponse struct {

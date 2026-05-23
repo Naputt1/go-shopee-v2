@@ -425,3 +425,23 @@ func Test_Order_DownloadFbsInvoices(t *testing.T) {
 
 	t.Logf("Order.DownloadFbsInvoices response: %#v", res)
 }
+
+func Test_Order_GetEstimiateCancelValue(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.order.get_estimiate_cancel_value_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetEstimiateCancelValue due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/order/get_estimate_cancel_value", app.APIURL), responder)
+	var req GetEstimiateCancelValueRequest
+	res, err := client.Order.GetEstimiateCancelValue(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Order.GetEstimiateCancelValue returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Order.GetEstimiateCancelValue response: %#v", res)
+}

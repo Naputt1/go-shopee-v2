@@ -1,7 +1,7 @@
 package goshopee
 
 type ShopService interface {
-	// GetShopInfo Use this call to get information of shop
+	// GetShopInfo {"content":"<p>Use this call to get information of shop</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this call to get information of shop"}]}]}
 	// Path: /api/v2/shop/get_shop_info
 	// https://open.shopee.com/documents/v2/v2.shop.get_shop_info?module=92&type=1
 	GetShopInfo(sid uint64, tok string) (*GetShopInfoResponse, error)
@@ -29,12 +29,11 @@ type ShopService interface {
 	// Path: /api/v2/shop/get_br_shop_onboarding_info
 	// https://open.shopee.com/documents/v2/v2.shop.get_br_shop_onboarding_info?module=92&type=1
 	GetBrShopOnboardingInfo(sid uint64, tok string) (*GetBrShopOnboardingInfoResponse, error)
-	// GetShopHolidayMode Use this API to check whether a shop has enabled holiday mode.
-	//
+	// GetShopHolidayMode Use this API to check whether a shop has enabled holiday mode and its ongoing and upcoming holiday mode period.
 	// Path: /api/v2/shop/get_shop_holiday_mode
 	// https://open.shopee.com/documents/v2/v2.shop.get_shop_holiday_mode?module=92&type=1
 	GetShopHolidayMode(sid uint64, tok string) (*GetShopHolidayModeResponse, error)
-	// SetShopHolidayMode Use this API to enable or disable holiday mode for a shop.
+	// SetShopHolidayMode Use this API to set holiday periods in advance for automatic on/off of holiday mode and there are two holiday modes allowing sellers to choose whether to accept new orders during holiday.
 	// Path: /api/v2/shop/set_shop_holiday_mode
 	// https://open.shopee.com/documents/v2/v2.shop.set_shop_holiday_mode?module=92&type=1
 	SetShopHolidayMode(sid uint64, req SetShopHolidayModeRequest, tok string) (*SetShopHolidayModeResponse, error)
@@ -44,7 +43,7 @@ type ShopServiceOp[T any] struct {
 	client *Client[T]
 }
 
-// GetShopInfo Use this call to get information of shop
+// GetShopInfo {"content":"<p>Use this call to get information of shop</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this call to get information of shop"}]}]}
 // Path: /api/v2/shop/get_shop_info
 // https://open.shopee.com/documents/v2/v2.shop.get_shop_info?module=92&type=1
 func (s *ShopServiceOp[T]) GetShopInfo(sid uint64, tok string) (*GetShopInfoResponse, error) {
@@ -114,8 +113,7 @@ func (s *ShopServiceOp[T]) GetBrShopOnboardingInfo(sid uint64, tok string) (*Get
 	return resp, err
 }
 
-// GetShopHolidayMode Use this API to check whether a shop has enabled holiday mode.
-//
+// GetShopHolidayMode Use this API to check whether a shop has enabled holiday mode and its ongoing and upcoming holiday mode period.
 // Path: /api/v2/shop/get_shop_holiday_mode
 // https://open.shopee.com/documents/v2/v2.shop.get_shop_holiday_mode?module=92&type=1
 func (s *ShopServiceOp[T]) GetShopHolidayMode(sid uint64, tok string) (*GetShopHolidayModeResponse, error) {
@@ -125,7 +123,7 @@ func (s *ShopServiceOp[T]) GetShopHolidayMode(sid uint64, tok string) (*GetShopH
 	return resp, err
 }
 
-// SetShopHolidayMode Use this API to enable or disable holiday mode for a shop.
+// SetShopHolidayMode Use this API to set holiday periods in advance for automatic on/off of holiday mode and there are two holiday modes allowing sellers to choose whether to accept new orders during holiday.
 // Path: /api/v2/shop/set_shop_holiday_mode
 // https://open.shopee.com/documents/v2/v2.shop.set_shop_holiday_mode?module=92&type=1
 func (s *ShopServiceOp[T]) SetShopHolidayMode(sid uint64, req SetShopHolidayModeRequest, tok string) (*SetShopHolidayModeResponse, error) {

@@ -1,8 +1,8 @@
 {
-	"error": "",
-	"message": "",
+	"error": "error_shop_not_exists",
+	"message": "Invalid partner_id or shopid.",
 	"request_id": "6745b892295d750abf83a29430510400",
 	"response": {
-		"debug_msg": ""
+		"debug_msg": "\"\""
 	}
 }

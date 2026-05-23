@@ -1,7 +1,7 @@
 package goshopee
 
 type PaymentService interface {
-	// GetEscrowDetail Use this API to fetch the accounting detail of order.
+	// GetEscrowDetail {"content":"<p>Use this API to fetch the accounting detail of order.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to fetch the accounting detail of order."}]}]}
 	// Path: /api/v2/payment/get_escrow_detail
 	// https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail?module=97&type=1
 	GetEscrowDetail(sid uint64, req GetEscrowDetailRequest, tok string) (*GetEscrowDetailResponse, error)
@@ -83,7 +83,7 @@ type PaymentServiceOp[T any] struct {
 	client *Client[T]
 }
 
-// GetEscrowDetail Use this API to fetch the accounting detail of order.
+// GetEscrowDetail {"content":"<p>Use this API to fetch the accounting detail of order.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to fetch the accounting detail of order."}]}]}
 // Path: /api/v2/payment/get_escrow_detail
 // https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail?module=97&type=1
 func (s *PaymentServiceOp[T]) GetEscrowDetail(sid uint64, req GetEscrowDetailRequest, tok string) (*GetEscrowDetailResponse, error) {

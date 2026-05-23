@@ -11,7 +11,12 @@ type AddressTimeSlot struct {
 
 type AddressTypeConfig struct {
 	AddressId   *int64   `json:"address_id,omitempty"`   // [Optional] The identifier id of the address.
-	AddressType []string `json:"address_type,omitempty"` // [Optional] The type of addres. Available values: DEFAULT_ADDRESS, PICKUP_ADDRESS, RETURN_ADDRESS
+	AddressType []string `json:"address_type,omitempty"` // [Optional] <p>The type of address. Available values: DEFAULT_ADDRESS, PICKUP_ADDRESS, RETURN_ADDRESS, INBOUND_PICKUP_ADDRESS.</p>
+}
+
+type AutoCallDriverSetting struct {
+	AutoCallDriverEnabled bool  `json:"auto_call_driver_enabled"` // [Required] <p>Indicate whether Auto Call Driver is currently enabled for this channel.</p>
+	PreparationTime       int64 `json:"preparation_time"`         // [Required] <p>The current valid preparation time for this channel, in minutes.</p>
 }
 
 type BatchShipOrderRequest struct {
@@ -72,6 +77,11 @@ type BuyerPreferDeliveryTime struct {
 	StartTime   string `json:"start_time"`  // [Required] <p>The start time of a day buyer prefer to receive the packages<br /></p>
 	EndTime     string `json:"end_time"`    // [Required] <p>The end time of a day buyer prefer to receive the packages.<br /></p>
 	Description string `json:"description"` // [Required] <p>The detailed instructions of the package delivering.<br /></p>
+}
+
+type ChannelRelationRules struct {
+	RelatedEnabledChannels        []int64 `json:"related_enabled_channels"`         // [Required] <p>Channels that will be auto-enabled in the same request if this channel is enabled.</p>
+	RelatedDependentBlockChannels []int64 `json:"related_dependent_block_channels"` // [Required] <p>Channels that must be disabled before or while disabling this parent channel.</p>
 }
 
 type CheckPolygonUpdateStatusRequest struct {
@@ -303,9 +313,9 @@ type GetBookingTrackingInfoResponse struct {
 }
 
 type GetBookingTrackingInfoResponseData struct {
-	BookingSn       string          `json:"booking_sn"`       // [Required] <p>Shopee's unique identifier for a booking.<br /></p>
-	LogisticsStatus LogisticsStatus `json:"logistics_status"` // [Required] <p>The Shopee logistics status for the booking. Applicable values.<br /></p><p>LOGISTICS_REQUEST_CREATED:booking arranged shipment<br /></p><p>LOGISTICS_PICKUP_DONE:booking handed over to 3PL<br /></p><p>LOGISTICS_PICKUP_FAILED:booking&nbsp;cancelled by 3PL due to failed pickup or picked up but not able to proceed with delivery<br /></p><p>LOGISTICS_DELIVERY_DONE:successfully delivered<br /></p><p>LOGISTICS_REQUEST_CANCELED:cancelled when booking at LOGISTICS_REQUEST_CREATED<br /></p><p>LOGISTICS_READY:booking&nbsp;ready for fulfilment<br /></p><p>LOGISTICS_INVALID:cancelled when booking at LOGISTICS_READY<br /></p><p>LOGISTICS_LOST:booking cancelled due to 3PL lost the parcel<br /></p>
-	TrackingInfo    []TrackingInfo  `json:"tracking_info"`    // [Required] <p>The tracking info of the booking.<br /></p>
+	BookingSn       string                     `json:"booking_sn"`       // [Required] <p>Shopee's unique identifier for a booking.<br /></p>
+	LogisticsStatus LogisticsStatus            `json:"logistics_status"` // [Required] <p>The Shopee logistics status for the booking. Applicable values.<br /></p><p>LOGISTICS_REQUEST_CREATED:booking arranged shipment<br /></p><p>LOGISTICS_PICKUP_DONE:booking handed over to 3PL<br /></p><p>LOGISTICS_PICKUP_FAILED:booking&nbsp;cancelled by 3PL due to failed pickup or picked up but not able to proceed with delivery<br /></p><p>LOGISTICS_DELIVERY_DONE:successfully delivered<br /></p><p>LOGISTICS_REQUEST_CANCELED:cancelled when booking at LOGISTICS_REQUEST_CREATED<br /></p><p>LOGISTICS_READY:booking&nbsp;ready for fulfilment<br /></p><p>LOGISTICS_INVALID:cancelled when booking at LOGISTICS_READY<br /></p><p>LOGISTICS_LOST:booking cancelled due to 3PL lost the parcel<br /></p>
+	TrackingInfo    []ResponseDataTrackingInfo `json:"tracking_info"`    // [Required] <p>The tracking info of the booking.<br /></p>
 }
 
 type GetBookingTrackingNumberRequest struct {
@@ -400,6 +410,17 @@ type GetOperatingHourRestrictionsResponseData struct {
 type GetOperatingHoursResponse struct {
 	BaseResponse `json:",inline"` // Common response fields
 	Repsonse     *Repsonse        `json:"repsonse,omitempty"` //
+}
+
+type GetPauseStatusResponse struct {
+	BaseResponse `json:",inline"`           // Common response fields
+	Response     GetPauseStatusResponseData `json:"response"` // Actual response data
+}
+
+type GetPauseStatusResponseData struct {
+	IsPaused            bool  `json:"is_paused"`             // [Required] <p>Indicate the current pause status of logistics channels under the shop. Applicable values:&nbsp;</p><p>- true: All relevant channels are currently paused and will not have any new incoming orders</p><p>- false: No channels are paused and may have new incoming orders</p><p><br /></p><p>Note: Please first call v2.logistics.get_pause_status to query the current suspension status of instant orders for the store. If is_paused = true, then call v2.logistics.get_channel_list and identify the range of channels affected by the pause function through support_pause = true.</p>
+	PauseEndTime        int64 `json:"pause_end_time"`        // [Required] <p>Time at which the relevant paused channels will automatically resume, returned only when is_paused = true, indicating the estimated time when the system will automatically resume order acceptance after the daily remaining quota is exhausted.</p><p><br /></p><p>Note: During the pause period, the seller may call the v2.logistics.set_pause_status at any time with is_paused = false to manually resume order acceptance. After resumption, the consumption of the daily remaining quota will stop and it will be retained until reset the next day.</p>
+	RemainingPauseQuota int64 `json:"remaining_pause_quota"` // [Required] <p>The remaining pause quota of the shop on the current day, in seconds, returned only when is_paused = false.</p>
 }
 
 type GetShippingDocumentDataInfoRequest struct {
@@ -559,24 +580,35 @@ type LogisticsCapability struct {
 }
 
 type LogisticsChannel struct {
-	LogisticsChannelId             int64                        `json:"logistics_channel_id"`              // [Required] The identity of logistic channel.
-	LogisticsChannelName           string                       `json:"logistics_channel_name"`            // [Required] The name of logistic channel.
-	CodEnabled                     bool                         `json:"cod_enabled"`                       // [Required] This is to indicate whether this logistic channel supports COD
-	Enabled                        bool                         `json:"enabled"`                           // [Required] Whether this logistic channel is enabled on shop level.
-	FeeType                        string                       `json:"fee_type"`                          // [Required] <p>SIZE_SELECTION</p><p>SIZE_INPUT</p><p>FIXED_DEFAULT_PRICE</p><p>CUSTOM_PRICE<br /></p>
-	SizeList                       []Size                       `json:"size_list"`                         // [Required] Only for fee_type is SIZE_SELECTION
-	WeightLimit                    *LogisticsChannelWeightLimit `json:"weight_limit"`                      // [Required] The weight limit for this logistic channel.
-	ItemMaxDimension               *ItemMaxDimension            `json:"item_max_dimension"`                // [Required] The dimension limit for this logistic channel.
-	VolumeLimit                    *VolumeLimit                 `json:"volume_limit"`                      // [Required] The limit of item volume.
-	LogisticsDescription           string                       `json:"logistics_description"`             // [Required] For checkout channels, this field indicates its corresponding fulfillment channels.
-	ForceEnable                    bool                         `json:"force_enable"`                      // [Required] Indicates whether the logistic channel is force enabled on Shop Level. If true, sellers cannot close this channel.
-	MaskChannelId                  int64                        `json:"mask_channel_id"`                   // [Required] Indicate the parent logistic channel ID. If it’s 0, it indicates the channel is a checkout(masked) channel; if it’s not 0, indicate the channel is a fulfillment channel and has a checkout channel(checkout channel’s channel_id equals this mask_channel_id) on top of it. Multiple channels may share the same mask_channel_id.
-	BlockSellerCoverShippingFee    bool                         `json:"block_seller_cover_shipping_fee"`   // [Required] <p>Indicate whether the channel is blocked to use seller cover shipping fee function.<br /></p><p>if the channel does not allow sellers to cover shipping fee, then the block_seller_cover_shipping_fee field will return true, otherwise it will return false.<br /></p>
-	SupportCrossBorder             bool                         `json:"support_cross_border"`              // [Required] <p>Indicate whether this channel support cross border shipping.<br /></p>
-	SellerLogisticHasConfiguration bool                         `json:"seller_logistic_has_configuration"` // [Required] <p>Indicate If seller has set the Seller logistics configuration if set will return true, otherwise it will return false or null.<br /></p>
-	LogisticsCapability            *LogisticsCapability         `json:"logistics_capability"`              // [Required] <p>The capability of one logistic channel.</p>
-	Preprint                       bool                         `json:"preprint"`                          // [Required] <p>Indicate whether this channel support pre-print AWB</p>
-	ServiceTypeIdentifier          string                       `json:"service_type_identifier"`           // [Required] <p>This parameter specifies the delivery service type of logistics channel. Applicable values:&nbsp;</p><p>- instant</p><p>- same_day</p><p>- null</p>
+	LogisticsChannelId             int64                                  `json:"logistics_channel_id"`              // [Required] The identity of logistic channel.
+	LogisticsChannelName           string                                 `json:"logistics_channel_name"`            // [Required] The name of logistic channel.
+	CodEnabled                     bool                                   `json:"cod_enabled"`                       // [Required] This is to indicate whether this logistic channel supports COD
+	Enabled                        bool                                   `json:"enabled"`                           // [Required] Whether this logistic channel is enabled on shop level.
+	FeeType                        string                                 `json:"fee_type"`                          // [Required] <p>SIZE_SELECTION</p><p>SIZE_INPUT</p><p>FIXED_DEFAULT_PRICE</p><p>CUSTOM_PRICE<br /></p>
+	SizeList                       []Size                                 `json:"size_list"`                         // [Required] Only for fee_type is SIZE_SELECTION
+	WeightLimit                    *LogisticsChannelWeightLimit           `json:"weight_limit"`                      // [Required] The weight limit for this logistic channel.
+	ItemMaxDimension               *ItemMaxDimension                      `json:"item_max_dimension"`                // [Required] The dimension limit for this logistic channel.
+	VolumeLimit                    *VolumeLimit                           `json:"volume_limit"`                      // [Required] The limit of item volume.
+	LogisticsDescription           string                                 `json:"logistics_description"`             // [Required] For checkout channels, this field indicates its corresponding fulfillment channels.
+	ForceEnable                    bool                                   `json:"force_enable"`                      // [Required] Indicates whether the logistic channel is force enabled on Shop Level. If true, sellers cannot close this channel.
+	MaskChannelId                  int64                                  `json:"mask_channel_id"`                   // [Required] Indicate the parent logistic channel ID. If it’s 0, it indicates the channel is a checkout(masked) channel; if it’s not 0, indicate the channel is a fulfillment channel and has a checkout channel(checkout channel’s channel_id equals this mask_channel_id) on top of it. Multiple channels may share the same mask_channel_id.
+	BlockSellerCoverShippingFee    bool                                   `json:"block_seller_cover_shipping_fee"`   // [Required] <p>Indicate whether the channel is blocked to use seller cover shipping fee function.<br /></p><p>if the channel does not allow sellers to cover shipping fee, then the block_seller_cover_shipping_fee field will return true, otherwise it will return false.<br /></p>
+	SupportCrossBorder             bool                                   `json:"support_cross_border"`              // [Required] <p>Indicate whether this channel support cross border shipping.<br /></p>
+	SellerLogisticHasConfiguration bool                                   `json:"seller_logistic_has_configuration"` // [Required] <p>Indicate If seller has set the Seller logistics configuration if set will return true, otherwise it will return false or null.<br /></p>
+	LogisticsCapability            *LogisticsCapability                   `json:"logistics_capability"`              // [Required] <p>The capability of one logistic channel.</p>
+	Preprint                       bool                                   `json:"preprint"`                          // [Required] <p>Indicate whether this channel support pre-print AWB</p>
+	ServiceTypeIdentifier          string                                 `json:"service_type_identifier"`           // [Required] <p>This parameter specifies the delivery service type of logistics channel. Applicable values:&nbsp;</p><p>- instant</p><p>- same_day</p><p>- null</p>
+	AutoCallDriverSetting          *LogisticsChannelAutoCallDriverSetting `json:"auto_call_driver_setting"`          // [Required]
+	SupportPause                   bool                                   `json:"support_pause"`                     // [Required] <p>Indicates whether this channel supports the pause operation (Pausing allows the shop to temporarily prevent buyers from placing orders through this logistics channel).</p><p>- true: This channel is affected by the pause function.<br />- false: This channel is not affected by the pause function.<br /><br />Note: Please first call v2.logistics.get_pause_status to get the current pause status of logistics channels under the shop. If is_paused = true, then call v2.logistics.get_channel_list and identify the range of channels affected by the pause function through support_pause = true.</p>
+	CompulsoryChannel              bool                                   `json:"compulsory_channel"`                // [Required] <p>Indicates if the channel is compulsory. If the value is true, at least one such channel must be enabled.</p>
+	ChannelRelationRules           []ChannelRelationRules                 `json:"channel_relation_rules"`            // [Required] <p>Indicate the related rules &amp; channels of this logistic channel.</p>
+}
+
+type LogisticsChannelAutoCallDriverSetting struct {
+	AutoCallDriverEligible bool                  `json:"auto_call_driver_eligible"` // [Required] <p>Indicate whether this channel is eligible for Auto Call Driver.</p>
+	AutoCallDriverEnabled  bool                  `json:"auto_call_driver_enabled"`  // [Required] <p>Indicate whether Auto Call Driver is currently enabled for this channel</p>
+	PreparationTime        int64                 `json:"preparation_time"`          // [Required] <p>The current valid preparation time for this channel, in minutes.</p>
+	PreparationTimeLimit   *PreparationTimeLimit `json:"preparation_time_limit"`    // [Required] <p>The preparation time range allowed for this channel.<br /><br /></p><p>Note: When calling v2.logistics.update_channel to set the Preparation Time for the channel, the time must not exceed this range.</p>
 }
 
 type LogisticsChannelWeightLimit struct {
@@ -636,6 +668,11 @@ type PickupAddress struct {
 	Zipcode      string     `json:"zipcode"`        // [Required] <p>The zipcode of specify address.<br /></p>
 	AddressFlag  []string   `json:"address_flag"`   // [Required] <p>The flag of shop address, applicable values: default_address, pickup_address, return_address, current_address (Multi-Warehouse sellers only)<br /></p>
 	TimeSlotList []TimeSlot `json:"time_slot_list"` // [Required] <p>List of pickup_time information corresponding to the address_id.<br /></p><p><br /></p><p>Some logistics channels may not return any date or time for pickup time slots. In such cases, sellers can arrange shipment without selecting any time slot, and Shopee will arrange a suitable timing for these situations.</p>
+}
+
+type PreparationTimeLimit struct {
+	MinPreparationTime int64 `json:"min_preparation_time"` // [Required] <p>The minimum allowable preparation time, in minutes.</p>
+	MaxPreparationTime int64 `json:"max_preparation_time"` // [Required] <p>The maximum allowable preparation time, in minutes.</p>
 }
 
 type RecipientAddressInfo struct {
@@ -719,7 +756,7 @@ type ResponseDataAddress struct {
 	Zipcode     string   `json:"zipcode"`      // [Required] The zipcode of specify address.
 	District    string   `json:"district"`     // [Required] The district of specify address.
 	Town        string   `json:"town"`         // [Required] The town of specify address.
-	AddressType []string `json:"address_type"` // [Required] The flag of shop address.Available values: DEFAULT_ADDRESS, PICK_UP_ADDRESS, RETURN_ADDRESS.
+	AddressType []string `json:"address_type"` // [Required] <p>The flag of shop address.Available values: DEFAULT_ADDRESS, PICK_UP_ADDRESS, RETURN_ADDRESS, INBOUND_PICKUP_ADDRESS.</p>
 }
 
 type ResponseDataDropoff struct {
@@ -792,6 +829,12 @@ type ResponseDataShippingDocumentInfo struct {
 	DestinationBaseCode  string             `json:"destination_base_code"` // [Required] <p>Distribution Center Code.<br /></p>
 }
 
+type ResponseDataTrackingInfo struct {
+	UpdateTime      int64           `json:"update_time"`      // [Required] <p>The time when logistics info has been updated.<br /></p>
+	Description     string          `json:"description"`      // [Required] <p>The description of booking logistics tracking info.logistics_status<br /></p>
+	LogisticsStatus LogisticsStatus `json:"logistics_status"` // [Required] <p>The Shopee logistics status for the booking.&nbsp;</p><p>TrackingLogisticsStatus:<br /></p><p>INITIAL</p><p>ORDER_INIT</p><p>ORDER_SUBMITTED</p><p>ORDER_CREATED</p><p>PICKUP_REQUESTED</p><p>PICKUP_PENDING</p><p>PICKED_UP</p><p>DELIVERY_PENDING</p><p>DELIVERED</p><p>LOST</p><p>UPDATE</p><p>UPDATE_SUBMITTED</p><p>UPDATE_CREATED</p><p>RETURN_STARTED</p><p>RETURN_PENDING</p><p>CANCEL</p><p>CANCEL_CREATED</p><p>CANCELED</p><p>FAILED_ORDER_SUBMITTED</p><p>FAILED_ORDER_CREATED</p><p>FAILED_PICKUP_REQUESTED</p><p>FAILED_PICKED_UP</p><p>FAILED_DELIVERED</p><p>FAILED_UPDATE_SUBMITTED</p><p>FAILED_UPDATE_CREATED</p><p>FAILED_RETURNED</p><p>FAILED_CANCEL_CREATED</p><p>FAILED_CANCELED</p><p>RETURNED</p><p>RETURN_INTIATED</p>
+}
+
 type ResultList struct {
 	RegularOperatingHour        *ResultListRegularOperatingHour `json:"regular_operating_hour"`         // [Required] <p>The result of create/update regular_operating_hour.&nbsp;</p>
 	SpecialOperatingHour        *ResultListRegularOperatingHour `json:"special_operating_hour"`         // [Required] <p>The result of create/update speicial_operating_hour.</p>
@@ -843,6 +886,21 @@ type SetMartPackagingInfoResponseData struct {
 	Enable       bool              `json:"enable"`        // [Required] <p>Indicates whether the seller has enabled or disabled the packaging fee configuration.</p><p><b>True:</b>&nbsp;The seller charges a packaging fee.</p><p><b>False:</b>&nbsp;The seller does not charge a packaging fee.</p>
 	Dimension    *RequestDimension `json:"dimension"`     // [Required] <p>Returned only if&nbsp;enabled&nbsp;is set to&nbsp;True.</p>
 	PackagingFee *PackagingFee     `json:"packaging_fee"` // [Required] <p>Returned only if&nbsp;enabled&nbsp;is set to&nbsp;True.</p>
+}
+
+type SetPauseStatusRequest struct {
+	IsPaused bool `json:"is_paused"` // [Required] <p>The target pause status that seller wants to update to. Applicable values:&nbsp;<br /></p><p>- true: Trigger pause. All relevant channels will be paused and will not have any new incoming orders (fulfillment of existing orders will not be affected). Meanwhile, the system will start deducting the daily pause quota and automatically calculate the pause end time based on the remaining quota.</p><p>- false: Trigger manual resume. No channels are paused and may have new incoming orders. The remaining daily quota will stop being consumed and be retained until reset the next day.</p><p><br />Note: Due to the system cache synchronization mechanism, there may be an approximately 15-second delay before the pause/resume operation takes effect. It is recommended to call the v2.logistics.get_pause_status for confirmation after the update.</p>
+}
+
+type SetPauseStatusResponse struct {
+	BaseResponse `json:",inline"`           // Common response fields
+	Response     SetPauseStatusResponseData `json:"response"` // Actual response data
+}
+
+type SetPauseStatusResponseData struct {
+	IsPaused            bool  `json:"is_paused"`             // [Required] <p>Indicate the current pause status of logistics channels under the shop. Applicable values:&nbsp;</p><p>- true: All relevant channels are currently paused and will not have any new incoming orders</p><p>- false: No channels are paused and may have new incoming orders</p><p><br /></p><p>Note: Please first call v2.logistics.get_pause_status to query the current suspension status of instant orders for the store. If is_paused = true, then call v2.logistics.get_channel_list and identify the range of channels affected by the pause function through support_pause = true.</p>
+	PauseEndTime        int64 `json:"pause_end_time"`        // [Required] <p>Time at which the relevant paused channels will automatically resume, returned only when is_paused = true, indicating the estimated time when the system will automatically resume order acceptance after the daily remaining quota is exhausted.</p><p><br /></p><p>Note: During the pause period, the seller may call the v2.logistics.set_pause_status at any time with is_paused = false to manually resume order acceptance. After resumption, the consumption of the daily remaining quota will stop and it will be retained until reset the next day.</p>
+	RemainingPauseQuota int64 `json:"remaining_pause_quota"` // [Required] <p>The remaining pause quota of the shop on the current day, in seconds, returned only when is_paused = false.</p>
 }
 
 type ShipBookingRequest struct {
@@ -1038,9 +1096,10 @@ type TimeSlot struct {
 }
 
 type TrackingInfo struct {
-	UpdateTime      int64           `json:"update_time"`      // [Required] <p>The time when logistics info has been updated.<br /></p>
-	Description     string          `json:"description"`      // [Required] <p>The description of booking logistics tracking info.logistics_status<br /></p>
-	LogisticsStatus LogisticsStatus `json:"logistics_status"` // [Required] <p>The Shopee logistics status for the booking.&nbsp;</p><p>TrackingLogisticsStatus:<br /></p><p>INITIAL</p><p>ORDER_INIT</p><p>ORDER_SUBMITTED</p><p>ORDER_CREATED</p><p>PICKUP_REQUESTED</p><p>PICKUP_PENDING</p><p>PICKED_UP</p><p>DELIVERY_PENDING</p><p>DELIVERED</p><p>LOST</p><p>UPDATE</p><p>UPDATE_SUBMITTED</p><p>UPDATE_CREATED</p><p>RETURN_STARTED</p><p>RETURN_PENDING</p><p>CANCEL</p><p>CANCEL_CREATED</p><p>CANCELED</p><p>FAILED_ORDER_SUBMITTED</p><p>FAILED_ORDER_CREATED</p><p>FAILED_PICKUP_REQUESTED</p><p>FAILED_PICKED_UP</p><p>FAILED_DELIVERED</p><p>FAILED_UPDATE_SUBMITTED</p><p>FAILED_UPDATE_CREATED</p><p>FAILED_RETURNED</p><p>FAILED_CANCEL_CREATED</p><p>FAILED_CANCELED</p><p>RETURNED</p><p>RETURN_INTIATED</p>
+	UpdateTime      int64           `json:"update_time"`      // [Required] <p>The time when the logistics&nbsp;tracking info is updated.</p>
+	Description     string          `json:"description"`      // [Required] <p>The description of the logistics tracking info.</p>
+	LogisticsStatus LogisticsStatus `json:"logistics_status"` // [Required] <p>The logistics status for the order. Applicable values: See Data Definition- LogisticsStatus.</p>
+	ReturnCode      string          `json:"return_code"`      // [Required] <p>The OTP generated after the parcel enters the RTS (Return to Seller) process. Sellers need to provide this OTP to the driver to complete the return confirmation.</p><p><br /><b>Note:&nbsp;</b></p><p>- This field only applies to orders under the SPX Instant &amp; Sameday channel in ID region.</p><p>- This field is only returned when the driver has initiated the return process to the seller. If the driver has not initiated the return process for the parcel, this field will be empty.</p>
 }
 
 type TrackingNumber struct {
@@ -1087,9 +1146,10 @@ type UpdateAddressResponse struct {
 }
 
 type UpdateChannelRequest struct {
-	LogisticsChannelId int64 `json:"logistics_channel_id"`  // [Required] The identity of logistic channel.
-	Enabled            *bool `json:"enabled,omitempty"`     // [Optional] Whether to enable this logistic channel.
-	CodEnabled         *bool `json:"cod_enabled,omitempty"` // [Optional] Whether to enable COD for this logistic channel. Only COD supported channels are applicable.
+	LogisticsChannelId    int64                  `json:"logistics_channel_id"`               // [Required] The identity of logistic channel.
+	Enabled               *bool                  `json:"enabled,omitempty"`                  // [Optional] Whether to enable this logistic channel.
+	CodEnabled            *bool                  `json:"cod_enabled,omitempty"`              // [Optional] Whether to enable COD for this logistic channel. Only COD supported channels are applicable.
+	AutoCallDriverSetting *AutoCallDriverSetting `json:"auto_call_driver_setting,omitempty"` // [Optional]
 }
 
 type UpdateChannelResponse struct {
@@ -1098,11 +1158,12 @@ type UpdateChannelResponse struct {
 }
 
 type UpdateChannelResponseData struct {
-	Enabled            bool              `json:"enabled"`              // [Required] Whether this logistic channel is enabled.
-	CodEnabled         bool              `json:"cod_enabled"`          // [Required] Whether COD is enabled for this channel.
-	LogisticsChannelId int64             `json:"logistics_channel_id"` // [Required] The identity of logistic channel.
-	UpdatedChannels    []UpdatedChannels `json:"updated_channels"`     // [Required] <p>List of channels that are updated in the operation (inclusive of dependent logistics channels)<br /></p>
-	IsMultiWarehouse   bool              `json:"is_multi_warehouse"`   // [Required]
+	Enabled               bool                   `json:"enabled"`                  // [Required] Whether this logistic channel is enabled.
+	CodEnabled            bool                   `json:"cod_enabled"`              // [Required] Whether COD is enabled for this channel.
+	LogisticsChannelId    int64                  `json:"logistics_channel_id"`     // [Required] The identity of logistic channel.
+	UpdatedChannels       []UpdatedChannels      `json:"updated_channels"`         // [Required] <p>List of channels that are updated in the operation (inclusive of dependent logistics channels)<br /></p>
+	IsMultiWarehouse      bool                   `json:"is_multi_warehouse"`       // [Required]
+	AutoCallDriverSetting *AutoCallDriverSetting `json:"auto_call_driver_setting"` // [Required]
 }
 
 type UpdateOperatingHoursRequest struct {
@@ -1125,6 +1186,7 @@ type UpdateSelfCollectionOrderLogisticsRequest struct {
 	PackageNumber                 string   `json:"package_number"`                   // [Required] <p>Shopee's unique identifier for the package under an order.</p>
 	SelfCollectionLogisticsAction string   `json:"self_collection_logistics_action"` // [Required] <p>Order logistics action. available values:</p><p>- ready_for_collection</p><p>- order_collected</p>
 	EpocImageList                 []string `json:"epoc_image_list,omitempty"`        // [Optional] <p>List of image_id for the proof that buyer already collected the order at the store.&nbsp;</p><p>Required when self_collection_logistics_action is order_collected. Max: 3.</p><p>You can call the v2.media.upload_image to upload image and get the image_id, for this scenario, please pass the business = 1 and scene = 1.</p>
+	Pin                           *string  `json:"pin,omitempty"`                    // [Optional] <p>PIN code required for prescription orders when buyer collects at your shop.</p>
 }
 
 type UpdateSelfCollectionOrderLogisticsResponse struct {

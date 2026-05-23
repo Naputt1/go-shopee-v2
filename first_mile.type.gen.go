@@ -28,6 +28,8 @@ type BindFirstMileTrackingNumberRequest struct {
 	Length                  *float64      `json:"length,omitempty"`           // [Optional] The length of the parcel.
 	Height                  *float64      `json:"height,omitempty"`           // [Optional] The height of the parcel.
 	OrderList               []SharedOrder `json:"order_list"`                 // [Required] The set of ordersn. You can specify up to 50 ordersns in this call.one fm_tn maximum number of total bind orders is 10000.
+	WarehouseId             *string       `json:"warehouse_id,omitempty"`     // [Optional] <p>The identity of transit warehouse address. Retrieved from&nbsp;v2.first_mile.get_transit_warehouse_list.</p><p><br /></p><p>Note: <b>When the first-mile delivery mode is "Drop Off", this field is expected to be a required field</b>. However, to avoid affecting your existing services, this field will be temporarily optional until&nbsp;<b><font color="#c24f4a">April 30, 2026</font></b>. Please complete the integration before then to avoid any impact on your services if it is changed to a required field later.</p>
+	WarehouseType           *int64        `json:"warehouse_type,omitempty"`   // [Optional] <p>Warehouse type.&nbsp;Retrieved from&nbsp;v2.first_mile.get_transit_warehouse_list.<br />0 = normal warehouse<br />1 = vendor warehouse</p><p><br /></p><p>Note:&nbsp;<b>When the first-mile delivery mode is "Drop Off", this field is expected to be a required field</b>.&nbsp;However, to avoid affecting your existing services, this field will be temporarily optional until&nbsp;<b><font color="#c24f4a">April 30, 2026</font></b>. Please complete the integration before then to avoid any impact on your services if it is changed to a required field later.</p>
 }
 
 type BindFirstMileTrackingNumberResponse struct {
@@ -231,7 +233,8 @@ type GetTrackingNumberListResponseData struct {
 }
 
 type GetTransitWarehouseListRequest struct {
-	Region *string `json:"region,omitempty" url:"region,omitempty"` // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value:&nbsp;CN.</p>
+	Region         *string `json:"region,omitempty" url:"region,omitempty"`                   // [Optional] <p>Use this field to specify the region you want to ship parcel. Available value:&nbsp;CN.</p>
+	ShipmentMethod *string `json:"shipment_method,omitempty" url:"shipment_method,omitempty"` // [Optional] <p>Use this field to specify the shipment method you want to ship parcel. Available value:&nbsp;pickup, dropoff, self_deliver, courier_delivery.</p><p><br /></p><p>Note: Only when shipment_method = dropoff, the API response will include warehouses where warehouse_type = 1 (vendor warehouse).</p>
 }
 
 type GetTransitWarehouseListResponse struct {
@@ -298,6 +301,7 @@ type TransitWarehouse struct {
 	WarehouseId     string `json:"warehouse_id"`      // [Required] <p>The identity of transit warehouse.<br /></p>
 	WarehouseNameEn string `json:"warehouse_name_en"` // [Required] <p>The name of transit warehouse in English.<br /></p>
 	WarehouseNameCn string `json:"warehouse_name_cn"` // [Required] <p>The name of transit warehouse in Chinese.<br /></p>
+	WarehouseType   int64  `json:"warehouse_type"`    // [Required] <p>Warehouse type:&nbsp;</p><p>0 = normal warehouse</p><p>1 = vendor warehouse</p><p><br /></p><p>Note: Only when shipment_method = dropoff, the API response will include warehouses where warehouse_type = 1 (vendor warehouse).</p>
 }
 
 type UnbindFirstMileTrackingNumberAllRequest struct {
