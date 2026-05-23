@@ -1,7 +1,7 @@
 package goshopee
 
 type FirstMileService interface {
-	// GetUnbindOrderList Use this api to get unbind order list.
+	// GetUnbindOrderList Use this api to get unbind order list. It will only return orders unbound to first-mile that were created within the past 6 months.
 	// Path: /api/v2/first_mile/get_unbind_order_list
 	// https://open.shopee.com/documents/v2/v2.first_mile.get_unbind_order_list?module=96&type=1
 	GetUnbindOrderList(sid uint64, opt GetUnbindOrderListRequest, tok string) (*GetUnbindOrderListResponse, error)
@@ -74,7 +74,7 @@ type FirstMileServiceOp[T any] struct {
 	client *Client[T]
 }
 
-// GetUnbindOrderList Use this api to get unbind order list.
+// GetUnbindOrderList Use this api to get unbind order list. It will only return orders unbound to first-mile that were created within the past 6 months.
 // Path: /api/v2/first_mile/get_unbind_order_list
 // https://open.shopee.com/documents/v2/v2.first_mile.get_unbind_order_list?module=96&type=1
 func (s *FirstMileServiceOp[T]) GetUnbindOrderList(sid uint64, opt GetUnbindOrderListRequest, tok string) (*GetUnbindOrderListResponse, error) {

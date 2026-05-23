@@ -885,3 +885,43 @@ func Test_Logistics_CheckPolygonUpdateStatus(t *testing.T) {
 
 	t.Logf("Logistics.CheckPolygonUpdateStatus response: %#v", res)
 }
+
+func Test_Logistics_GetPauseStatus(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.logistics.get_pause_status_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetPauseStatus due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/logistics/get_pause_status", app.APIURL), responder)
+
+	res, err := client.Logistics.GetPauseStatus(shopID, accessToken)
+	if err != nil {
+		t.Logf("Logistics.GetPauseStatus returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Logistics.GetPauseStatus response: %#v", res)
+}
+
+func Test_Logistics_SetPauseStatus(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.logistics.set_pause_status_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	if err != nil {
+		t.Skipf("Skipping SetPauseStatus due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/logistics/set_pause_status", app.APIURL), responder)
+	var req SetPauseStatusRequest
+	res, err := client.Logistics.SetPauseStatus(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Logistics.SetPauseStatus returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Logistics.SetPauseStatus response: %#v", res)
+}

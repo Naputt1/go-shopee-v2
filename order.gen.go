@@ -9,7 +9,7 @@ type OrderService interface {
 	// Path: /api/v2/order/get_order_list
 	// https://open.shopee.com/documents/v2/v2.order.get_order_list?module=94&type=1
 	GetOrderList(sid uint64, opt GetOrderListRequest, tok string) (*GetOrderListResponse, error)
-	// GetOrderDetail Use this api to get order detail.
+	// GetOrderDetail {"content":"<p>Use this api to get order detail.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get order detail."}]}]}
 	// Path: /api/v2/order/get_order_detail
 	// https://open.shopee.com/documents/v2/v2.order.get_order_detail?module=94&type=1
 	GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error)
@@ -21,8 +21,7 @@ type OrderService interface {
 	// Path: /api/v2/order/search_package_list
 	// https://open.shopee.com/documents/v2/v2.order.search_package_list?module=94&type=1
 	SearchPackageList(sid uint64, req SearchPackageListRequest, tok string) (*SearchPackageListResponse, error)
-	// GetPackageDetail Use this api to get package detail.
-	//
+	// GetPackageDetail {"content":"<p>Use this api to get package detail.<br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get package detail."},{"name":"softBreak"},{"data":" "}]}]}
 	// Path: /api/v2/order/get_package_detail
 	// https://open.shopee.com/documents/v2/v2.order.get_package_detail?module=94&type=1
 	GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error)
@@ -34,7 +33,7 @@ type OrderService interface {
 	// Path: /api/v2/order/unsplit_order
 	// https://open.shopee.com/documents/v2/v2.order.unsplit_order?module=94&type=1
 	UnsplitOrder(sid uint64, req UnsplitOrderRequest, tok string) (*UnsplitOrderResponse, error)
-	// CancelOrder Use this api to cancel an order. This action can only be performed before the order has been shipped.
+	// CancelOrder {"content":"<p>Use this api to cancel an order. This action can only be performed before the order has been shipped.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to cancel an order. This action can only be performed before the order has been shipped."}]}]}
 	// Path: /api/v2/order/cancel_order
 	// https://open.shopee.com/documents/v2/v2.order.cancel_order?module=94&type=1
 	CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error)
@@ -95,6 +94,10 @@ type OrderService interface {
 	// Path: /api/v2/order/download_fbs_invoices
 	// https://open.shopee.com/documents/v2/v2.order.download_fbs_invoices?module=94&type=1
 	DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error)
+	// GetEstimiateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
+	// Path: /api/v2/order/get_estimate_cancel_value
+	// https://open.shopee.com/documents/v2/v2.order.get_estimiate_cancel_value?module=94&type=1
+	GetEstimiateCancelValue(sid uint64, req GetEstimiateCancelValueRequest, tok string) (*GetEstimiateCancelValueResponse, error)
 }
 
 type OrderServiceOp[T any] struct {
@@ -111,7 +114,7 @@ func (s *OrderServiceOp[T]) GetOrderList(sid uint64, opt GetOrderListRequest, to
 	return resp, err
 }
 
-// GetOrderDetail Use this api to get order detail.
+// GetOrderDetail {"content":"<p>Use this api to get order detail.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get order detail."}]}]}
 // Path: /api/v2/order/get_order_detail
 // https://open.shopee.com/documents/v2/v2.order.get_order_detail?module=94&type=1
 func (s *OrderServiceOp[T]) GetOrderDetail(sid uint64, opt GetOrderDetailRequest, tok string) (*GetOrderDetailResponse, error) {
@@ -141,8 +144,7 @@ func (s *OrderServiceOp[T]) SearchPackageList(sid uint64, req SearchPackageListR
 	return resp, err
 }
 
-// GetPackageDetail Use this api to get package detail.
-//
+// GetPackageDetail {"content":"<p>Use this api to get package detail.<br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get package detail."},{"name":"softBreak"},{"data":" "}]}]}
 // Path: /api/v2/order/get_package_detail
 // https://open.shopee.com/documents/v2/v2.order.get_package_detail?module=94&type=1
 func (s *OrderServiceOp[T]) GetPackageDetail(sid uint64, opt GetPackageDetailRequest, tok string) (*GetPackageDetailResponse, error) {
@@ -172,7 +174,7 @@ func (s *OrderServiceOp[T]) UnsplitOrder(sid uint64, req UnsplitOrderRequest, to
 	return resp, err
 }
 
-// CancelOrder Use this api to cancel an order. This action can only be performed before the order has been shipped.
+// CancelOrder {"content":"<p>Use this api to cancel an order. This action can only be performed before the order has been shipped.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to cancel an order. This action can only be performed before the order has been shipped."}]}]}
 // Path: /api/v2/order/cancel_order
 // https://open.shopee.com/documents/v2/v2.order.cancel_order?module=94&type=1
 func (s *OrderServiceOp[T]) CancelOrder(sid uint64, req CancelOrderRequest, tok string) (*CancelOrderResponse, error) {
@@ -323,6 +325,16 @@ func (s *OrderServiceOp[T]) GetFbsInvoicesResult(sid uint64, req GetFbsInvoicesR
 func (s *OrderServiceOp[T]) DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error) {
 	path := "/order/download_fbs_invoices"
 	resp := new(DownloadFbsInvoicesResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// GetEstimiateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
+// Path: /api/v2/order/get_estimate_cancel_value
+// https://open.shopee.com/documents/v2/v2.order.get_estimiate_cancel_value?module=94&type=1
+func (s *OrderServiceOp[T]) GetEstimiateCancelValue(sid uint64, req GetEstimiateCancelValueRequest, tok string) (*GetEstimiateCancelValueResponse, error) {
+	path := "/order/get_estimate_cancel_value"
+	resp := new(GetEstimiateCancelValueResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

@@ -1146,3 +1146,23 @@ func Test_Product_GenerateKitImage(t *testing.T) {
 
 	t.Logf("Product.GenerateKitImage response: %#v", res)
 }
+
+func Test_Product_GetMartItemByOutletItemId(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.get_mart_item_by_outlet_item_id_resp.json"
+	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	if err != nil {
+		t.Skipf("Skipping GetMartItemByOutletItemId due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/get_mart_item_by_outlet_item_id", app.APIURL), responder)
+	var req GetMartItemByOutletItemIdRequest
+	res, err := client.Product.GetMartItemByOutletItemId(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.GetMartItemByOutletItemId returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.GetMartItemByOutletItemId response: %#v", res)
+}

@@ -73,33 +73,38 @@ type GetShopHolidayModeResponse struct {
 }
 
 type GetShopHolidayModeResponseData struct {
-	HolidayModeOn    bool   `json:"holiday_mode_on"`    // [Required] <p>Indicate whether the shop has enabled holiday mode. true means ON, false means OFF.</p>
-	HolidayModeMtime int64  `json:"holiday_mode_mtime"` // [Required] <p>The last time the holiday mode was modifies.</p>
-	DebugMsg         string `json:"debug_msg"`          // [Required] <p>Debug message.</p>
+	HolidayModeOn          bool   `json:"holiday_mode_on"`          // [Required] <p>Indicate whether the shop has enabled holiday mode. true means ON, false means OFF.</p>
+	HolidayModeMtime       int64  `json:"holiday_mode_mtime"`       // [Required] <p>The last time the holiday mode was modifies.</p>
+	HolidayModeType        int64  `json:"holiday_mode_type"`        // [Required] <p>Indicate whether the holiday mode is partial&nbsp;holiday or full holiday.</p><p>1: Partial Holiday: seller can still receive orders during partial holiday</p><p>0: Full Holiday: seller can not receive orders during full holiday</p><p><br />only when holiday_mode_on = true will the holiday_mode_type work</p>
+	HolidayModeStartTime   int64  `json:"holiday_mode_start_time"`  // [Required] <p>Holiday start time timestamp.</p>
+	HolidayModeEndTime     int64  `json:"holiday_mode_end_time"`    // [Required] <p>Holiday end time timestamp.</p>
+	HolidayModeDescription string `json:"holiday_mode_description"` // [Required] <p>Description of the holiday</p>
+	DebugMsg               string `json:"debug_msg"`                // [Required] <p>Debug message.</p>
 }
 
 type GetShopInfoResponse struct {
-	BaseResponse         `json:",inline"`   // Common response fields
-	ShopName             string             `json:"shop_name,omitempty"`               // Name of the shop.
-	Region               string             `json:"region,omitempty"`                  // Shop's area.
-	Status               string             `json:"status,omitempty"`                  // <p>Applicable status: <b>BANNED</b>, <b>FROZEN</b>, <b>NORMAL</b>.</p>
-	SipAffiShops         []SipAffiShops     `json:"sip_affi_shops,omitempty"`          // SIP affiliate shops info list.If you request for SIP primary shop,this field will be returned, if you request for SIP affiliate shop,this field won't be returned
-	IsCb                 bool               `json:"is_cb,omitempty"`                   // Use this filed to indicate whether the shop is a cross-border shop.
-	AuthTime             int64              `json:"auth_time,omitempty"`               // The timestamp when the shop was authorized to the partner.
-	ExpireTime           int64              `json:"expire_time,omitempty"`             // Use this field to indicate the expiration date for shop authorization.
-	IsSip                bool               `json:"is_sip,omitempty"`                  // This filed will return "true" when SIP primary shop or affiliate shop calls
-	IsUpgradedCbsc       bool               `json:"is_upgraded_cbsc,omitempty"`        // <p>Use this filed to indicate whether this merchant is upgraded to CBSC, including CNSC and KRSC.<br /></p>
-	MerchantId           int64              `json:"merchant_id,omitempty"`             // <p>Shopee’s unique identifier for a merchant. If the shop won't under any merchant, then the value will be null.<br /></p>
-	ShopFulfillmentFlag  string             `json:"shop_fulfillment_flag,omitempty"`   // <p>Use this field to indicate the fulfillment type of current shop, the applicable values:&nbsp;</p><p><b><br /></b></p><p><b>- Pure - FBS Shop:&nbsp;</b>Single mode, refer to Local/CB shops which only have Shopee official warehouse stock, orders are fulfilled by Shopee from Shopee official warehouse;&nbsp;</p><p><b><br /></b></p><p><b>- Pure - 3PF Shop:&nbsp;</b>Single mode, refer to CB shops which only have local seller warehouse stock, orders are fulfilled by seller from local seller warehouse via local logistics channels;&nbsp;</p><p><b><br /></b></p><p><b>- PFF - FBS Shop:&nbsp;</b></p><p>1) Hybird mode, refer to Local shops which have both Shopee official warehouse stock and local seller warehouse stock, orders can be fulfilled by Shopee from Shopee official warehouse and can also fulfilled by seller from local seller warehouse via local logistics channels;&nbsp;</p><p>2) Hybrid mode, refer to CB shops which have both Shopee official warehouse stock and CB seller warehouse stock, orders can be fulfilled by Shopee from Shopee official warehouse and can also fulfilled by seller from CB seller warehouse via CB logistics channels;&nbsp;</p><p><b><br /></b></p><p><b>-&nbsp;PFF - 3PF Shop:&nbsp;</b>Hybrid mode, refer to CB shops which have both local seller warehouse stock and CB seller warehouse stock, orders can be fulfilled by seller from local seller warehouse via local logistics channels and can also fulfilled by seller from CB seller warehouse via CB logistics channels;&nbsp;</p><p><br /></p><p><b>- LFF Hybrid Shop:</b> Hybrid mode, refer to CB shops which have 3 types of stock: FBS stock (Shopee official warehouse stock), 3PF stock (CB seller own stock in the local market) and CB SLS stock (CB seller own stock in CN/HK/KR);</p><p><b><br /></b></p><p><b>- Others</b></p><p><b><br /></b></p><p><b>- Unknown: </b>Returned when obtaining shop_fulfillment_flag information fails</p>
-	IsMainShop           bool               `json:"is_main_shop,omitempty"`            // <p>Identifies if the current shop is a Local Shop linked to Cross Border Direct Shop.</p>
-	IsDirectShop         bool               `json:"is_direct_shop,omitempty"`          // <p>Identifies if the current shop is a Cross Border Direct Shop.</p>
-	LinkedMainShopId     int64              `json:"linked_main_shop_id,omitempty"`     // <p>Returns the Shop ID of the Local Shop linked to the Cross Border Direct Shop.</p>
-	LinkedDirectShopList []LinkedDirectShop `json:"linked_direct_shop_list,omitempty"` // <p>Returns the list of Cross Border Direct Shops linked to the Local Shop.</p>
-	IsOneAwb             bool               `json:"is_one_awb,omitempty"`              // <p>Use this filed to indicate if the shop is in 1-AWB whitelist.&nbsp;</p><p><br /></p><p>If is_one_awb return true, please use&nbsp;new AWB size (10cm x 15cm thermal paper) to print AWB. For more details, please refer to:&nbsp;<a href="https://open.shopee.com/announcements/1138?category=3&amp;is_top=false" target="_blank" style="font-size:14px;">https://open.shopee.com/announcements/1138?category=3&amp;is_top=false</a></p>
-	IsMartShop           bool               `json:"is_mart_shop,omitempty"`            // <p>Indicates whether the current shop is a Mart Shop.<br /></p>
-	IsOutletShop         bool               `json:"is_outlet_shop,omitempty"`          // <p>Indicates whether the current shop is an Outlet Shop.<br /></p>
-	MartShopId           int64              `json:"mart_shop_id,omitempty"`            // <p>(Only returned when requesting an Outlet Shop) Refers to the Mart Shop ID this Outlet belongs to.<br /></p>
-	OutletShopInfoList   []OutletShopInfo   `json:"outlet_shop_info_list,omitempty"`   // <p>(Only returned when requesting a Mart Shop) List of Outlet Shop IDs under this Mart Shop.<br /></p>
+	BaseResponse            `json:",inline"`   // Common response fields
+	ShopName                string             `json:"shop_name,omitempty"`                  // Name of the shop.
+	Region                  string             `json:"region,omitempty"`                     // Shop's area.
+	Status                  string             `json:"status,omitempty"`                     // <p>Applicable status: <b>BANNED</b>, <b>FROZEN</b>, <b>NORMAL</b>.</p>
+	SipAffiShops            []SipAffiShops     `json:"sip_affi_shops,omitempty"`             // SIP affiliate shops info list.If you request for SIP primary shop,this field will be returned, if you request for SIP affiliate shop,this field won't be returned
+	IsCb                    bool               `json:"is_cb,omitempty"`                      // Use this filed to indicate whether the shop is a cross-border shop.
+	AuthTime                int64              `json:"auth_time,omitempty"`                  // The timestamp when the shop was authorized to the partner.
+	ExpireTime              int64              `json:"expire_time,omitempty"`                // Use this field to indicate the expiration date for shop authorization.
+	IsSip                   bool               `json:"is_sip,omitempty"`                     // This filed will return "true" when SIP primary shop or affiliate shop calls
+	IsUpgradedCbsc          bool               `json:"is_upgraded_cbsc,omitempty"`           // <p>Use this filed to indicate whether this merchant is upgraded to CBSC, including CNSC and KRSC.<br /></p>
+	MerchantId              int64              `json:"merchant_id,omitempty"`                // <p>Shopee’s unique identifier for a merchant. If the shop won't under any merchant, then the value will be null.<br /></p>
+	ShopFulfillmentFlag     string             `json:"shop_fulfillment_flag,omitempty"`      // <p>Use this field to indicate the fulfillment type of current shop, the applicable values:&nbsp;</p><p><b><br /></b></p><p><b>- Pure - FBS Shop:&nbsp;</b>Single mode, refer to Local/CB shops which only have Shopee official warehouse stock, orders are fulfilled by Shopee from Shopee official warehouse;&nbsp;</p><p><b><br /></b></p><p><b>- Pure - 3PF Shop:&nbsp;</b>Single mode, refer to CB shops which only have local seller warehouse stock, orders are fulfilled by seller from local seller warehouse via local logistics channels;&nbsp;</p><p><b><br /></b></p><p><b>- PFF - FBS Shop:&nbsp;</b></p><p>1) Hybird mode, refer to Local shops which have both Shopee official warehouse stock and local seller warehouse stock, orders can be fulfilled by Shopee from Shopee official warehouse and can also fulfilled by seller from local seller warehouse via local logistics channels;&nbsp;</p><p>2) Hybrid mode, refer to CB shops which have both Shopee official warehouse stock and CB seller warehouse stock, orders can be fulfilled by Shopee from Shopee official warehouse and can also fulfilled by seller from CB seller warehouse via CB logistics channels;&nbsp;</p><p><b><br /></b></p><p><b>-&nbsp;PFF - 3PF Shop:&nbsp;</b>Hybrid mode, refer to CB shops which have both local seller warehouse stock and CB seller warehouse stock, orders can be fulfilled by seller from local seller warehouse via local logistics channels and can also fulfilled by seller from CB seller warehouse via CB logistics channels;&nbsp;</p><p><br /></p><p><b>- LFF Hybrid Shop:</b> Hybrid mode, refer to CB shops which have 3 types of stock: FBS stock (Shopee official warehouse stock), 3PF stock (CB seller own stock in the local market) and CB SLS stock (CB seller own stock in CN/HK/KR);</p><p><b><br /></b></p><p><b>- Others</b></p><p><b><br /></b></p><p><b>- Unknown: </b>Returned when obtaining shop_fulfillment_flag information fails</p>
+	IsMainShop              bool               `json:"is_main_shop,omitempty"`               // <p>Identifies if the current shop is a Local Shop linked to Cross Border Direct Shop.</p>
+	IsDirectShop            bool               `json:"is_direct_shop,omitempty"`             // <p>Identifies if the current shop is a Cross Border Direct Shop.</p>
+	LinkedMainShopId        int64              `json:"linked_main_shop_id,omitempty"`        // <p>Returns the Shop ID of the Local Shop linked to the Cross Border Direct Shop.</p>
+	LinkedDirectShopList    []LinkedDirectShop `json:"linked_direct_shop_list,omitempty"`    // <p>Returns the list of Cross Border Direct Shops linked to the Local Shop.</p>
+	IsOneAwb                bool               `json:"is_one_awb,omitempty"`                 // <p>Use this filed to indicate if the shop is in 1-AWB whitelist.&nbsp;</p><p><br /></p><p>If is_one_awb return true, please use&nbsp;new AWB size (10cm x 15cm thermal paper) to print AWB. For more details, please refer to:&nbsp;<a href="https://open.shopee.com/announcements/1138?category=3&amp;is_top=false" target="_blank" style="font-size:14px;">https://open.shopee.com/announcements/1138?category=3&amp;is_top=false</a></p>
+	IsMartShop              bool               `json:"is_mart_shop,omitempty"`               // <p>Indicates whether the current shop is a Mart Shop.<br /></p>
+	IsOutletShop            bool               `json:"is_outlet_shop,omitempty"`             // <p>Indicates whether the current shop is an Outlet Shop.<br /></p>
+	MartShopId              int64              `json:"mart_shop_id,omitempty"`               // <p>(Only returned when requesting an Outlet Shop) Refers to the Mart Shop ID this Outlet belongs to.<br /></p>
+	OutletShopInfoList      []OutletShopInfo   `json:"outlet_shop_info_list,omitempty"`      // <p>(Only returned when requesting a Mart Shop) List of Outlet Shop IDs under this Mart Shop.<br /></p>
+	MartOutletStructureType string             `json:"mart_outlet_structure_type,omitempty"` // <p>(Only returned when requesting a Mart or Outlet Shop)<br /></p><p><span style="font-size:14px;">Indicates the structure type of the Mart or Outlet shop. Applicable values are:&nbsp;</span><b>normal_mart_shop, warehouse_mart_shop, normal_outlet_shop, warehouse_outlet_shop</b></p>
 }
 
 type GetShopNotificationRequest struct {
@@ -156,7 +161,11 @@ type ResponseData struct {
 }
 
 type SetShopHolidayModeRequest struct {
-	HolidayModeOn bool `json:"holiday_mode_on"` // [Required] <p>Indicate whether to enable holiday mode for the shop. true means turn ON, false means turn OFF.</p>
+	HolidayModeOn          bool    `json:"holiday_mode_on"`                    // [Required] <p>Indicate whether to enable holiday mode for the shop. true means turn ON, false means turn OFF.</p>
+	HolidayModeType        *int64  `json:"holiday_mode_type,omitempty"`        // [Optional] <p>Holiday type:<br />0 - Full holiday，buyers cannot place new orders. The behavior remains consistent with the current Holiday Mode.</p><p>1 - Partial holiday, buyers can continue placing orders, and the system will automatically extend the order’s Ship-By-Date (SBD).</p><br />
+	HolidayModeStartTime   *int64  `json:"holiday_mode_start_time,omitempty"`  // [Optional] <p>Holiday start time should be whole hour and could be parsed as "2026:01:16 15:00:00"</p>
+	HolidayModeEndTime     *int64  `json:"holiday_mode_end_time,omitempty"`    // [Optional] <p>Holiday end time plus one second should be whole hour, which means the input timestamp must be able to be parsed as "2025:01:20 17:59:59"</p><p><br /></p><p>and the&nbsp;holiday_end_time must be larger than&nbsp;holiday_start_time</p>
+	HolidayModeDescription *string `json:"holiday_mode_description,omitempty"` // [Optional] <p>Description of the holiday</p>
 }
 
 type SetShopHolidayModeResponse struct {
