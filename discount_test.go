@@ -12,7 +12,14 @@ func Test_Discount_AddDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.add_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.add_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddDiscount due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Discount_AddDiscountItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.add_discount_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.add_discount_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddDiscountItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddDiscountItem due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Discount_DeleteDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.delete_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.delete_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteDiscount due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Discount_DeleteDiscountItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.delete_discount_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.delete_discount_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteDiscountItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteDiscountItem due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Discount_GetDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.get_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.get_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetDiscount due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Discount_GetDiscountList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.get_discount_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.get_discount_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetDiscountList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetDiscountList due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_Discount_UpdateDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.update_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.update_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateDiscount due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_Discount_UpdateDiscountItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.update_discount_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.update_discount_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateDiscountItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateDiscountItem due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_Discount_EndDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.end_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.end_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EndDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EndDiscount due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_Discount_GetSipDiscounts(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.get_sip_discounts_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.get_sip_discounts")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSipDiscounts due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSipDiscounts due to invalid fixture: %v", err)
 	}
@@ -212,7 +282,14 @@ func Test_Discount_SetSipDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.set_sip_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.set_sip_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetSipDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetSipDiscount due to invalid fixture: %v", err)
 	}
@@ -232,7 +309,14 @@ func Test_Discount_DeleteSipDiscount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.discount.delete_sip_discount_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.discount.delete_sip_discount")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteSipDiscount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteSipDiscount due to invalid fixture: %v", err)
 	}

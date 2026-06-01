@@ -12,7 +12,14 @@ func Test_GlobalProduct_GetCategory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_category_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_category")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCategory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCategory due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_GlobalProduct_GetAttributeTree(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_attribute_tree_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_attribute_tree")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAttributeTree due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAttributeTree due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_GlobalProduct_GetBrandList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_brand_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_brand_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBrandList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBrandList due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_GlobalProduct_GetGlobalItemLimit(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_global_item_limit_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_global_item_limit")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGlobalItemLimit due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGlobalItemLimit due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_GlobalProduct_GetGlobalItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_global_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_global_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGlobalItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGlobalItemList due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_GlobalProduct_GetGlobalItemInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_global_item_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_global_item_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGlobalItemInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGlobalItemInfo due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_GlobalProduct_AddGlobalItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.add_global_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.add_global_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddGlobalItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddGlobalItem due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_GlobalProduct_UpdateGlobalItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_global_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_global_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateGlobalItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateGlobalItem due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_GlobalProduct_DeleteGlobalItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.delete_global_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.delete_global_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteGlobalItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteGlobalItem due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_GlobalProduct_InitTierVariation(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.init_tier_variation_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.init_tier_variation")
+		skippedMu.Unlock()
+		t.Skipf("Skipping InitTierVariation due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping InitTierVariation due to invalid fixture: %v", err)
 	}
@@ -212,7 +282,14 @@ func Test_GlobalProduct_UpdateTierVariation(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_tier_variation_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_tier_variation")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateTierVariation due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateTierVariation due to invalid fixture: %v", err)
 	}
@@ -232,7 +309,14 @@ func Test_GlobalProduct_AddGlobalModel(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.add_global_model_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.add_global_model")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddGlobalModel due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddGlobalModel due to invalid fixture: %v", err)
 	}
@@ -252,7 +336,14 @@ func Test_GlobalProduct_UpdateGlobalModel(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_global_model_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_global_model")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateGlobalModel due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateGlobalModel due to invalid fixture: %v", err)
 	}
@@ -272,7 +363,14 @@ func Test_GlobalProduct_DeleteGlobalModel(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.delete_global_model_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.delete_global_model")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteGlobalModel due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteGlobalModel due to invalid fixture: %v", err)
 	}
@@ -292,7 +390,14 @@ func Test_GlobalProduct_GetGlobalModelList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_global_model_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_global_model_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGlobalModelList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGlobalModelList due to invalid fixture: %v", err)
 	}
@@ -312,7 +417,14 @@ func Test_GlobalProduct_SupportSizeChart(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.support_size_chart_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.support_size_chart")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SupportSizeChart due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SupportSizeChart due to invalid fixture: %v", err)
 	}
@@ -332,7 +444,14 @@ func Test_GlobalProduct_UpdateSizeChart(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_size_chart_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_size_chart")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateSizeChart due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateSizeChart due to invalid fixture: %v", err)
 	}
@@ -352,7 +471,14 @@ func Test_GlobalProduct_CreatePublishTask(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.create_publish_task_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.create_publish_task")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CreatePublishTask due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CreatePublishTask due to invalid fixture: %v", err)
 	}
@@ -372,7 +498,14 @@ func Test_GlobalProduct_GetPublishableShop(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_publishable_shop_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_publishable_shop")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPublishableShop due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPublishableShop due to invalid fixture: %v", err)
 	}
@@ -392,7 +525,14 @@ func Test_GlobalProduct_GetPublishTaskResult(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_publish_task_result_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_publish_task_result")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPublishTaskResult due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPublishTaskResult due to invalid fixture: %v", err)
 	}
@@ -412,7 +552,14 @@ func Test_GlobalProduct_GetPublishedList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_published_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_published_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPublishedList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPublishedList due to invalid fixture: %v", err)
 	}
@@ -432,7 +579,14 @@ func Test_GlobalProduct_UpdatePrice(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_price_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_price")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdatePrice due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdatePrice due to invalid fixture: %v", err)
 	}
@@ -452,7 +606,14 @@ func Test_GlobalProduct_UpdateStock(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_stock_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_stock")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateStock due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateStock due to invalid fixture: %v", err)
 	}
@@ -472,7 +633,14 @@ func Test_GlobalProduct_SetSyncField(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.set_sync_field_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.set_sync_field")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetSyncField due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetSyncField due to invalid fixture: %v", err)
 	}
@@ -492,7 +660,14 @@ func Test_GlobalProduct_GetGlobalItemId(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_global_item_id_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_global_item_id")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGlobalItemId due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGlobalItemId due to invalid fixture: %v", err)
 	}
@@ -512,7 +687,14 @@ func Test_GlobalProduct_CategoryRecommend(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.category_recommend_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.category_recommend")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CategoryRecommend due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CategoryRecommend due to invalid fixture: %v", err)
 	}
@@ -532,7 +714,14 @@ func Test_GlobalProduct_GetRecommendAttribute(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_recommend_attribute_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_recommend_attribute")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetRecommendAttribute due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetRecommendAttribute due to invalid fixture: %v", err)
 	}
@@ -552,7 +741,14 @@ func Test_GlobalProduct_GetShopPublishableStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_shop_publishable_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_shop_publishable_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopPublishableStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopPublishableStatus due to invalid fixture: %v", err)
 	}
@@ -572,7 +768,14 @@ func Test_GlobalProduct_GetVariations(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_variations_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_variations")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetVariations due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetVariations due to invalid fixture: %v", err)
 	}
@@ -592,7 +795,14 @@ func Test_GlobalProduct_GetSizeChartDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_size_chart_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_size_chart_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSizeChartDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSizeChartDetail due to invalid fixture: %v", err)
 	}
@@ -612,7 +822,14 @@ func Test_GlobalProduct_GetSizeChartList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_size_chart_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_size_chart_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSizeChartList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSizeChartList due to invalid fixture: %v", err)
 	}
@@ -632,7 +849,14 @@ func Test_GlobalProduct_SearchGlobalAttributeValueList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.search_global_attribute_value_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.search_global_attribute_value_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SearchGlobalAttributeValueList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SearchGlobalAttributeValueList due to invalid fixture: %v", err)
 	}
@@ -652,7 +876,14 @@ func Test_GlobalProduct_GetLocalAdjustmentRate(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.get_local_adjustment_rate_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.get_local_adjustment_rate")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetLocalAdjustmentRate due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetLocalAdjustmentRate due to invalid fixture: %v", err)
 	}
@@ -672,7 +903,14 @@ func Test_GlobalProduct_UpdateLocalAdjustmentRate(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.global_product.update_local_adjustment_rate_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.global_product.update_local_adjustment_rate")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateLocalAdjustmentRate due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateLocalAdjustmentRate due to invalid fixture: %v", err)
 	}

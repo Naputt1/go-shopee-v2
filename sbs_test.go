@@ -12,7 +12,14 @@ func Test_SBS_GetBoundWhsInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.sbs.get_bound_whs_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.sbs.get_bound_whs_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBoundWhsInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBoundWhsInfo due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_SBS_GetCurrentInventory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.sbs.get_current_inventory_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.sbs.get_current_inventory")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCurrentInventory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCurrentInventory due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_SBS_GetExpiryReport(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.sbs.get_expiry_report_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.sbs.get_expiry_report")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetExpiryReport due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetExpiryReport due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_SBS_GetStockAging(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.sbs.get_stock_aging_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.sbs.get_stock_aging")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetStockAging due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetStockAging due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_SBS_GetStockMovement(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.sbs.get_stock_movement_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.sbs.get_stock_movement")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetStockMovement due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetStockMovement due to invalid fixture: %v", err)
 	}

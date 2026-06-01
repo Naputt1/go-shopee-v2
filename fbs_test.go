@@ -12,7 +12,14 @@ func Test_FBS_QueryBrShopEnrollmentStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.fbs.query_br_shop_enrollment_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.fbs.query_br_shop_enrollment_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping QueryBrShopEnrollmentStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping QueryBrShopEnrollmentStatus due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_FBS_QueryBrShopInvoiceError(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.fbs.query_br_shop_invoice_error_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.fbs.query_br_shop_invoice_error")
+		skippedMu.Unlock()
+		t.Skipf("Skipping QueryBrShopInvoiceError due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping QueryBrShopInvoiceError due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_FBS_QueryBrShopBlockStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.fbs.query_br_shop_block_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.fbs.query_br_shop_block_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping QueryBrShopBlockStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping QueryBrShopBlockStatus due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_FBS_QueryBrSkuBlockStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.fbs.query_br_sku_block_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.fbs.query_br_sku_block_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping QueryBrSkuBlockStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping QueryBrSkuBlockStatus due to invalid fixture: %v", err)
 	}

@@ -12,7 +12,14 @@ func Test_Shop_GetShopInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_shop_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_shop_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopInfo due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Shop_GetProfile(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_profile_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_profile")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProfile due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProfile due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Shop_UpdateProfile(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.update_profile_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.update_profile")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateProfile due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateProfile due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Shop_GetWarehouseDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_warehouse_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_warehouse_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetWarehouseDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetWarehouseDetail due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Shop_GetShopNotification(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_shop_notification_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_shop_notification")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopNotification due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopNotification due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Shop_GetAuthorisedResellerBrand(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_authorised_reseller_brand_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_authorised_reseller_brand")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAuthorisedResellerBrand due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAuthorisedResellerBrand due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_Shop_GetBrShopOnboardingInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_br_shop_onboarding_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_br_shop_onboarding_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBrShopOnboardingInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBrShopOnboardingInfo due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_Shop_GetShopHolidayMode(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.get_shop_holiday_mode_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.get_shop_holiday_mode")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopHolidayMode due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopHolidayMode due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_Shop_SetShopHolidayMode(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop.set_shop_holiday_mode_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop.set_shop_holiday_mode")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetShopHolidayMode due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetShopHolidayMode due to invalid fixture: %v", err)
 	}

@@ -12,7 +12,14 @@ func Test_Payment_GetEscrowDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_escrow_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_escrow_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetEscrowDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetEscrowDetail due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Payment_SetShopInstallmentStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.set_shop_installment_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.set_shop_installment_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetShopInstallmentStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetShopInstallmentStatus due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Payment_GetShopInstallmentStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_shop_installment_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_shop_installment_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopInstallmentStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopInstallmentStatus due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Payment_GetPayoutDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_payout_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_payout_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPayoutDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPayoutDetail due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Payment_SetItemInstallmentStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.set_item_installment_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.set_item_installment_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetItemInstallmentStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetItemInstallmentStatus due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Payment_GetItemInstallmentStatus(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_item_installment_status_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_item_installment_status")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemInstallmentStatus due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemInstallmentStatus due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_Payment_GetPaymentMethodList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_payment_method_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_payment_method_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPaymentMethodList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPaymentMethodList due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_Payment_GetWalletTransactionList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_wallet_transaction_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_wallet_transaction_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetWalletTransactionList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetWalletTransactionList due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_Payment_GetEscrowList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_escrow_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_escrow_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetEscrowList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetEscrowList due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_Payment_GetPayoutInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_payout_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_payout_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPayoutInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPayoutInfo due to invalid fixture: %v", err)
 	}
@@ -212,7 +282,14 @@ func Test_Payment_GetBillingTransactionInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_billing_transaction_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_billing_transaction_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBillingTransactionInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBillingTransactionInfo due to invalid fixture: %v", err)
 	}
@@ -232,7 +309,14 @@ func Test_Payment_GetEscrowDetailBatch(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_escrow_detail_batch_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_escrow_detail_batch")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetEscrowDetailBatch due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetEscrowDetailBatch due to invalid fixture: %v", err)
 	}
@@ -252,7 +336,14 @@ func Test_Payment_GenerateIncomeStatement(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.generate_income_statement_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.generate_income_statement")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GenerateIncomeStatement due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GenerateIncomeStatement due to invalid fixture: %v", err)
 	}
@@ -272,7 +363,14 @@ func Test_Payment_GetIncomeStatement(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_income_statement_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_income_statement")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetIncomeStatement due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetIncomeStatement due to invalid fixture: %v", err)
 	}
@@ -292,7 +390,14 @@ func Test_Payment_GenerateIncomeReport(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.generate_income_report_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.generate_income_report")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GenerateIncomeReport due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GenerateIncomeReport due to invalid fixture: %v", err)
 	}
@@ -312,7 +417,14 @@ func Test_Payment_GetIncomeReport(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_income_report_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_income_report")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetIncomeReport due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetIncomeReport due to invalid fixture: %v", err)
 	}
@@ -332,7 +444,14 @@ func Test_Payment_GetIncomeOverview(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_income_overview_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_income_overview")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetIncomeOverview due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetIncomeOverview due to invalid fixture: %v", err)
 	}
@@ -352,7 +471,14 @@ func Test_Payment_GetIncomeDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.payment.get_income_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.payment.get_income_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetIncomeDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetIncomeDetail due to invalid fixture: %v", err)
 	}

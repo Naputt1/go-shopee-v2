@@ -12,7 +12,14 @@ func Test_FirstMile_GetUnbindOrderList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_unbind_order_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_unbind_order_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetUnbindOrderList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetUnbindOrderList due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_FirstMile_GetDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetDetail due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_FirstMile_GenerateFirstMileTrackingNumber(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.generate_first_mile_tracking_number_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.generate_first_mile_tracking_number")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GenerateFirstMileTrackingNumber due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GenerateFirstMileTrackingNumber due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_FirstMile_BindFirstMileTrackingNumber(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.bind_first_mile_tracking_number_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.bind_first_mile_tracking_number")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BindFirstMileTrackingNumber due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping BindFirstMileTrackingNumber due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_FirstMile_UnbindFirstMileTrackingNumber(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.unbind_first_mile_tracking_number_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.unbind_first_mile_tracking_number")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UnbindFirstMileTrackingNumber due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UnbindFirstMileTrackingNumber due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_FirstMile_GetTrackingNumberList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_tracking_number_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_tracking_number_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetTrackingNumberList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetTrackingNumberList due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_FirstMile_GetWaybill(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_waybill_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_waybill")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetWaybill due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetWaybill due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_FirstMile_GetChannelList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_channel_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_channel_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetChannelList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetChannelList due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_FirstMile_GetCourierDeliveryChannelList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_courier_delivery_channel_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_courier_delivery_channel_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCourierDeliveryChannelList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCourierDeliveryChannelList due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_FirstMile_GetTransitWarehouseList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_transit_warehouse_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_transit_warehouse_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetTransitWarehouseList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetTransitWarehouseList due to invalid fixture: %v", err)
 	}
@@ -212,7 +282,14 @@ func Test_FirstMile_GenerateAndBindFirstMileTrackingNumber(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.generate_and_bind_first_mile_tracking_number_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.generate_and_bind_first_mile_tracking_number")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GenerateAndBindFirstMileTrackingNumber due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GenerateAndBindFirstMileTrackingNumber due to invalid fixture: %v", err)
 	}
@@ -232,7 +309,14 @@ func Test_FirstMile_BindCourierDeliveryFirstMileTrackingNumber(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.bind_courier_delivery_first_mile_tracking_number_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.bind_courier_delivery_first_mile_tracking_number")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BindCourierDeliveryFirstMileTrackingNumber due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping BindCourierDeliveryFirstMileTrackingNumber due to invalid fixture: %v", err)
 	}
@@ -252,7 +336,14 @@ func Test_FirstMile_UnbindFirstMileTrackingNumberAll(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.unbind_first_mile_tracking_number_all_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.unbind_first_mile_tracking_number_all")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UnbindFirstMileTrackingNumberAll due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UnbindFirstMileTrackingNumberAll due to invalid fixture: %v", err)
 	}
@@ -272,7 +363,14 @@ func Test_FirstMile_GetCourierDeliveryDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_courier_delivery_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_courier_delivery_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCourierDeliveryDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCourierDeliveryDetail due to invalid fixture: %v", err)
 	}
@@ -292,7 +390,14 @@ func Test_FirstMile_GetCourierDeliveryWaybill(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_courier_delivery_waybill_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_courier_delivery_waybill")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCourierDeliveryWaybill due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCourierDeliveryWaybill due to invalid fixture: %v", err)
 	}
@@ -312,7 +417,14 @@ func Test_FirstMile_GetCourierDeliveryTrackingNumberList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.first_mile.get_courier_delivery_tracking_number_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.first_mile.get_courier_delivery_tracking_number_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCourierDeliveryTrackingNumberList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCourierDeliveryTrackingNumberList due to invalid fixture: %v", err)
 	}

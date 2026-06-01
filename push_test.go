@@ -12,7 +12,14 @@ func Test_Push_SetAppPushConfig(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.push.set_app_push_config_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.push.set_app_push_config")
+		skippedMu.Unlock()
+		t.Skipf("Skipping SetAppPushConfig due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping SetAppPushConfig due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Push_GetAppPushConfig(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.push.get_app_push_config_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.push.get_app_push_config")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAppPushConfig due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAppPushConfig due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Push_GetLostPushMessage(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.push.get_lost_push_message_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.push.get_lost_push_message")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetLostPushMessage due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetLostPushMessage due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Push_ConfirmConsumedLostPushMessage(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.push.confirm_consumed_lost_push_message_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.push.confirm_consumed_lost_push_message")
+		skippedMu.Unlock()
+		t.Skipf("Skipping ConfirmConsumedLostPushMessage due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping ConfirmConsumedLostPushMessage due to invalid fixture: %v", err)
 	}

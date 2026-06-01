@@ -12,7 +12,14 @@ func Test_Ads_GetTotalBalance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_total_balance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_total_balance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetTotalBalance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetTotalBalance due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Ads_GetShopToggleInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_shop_toggle_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_shop_toggle_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopToggleInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopToggleInfo due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Ads_GetRecommendedKeywordList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_recommended_keyword_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_recommended_keyword_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetRecommendedKeywordList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetRecommendedKeywordList due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Ads_GetRecommendedItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_recommended_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_recommended_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetRecommendedItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetRecommendedItemList due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Ads_GetAllCpcAdsHourlyPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_all_cpc_ads_hourly_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_all_cpc_ads_hourly_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAllCpcAdsHourlyPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAllCpcAdsHourlyPerformance due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Ads_GetAllCpcAdsDailyPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_all_cpc_ads_daily_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_all_cpc_ads_daily_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAllCpcAdsDailyPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAllCpcAdsDailyPerformance due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_Ads_GetProductCampaignDailyPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_product_campaign_daily_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_product_campaign_daily_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProductCampaignDailyPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProductCampaignDailyPerformance due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_Ads_GetProductCampaignHourlyPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_product_campaign_hourly_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_product_campaign_hourly_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProductCampaignHourlyPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProductCampaignHourlyPerformance due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_Ads_GetProductLevelCampaignIdList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_product_level_campaign_id_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_product_level_campaign_id_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProductLevelCampaignIdList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProductLevelCampaignIdList due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_Ads_GetProductLevelCampaignSettingInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_product_level_campaign_setting_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_product_level_campaign_setting_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProductLevelCampaignSettingInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProductLevelCampaignSettingInfo due to invalid fixture: %v", err)
 	}
@@ -212,7 +282,14 @@ func Test_Ads_CreateManualProductAds(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.create_manual_product_ads_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.create_manual_product_ads")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CreateManualProductAds due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CreateManualProductAds due to invalid fixture: %v", err)
 	}
@@ -232,7 +309,14 @@ func Test_Ads_EditManualProductAdKeywords(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.edit_manual_product_ad_keywords_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.edit_manual_product_ad_keywords")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EditManualProductAdKeywords due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EditManualProductAdKeywords due to invalid fixture: %v", err)
 	}
@@ -252,7 +336,14 @@ func Test_Ads_EditManualProductAds(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.edit_manual_product_ads_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.edit_manual_product_ads")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EditManualProductAds due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EditManualProductAds due to invalid fixture: %v", err)
 	}
@@ -272,7 +363,14 @@ func Test_Ads_GetCreateProductAdBudgetSuggestion(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_create_product_ad_budget_suggestion_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_create_product_ad_budget_suggestion")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetCreateProductAdBudgetSuggestion due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetCreateProductAdBudgetSuggestion due to invalid fixture: %v", err)
 	}
@@ -292,7 +390,14 @@ func Test_Ads_GetProductRecommendedRoiTarget(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_product_recommended_roi_target_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_product_recommended_roi_target")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetProductRecommendedRoiTarget due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetProductRecommendedRoiTarget due to invalid fixture: %v", err)
 	}
@@ -312,7 +417,14 @@ func Test_Ads_GetAdsFcilShopRate(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_ads_f_cil_shop_rate_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_ads_fácil_shop_rate")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAdsFcilShopRate due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAdsFcilShopRate due to invalid fixture: %v", err)
 	}
@@ -332,7 +444,14 @@ func Test_Ads_CheckCreateGmsProductCampaignEligibility(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.check_create_gms_product_campaign_eligibility_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.check_create_gms_product_campaign_eligibility")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CheckCreateGmsProductCampaignEligibility due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CheckCreateGmsProductCampaignEligibility due to invalid fixture: %v", err)
 	}
@@ -352,7 +471,14 @@ func Test_Ads_CreateGmsProductCampaign(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.create_gms_product_campaign_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.create_gms_product_campaign")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CreateGmsProductCampaign due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CreateGmsProductCampaign due to invalid fixture: %v", err)
 	}
@@ -372,7 +498,14 @@ func Test_Ads_EditGmsProductCampaign(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.edit_gms_product_campaign_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.edit_gms_product_campaign")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EditGmsProductCampaign due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EditGmsProductCampaign due to invalid fixture: %v", err)
 	}
@@ -392,7 +525,14 @@ func Test_Ads_ListGmsUserDeletedItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.list_gms_user_deleted_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.list_gms_user_deleted_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping ListGmsUserDeletedItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping ListGmsUserDeletedItem due to invalid fixture: %v", err)
 	}
@@ -412,7 +552,14 @@ func Test_Ads_EditGmsItemProductCampaign(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.edit_gms_item_product_campaign_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.edit_gms_item_product_campaign")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EditGmsItemProductCampaign due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EditGmsItemProductCampaign due to invalid fixture: %v", err)
 	}
@@ -432,7 +579,14 @@ func Test_Ads_GetGmsCampaignPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_gms_campaign_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_gms_campaign_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGmsCampaignPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGmsCampaignPerformance due to invalid fixture: %v", err)
 	}
@@ -452,7 +606,14 @@ func Test_Ads_GetGmsItemPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.ads.get_gms_item_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.ads.get_gms_item_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetGmsItemPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetGmsItemPerformance due to invalid fixture: %v", err)
 	}

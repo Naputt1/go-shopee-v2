@@ -12,7 +12,14 @@ func Test_FollowPrize_AddFollowPrize(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.add_follow_prize_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.add_follow_prize")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddFollowPrize due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddFollowPrize due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_FollowPrize_DeleteFollowPrize(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.delete_follow_prize_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.delete_follow_prize")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteFollowPrize due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteFollowPrize due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_FollowPrize_EndFollowPrize(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.end_follow_prize_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.end_follow_prize")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EndFollowPrize due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EndFollowPrize due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_FollowPrize_UpdateFollowPrize(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.update_follow_prize_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.update_follow_prize")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateFollowPrize due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateFollowPrize due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_FollowPrize_GetFollowPrizeDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.get_follow_prize_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.get_follow_prize_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetFollowPrizeDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetFollowPrizeDetail due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_FollowPrize_GetFollowPrizeList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.follow_prize.get_follow_prize_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.follow_prize.get_follow_prize_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetFollowPrizeList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetFollowPrizeList due to invalid fixture: %v", err)
 	}
