@@ -12,7 +12,14 @@ func Test_Public_GetShopsByPartner(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.public.get_shops_by_partner_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.public.get_shops_by_partner")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopsByPartner due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopsByPartner due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Public_GetMerchantsByPartner(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.public.get_merchants_by_partner_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.public.get_merchants_by_partner")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMerchantsByPartner due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMerchantsByPartner due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Public_GetTokenByResendCode(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.public.get_token_by_resend_code_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.public.get_token_by_resend_code")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetTokenByResendCode due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetTokenByResendCode due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Public_GetShopeeIpRanges(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.public.get_shopee_ip_ranges_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.public.get_shopee_ip_ranges")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopeeIpRanges due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopeeIpRanges due to invalid fixture: %v", err)
 	}

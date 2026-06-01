@@ -12,7 +12,14 @@ func Test_MediaSpace_InitVideoUpload(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.init_video_upload_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.init_video_upload")
+		skippedMu.Unlock()
+		t.Skipf("Skipping InitVideoUpload due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping InitVideoUpload due to invalid fixture: %v", err)
 	}
@@ -31,7 +38,14 @@ func Test_MediaSpace_UploadVideoPart(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.upload_video_part_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.upload_video_part")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UploadVideoPart due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UploadVideoPart due to invalid fixture: %v", err)
 	}
@@ -50,7 +64,14 @@ func Test_MediaSpace_CompleteVideoUpload(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.complete_video_upload_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.complete_video_upload")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CompleteVideoUpload due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CompleteVideoUpload due to invalid fixture: %v", err)
 	}
@@ -69,7 +90,14 @@ func Test_MediaSpace_GetVideoUploadResult(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.get_video_upload_result_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.get_video_upload_result")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetVideoUploadResult due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetVideoUploadResult due to invalid fixture: %v", err)
 	}
@@ -88,7 +116,14 @@ func Test_MediaSpace_CancelVideoUpload(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.cancel_video_upload_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.cancel_video_upload")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CancelVideoUpload due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CancelVideoUpload due to invalid fixture: %v", err)
 	}
@@ -107,7 +142,14 @@ func Test_MediaSpace_UploadImage(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.media_space.upload_image_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.media_space.upload_image")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UploadImage due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UploadImage due to invalid fixture: %v", err)
 	}

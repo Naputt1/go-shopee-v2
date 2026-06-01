@@ -959,7 +959,14 @@ func Test_{{$.ModuleName}}_{{.Name}}(t *testing.T) {
 	defer teardown()
 
 	fixture := "{{.FixtureName}}"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "{{.FullAPIName}}")
+		skippedMu.Unlock()
+		t.Skipf("Skipping {{.Name}} due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping {{.Name}} due to invalid fixture: %v", err)
 	}

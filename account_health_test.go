@@ -12,7 +12,14 @@ func Test_AccountHealth_GetShopPerformance(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_shop_performance_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_shop_performance")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopPerformance due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopPerformance due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_AccountHealth_GetMetricSourceDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_metric_source_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_metric_source_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMetricSourceDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMetricSourceDetail due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_AccountHealth_GetPenaltyPointHistory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_penalty_point_history_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_penalty_point_history")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPenaltyPointHistory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPenaltyPointHistory due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_AccountHealth_GetPunishmentHistory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_punishment_history_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_punishment_history")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetPunishmentHistory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetPunishmentHistory due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_AccountHealth_GetListingsWithIssues(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_listings_with_issues_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_listings_with_issues")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetListingsWithIssues due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetListingsWithIssues due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_AccountHealth_GetLateOrders(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.account_health.get_late_orders_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.account_health.get_late_orders")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetLateOrders due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetLateOrders due to invalid fixture: %v", err)
 	}

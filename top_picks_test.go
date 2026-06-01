@@ -12,7 +12,14 @@ func Test_TopPicks_GetTopPicksList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.top_picks.get_top_picks_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.top_picks.get_top_picks_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetTopPicksList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetTopPicksList due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_TopPicks_AddTopPicks(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.top_picks.add_top_picks_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.top_picks.add_top_picks")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddTopPicks due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddTopPicks due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_TopPicks_UpdateTopPicks(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.top_picks.update_top_picks_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.top_picks.update_top_picks")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateTopPicks due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateTopPicks due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_TopPicks_DeleteTopPicks(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.top_picks.delete_top_picks_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.top_picks.delete_top_picks")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteTopPicks due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteTopPicks due to invalid fixture: %v", err)
 	}

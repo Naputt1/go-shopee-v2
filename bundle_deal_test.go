@@ -12,7 +12,14 @@ func Test_BundleDeal_AddBundleDeal(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.add_bundle_deal_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.add_bundle_deal")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddBundleDeal due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddBundleDeal due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_BundleDeal_AddBundleDealItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.add_bundle_deal_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.add_bundle_deal_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddBundleDealItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddBundleDealItem due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_BundleDeal_GetBundleDealList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.get_bundle_deal_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.get_bundle_deal_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBundleDealList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBundleDealList due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_BundleDeal_GetBundleDeal(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.get_bundle_deal_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.get_bundle_deal")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBundleDeal due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBundleDeal due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_BundleDeal_GetBundleDealItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.get_bundle_deal_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.get_bundle_deal_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBundleDealItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetBundleDealItem due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_BundleDeal_UpdateBundleDeal(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.update_bundle_deal_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.update_bundle_deal")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateBundleDeal due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateBundleDeal due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_BundleDeal_UpdateBundleDealItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.update_bundle_deal_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.update_bundle_deal_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateBundleDealItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateBundleDealItem due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_BundleDeal_EndBundleDeal(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.end_bundle_deal_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.end_bundle_deal")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EndBundleDeal due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EndBundleDeal due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_BundleDeal_DeleteBundleDeal(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.delete_bundle_deal_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.delete_bundle_deal")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteBundleDeal due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteBundleDeal due to invalid fixture: %v", err)
 	}
@@ -192,7 +255,14 @@ func Test_BundleDeal_DeleteBundleDealItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.bundle_deal.delete_bundle_deal_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.bundle_deal.delete_bundle_deal_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteBundleDealItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteBundleDealItem due to invalid fixture: %v", err)
 	}

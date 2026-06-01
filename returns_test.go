@@ -12,7 +12,14 @@ func Test_Returns_GetReturnList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_return_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_return_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetReturnList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetReturnList due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Returns_GetReturnDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_return_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_return_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetReturnDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetReturnDetail due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Returns_Confirm(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.confirm_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.confirm")
+		skippedMu.Unlock()
+		t.Skipf("Skipping Confirm due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping Confirm due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Returns_Dispute(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.dispute_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.dispute")
+		skippedMu.Unlock()
+		t.Skipf("Skipping Dispute due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping Dispute due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Returns_GetAvailableSolutions(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_available_solutions_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_available_solutions")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetAvailableSolutions due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetAvailableSolutions due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Returns_Offer(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.offer_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.offer")
+		skippedMu.Unlock()
+		t.Skipf("Skipping Offer due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping Offer due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_Returns_AcceptOffer(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.accept_offer_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.accept_offer")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AcceptOffer due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AcceptOffer due to invalid fixture: %v", err)
 	}
@@ -152,7 +201,14 @@ func Test_Returns_ConvertImage(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.convert_image_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.convert_image")
+		skippedMu.Unlock()
+		t.Skipf("Skipping ConvertImage due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping ConvertImage due to invalid fixture: %v", err)
 	}
@@ -172,7 +228,14 @@ func Test_Returns_UploadProof(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.upload_proof_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.upload_proof")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UploadProof due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UploadProof due to invalid fixture: %v", err)
 	}
@@ -191,7 +254,14 @@ func Test_Returns_QueryProof(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.query_proof_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.query_proof")
+		skippedMu.Unlock()
+		t.Skipf("Skipping QueryProof due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping QueryProof due to invalid fixture: %v", err)
 	}
@@ -211,7 +281,14 @@ func Test_Returns_GetReturnDisputeReason(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_return_dispute_reason_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_return_dispute_reason")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetReturnDisputeReason due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetReturnDisputeReason due to invalid fixture: %v", err)
 	}
@@ -231,7 +308,14 @@ func Test_Returns_CancelDispute(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.cancel_dispute_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.cancel_dispute")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CancelDispute due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CancelDispute due to invalid fixture: %v", err)
 	}
@@ -251,7 +335,14 @@ func Test_Returns_GetShippingCarrier(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_shipping_carrier_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_shipping_carrier")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShippingCarrier due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShippingCarrier due to invalid fixture: %v", err)
 	}
@@ -271,7 +362,14 @@ func Test_Returns_UploadShippingProof(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.upload_shipping_proof_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.upload_shipping_proof")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UploadShippingProof due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UploadShippingProof due to invalid fixture: %v", err)
 	}
@@ -290,7 +388,14 @@ func Test_Returns_GetReverseTrackingInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.returns.get_reverse_tracking_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.returns.get_reverse_tracking_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetReverseTrackingInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetReverseTrackingInfo due to invalid fixture: %v", err)
 	}

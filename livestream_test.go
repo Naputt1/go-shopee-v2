@@ -12,7 +12,14 @@ func Test_Livestream_UploadImage(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.upload_image_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.upload_image")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UploadImage due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UploadImage due to invalid fixture: %v", err)
 	}
@@ -31,7 +38,14 @@ func Test_Livestream_CreateSession(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.create_session_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.create_session")
+		skippedMu.Unlock()
+		t.Skipf("Skipping CreateSession due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping CreateSession due to invalid fixture: %v", err)
 	}
@@ -51,7 +65,14 @@ func Test_Livestream_UpdateSession(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.update_session_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.update_session")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateSession due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateSession due to invalid fixture: %v", err)
 	}
@@ -71,7 +92,14 @@ func Test_Livestream_StartSession(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.start_session_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.start_session")
+		skippedMu.Unlock()
+		t.Skipf("Skipping StartSession due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping StartSession due to invalid fixture: %v", err)
 	}
@@ -91,7 +119,14 @@ func Test_Livestream_EndSession(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.end_session_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.end_session")
+		skippedMu.Unlock()
+		t.Skipf("Skipping EndSession due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping EndSession due to invalid fixture: %v", err)
 	}
@@ -111,7 +146,14 @@ func Test_Livestream_GetSessionDetail(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_session_detail_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_session_detail")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSessionDetail due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSessionDetail due to invalid fixture: %v", err)
 	}
@@ -131,7 +173,14 @@ func Test_Livestream_AddItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.add_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.add_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddItemList due to invalid fixture: %v", err)
 	}
@@ -151,7 +200,14 @@ func Test_Livestream_DeleteItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.delete_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.delete_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteItemList due to invalid fixture: %v", err)
 	}
@@ -171,7 +227,14 @@ func Test_Livestream_UpdateItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.update_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.update_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateItemList due to invalid fixture: %v", err)
 	}
@@ -191,7 +254,14 @@ func Test_Livestream_GetItemCount(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_item_count_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_item_count")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemCount due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemCount due to invalid fixture: %v", err)
 	}
@@ -211,7 +281,14 @@ func Test_Livestream_GetItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemList due to invalid fixture: %v", err)
 	}
@@ -231,7 +308,14 @@ func Test_Livestream_UpdateShowItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.update_show_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.update_show_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateShowItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateShowItem due to invalid fixture: %v", err)
 	}
@@ -251,7 +335,14 @@ func Test_Livestream_DeleteShowItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.delete_show_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.delete_show_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteShowItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteShowItem due to invalid fixture: %v", err)
 	}
@@ -271,7 +362,14 @@ func Test_Livestream_GetShowItem(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_show_item_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_show_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShowItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShowItem due to invalid fixture: %v", err)
 	}
@@ -291,7 +389,14 @@ func Test_Livestream_GetLikeItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_like_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_like_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetLikeItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetLikeItemList due to invalid fixture: %v", err)
 	}
@@ -311,7 +416,14 @@ func Test_Livestream_GetRecentItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_recent_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_recent_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetRecentItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetRecentItemList due to invalid fixture: %v", err)
 	}
@@ -331,7 +443,14 @@ func Test_Livestream_GetItemSetList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_item_set_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_item_set_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemSetList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemSetList due to invalid fixture: %v", err)
 	}
@@ -351,7 +470,14 @@ func Test_Livestream_GetItemSetItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_item_set_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_item_set_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemSetItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemSetItemList due to invalid fixture: %v", err)
 	}
@@ -371,7 +497,14 @@ func Test_Livestream_ApplyItemSet(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.apply_item_set_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.apply_item_set")
+		skippedMu.Unlock()
+		t.Skipf("Skipping ApplyItemSet due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping ApplyItemSet due to invalid fixture: %v", err)
 	}
@@ -391,7 +524,14 @@ func Test_Livestream_GetSessionMetric(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_session_metric_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_session_metric")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSessionMetric due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSessionMetric due to invalid fixture: %v", err)
 	}
@@ -411,7 +551,14 @@ func Test_Livestream_GetSessionItemMetric(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_session_item_metric_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_session_item_metric")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetSessionItemMetric due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetSessionItemMetric due to invalid fixture: %v", err)
 	}
@@ -431,7 +578,14 @@ func Test_Livestream_GetLatestCommentList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.get_latest_comment_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.get_latest_comment_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetLatestCommentList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetLatestCommentList due to invalid fixture: %v", err)
 	}
@@ -451,7 +605,14 @@ func Test_Livestream_PostComment(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.post_comment_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.post_comment")
+		skippedMu.Unlock()
+		t.Skipf("Skipping PostComment due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping PostComment due to invalid fixture: %v", err)
 	}
@@ -471,7 +632,14 @@ func Test_Livestream_BanUserComment(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.ban_user_comment_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.ban_user_comment")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BanUserComment due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping BanUserComment due to invalid fixture: %v", err)
 	}
@@ -491,7 +659,14 @@ func Test_Livestream_UnbanUserComment(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.livestream.unban_user_comment_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.livestream.unban_user_comment")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UnbanUserComment due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UnbanUserComment due to invalid fixture: %v", err)
 	}

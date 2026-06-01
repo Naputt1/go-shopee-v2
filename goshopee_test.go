@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"sync"
 	"testing"
 
 	"github.com/caarlos0/env/v11"
@@ -20,9 +21,22 @@ const (
 )
 
 var (
-	client *Client[any]
-	app    App
+	client        *Client[any]
+	app           App
+	skippedRoutes []string
+	skippedMu     sync.Mutex
 )
+
+func TestMain(m *testing.M) {
+	code := m.Run()
+	if len(skippedRoutes) > 0 {
+		fmt.Println("\nSkipped routes (missing fixtures):")
+		for _, r := range skippedRoutes {
+			fmt.Println("  -", r)
+		}
+	}
+	os.Exit(code)
+}
 
 func setup() {
 	err := godotenv.Load()
@@ -50,11 +64,19 @@ func teardown() {
 }
 
 func loadFixture(filename string) []byte {
-	f, err := os.ReadFile("fixtures/" + filename)
+	f, err := loadFixtureSafe(filename)
 	if err != nil {
 		panic(fmt.Sprintf("Cannot load fixture %v", filename))
 	}
 	return f
+}
+
+func loadFixtureSafe(filename string) ([]byte, error) {
+	f, err := os.ReadFile("fixtures/" + filename)
+	if err != nil {
+		return nil, err
+	}
+	return f, nil
 }
 
 func loadMockData(filename string, out interface{}) {

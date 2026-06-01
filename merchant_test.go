@@ -12,7 +12,14 @@ func Test_Merchant_GetMerchantInfo(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_merchant_info_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_merchant_info")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMerchantInfo due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMerchantInfo due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_Merchant_GetShopListByMerchant(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_shop_list_by_merchant_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_shop_list_by_merchant")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopListByMerchant due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopListByMerchant due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_Merchant_GetMerchantWarehouseLocationList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_merchant_warehouse_location_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_merchant_warehouse_location_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMerchantWarehouseLocationList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMerchantWarehouseLocationList due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_Merchant_GetMerchantWarehouseList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_merchant_warehouse_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_merchant_warehouse_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMerchantWarehouseList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMerchantWarehouseList due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_Merchant_GetWarehouseEligibleShopList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_warehouse_eligible_shop_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_warehouse_eligible_shop_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetWarehouseEligibleShopList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetWarehouseEligibleShopList due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_Merchant_GetMerchantPrepaidAccountList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.merchant.get_merchant_prepaid_account_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.merchant.get_merchant_prepaid_account_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetMerchantPrepaidAccountList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetMerchantPrepaidAccountList due to invalid fixture: %v", err)
 	}

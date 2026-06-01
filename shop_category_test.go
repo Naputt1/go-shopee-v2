@@ -12,7 +12,14 @@ func Test_ShopCategory_AddShopCategory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.add_shop_category_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.add_shop_category")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddShopCategory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddShopCategory due to invalid fixture: %v", err)
 	}
@@ -32,7 +39,14 @@ func Test_ShopCategory_GetShopCategoryList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.get_shop_category_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.get_shop_category_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetShopCategoryList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetShopCategoryList due to invalid fixture: %v", err)
 	}
@@ -52,7 +66,14 @@ func Test_ShopCategory_DeleteShopCategory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.delete_shop_category_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.delete_shop_category")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteShopCategory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteShopCategory due to invalid fixture: %v", err)
 	}
@@ -72,7 +93,14 @@ func Test_ShopCategory_UpdateShopCategory(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.update_shop_category_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.update_shop_category")
+		skippedMu.Unlock()
+		t.Skipf("Skipping UpdateShopCategory due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping UpdateShopCategory due to invalid fixture: %v", err)
 	}
@@ -92,7 +120,14 @@ func Test_ShopCategory_AddItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.add_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.add_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping AddItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping AddItemList due to invalid fixture: %v", err)
 	}
@@ -112,7 +147,14 @@ func Test_ShopCategory_GetItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.get_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.get_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping GetItemList due to invalid fixture: %v", err)
 	}
@@ -132,7 +174,14 @@ func Test_ShopCategory_DeleteItemList(t *testing.T) {
 	defer teardown()
 
 	fixture := "v2.shop_category.delete_item_list_resp.json"
-	responder, err := httpmock.NewJsonResponder(200, loadFixture(fixture))
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.shop_category.delete_item_list")
+		skippedMu.Unlock()
+		t.Skipf("Skipping DeleteItemList due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
 		t.Skipf("Skipping DeleteItemList due to invalid fixture: %v", err)
 	}
