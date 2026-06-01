@@ -29,7 +29,7 @@ type PaymentService interface {
 	// Path: /api/v2/payment/get_payment_method_list
 	// https://open.shopee.com/documents/v2/v2.payment.get_payment_method_list?module=97&type=1
 	GetPaymentMethodList(sid uint64, tok string) (*GetPaymentMethodListResponse, error)
-	// GetWalletTransactionList Use this API to get the transaction records of wallet. Only applicable for local shops
+	// GetWalletTransactionList {"content":"<p>Use this API to get the transaction records of wallet. Only applicable for local shops</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to get the transaction records of wallet. Only applicable for local shops"}]}]}
 	// Path: /api/v2/payment/get_wallet_transaction_list
 	// https://open.shopee.com/documents/v2/v2.payment.get_wallet_transaction_list?module=97&type=1
 	GetWalletTransactionList(sid uint64, req GetWalletTransactionListRequest, tok string) (*GetWalletTransactionListResponse, error)
@@ -153,7 +153,7 @@ func (s *PaymentServiceOp[T]) GetPaymentMethodList(sid uint64, tok string) (*Get
 	return resp, err
 }
 
-// GetWalletTransactionList Use this API to get the transaction records of wallet. Only applicable for local shops
+// GetWalletTransactionList {"content":"<p>Use this API to get the transaction records of wallet. Only applicable for local shops</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to get the transaction records of wallet. Only applicable for local shops"}]}]}
 // Path: /api/v2/payment/get_wallet_transaction_list
 // https://open.shopee.com/documents/v2/v2.payment.get_wallet_transaction_list?module=97&type=1
 func (s *PaymentServiceOp[T]) GetWalletTransactionList(sid uint64, req GetWalletTransactionListRequest, tok string) (*GetWalletTransactionListResponse, error) {
