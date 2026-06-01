@@ -55,7 +55,7 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/get_shipping_document_data_info
 	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_data_info?module=95&type=1
 	GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error)
-	// GetTrackingInfo Use this api to get the logistics tracking information of an order.
+	// GetTrackingInfo {"content":"<p>Use this api to get the logistics tracking information of an order.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get the logistics tracking information of an order."}]}]}
 	// Path: /api/v2/logistics/get_tracking_info
 	// https://open.shopee.com/documents/v2/v2.logistics.get_tracking_info?module=95&type=1
 	GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error)
@@ -325,7 +325,7 @@ func (s *LogisticsServiceOp[T]) GetShippingDocumentDataInfo(sid uint64, req GetS
 	return resp, err
 }
 
-// GetTrackingInfo Use this api to get the logistics tracking information of an order.
+// GetTrackingInfo {"content":"<p>Use this api to get the logistics tracking information of an order.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get the logistics tracking information of an order."}]}]}
 // Path: /api/v2/logistics/get_tracking_info
 // https://open.shopee.com/documents/v2/v2.logistics.get_tracking_info?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetTrackingInfo(sid uint64, opt GetTrackingInfoRequest, tok string) (*GetTrackingInfoResponse, error) {

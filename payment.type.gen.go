@@ -704,6 +704,7 @@ type TotalIncome struct {
 type Transaction struct {
 	Status             string     `json:"status"`               // [Required] The status of the transaction，available values: FAILED,COMPLETED,PENDING,INITIAL.
 	TransactionType    string     `json:"transaction_type"`     // [Required] The type of transaction.
+	TxnTitle           string     `json:"txn_title"`            // [Required] <p>The transaction title sent by client (Adjustment Center) for adjustments, Only for ID local sellers for now.</p>
 	Amount             float64    `json:"amount"`               // [Required] The amount of transaction.
 	CurrentBalance     float64    `json:"current_balance"`      // [Required] The current balance of this account.
 	CreateTime         int64      `json:"create_time"`          // [Required] The create time of the transaction.
