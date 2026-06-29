@@ -29,11 +29,11 @@ type ProductService interface {
 	// Path: /api/v2/product/get_item_extra_info
 	// https://open.shopee.com/documents/v2/v2.product.get_item_extra_info?module=89&type=1
 	GetItemExtraInfo(sid uint64, opt GetItemExtraInfoRequest, tok string) (*GetItemExtraInfoResponse, error)
-	// AddItem Add a new item.
+	// AddItem {"content":"<p>Add a new item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Add a new item."}]}]}
 	// Path: /api/v2/product/add_item
 	// https://open.shopee.com/documents/v2/v2.product.add_item?module=89&type=1
 	AddItem(sid uint64, req AddItemRequest, tok string) (*AddItemResponse, error)
-	// UpdateItem Update item.
+	// UpdateItem {"content":"<p>Update item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Update item."}]}]}
 	// Path: /api/v2/product/update_item
 	// https://open.shopee.com/documents/v2/v2.product.update_item?module=89&type=1
 	UpdateItem(sid uint64, req UpdateItemRequest, tok string) (*UpdateItemResponse, error)
@@ -170,26 +170,6 @@ type ProductService interface {
 	// Path: /api/v2/product/get_kit_item_info
 	// https://open.shopee.com/documents/v2/v2.product.get_kit_item_info?module=89&type=1
 	GetKitItemInfo(sid uint64, opt GetKitItemInfoRequest, tok string) (*GetKitItemInfoResponse, error)
-	// GetSspList Get the list of SSP with main info as ssp_id, product_name, gtin, oem codes.
-	// Path: /api/v2/product/get_ssp_list
-	// https://open.shopee.com/documents/v2/v2.product.get_ssp_list?module=89&type=1
-	GetSspList(sid uint64, opt GetSspListRequest, tok string) (*GetSspListResponse, error)
-	// GetSspInfo Get the SSP details with all available info, searching through ssp_id, gtin or oem.
-	// Path: /api/v2/product/get_ssp_info
-	// https://open.shopee.com/documents/v2/v2.product.get_ssp_info?module=89&type=1
-	GetSspInfo(sid uint64, req GetSspInfoRequest, tok string) (*GetSspInfoResponse, error)
-	// AddSspItem Create product based on SSP.
-	// Path: /api/v2/product/add_ssp_item
-	// https://open.shopee.com/documents/v2/v2.product.add_ssp_item?module=89&type=1
-	AddSspItem(sid uint64, req AddSspItemRequest, tok string) (*AddSspItemResponse, error)
-	// LinkSsp Link the existing product to SSP, replacing its info for the ones from the SSP.
-	// Path: /api/v2/product/link_ssp
-	// https://open.shopee.com/documents/v2/v2.product.link_ssp?module=89&type=1
-	LinkSsp(sid uint64, req LinkSspRequest, tok string) (*LinkSspResponse, error)
-	// UnlinkSsp Unlink the existing product from SSP, keeping the existing info.
-	// Path: /api/v2/product/unlink_ssp
-	// https://open.shopee.com/documents/v2/v2.product.unlink_ssp?module=89&type=1
-	UnlinkSsp(sid uint64, req UnlinkSspRequest, tok string) (*UnlinkSspResponse, error)
 	// GetAitemByPitemId Get the list of A Items under SIP Affiliate Shop corresponding to P Items under SIP Primary Shop.
 	// Path: /api/v2/product/get_aitem_by_pitem_id
 	// https://open.shopee.com/documents/v2/v2.product.get_aitem_by_pitem_id?module=89&type=1
@@ -234,6 +214,26 @@ type ProductService interface {
 	// Path: /api/v2/product/get_mart_item_by_outlet_item_id
 	// https://open.shopee.com/documents/v2/v2.product.get_mart_item_by_outlet_item_id?module=89&type=1
 	GetMartItemByOutletItemId(sid uint64, req GetMartItemByOutletItemIdRequest, tok string) (*GetMartItemByOutletItemIdResponse, error)
+	// BatchUpdateOutletPrice {"content":"<p>Create asynchronous task to batch update outlet item's price</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch update outlet item's price"}]}]}
+	// Path: /api/v2/product/batch_update_outlet_price
+	// https://open.shopee.com/documents/v2/v2.product.batch_update_outlet_price?module=89&type=1
+	BatchUpdateOutletPrice(sid uint64, req BatchUpdateOutletPriceRequest, tok string) (*BatchUpdateOutletPriceResponse, error)
+	// BatchUpdateOutletStock {"content":"<p>Create asynchronous task to batch update outlet stock</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch update outlet stock"}]}]}
+	// Path: /api/v2/product/batch_update_outlet_stock
+	// https://open.shopee.com/documents/v2/v2.product.batch_update_outlet_stock?module=89&type=1
+	BatchUpdateOutletStock(sid uint64, req BatchUpdateOutletStockRequest, tok string) (*BatchUpdateOutletStockResponse, error)
+	// GetBatchTaskResult {"content":"<p>Query batch task result</p>","raw_content":[{"name":"paragraph","children":[{"data":"Query batch task result"}]}]}
+	// Path: /api/v2/product/get_batch_task_result
+	// https://open.shopee.com/documents/v2/v2.product.get_batch_task_result?module=89&type=1
+	GetBatchTaskResult(sid uint64, req GetBatchTaskResultRequest, tok string) (*GetBatchTaskResultResponse, error)
+	// BatchAddItem {"content":"<p>Create asynchronous task to batch add item</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch add item"}]}]}
+	// Path: /api/v2/product/batch_add_item
+	// https://open.shopee.com/documents/v2/v2.product.batch_add_item?module=89&type=1
+	BatchAddItem(sid uint64, req BatchAddItemRequest, tok string) (*BatchAddItemResponse, error)
+	// BatchPublishItemToOutletShop {"content":"<p>Create asynchronous task to batch publish outlet item</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch publish outlet item"}]}]}
+	// Path: /api/v2/product/batch_publish_item_to_outlet_shop
+	// https://open.shopee.com/documents/v2/v2.product.batch_publish_item_to_outlet_shop?module=89&type=1
+	BatchPublishItemToOutletShop(sid uint64, req BatchPublishItemToOutletShopRequest, tok string) (*BatchPublishItemToOutletShopResponse, error)
 }
 
 type ProductServiceOp[T any] struct {
@@ -310,7 +310,7 @@ func (s *ProductServiceOp[T]) GetItemExtraInfo(sid uint64, opt GetItemExtraInfoR
 	return resp, err
 }
 
-// AddItem Add a new item.
+// AddItem {"content":"<p>Add a new item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Add a new item."}]}]}
 // Path: /api/v2/product/add_item
 // https://open.shopee.com/documents/v2/v2.product.add_item?module=89&type=1
 func (s *ProductServiceOp[T]) AddItem(sid uint64, req AddItemRequest, tok string) (*AddItemResponse, error) {
@@ -320,7 +320,7 @@ func (s *ProductServiceOp[T]) AddItem(sid uint64, req AddItemRequest, tok string
 	return resp, err
 }
 
-// UpdateItem Update item.
+// UpdateItem {"content":"<p>Update item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Update item."}]}]}
 // Path: /api/v2/product/update_item
 // https://open.shopee.com/documents/v2/v2.product.update_item?module=89&type=1
 func (s *ProductServiceOp[T]) UpdateItem(sid uint64, req UpdateItemRequest, tok string) (*UpdateItemResponse, error) {
@@ -661,56 +661,6 @@ func (s *ProductServiceOp[T]) GetKitItemInfo(sid uint64, opt GetKitItemInfoReque
 	return resp, err
 }
 
-// GetSspList Get the list of SSP with main info as ssp_id, product_name, gtin, oem codes.
-// Path: /api/v2/product/get_ssp_list
-// https://open.shopee.com/documents/v2/v2.product.get_ssp_list?module=89&type=1
-func (s *ProductServiceOp[T]) GetSspList(sid uint64, opt GetSspListRequest, tok string) (*GetSspListResponse, error) {
-	path := "/product/get_ssp_list"
-	resp := new(GetSspListResponse)
-	err := s.client.WithShop(sid, tok).Get(path, resp, opt)
-	return resp, err
-}
-
-// GetSspInfo Get the SSP details with all available info, searching through ssp_id, gtin or oem.
-// Path: /api/v2/product/get_ssp_info
-// https://open.shopee.com/documents/v2/v2.product.get_ssp_info?module=89&type=1
-func (s *ProductServiceOp[T]) GetSspInfo(sid uint64, req GetSspInfoRequest, tok string) (*GetSspInfoResponse, error) {
-	path := "/product/get_ssp_info"
-	resp := new(GetSspInfoResponse)
-	err := s.client.WithShop(sid, tok).Post(path, req, resp)
-	return resp, err
-}
-
-// AddSspItem Create product based on SSP.
-// Path: /api/v2/product/add_ssp_item
-// https://open.shopee.com/documents/v2/v2.product.add_ssp_item?module=89&type=1
-func (s *ProductServiceOp[T]) AddSspItem(sid uint64, req AddSspItemRequest, tok string) (*AddSspItemResponse, error) {
-	path := "/product/add_ssp_item"
-	resp := new(AddSspItemResponse)
-	err := s.client.WithShop(sid, tok).Post(path, req, resp)
-	return resp, err
-}
-
-// LinkSsp Link the existing product to SSP, replacing its info for the ones from the SSP.
-// Path: /api/v2/product/link_ssp
-// https://open.shopee.com/documents/v2/v2.product.link_ssp?module=89&type=1
-func (s *ProductServiceOp[T]) LinkSsp(sid uint64, req LinkSspRequest, tok string) (*LinkSspResponse, error) {
-	path := "/product/link_ssp"
-	resp := new(LinkSspResponse)
-	err := s.client.WithShop(sid, tok).Post(path, req, resp)
-	return resp, err
-}
-
-// UnlinkSsp Unlink the existing product from SSP, keeping the existing info.
-// Path: /api/v2/product/unlink_ssp
-// https://open.shopee.com/documents/v2/v2.product.unlink_ssp?module=89&type=1
-func (s *ProductServiceOp[T]) UnlinkSsp(sid uint64, req UnlinkSspRequest, tok string) (*UnlinkSspResponse, error) {
-	path := "/product/unlink_ssp"
-	resp := new(UnlinkSspResponse)
-	err := s.client.WithShop(sid, tok).Post(path, req, resp)
-	return resp, err
-}
-
 // GetAitemByPitemId Get the list of A Items under SIP Affiliate Shop corresponding to P Items under SIP Primary Shop.
 // Path: /api/v2/product/get_aitem_by_pitem_id
 // https://open.shopee.com/documents/v2/v2.product.get_aitem_by_pitem_id?module=89&type=1
@@ -817,6 +767,56 @@ func (s *ProductServiceOp[T]) GenerateKitImage(sid uint64, req GenerateKitImageR
 func (s *ProductServiceOp[T]) GetMartItemByOutletItemId(sid uint64, req GetMartItemByOutletItemIdRequest, tok string) (*GetMartItemByOutletItemIdResponse, error) {
 	path := "/product/get_mart_item_by_outlet_item_id"
 	resp := new(GetMartItemByOutletItemIdResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// BatchUpdateOutletPrice {"content":"<p>Create asynchronous task to batch update outlet item's price</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch update outlet item's price"}]}]}
+// Path: /api/v2/product/batch_update_outlet_price
+// https://open.shopee.com/documents/v2/v2.product.batch_update_outlet_price?module=89&type=1
+func (s *ProductServiceOp[T]) BatchUpdateOutletPrice(sid uint64, req BatchUpdateOutletPriceRequest, tok string) (*BatchUpdateOutletPriceResponse, error) {
+	path := "/product/batch_update_outlet_price"
+	resp := new(BatchUpdateOutletPriceResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// BatchUpdateOutletStock {"content":"<p>Create asynchronous task to batch update outlet stock</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch update outlet stock"}]}]}
+// Path: /api/v2/product/batch_update_outlet_stock
+// https://open.shopee.com/documents/v2/v2.product.batch_update_outlet_stock?module=89&type=1
+func (s *ProductServiceOp[T]) BatchUpdateOutletStock(sid uint64, req BatchUpdateOutletStockRequest, tok string) (*BatchUpdateOutletStockResponse, error) {
+	path := "/product/batch_update_outlet_stock"
+	resp := new(BatchUpdateOutletStockResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// GetBatchTaskResult {"content":"<p>Query batch task result</p>","raw_content":[{"name":"paragraph","children":[{"data":"Query batch task result"}]}]}
+// Path: /api/v2/product/get_batch_task_result
+// https://open.shopee.com/documents/v2/v2.product.get_batch_task_result?module=89&type=1
+func (s *ProductServiceOp[T]) GetBatchTaskResult(sid uint64, req GetBatchTaskResultRequest, tok string) (*GetBatchTaskResultResponse, error) {
+	path := "/product/get_batch_task_result"
+	resp := new(GetBatchTaskResultResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// BatchAddItem {"content":"<p>Create asynchronous task to batch add item</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch add item"}]}]}
+// Path: /api/v2/product/batch_add_item
+// https://open.shopee.com/documents/v2/v2.product.batch_add_item?module=89&type=1
+func (s *ProductServiceOp[T]) BatchAddItem(sid uint64, req BatchAddItemRequest, tok string) (*BatchAddItemResponse, error) {
+	path := "/product/batch_add_item"
+	resp := new(BatchAddItemResponse)
+	err := s.client.WithShop(sid, tok).Post(path, req, resp)
+	return resp, err
+}
+
+// BatchPublishItemToOutletShop {"content":"<p>Create asynchronous task to batch publish outlet item</p>","raw_content":[{"name":"paragraph","children":[{"data":"Create asynchronous task to batch publish outlet item"}]}]}
+// Path: /api/v2/product/batch_publish_item_to_outlet_shop
+// https://open.shopee.com/documents/v2/v2.product.batch_publish_item_to_outlet_shop?module=89&type=1
+func (s *ProductServiceOp[T]) BatchPublishItemToOutletShop(sid uint64, req BatchPublishItemToOutletShopRequest, tok string) (*BatchPublishItemToOutletShopResponse, error) {
+	path := "/product/batch_publish_item_to_outlet_shop"
+	resp := new(BatchPublishItemToOutletShopResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

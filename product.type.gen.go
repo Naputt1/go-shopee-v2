@@ -102,70 +102,6 @@ type AddModelResponseDataModel struct {
 	Dimension   *Dimension       `json:"dimension"`    // [Required] <p>The dimension of this model.</p><p>If don't set the dimension of this model, will use the dimension of item by default.</p>
 }
 
-type AddSspItemRequest struct {
-	SspId             int64                     `json:"ssp_id"`                        // [Required] <p>Shopee's unique identifier for Shopee&nbsp;Standard Product.<br /></p>
-	OriginalPrice     *float64                  `json:"original_price,omitempty"`      // [Optional] <p>The price of this item.<br /></p>
-	ItemStatus        *ItemStatus               `json:"item_status,omitempty"`         // [Optional] <p>Item status, could be UNLIST or NORMAL.<br /></p>
-	Dimension         *Dimension                `json:"dimension,omitempty"`           // [Optional] <p>The dimension of this item.<br /></p>
-	LogisticInfo      []LogisticInfo            `json:"logistic_info"`                 // [Required] <p>Logistic channel setting of this item.<br /></p>
-	AttributeList     []Attribute               `json:"attribute_list,omitempty"`      // [Optional]
-	PreOrder          *PreOrder                 `json:"pre_order,omitempty"`           // [Optional] <p>Pre order setting of this item.</p>
-	ItemSku           *string                   `json:"item_sku,omitempty"`            // [Optional] <p>SKU tag of this item.<br /></p>
-	Condition         *string                   `json:"condition,omitempty"`           // [Optional] <p>Condition of item, could be USED or NEW.<br /></p>
-	Wholesale         []Wholesale               `json:"wholesale,omitempty"`           // [Optional] <p>Wholesale setting of this item.<br /></p>
-	VideoUploadId     []string                  `json:"video_upload_id,omitempty"`     // [Optional] <p>Video upload ID returned from video uploading API. Only accept one video_upload_id.<br /></p>
-	ItemDangerous     *int64                    `json:"item_dangerous,omitempty"`      // [Optional] <p>This field is only applicable for&nbsp;local sellers&nbsp;in Indonesia and Malaysia. Use this field to identify whether a product is a dangerous product. 0 for non-dangerous product and 1 for dangerous product. For more information, please visit the market's respective Seller Education Hub.<br /></p>
-	TaxInfo           *AddSspItemRequestTaxInfo `json:"tax_info,omitempty"`            // [Optional] <p>Tax information for this item.<br /></p>
-	SellerStock       []SellerStock             `json:"seller_stock,omitempty"`        // [Optional] <p>seller stock（Please notice that stock(including Seller Stock and Shopee Stock) should be larger than or equal to real-time reserved stock）<br /></p>
-	SizeChartInfo     *SizeChartInfo            `json:"size_chart_info,omitempty"`     // [Optional]
-	AuthorisedBrandId *int64                    `json:"authorised_brand_id,omitempty"` // [Optional] <p>ID of authorised reseller brand.<br /></p>
-	ModelList         []AddSspItemRequestModel  `json:"model_list,omitempty"`          // [Optional] <p>Model info list.<br /></p>
-}
-
-type AddSspItemRequestModel struct {
-	TierIndex     interface{}   `json:"tier_index"`             // [Required] <p>Tier index of this model.</p>
-	ModelSku      *string       `json:"model_sku,omitempty"`    // [Optional] <p>Seller SKU of this model, model_sku length information needs to be no more than 100 characters.<br /></p>
-	OriginalPrice float64       `json:"original_price"`         // [Required] <p>Original price of this model.</p>
-	SellerStock   []SellerStock `json:"seller_stock,omitempty"` // [Optional] <p>seller stock（Please notice that stock(including Seller Stock and Shopee Stock) should be larger than or equal to real-time reserved stock）<br /></p>
-	Dimension     *Dimension    `json:"dimension,omitempty"`    // [Optional] <p>The dimension of this model.</p><p>If don't set the dimension of this model, will use the dimension of item by default.</p>
-	PreOrder      *PreOrder     `json:"pre_order,omitempty"`    // [Optional] <p>Pre-order information of this model.</p><p><br /></p><p>Notes:&nbsp;</p><p>If don't set the DTS of this model, will use the DTS of the item by default.</p>
-}
-
-type AddSspItemRequestTaxInfo struct {
-	Ncm               *string        `json:"ncm,omitempty"`                 // [Optional] <p>Mercosur Common Nomenclature, it is a convention between Mercosur member countries to easily recognize goods, services and productive factors negotiated among themselves.&nbsp;(BR region)<br /></p><p><br />NCM must have 8 digits, OR, if your item doesn't have a NCM enter the value "00"</p>
-	SameStateCfop     *string        `json:"same_state_cfop,omitempty"`     // [Optional] <p>Tax Code of Operations and Installments for orders that seller and buyer are in the same state. It identifies a specific operation by category at the time of issuing the invoice.(BR region)<br /></p>
-	DiffStateCfop     *string        `json:"diff_state_cfop,omitempty"`     // [Optional] <p>Tax Code of Operations and Installments for orders that seller and buyer are in different states. It identifies a specific operation by category at the time of issuing the invoice.(BR region)<br /></p>
-	Csosn             *string        `json:"csosn,omitempty"`               // [Optional] <p>Code of Operation Status – Simples Nacional, code for company operations to identify the origin of the goods and the taxation regime of the operations.(BR region)<br /></p>
-	Origin            *string        `json:"origin,omitempty"`              // [Optional] <p>Product source, domestic or foreig (BR region).<br /></p>
-	Cest              *string        `json:"cest,omitempty"`                // [Optional] <p>Tax Replacement Specifying Code (CEST), to separate within the same NCM products that do or do not have ICMS tax substitution. (BR region)<br /><br />CEST must have 7 digits, OR, if your item doesn't have a CEST enter the value "00".<br /></p>
-	MeasureUnit       *string        `json:"measure_unit,omitempty"`        // [Optional] <p>(BR region)<br /></p>
-	InvoiceOption     *InvoiceOption `json:"invoice_option,omitempty"`      // [Optional] <p>Value shuold be one of NO_INVOICES VAT_MARGIN_SCHEME_INVOICES VAT_INVOICES NON_VAT_INVOICES and if value is NON_VAT_INVOICE vat_rate should be null (PL region)<br /></p>
-	VatRate           *string        `json:"vat_rate,omitempty"`            // [Optional] <p>Value should be one of 0% 5% 8% 23% NO_VAT_RATE (PL region)<br /></p>
-	HsCode            string         `json:"hs_code"`                       // [Required] <p>HS Code (Only for IN region)<br /></p>
-	TaxCode           string         `json:"tax_code"`                      // [Required] <p>Tax Code (Only for IN region)<br /></p>
-	TaxType           *TaxType       `json:"tax_type,omitempty"`            // [Optional] <p>tax_type only for TW whitelist shop. Shopee will referred Tax type when substitute sellers for issuing e-receipts to buyers. All variations share the same tax type. The meaning of value:&nbsp;</p><p>0: no tax type</p><p>1: tax-able</p><p>2: tax-free</p>
-	Pis               *string        `json:"pis,omitempty"`                 // [Optional] <p>Only for BR shop.</p><p>PIS - Programa de Integração Social (Social Integration Program). It is a government tax to collect resources for the payment of unemployment insurance and other employee related rights.</p><p>PIS % - the tax applied to this product</p>
-	Cofins            *string        `json:"cofins,omitempty"`              // [Optional] <p>Only for BR shop.<br /></p><p>COFINS – Contribuição para Financiamento da Seguridade Social (Contribution for Social Security Funding). It&nbsp;is a government tax to collect resources for public health system and social security.</p><p>COFINS&nbsp;% - the tax applied to this product</p>
-	IcmsCst           *string        `json:"icms_cst,omitempty"`            // [Optional] <p>Only for BR shop.<br /></p><p>ICMS - Imposto sobre Circulação de Mercadorias e Serviços (Circulation of Goods and Services Tax).&nbsp;</p><p>CST - Código da Situação Tributária (Tax Situation Code) is represented by a combination of 3 numbers with the purpose of demonstrating the origin of a product and determining the form of taxation that will apply to it. Therefore, each digit in the CST Table has a specific meaning: the first digit indicates the origin of the operation, the second digit represents the ICMS taxation on the operation and the third digit provides additional information about the form of taxation.</p>
-	PisCofinsCst      *string        `json:"pis_cofins_cst,omitempty"`      // [Optional] <p>Only for BR shop.</p><p>The CST PIS/Cofins is a code on the Electronic Invoice (NF-e) that identifies the tax situation of PIS (Programa de Integração Social) and Cofins (Contribuição para o Financiamento da Seguridade Social) in sales of goods.</p>
-	FederalStateTaxes *string        `json:"federal_state_taxes,omitempty"` // [Optional] <p>Only for BR shop.</p><p>Enter the total percentage of the combination of federal, state, and municipal taxes, using up to two decimals.</p>
-	OperationType     *OperationType `json:"operation_type,omitempty"`      // [Optional] <p>Only for BR shop.</p><p>1: Retailer</p><p>2: Manufacturer</p>
-	ExTipi            *string        `json:"ex_tipi,omitempty"`             // [Optional] <p>Only for BR shop.<br /></p><p>The EXTIPI field in the NF-e (Nota Fiscal Eletrônica) is used to indicate if there's an exception to the IPI (Imposto sobre Produtos Industrializados) tax rate for a specific product.</p>
-	FciNum            *string        `json:"fci_num,omitempty"`             // [Optional] <p>Only for BR shop.<br /></p><p>The FCI Control Number is a unique identifier assigned to each import FCI (Import Content Form). It's mandatory on the corresponding NF-e (electronic invoice) to ensure compliance with Brazilian import tax regulations.</p>
-	RecopiNum         *string        `json:"recopi_num,omitempty"`          // [Optional] <p>Only for BR shop.</p><p>RECOPI NACIONAL is a Brazilian government system that facilitates the registration and management of tax-exempt operations involving paper destined for printing books, newspapers, and periodicals (known as "papel imune" in Portuguese).</p>
-	AdditionalInfo    *string        `json:"additional_info,omitempty"`     // [Optional] <p>Only for BR shop.</p><p>Include relevant information to display on Invoice.</p>
-	GroupItemInfo     *GroupItemInfo `json:"group_item_info,omitempty"`     // [Optional] <p>Only for BR shop.</p><p>Required if the item is a group item.</p>
-}
-
-type AddSspItemResponse struct {
-	BaseResponse `json:",inline"`       // Common response fields
-	Response     AddSspItemResponseData `json:"response"` // Actual response data
-}
-
-type AddSspItemResponseData struct {
-	ItemId int64 `json:"item_id"` // [Required] <p>Shopee's unique identifier for an item.<br /></p>
-}
-
 type AdvanceStock struct {
 	SellableAdvanceStock  int64 `json:"sellable_advance_stock"`   // [Required] <p>Refers to Advance Fulfillment&nbsp;stock that Seller has shipped out and is available&nbsp;to be used to fulfill an order.<br /></p>
 	InTransitAdvanceStock int64 `json:"in_transit_advance_stock"` // [Required] <p>Refers to Advance Fulfillment stock that seller has shipped out and is still in transit and unavailable to be used to fulfill an order.<br /></p>
@@ -210,6 +146,105 @@ type AttributeTreeAttributeValue struct {
 	ValueUnit          string        `json:"value_unit"`           // [Required] <p>Value unit</p>
 	ChildAttributeList []interface{} `json:"child_attribute_list"` // [Required] <p>Child attributes for the value of parent attribute<br />The structure content is the same as attribute_tree<br /></p>
 	MultiLang          []MultiLang   `json:"multi_lang"`           // [Required] <p>Translate results for display</p>
+}
+
+type BatchAddItemRequest struct {
+	ItemList []BatchAddItemRequestItem `json:"item_list"` // [Required] <p>The item list to batch add. The list size must be between 1 and 100.</p>
+}
+
+type BatchAddItemRequestItem struct {
+	OriginalPrice        float64            `json:"original_price"`                   // [Required] Item price
+	Description          string             `json:"description"`                      // [Required] if description_type is normal , Description information should be set by this field.
+	Weight               float64            `json:"weight"`                           // [Required] <p>The weight of this item, the unit is KG.</p>
+	ItemName             string             `json:"item_name"`                        // [Required] Item name
+	ItemStatus           *ItemStatus        `json:"item_status,omitempty"`            // [Optional] Item status, could be UNLIST or NORMAL
+	Dimension            *Dimension         `json:"dimension,omitempty"`              // [Optional] <p>The dimension of this item.</p>
+	LogisticInfo         []LogisticInfo     `json:"logistic_info"`                    // [Required] Logistic channel setting
+	AttributeList        []Attribute        `json:"attribute_list,omitempty"`         // [Optional] This field is optional(expect Indonesia) depending on the specific attribute under different categories. Should call shopee.item.GetAttributes to get attribute first. Must contain all all mandatory attribute.
+	CategoryId           int64              `json:"category_id"`                      // [Required] ID of category
+	Image                *Image             `json:"image"`                            // [Required] Item images
+	PreOrder             *PreOrder          `json:"pre_order,omitempty"`              // [Optional] Pre order setting
+	ItemSku              *string            `json:"item_sku,omitempty"`               // [Optional] SKU tag of item
+	Condition            *string            `json:"condition,omitempty"`              // [Optional] Condition of item, could be USED or NEW
+	Wholesale            []Wholesale        `json:"wholesale,omitempty"`              // [Optional] Wholesale setting
+	VideoUploadId        []string           `json:"video_upload_id,omitempty"`        // [Optional] Video upload ID returned from video uploading API. Only accept one video_upload_id.
+	Brand                *Brand             `json:"brand,omitempty"`                  // [Optional]
+	ItemDangerous        *int64             `json:"item_dangerous,omitempty"`         // [Optional] This field is only applicable for local sellers in Indonesia and Malaysia. Use this field to identify whether a product is a dangerous product. 0 for non-dangerous product and 1 for dangerous product. For more information, please visit the market's respective Seller Education Hub.
+	TaxInfo              *TaxInfo           `json:"tax_info,omitempty"`               // [Optional] Tax information
+	ComplaintPolicy      *ComplaintPolicy   `json:"complaint_policy,omitempty"`       // [Optional] Complaint Policy for item. Only required for local PL sellers, ignored otherwise.
+	DescriptionInfo      *DescriptionInfo   `json:"description_info,omitempty"`       // [Optional] New description field. Only whitelist sellers can use it. If you use the field, please upload the description_type=extended otherwise api will return error. If you don't use this field, you don't need to upload the description_type or upload description_type=normal
+	DescriptionType      *DescriptionType   `json:"description_type,omitempty"`       // [Optional] Values: See Data Definition- description_type (normal , extended). If you want to use extended_description, this field must be inputed
+	SellerStock          []SellerStock      `json:"seller_stock,omitempty"`           // [Optional] <p>seller stock（Please notice that stock(including Seller Stock and Shopee Stock) should be larger than or equal to real-time reserved stock）</p>
+	GtinCode             *string            `json:"gtin_code,omitempty"`              // [Optional] <p>- GTIN is an identifier for trade items, developed by the international organization GS1.<br />- They have 8 to 14 digits. The most common are UPC, EAN, JAN and ISBN.<br />- GTIN will help boost positioning in online marketing channels like Google and Facebook.<br />- That incorporation with GTIN will also aid in Search and Recommendation in Shopee itself allowing buyers to have higher likelihood of finding one's listing.<br /></p><p><br /></p><p>Note: If you want to set “Item without GTIN”, please pass the gtin_code as "00".<br /><br />The validation rule is based on the value return in gtin_validation_rule" field in v2.product.get_item_limit API</p><p><b>- Mandatory</b>:&nbsp;This field is required and must contain a correctly formatted GTiN number.</p><p><b>- Flexible</b>: This field is required and must contain either a correctly formatted GTlN number or "00" to declare that the item/model has no valid GTlN.<br /><b>- Optional:</b> This field is optional and can contain a correctly formatted GTiN number, "00" or be omitted entirely.</p>
+	DsCatRcmdId          *string            `json:"ds_cat_rcmd_id,omitempty"`         // [Optional] <p>category recommendation service id</p>
+	PromotionImages      *PromotionImages   `json:"promotion_images,omitempty"`       // [Optional] <p>Promotion Image<br />Currently only allow one promoton image<br />You could set promotion image only if the product images' ratio is 3:4<br /></p>
+	CompatibilityInfo    *CompatibilityInfo `json:"compatibility_info,omitempty"`     // [Optional]
+	ScheduledPublishTime *int64             `json:"scheduled_publish_time,omitempty"` // [Optional] <p>Scheduled publish time of this item:&nbsp;</p><p>1) Can only set scheduled_publish_time for item with UNLIST status</p><p>2) Can only set the time from current time +1hour to current time +90days, and the time is only allowed to be accurate to the minute</p>
+	AuthorisedBrandId    *int64             `json:"authorised_brand_id,omitempty"`    // [Optional] <p>ID of authorised reseller brand.</p>
+	SizeChartInfo        *SizeChartInfo     `json:"size_chart_info,omitempty"`        // [Optional]
+	CertificationInfo    *CertificationInfo `json:"certification_info,omitempty"`     // [Optional] <p>For PH product certification input<br />Required for some category and attribute option</p>
+	PurchaseLimitInfo    *PurchaseLimitInfo `json:"purchase_limit_info,omitempty"`    // [Optional] <p>purchase limit info</p>
+	MedicineId           *int64             `json:"medicine_id,omitempty"`            // [Optional] <p>[Only for ID local sellers] as a unique identifier for each standardized medicine, the medicine id can only be obtained offline</p>
+}
+
+type BatchAddItemResponse struct {
+	BaseResponse `json:",inline"`         // Common response fields
+	Response     BatchAddItemResponseData `json:"response"` // Actual response data
+}
+
+type BatchAddItemResponseData struct {
+	TaskId int64 `json:"task_id"` // [Required] <p>The task ID of the batch add item task.</p>
+}
+
+type BatchPublishItemToOutletShopRequest struct {
+	ItemList []BatchPublishItemToOutletShopRequestItem `json:"item_list"` // [Required] <p>The item list to batch publish to Outlet shop. The list size must be between 1 and 100.</p>
+}
+
+type BatchPublishItemToOutletShopRequestItem struct {
+	MartItemId   int64        `json:"mart_item_id"`   // [Required] <p>The item ID of the item in the Mart shop.</p>
+	OutletShopId int64        `json:"outlet_shop_id"` // [Required] <p>The shop ID of the Outlet shop.</p>
+	PublishItem  *PublishItem `json:"publish_item"`   // [Required] <p>The outlet item data to publish.</p>
+}
+
+type BatchPublishItemToOutletShopResponse struct {
+	BaseResponse `json:",inline"`                         // Common response fields
+	Response     BatchPublishItemToOutletShopResponseData `json:"response"` // Actual response data
+}
+
+type BatchPublishItemToOutletShopResponseData struct {
+	TaskId int64 `json:"task_id"` // [Required] <p>The task ID of the batch publish outlet item task.</p>
+}
+
+type BatchUpdateOutletPriceRequest struct {
+	ItemList []RequestItem `json:"item_list"` // [Required] <p>The item list to batch update price. The list size must be between 1 and 100.</p>
+}
+
+type BatchUpdateOutletPriceResponse struct {
+	BaseResponse `json:",inline"`                   // Common response fields
+	Response     BatchUpdateOutletPriceResponseData `json:"response"` // Actual response data
+}
+
+type BatchUpdateOutletPriceResponseData struct {
+	TaskId int64 `json:"task_id"` // [Required] <p>The task ID of the batch update price task.</p>
+}
+
+type BatchUpdateOutletStockRequest struct {
+	ItemList []BatchUpdateOutletStockRequestItem `json:"item_list"` // [Required] <p>The item list to batch update stock. The list size must be between 1 and 100.</p>
+}
+
+type BatchUpdateOutletStockRequestItem struct {
+	OutletShopId int64   `json:"outlet_shop_id"` // [Required] <p>The shop ID of the Outlet shop.</p>
+	ItemId       int64   `json:"item_id"`        // [Required] <p>The item ID of the item in the Outlet shop.</p>
+	StockList    []Stock `json:"stock_list"`     // [Required] <p>The stock list of item models. The list size must be at least 1.</p>
+}
+
+type BatchUpdateOutletStockResponse struct {
+	BaseResponse `json:",inline"`                   // Common response fields
+	Response     BatchUpdateOutletStockResponseData `json:"response"` // Actual response data
+}
+
+type BatchUpdateOutletStockResponseData struct {
+	TaskId int64 `json:"task_id"` // [Required] <p>The task ID of the batch update stock task.</p>
 }
 
 type BoostItemRequest struct {
@@ -343,22 +378,6 @@ type DeleteModelResponse struct {
 	BaseResponse `json:",inline"` // Common response fields
 }
 
-type Description struct {
-	DescriptionType     DescriptionType                 `json:"description_type"`     // [Required] <p>Type of description : values: See Data Definition- description_type (normal , extended).<br /></p>
-	Description         string                          `json:"description"`          // [Required] <p>If description_type is normal , Description information will be returned through this field，else description will be empty.<br /></p>
-	ExtendedDescription *DescriptionExtendedDescription `json:"extended_description"` // [Required] <p>If description_type is extended , Description information will be returned through this field.<br /></p>
-}
-
-type DescriptionExtendedDescription struct {
-	FieldList []DescriptionExtendedDescriptionField `json:"field_list"` // [Required] <p>Field of extended description.<br /></p>
-}
-
-type DescriptionExtendedDescriptionField struct {
-	Type      string          `json:"type"`       // [Required] <p>Type of extended description field ：values: See Data Definition- description_field_type (text , image).<br /></p>
-	Text      string          `json:"text"`       // [Required] <p>If field_type is text, text information will be returned through this field.<br /></p>
-	ImageInfo *FieldImageInfo `json:"image_info"` // [Required] <p>If field_type is image, image url will be returned through this field.<br /></p>
-}
-
 type DescriptionInfo struct {
 	ExtendedDescription *ExtendedDescription `json:"extended_description"` // [Required] If description_type is extended , description information should be set by this field.
 }
@@ -394,6 +413,12 @@ type DtsLimit struct {
 
 type ExtendedDescription struct {
 	FieldList []Field `json:"field_list"` // [Required]  Field of extended description.
+}
+
+type Failed struct {
+	ItemId       int64  `json:"item_id"`       // [Required] <p>The item ID of the item in the shop.</p>
+	ModelId      int64  `json:"model_id"`      // [Required] <p>The model ID of the model in the shop.</p>
+	FailedReason string `json:"failed_reason"` // [Required] <p>The failed reason.</p>
 }
 
 type Failure struct {
@@ -462,6 +487,22 @@ type GetAttributeTreeResponse struct {
 
 type GetAttributeTreeResponseData struct {
 	List []List `json:"list"` // [Required] <p>Each result corresponds to one category in category_ids<br /></p>
+}
+
+type GetBatchTaskResultRequest struct {
+	TaskType int64 `json:"task_type"` // [Required] <p>The task type. 1: price; 2: stock; 3: publish outlet; 4: add item.</p>
+	TaskId   int64 `json:"task_id"`   // [Required] <p>The task ID to query.</p>
+}
+
+type GetBatchTaskResultResponse struct {
+	BaseResponse `json:",inline"`               // Common response fields
+	Response     GetBatchTaskResultResponseData `json:"response"` // Actual response data
+}
+
+type GetBatchTaskResultResponseData struct {
+	PublishStatus int64                    `json:"publish_status"` // [Required] <p>The publish status. 1: ongoing; 2: finished.</p>
+	SuccessList   []CancelOrderRequestItem `json:"success_list"`   // [Required] <p>The batch task success records.</p>
+	FailedList    []Failed                 `json:"failed_list"`    // [Required] <p>The batch task failed records.</p>
 }
 
 type GetBoostedListResponse struct {
@@ -938,36 +979,6 @@ type GetSizeChartListResponseData struct {
 	NextCursor    string      `json:"next_cursor"`     // [Required] <p>if next_cursor has value, this value need set to next request.cursor<br /></p>
 }
 
-type GetSspInfoRequest struct {
-	SspIdList []int64  `json:"ssp_id_list,omitempty"` // [Optional] <p>The ssp_id list; limit [0,50]</p>
-	GtinList  []string `json:"gtin_list,omitempty"`   // [Optional] <p>The gtin_list; limit [0,50]</p>
-	OemList   []string `json:"oem_list,omitempty"`    // [Optional] <p>The oem_list; limit [0,50]</p>
-}
-
-type GetSspInfoResponse struct {
-	BaseResponse `json:",inline"`       // Common response fields
-	Response     GetSspInfoResponseData `json:"response"` // Actual response data
-}
-
-type GetSspInfoResponseData struct {
-	SspList []ResponseDataSsp `json:"ssp_list"` // [Required]
-}
-
-type GetSspListRequest struct {
-	PageSize *int64  `json:"page_size,omitempty" url:"page_size,omitempty"` // [Optional] <p>The size of one page.</p><p>The limit of page_size is [1,20], and default page_size is 10.<br /></p>
-	Offset   *string `json:"offset,omitempty" url:"offset,omitempty"`       // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "", if data is more than one page, the offset can be some entry to start next call.<br /></p>
-}
-
-type GetSspListResponse struct {
-	BaseResponse `json:",inline"`       // Common response fields
-	Response     GetSspListResponseData `json:"response"` // Actual response data
-}
-
-type GetSspListResponseData struct {
-	PageInfo *PageInfo `json:"page_info"` // [Required]
-	SspList  []Ssp     `json:"ssp_list"`  // [Required]
-}
-
 type GetVariationsRequest struct {
 	CategoryId int64 `json:"category_id" url:"category_id"` // [Required] <p>Leaf category id</p>
 }
@@ -1012,11 +1023,6 @@ type GetWeightRecommendationResponse struct {
 
 type GetWeightRecommendationResponseData struct {
 	NormalWeightRange interface{} `json:"normal_weight_range"` // [Required] <p>Recommended weight range, in kg. If there are no recommended results, return empty.<br /></p>
-}
-
-type GlobalCode struct {
-	Gtin string `json:"gtin"` // [Required] <p>GTIN of Shopee&nbsp;Standard Product.</p>
-	Oem  string `json:"oem"`  // [Required] <p>OEM of Shopee&nbsp;Standard Product.<br /></p>
 }
 
 type GroupItemInfo struct {
@@ -1095,7 +1101,7 @@ type ItemCountLimit struct {
 type ItemImage struct {
 	ImageIdList  []string `json:"image_id_list"`  // [Required] <p>List of image id.<br /></p>
 	ImageUrlList []string `json:"image_url_list"` // [Required] <p>List of image url.<br /></p>
-	ImageRatio   string   `json:"image_ratio"`    // [Required] <p>Image ratio.<br /></p>
+	ImageRatio   string   `json:"image_ratio"`    // [Required] <p>3:4</p>
 }
 
 type ItemLogisticInfo struct {
@@ -1163,36 +1169,6 @@ type Licenses struct {
 	FileHash *string `json:"file_hash,omitempty"` // [Optional] <p>Image id of brand registration certificate image , max input num of file = 1 , each file's length&lt;=498<br /></p>
 }
 
-type LinkSspRequest struct {
-	ItemId            int64                     `json:"item_id"`                       // [Required] <p>ID of this item.<br /></p>
-	SspId             int64                     `json:"ssp_id"`                        // [Required] <p>Shopee's unique identifier for Shopee&nbsp;Standard Product.<br /></p>
-	OriginalPrice     *float64                  `json:"original_price,omitempty"`      // [Optional] <p>The price of this item.<br /></p>
-	ItemStatus        *ItemStatus               `json:"item_status,omitempty"`         // [Optional] <p>Item status, could be UNLIST or NORMAL.<br /></p>
-	Dimension         *Dimension                `json:"dimension,omitempty"`           // [Optional] <p>The dimension of this item.<br /></p>
-	LogisticInfo      []LogisticInfo            `json:"logistic_info,omitempty"`       // [Optional] <p>Logistic channel setting of this item.<br /></p>
-	AttributeList     []Attribute               `json:"attribute_list,omitempty"`      // [Optional]
-	PreOrder          *PreOrder                 `json:"pre_order,omitempty"`           // [Optional] <p>Pre order setting of this item.</p>
-	ItemSku           *string                   `json:"item_sku,omitempty"`            // [Optional] <p>SKU tag of this item.<br /></p>
-	Condition         *string                   `json:"condition,omitempty"`           // [Optional] <p>Condition of item, could be USED or NEW.<br /></p>
-	Wholesale         []Wholesale               `json:"wholesale,omitempty"`           // [Optional] <p>Wholesale setting of this item.<br /></p>
-	VideoUploadId     []string                  `json:"video_upload_id,omitempty"`     // [Optional] <p>Video upload ID returned from video uploading API. Only accept one video_upload_id.<br /></p>
-	ItemDangerous     *int64                    `json:"item_dangerous,omitempty"`      // [Optional] <p>This field is only applicable for&nbsp;local sellers&nbsp;in Indonesia and Malaysia. Use this field to identify whether a product is a dangerous product. 0 for non-dangerous product and 1 for dangerous product. For more information, please visit the market's respective Seller Education Hub.<br /></p>
-	TaxInfo           *AddSspItemRequestTaxInfo `json:"tax_info,omitempty"`            // [Optional] <p>Tax information for this item.<br /></p>
-	SellerStock       []SellerStock             `json:"seller_stock,omitempty"`        // [Optional] <p>seller stock（Please notice that stock(including Seller Stock and Shopee Stock) should be larger than or equal to real-time reserved stock）<br /></p>
-	SizeChartInfo     *SizeChartInfo            `json:"size_chart_info,omitempty"`     // [Optional]
-	AuthorisedBrandId *int64                    `json:"authorised_brand_id,omitempty"` // [Optional] <p>ID of authorised reseller brand.<br /></p>
-	ModelList         []AddSspItemRequestModel  `json:"model_list,omitempty"`          // [Optional] <p>Model info list.<br /></p>
-}
-
-type LinkSspResponse struct {
-	BaseResponse `json:",inline"`    // Common response fields
-	Response     LinkSspResponseData `json:"response"` // Actual response data
-}
-
-type LinkSspResponseData struct {
-	ItemId int64 `json:"item_id"` // [Required] <p>Shopee's unique identifier for an item.<br /></p>
-}
-
 type List struct {
 	AttributeTree []AttributeTree `json:"attribute_tree"` // [Required] <p>One category's attribute trees</p>
 	CategoryId    int64           `json:"category_id"`    // [Required] <p>Category ID</p>
@@ -1243,14 +1219,9 @@ type ModelMapping struct {
 	AmodelId int64 `json:"amodel_id"` // [Required] <p>ID of model for the A Item.<br /></p>
 }
 
-type ModelSetting struct {
-	TierIndex interface{} `json:"tier_index"` // [Required] <p>Tier index of this model.<br /></p>
-	Gtin      string      `json:"gtin"`       // [Required] <p>GTIN of this model.</p>
-}
-
-type PageInfo struct {
-	HasNextPage bool   `json:"has_next_page"` // [Required]
-	NextOffset  string `json:"next_offset"`   // [Required]
+type ModelPreOrder struct {
+	IsPreOrder interface{} `json:"is_pre_order"`           // [Required] <p>Indicate whether the model is pre-order.</p>
+	DaysToShip *int64      `json:"days_to_ship,omitempty"` // [Optional] <p>The days to ship for pre-order model.</p>
 }
 
 type PreOrder struct {
@@ -1334,6 +1305,29 @@ type PromotionStockInfoV2 struct {
 	TotalReservedStock int64       `json:"total_reserved_stock"` // [Required] <p>Total Stock reserved for promotion<br /></p>
 }
 
+type PublishItem struct {
+	OutletItemId      *int64                    `json:"outlet_item_id,omitempty"`      // [Optional] <p>The item ID of the item in the Outlet shop.</p>
+	Model             []PublishItemModel        `json:"model,omitempty"`               // [Optional] <p>The outlet model list.</p>
+	LogisticInfo      []PublishItemLogisticInfo `json:"logistic_info,omitempty"`       // [Optional] <p>The logistic information of the outlet item.</p>
+	PurchaseLimitInfo *PurchaseLimitInfo        `json:"purchase_limit_info,omitempty"` // [Optional] <p>The purchase limit information of the outlet item.</p>
+}
+
+type PublishItemLogisticInfo struct {
+	LogisticId  *int64       `json:"logistic_id,omitempty"`  // [Optional] <p>The logistics channel ID used for shipping the item.</p>
+	Enabled     interface{}  `json:"enabled"`                // [Required] <p>Indicates whether the logistics channel is enabled for the item.</p>
+	ShippingFee *float64     `json:"shipping_fee,omitempty"` // [Optional] <p>The shipping fee charged to the buyer for this logistics channel.</p>
+	SizeId      *int64       `json:"size_id,omitempty"`      // [Optional] <p>The parcel size ID used to calculate shipping fees.</p>
+	IsFree      *interface{} `json:"is_free,omitempty"`      // [Optional] <p>Indicates whether free shipping is applied for this logistics channel.</p>
+}
+
+type PublishItemModel struct {
+	RelateMartModelId *int64         `json:"relate_mart_model_id,omitempty"` // [Optional] <p>The related model ID of the product in the Mart shop.</p>
+	ModelStatus       *string        `json:"model_status,omitempty"`         // [Optional] <p>The model status.</p>
+	OriginalPrice     *float64       `json:"original_price,omitempty"`       // [Optional] <p>The original price of the outlet model.</p>
+	SellerStock       []SellerStock  `json:"seller_stock,omitempty"`         // [Optional] <p>The seller stock by location.</p>
+	PreOrder          *ModelPreOrder `json:"pre_order,omitempty"`            // [Optional] <p>The pre-order setting of the model.</p>
+}
+
 type PublishItemToOutletShopResponse struct {
 	BaseResponse `json:",inline"` // Common response fields
 }
@@ -1394,6 +1388,12 @@ type RequestImage struct {
 	ImageRatio  *string       `json:"image_ratio,omitempty"` // [Optional] <p>Ratio of image, <br />OptionalAllowed ratios :<br />"1:1" (default)&nbsp;<br />"3:4"<br /></p>
 }
 
+type RequestItem struct {
+	OutletShopId int64   `json:"outlet_shop_id"` // [Required] <p>The shop ID of the Outlet shop.</p>
+	ItemId       int64   `json:"item_id"`        // [Required] <p>The item ID of the item in the Outlet shop.</p>
+	PriceList    []Price `json:"price_list"`     // [Required] <p>The price list of item models. The list size must be at least 1.</p>
+}
+
 type RequestItemSetting struct {
 	ItemName          *string                   `json:"item_name,omitempty"`           // [Optional] <p>The name of this kit item.<br /></p>
 	Images            *PromotionImages          `json:"images,omitempty"`              // [Optional] <p>Item images with 1:1 ratio.<br /></p>
@@ -1432,7 +1432,7 @@ type RequestTaxInfo struct {
 	Csosn             *string        `json:"csosn,omitempty"`               // [Optional] Code of Operation Status – Simples Nacional, code for company operations to identify the origin of the goods and the taxation regime of the operations.
 	Origin            *string        `json:"origin,omitempty"`              // [Optional] Product source, domestic or foreig
 	Cest              *string        `json:"cest,omitempty"`                // [Optional] <p>Tax Replacement Specifying Code (CEST), to separate within the same NCM products that do or do not have ICMS tax substitution. (BR region)<br /><br />CEST must have 7 digits, OR, if your item doesn't have a CEST enter the value "00".<br /></p>
-	MeasureUnit       *string        `json:"measure_unit,omitempty"`        // [Optional] (BR region)
+	MeasureUnit       *string        `json:"measure_unit,omitempty"`        // [Optional] <p>(BR region)<br /><br /></p><p>The value must be provided in uppercase and must match one of the supported units below:<br /><br /></p><p>AMPOLA, BALDE, BANDEJ, BARRA, BISNAG, BLOCO, BOBINA, BOMB, CAPS, CART, CENTO, CJ, CM, CM2, CX, CX2, CX3, CX5, CX10, CX15, CX20, CX25, CX50, CX100, DISP, DUZIA, EMBAL, FARDO, FOLHA, FRASCO, GALAO, GF, GRAMAS, JOGO, KG, KIT, LATA, LITRO, M, M2, M3, MILHEI, ML, MWH, PACOTE, PALETE, PARES, PC, POTE, K, RESMA, ROLO, SACO, SACOLA, TAMBOR, TANQUE, TON, TUBO, UN, VASIL, VIDRO.</p>
 	InvoiceOption     *InvoiceOption `json:"invoice_option,omitempty"`      // [Optional] Value shuold be one of NO_INVOICES VAT_MARGIN_SCHEME_INVOICES VAT_INVOICES NON_VAT_INVOICES and if value is NON_VAT_INVOICE vat_rate should be null (PL region)
 	VatRate           *string        `json:"vat_rate,omitempty"`            // [Optional] Value should be one of 0% 5% 8% 23% NO_VAT_RATE (PL region)
 	HsCode            *string        `json:"hs_code,omitempty"`             // [Optional] HS Code. (Only for IN region)
@@ -1518,21 +1518,6 @@ type ResponseDataPriceInfo struct {
 	OriginalPrice float64 `json:"original_price"` // [Required] Original price of item
 }
 
-type ResponseDataSsp struct {
-	SspId             int64              `json:"ssp_id"`             // [Required] <p>Shopee's unique identifier for Shopee Standard Product.</p>
-	ProductName       string             `json:"product_name"`       // [Required] <p>Name of Shopee&nbsp;Standard Product.</p>
-	CategoryId        int64              `json:"category_id"`        // [Required] <p>Shopee's unique identifier for a category of Shopee&nbsp;Standard Product.</p>
-	Description       *Description       `json:"description"`        // [Required] <p>Description of Shopee&nbsp;Standard Product.</p>
-	Weight            string             `json:"weight"`             // [Required] <p>The weight of Shopee Standard Product, the unit is KG.</p>
-	BrandInfo         *Brand             `json:"brand_info"`         // [Required] <p>Brand of Shopee Standard Product.</p>
-	AttributeList     []SspAttribute     `json:"attribute_list"`     // [Required]
-	Media             *SspMedia          `json:"media"`              // [Required]
-	CompatibilityInfo *CompatibilityInfo `json:"compatibility_info"` // [Required]
-	Dimension         *Dimension         `json:"dimension"`          // [Required] <p>The dimension of this Shopee Standard Product.</p>
-	GlobalCode        *GlobalCode        `json:"global_code"`        // [Required]
-	SalesInfo         *SalesInfo         `json:"sales_info"`         // [Required]
-}
-
 type ResponseDataSuccess struct {
 	ItemId    int64       `json:"item_id"`   // [Required] The identity of product item.
 	Promotion []Promotion `json:"promotion"` // [Required] Item promotion info list
@@ -1575,11 +1560,6 @@ type Result struct {
 	FailMessage string `json:"fail_message"` // [Required] Indicate error type if one element hit error.
 }
 
-type SalesInfo struct {
-	ModelSettingList     []ModelSetting                         `json:"model_setting_list"`      // [Required]
-	StdTierVariationList []ResponseDataStandardiseTierVariation `json:"std_tier_variation_list"` // [Required] <p>Standardise Variation config of Shopee Standard Product.<br /></p>
-}
-
 type SearchAttributeValueListRequest struct {
 	AttributeId int64   `json:"attribute_id"`         // [Required]
 	ValueName   *string `json:"value_name,omitempty"` // [Optional] <p>search the keywords of the attributes value</p>
@@ -1595,8 +1575,8 @@ type SearchAttributeValueListResponse struct {
 }
 
 type SearchAttributeValueListResponseData struct {
-	ValueList []Value               `json:"value_list"` // [Required]
-	PageInfo  *ResponseDataPageInfo `json:"page_info"`  // [Required]
+	ValueList []Value   `json:"value_list"` // [Required]
+	PageInfo  *PageInfo `json:"page_info"`  // [Required]
 }
 
 type SearchItemRequest struct {
@@ -1671,32 +1651,9 @@ type SipItemPrice struct {
 	SipItemPrice float64 `json:"sip_item_price"`     // [Required] SIP item price.
 }
 
-type Ssp struct {
-	SspInfo   *SspInfo `json:"ssp_info"`  // [Required]
-	Available bool     `json:"available"` // [Required] <p>Indicate whether the Shopee Standard Product is available to create product (One&nbsp;SSP can only be used to create one product under the shop, so if the SSP has already been used, then available will be false).</p>
-}
-
-type SspAttribute struct {
-	AttributeId           int64            `json:"attribute_id"`            // [Required] <p>The Identify of each attribute.</p>
-	OriginalAttributeName string           `json:"original_attribute_name"` // [Required] <p>The name of each attribute.</p>
-	AttributeValues       []AttributeValue `json:"attribute_values"`        // [Required]
-}
-
-type SspInfo struct {
-	SspId       int64  `json:"ssp_id"`       // [Required] <p>Shopee's unique identifier for Shopee&nbsp;Standard Product.<br /></p>
-	ProductName string `json:"product_name"` // [Required] <p>Name of Shopee&nbsp;Standard Product.<br /></p>
-	Gtin        string `json:"gtin"`         // [Required] <p>GTIN of Shopee&nbsp;Standard Product.</p>
-	Oem         string `json:"oem"`          // [Required] <p>OEM of Shopee&nbsp;Standard Product.</p>
-}
-
-type SspMedia struct {
-	Image *ItemImage `json:"image"` // [Required]
-	Video []Video    `json:"video"` // [Required]
-}
-
 type Stock struct {
-	ModelId     *int64        `json:"model_id,omitempty"` // [Optional] 0 for no model item.
-	SellerStock []SellerStock `json:"seller_stock"`       // [Required] <p>new stock info（Please notice that stock(including Seller Stock and Shopee Stock) should be larger than or equal to real-time reserved stock）<br /></p>
+	ModelId     *int64        `json:"model_id,omitempty"` // [Optional] <p>The model ID of the product. Empty for item without model.</p>
+	SellerStock []SellerStock `json:"seller_stock"`       // [Required] <p>The seller stock by location.</p>
 }
 
 type StockInfoV2 struct {
@@ -1784,19 +1741,6 @@ type UnfinishedTask struct {
 	Suggestion string `json:"suggestion"` // [Required] <p>System&nbsp;suggestion for item's content issue. Applicable values:</p><p>Add at least 3 images</p><p>Adopt suggested category<br />Add at least 1 attributes<br />Add size chart<br />Adopt the color or size variation<br />Add brand info<br />Add at least 100 characters or 1 image for desc<br />Add characters for name to 25~100<br />Adopt suggested weight<br />Add video<br />Add at least 3 attributes</p>
 }
 
-type UnlinkSspRequest struct {
-	ItemId int64 `json:"item_id"` // [Required] <p>ID of this item.<br /></p>
-}
-
-type UnlinkSspResponse struct {
-	BaseResponse `json:",inline"`      // Common response fields
-	Response     UnlinkSspResponseData `json:"response"` // Actual response data
-}
-
-type UnlinkSspResponseData struct {
-	ItemId int64 `json:"item_id"` // [Required] <p>Shopee's unique identifier for an item.<br /></p>
-}
-
 type UnlistItemRequest struct {
 	ItemList []SharedItem `json:"item_list"` // [Required] Length should be between 1 to 50.
 }
@@ -1820,7 +1764,6 @@ type UpdateItemRequest struct {
 	Image                *RequestImage             `json:"image,omitempty"`                  // [Optional] Images of item.
 	ItemSku              *string                   `json:"item_sku,omitempty"`               // [Optional] SKU tag for item.
 	ItemStatus           *ItemStatus               `json:"item_status,omitempty"`            // [Optional] Item status, could be UNLIST or NORMAL.
-	LogisticInfo         []LogisticInfo            `json:"logistic_info,omitempty"`          // [Optional] Logistic channel setting.
 	Wholesale            []Wholesale               `json:"wholesale,omitempty"`              // [Optional] <p>Wholesale setting.</p><p>If you want to delete it, please pass it with blank.<br /></p>
 	ItemId               int64                     `json:"item_id"`                          // [Required] ID of item.
 	CategoryId           *int64                    `json:"category_id,omitempty"`            // [Optional] ID of category.
@@ -1963,12 +1906,6 @@ type VehicleInfo struct {
 	ModelId   int64 `json:"model_id"`   // [Required] <p>ID of the model.<br /></p>
 	YearId    int64 `json:"year_id"`    // [Required] <p>ID of the year.<br /></p>
 	VersionId int64 `json:"version_id"` // [Required] <p>ID of the version.<br /></p>
-}
-
-type Video struct {
-	VideoUrl     string `json:"video_url"`     // [Required] <p>Url of video.<br /></p>
-	ThumbnallUrl string `json:"thumbnall_url"` // [Required] <p>Thumbnail of video.<br /></p>
-	Duration     int64  `json:"duration"`      // [Required] <p>Duration of video.<br /></p>
 }
 
 type Wholesale struct {

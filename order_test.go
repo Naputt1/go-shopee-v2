@@ -573,29 +573,29 @@ func Test_Order_DownloadFbsInvoices(t *testing.T) {
 	t.Logf("Order.DownloadFbsInvoices response: %#v", res)
 }
 
-func Test_Order_GetEstimiateCancelValue(t *testing.T) {
+func Test_Order_GetEstimateCancelValue(t *testing.T) {
 	setup()
 	defer teardown()
 
-	fixture := "v2.order.get_estimiate_cancel_value_resp.json"
+	fixture := "v2.order.get_estimate_cancel_value_resp.json"
 	data, err := loadFixtureSafe(fixture)
 	if err != nil {
 		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.order.get_estimiate_cancel_value")
+		skippedRoutes = append(skippedRoutes, "v2.order.get_estimate_cancel_value")
 		skippedMu.Unlock()
-		t.Skipf("Skipping GetEstimiateCancelValue due to missing fixture: %v", err)
+		t.Skipf("Skipping GetEstimateCancelValue due to missing fixture: %v", err)
 	}
 	responder, err := httpmock.NewJsonResponder(200, data)
 	if err != nil {
-		t.Skipf("Skipping GetEstimiateCancelValue due to invalid fixture: %v", err)
+		t.Skipf("Skipping GetEstimateCancelValue due to invalid fixture: %v", err)
 	}
 
 	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/order/get_estimate_cancel_value", app.APIURL), responder)
-	var req GetEstimiateCancelValueRequest
-	res, err := client.Order.GetEstimiateCancelValue(shopID, req, accessToken)
+	var req GetEstimateCancelValueRequest
+	res, err := client.Order.GetEstimateCancelValue(shopID, req, accessToken)
 	if err != nil {
-		t.Logf("Order.GetEstimiateCancelValue returned error (possibly expected with mock data): %s", err)
+		t.Logf("Order.GetEstimateCancelValue returned error (possibly expected with mock data): %s", err)
 	}
 
-	t.Logf("Order.GetEstimiateCancelValue response: %#v", res)
+	t.Logf("Order.GetEstimateCancelValue response: %#v", res)
 }

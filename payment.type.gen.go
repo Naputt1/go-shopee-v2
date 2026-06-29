@@ -24,6 +24,7 @@ type BuyerPaymentInfo struct {
 	BulkyHandlingFee      float64 `json:"bulky_handling_fee"`       // [Required] <p>A fee charged to the buyer for the special handling and transportation required for items that exceed a specified weight or dimension threshold. Only for ID local seller</p>
 	DiscountPix           float64 `json:"discount_pix"`             // [Required] <p>The discount provided by PIX&nbsp;(Only applicable for BR region)</p>
 	BcrsDeposit           float64 `json:"bcrs_deposit"`             // [Required] <p>The deposit fee paid by buyer of $0.10 per container as part of the SG Beverage Container Return Scheme mandated by the National Environment Agency (NEA). This will be an initial value and will not update after RR/cancellation.</p>
+	AdsVoucherDiscount    float64 `json:"ads_voucher_discount"`     // [Required] <p>The voucher provided by Ads team to offset the amount need to be paid by buyer.</p>
 }
 
 type Escrow struct {
@@ -64,6 +65,8 @@ type EscrowDetailBuyerPaymentInfo struct {
 	TradeInBonus          float64 `json:"trade_in_bonus"`           // [Required] <p>The total amount of all trade-in bonuses applied to a transaction. This value is the summation of the bonuses contributed by all four parties: Shopee, Seller, Bank and Trade-in Partner.</p>
 	BulkyHandlingFee      float64 `json:"bulky_handling_fee"`       // [Required] <p>A fee charged to the buyer for the special handling and transportation required for items that exceed a specified weight or dimension threshold.Only for local ID sellers.</p>
 	DiscountPix           float64 `json:"discount_pix"`             // [Required] <p>The discount provided by PIX&nbsp;(Only applicable for BR region)</p>
+	BcrsDeposit           float64 `json:"bcrs_deposit"`             // [Required] <p>The deposit fee paid by buyer of $0.10 per container as part of the SG Beverage Container Return Scheme mandated by the National Environment Agency (NEA). This will be an initial value and will not update after RR/cancellation.</p>
+	AdsVoucherDiscount    float64 `json:"ads_voucher_discount"`     // [Required] <p>The voucher provided by Ads team to offset the amount need to be paid by buyer.</p><p>it is an initial value (will not be updated after RR/cancellation)</p>
 }
 
 type EscrowDetailOrderIncome struct {
@@ -138,7 +141,7 @@ type EscrowDetailOrderIncome struct {
 	ProratedPaymentChannelPromoBankOffsetReturnItems   float64                   `json:"prorated_payment_channel_promo_bank_offset_return_items"`   // [Required] <p>This is the prorated value from bank payment channel promo due to adjustable RR.This field will only be updated when there is an adjustable RR.If it's a full RR or normal order will response 0.<br /></p>
 	ProratedPaymentChannelPromoShopeeOffsetReturnItems float64                   `json:"prorated_payment_channel_promo_shopee_offset_return_items"` // [Required] <p>This is the prorated value from shopee payment channel promo due to adjustable RR.This field will only be updated when there is an adjustable RR.If it's a full RR or normal order will response 0.<br /></p>
 	FsfSellerProtectionFeeClaimAmount                  float64                   `json:"fsf_seller_protection_fee_claim_amount"`                    // [Required] <p>The claim amount given to seller if seller opt in to shipping fee service program. this covers Forward Shipping Fee cost in the case of cancelled due to Failed delivery. only apply to PH Local as per Jun 2024.<br /></p>
-	ShippingSellerProtectionFeeAmount                  float64                   `json:"shipping_seller_protection_fee_amount"`                     // [Required] <p>Service fee charged to seller in MY,ID,PH Local (as per Jun 2024) due to additional program purchased<br /></p>
+	ShippingSellerProtectionFeeAmount                  float64                   `json:"shipping_seller_protection_fee_amount"`                     // [Required] <p>Service fee charged to seller in MY,ID,PH,BR Local (as per Jun 2024) due to additional program purchased<br /></p>
 	FinalReturnToSellerShippingFee                     float64                   `json:"final_return_to_seller_shipping_fee"`                       // [Required] <p>The amount of fee charged to seller (if any) for the failed delivery order&nbsp;</p>
 	VatOnImportedGoods                                 float64                   `json:"vat_on_imported_goods"`                                     // [Required] <p>7% VAT is charged for imported goods entering Thailand<br /></p>
 	WithholdingVatTax                                  float64                   `json:"withholding_vat_tax"`                                       // [Required] <p>By VN law, E-commerce platforms need to Withhold VAT tax applicable to all VN business household and VN individual sellers</p>

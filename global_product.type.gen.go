@@ -93,9 +93,23 @@ type Column struct {
 }
 
 type CreatePublishTaskRequest struct {
-	GlobalItemId int64        `json:"global_item_id"` // [Required] Id of global item.
-	ShopRegion   string       `json:"shop_region"`    // [Required] Region of shop.
-	Item         *RequestItem `json:"item,omitempty"` // [Optional] Item information.
+	GlobalItemId int64                         `json:"global_item_id"` // [Required] Id of global item.
+	ShopRegion   string                        `json:"shop_region"`    // [Required] Region of shop.
+	Item         *CreatePublishTaskRequestItem `json:"item,omitempty"` // [Optional] Item information.
+}
+
+type CreatePublishTaskRequestItem struct {
+	ItemName                 *string                    `json:"item_name,omitempty"`                  // [Optional] <p>Name of item.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product name into the local language.</p>
+	Description              *string                    `json:"description,omitempty"`                // [Optional] <p>Description of item.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product description into the local language.</p>
+	ItemStatus               *ItemStatus                `json:"item_status,omitempty"`                // [Optional] Status of item.
+	OriginalPrice            *float64                   `json:"original_price,omitempty"`             // [Optional] <p>Original price of item.</p><p><b><font color="#c24f4a">For&nbsp;SG/MY/BR/MX/PL/ES/AR seller:</font></b>&nbsp;Sellers can set the price with two decimal place,&nbsp;other regions can only set the price as an integer.&nbsp;If you upload this field, we will take your value, so you should pass the value in local currency, if you don't upload this field, Shopee will automatically calculate the price.<br /></p>
+	Image                    *PromotionImages           `json:"image,omitempty"`                      // [Optional] Image information of item.
+	Model                    []ItemModel                `json:"model,omitempty"`                      // [Optional] Model information of item.
+	SizeChart                *string                    `json:"size_chart,omitempty"`                 // [Optional] <p>Size chart of item. Only support image_id for now</p>
+	Logistic                 []LogisticInfo             `json:"logistic,omitempty"`                   // [Optional] Logistic information of item.
+	PreOrder                 *PreOrder                  `json:"pre_order,omitempty"`                  // [Optional] Preorder information of item.
+	DescriptionInfo          *DescriptionInfo           `json:"description_info,omitempty"`           // [Optional] <p>New description field. Only whitelist sellers can use it. If you use the field, please upload the description_type=extended otherwise api will return error. If you don't use this field, you don't need to upload the description_type or upload description_type=normal.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product description into the local language.</p>
+	StandardiseTierVariation []StandardiseTierVariation `json:"standardise_tier_variation,omitempty"` // [Optional]
 }
 
 type CreatePublishTaskResponse struct {
@@ -168,10 +182,6 @@ type ExtendedDescriptionLimit struct {
 	DescriptionImageHeightMin      int64   `json:"description_image_height_min"`       // [Required] length min limit for item extended description image hight
 	DescriptionImageAspectRatioMin float64 `json:"description_image_aspect_ratio_min"` // [Required] length min limit for item extended description image aspect (image width / image hight )
 	DescriptionImageAspectRatioMax float64 `json:"description_image_aspect_ratio_max"` // [Required] length max limit for item extended description image aspect (image width / image hight )
-}
-
-type Failed struct {
-	FailedReason string `json:"failed_reason"` // [Required] Failed reason.
 }
 
 type GetAttributeTreeResponseDataList struct {
@@ -295,7 +305,7 @@ type GetPublishTaskResultResponse struct {
 type GetPublishTaskResultResponseData struct {
 	PublishStatus string                                   `json:"publish_status"` // [Required] Status of publish task.
 	Success       *GetPublishTaskResultResponseDataSuccess `json:"success"`        // [Required] If publish task is successful, this field shows the published results.
-	Failed        *Failed                                  `json:"failed"`         // [Required] If publish task is failed, this field shows the failed reason.
+	Failed        *ResponseDataFailed                      `json:"failed"`         // [Required] If publish task is failed, this field shows the failed reason.
 }
 
 type GetPublishTaskResultResponseDataSuccess struct {
@@ -590,6 +600,11 @@ type MultiLang struct {
 	Value    string `json:"value"`    // [Required] <p>Translate result<br /></p>
 }
 
+type PageInfo struct {
+	Cursor  int64 `json:"cursor"`   // [Required]
+	HasNext bool  `json:"has_next"` // [Required]
+}
+
 type PriceLimit struct {
 	MinLimit float64 `json:"min_limit"` // [Required] Global item price min limit.
 	MaxLimit float64 `json:"max_limit"` // [Required] Global item price max limit.
@@ -621,20 +636,6 @@ type RequestGlobalModel struct {
 	PreOrder       *RequestPreOrder `json:"pre_order,omitempty"` // [Optional] <p>Pre-order information of this global model.</p><p><br /></p><p>Notes:&nbsp;</p><p>If don't set the DTS of this global model, will use the DTS of the global item by default.</p>
 }
 
-type RequestItem struct {
-	ItemName                 *string                    `json:"item_name,omitempty"`                  // [Optional] <p>Name of item.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product name into the local language.</p>
-	Description              *string                    `json:"description,omitempty"`                // [Optional] <p>Description of item.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product description into the local language.</p>
-	ItemStatus               *ItemStatus                `json:"item_status,omitempty"`                // [Optional] Status of item.
-	OriginalPrice            *float64                   `json:"original_price,omitempty"`             // [Optional] <p>Original price of item.</p><p><b><font color="#c24f4a">For&nbsp;SG/MY/BR/MX/PL/ES/AR seller:</font></b>&nbsp;Sellers can set the price with two decimal place,&nbsp;other regions can only set the price as an integer.&nbsp;If you upload this field, we will take your value, so you should pass the value in local currency, if you don't upload this field, Shopee will automatically calculate the price.<br /></p>
-	Image                    *PromotionImages           `json:"image,omitempty"`                      // [Optional] Image information of item.
-	Model                    []ItemModel                `json:"model,omitempty"`                      // [Optional] Model information of item.
-	SizeChart                *string                    `json:"size_chart,omitempty"`                 // [Optional] <p>Size chart of item. Only support image_id for now</p>
-	Logistic                 []LogisticInfo             `json:"logistic,omitempty"`                   // [Optional] Logistic information of item.
-	PreOrder                 *PreOrder                  `json:"pre_order,omitempty"`                  // [Optional] Preorder information of item.
-	DescriptionInfo          *DescriptionInfo           `json:"description_info,omitempty"`           // [Optional] <p>New description field. Only whitelist sellers can use it. If you use the field, please upload the description_type=extended otherwise api will return error. If you don't use this field, you don't need to upload the description_type or upload description_type=normal.&nbsp;If you upload this field, we will take your value, so you should pass the value in the local language, if you don't upload this field, Shopee will automatically translate your global product description into the local language.</p>
-	StandardiseTierVariation []StandardiseTierVariation `json:"standardise_tier_variation,omitempty"` // [Optional]
-}
-
 type RequestPreOrder struct {
 	DaysToShip int64 `json:"days_to_ship"` // [Required] <p>Days to ship.</p>
 }
@@ -662,6 +663,10 @@ type ResponseDataBrand struct {
 
 type ResponseDataDescriptionInfo struct {
 	ExtendedDescription *DescriptionInfoExtendedDescription `json:"extended_description"` // [Required] If description_type is extended , Description information will be returned through this field.
+}
+
+type ResponseDataFailed struct {
+	FailedReason string `json:"failed_reason"` // [Required] Failed reason.
 }
 
 type ResponseDataGlobalItem struct {
@@ -703,11 +708,6 @@ type ResponseDataGlobalModel struct {
 	IsFulfillmentByShopee bool                   `json:"is_fulfillment_by_shopee"` // [Required] <p>If it it a FBS model</p>
 }
 
-type ResponseDataPageInfo struct {
-	Cursor  int64 `json:"cursor"`   // [Required]
-	HasNext bool  `json:"has_next"` // [Required]
-}
-
 type ResponseDataStandardiseTierVariation struct {
 	VariationId         int64                                     `json:"variation_id"`          // [Required] <p>Standardise Tier variation ID.<br /></p>
 	VariationName       string                                    `json:"variation_name"`        // [Required] <p>Standardise Tier variation Name.<br /></p>
@@ -735,8 +735,8 @@ type SearchGlobalAttributeValueListResponse struct {
 }
 
 type SearchGlobalAttributeValueListResponseData struct {
-	ValueList []Value               `json:"value_list"` // [Required]
-	PageInfo  *ResponseDataPageInfo `json:"page_info"`  // [Required]
+	ValueList []Value   `json:"value_list"` // [Required]
+	PageInfo  *PageInfo `json:"page_info"`  // [Required]
 }
 
 type SetSyncFieldRequest struct {

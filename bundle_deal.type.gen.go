@@ -11,8 +11,8 @@ type AddBundleDealItemResponse struct {
 }
 
 type AddBundleDealItemResponseData struct {
-	FailedList  []ResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
-	SuccessList []interface{}        `json:"success_list"` // [Required] The list of succeed added items
+	FailedList  []AddBundleDealItemResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
+	SuccessList []interface{}                         `json:"success_list"` // [Required] The list of succeed added items
 }
 
 type AddBundleDealRequest struct {
@@ -73,8 +73,8 @@ type DeleteBundleDealItemResponse struct {
 }
 
 type DeleteBundleDealItemResponseData struct {
-	FailedList  []ResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
-	SuccessList []interface{}        `json:"success_list"` // [Required] The list of succeed added items
+	FailedList  []AddBundleDealItemResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
+	SuccessList []interface{}                         `json:"success_list"` // [Required] The list of succeed added items
 }
 
 type DeleteBundleDealRequest struct {
@@ -171,8 +171,8 @@ type UpdateBundleDealItemResponse struct {
 }
 
 type UpdateBundleDealItemResponseData struct {
-	FailedList  []ResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
-	SuccessList []interface{}        `json:"success_list"` // [Required] The list of succeed added items
+	FailedList  []AddBundleDealItemResponseDataFailed `json:"failed_list"`  // [Required] Indicate error details.
+	SuccessList []interface{}                         `json:"success_list"` // [Required] The list of succeed added items
 }
 
 type UpdateBundleDealRequest struct {

@@ -94,10 +94,10 @@ type OrderService interface {
 	// Path: /api/v2/order/download_fbs_invoices
 	// https://open.shopee.com/documents/v2/v2.order.download_fbs_invoices?module=94&type=1
 	DownloadFbsInvoices(sid uint64, req DownloadFbsInvoicesRequest, tok string) (*DownloadFbsInvoicesResponse, error)
-	// GetEstimiateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
+	// GetEstimateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
 	// Path: /api/v2/order/get_estimate_cancel_value
-	// https://open.shopee.com/documents/v2/v2.order.get_estimiate_cancel_value?module=94&type=1
-	GetEstimiateCancelValue(sid uint64, req GetEstimiateCancelValueRequest, tok string) (*GetEstimiateCancelValueResponse, error)
+	// https://open.shopee.com/documents/v2/v2.order.get_estimate_cancel_value?module=94&type=1
+	GetEstimateCancelValue(sid uint64, req GetEstimateCancelValueRequest, tok string) (*GetEstimateCancelValueResponse, error)
 }
 
 type OrderServiceOp[T any] struct {
@@ -329,12 +329,12 @@ func (s *OrderServiceOp[T]) DownloadFbsInvoices(sid uint64, req DownloadFbsInvoi
 	return resp, err
 }
 
-// GetEstimiateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
+// GetEstimateCancelValue {"content":"<p>Returns the estimated refund value for a partial order cancellation given the specified items to cancel.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Returns the estimated refund value for a partial order cancellation given the specified items to cancel."}]}]}
 // Path: /api/v2/order/get_estimate_cancel_value
-// https://open.shopee.com/documents/v2/v2.order.get_estimiate_cancel_value?module=94&type=1
-func (s *OrderServiceOp[T]) GetEstimiateCancelValue(sid uint64, req GetEstimiateCancelValueRequest, tok string) (*GetEstimiateCancelValueResponse, error) {
+// https://open.shopee.com/documents/v2/v2.order.get_estimate_cancel_value?module=94&type=1
+func (s *OrderServiceOp[T]) GetEstimateCancelValue(sid uint64, req GetEstimateCancelValueRequest, tok string) (*GetEstimateCancelValueResponse, error) {
 	path := "/order/get_estimate_cancel_value"
-	resp := new(GetEstimiateCancelValueResponse)
+	resp := new(GetEstimateCancelValueResponse)
 	err := s.client.WithShop(sid, tok).Post(path, req, resp)
 	return resp, err
 }

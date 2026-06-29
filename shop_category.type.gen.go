@@ -1,5 +1,11 @@
 package goshopee
 
+type AddBundleDealItemResponseDataFailed struct {
+	ItemId      int64  `json:"item_id"`      // [Required] The invalid item id.
+	FailError   string `json:"fail_error"`   // [Required] The reason of the fail.
+	FailMessage string `json:"fail_message"` // [Required] The detailed reason of the failure and the hints of error fixing
+}
+
 type AddItemListRequest struct {
 	ShopCategoryId int64   `json:"shop_category_id"` // [Required] ShopCategory's unique identifier.
 	ItemList       []int64 `json:"item_list"`        // [Required] Shopee's unique identifiers list for an item. Max. 100 items to be deleted per request.
@@ -11,9 +17,9 @@ type AddItemListResponse struct {
 }
 
 type AddItemListResponseData struct {
-	InvalidItemIdList []ResponseDataFailed `json:"invalid_item_id_list"` // [Required] List of invalid item ids.
-	ShopCategoryId    int64                `json:"shop_category_id"`     // [Required] ShopCategory's unique identifier.
-	CurrentCount      int64                `json:"current_count"`        // [Required] Count of items under this shop category after deletion.
+	InvalidItemIdList []AddBundleDealItemResponseDataFailed `json:"invalid_item_id_list"` // [Required] List of invalid item ids.
+	ShopCategoryId    int64                                 `json:"shop_category_id"`     // [Required] ShopCategory's unique identifier.
+	CurrentCount      int64                                 `json:"current_count"`        // [Required] Count of items under this shop category after deletion.
 }
 
 type AddShopCategoryRequest struct {
@@ -74,12 +80,6 @@ type GetShopCategoryListResponseData struct {
 	ShopCategorys []ShopCategorys `json:"shop_categorys"` // [Required] ShopCategory's unique identifier.
 	TotalCount    int64           `json:"total_count"`    // [Required] This is to indicate the whole number of  in-shop categories under the shop.
 	More          bool            `json:"more"`           // [Required] This is to indicate whether the list is more than one page. If this value is true, you may want to continue to check next page to retrieve the rest.
-}
-
-type ResponseDataFailed struct {
-	ItemId      int64  `json:"item_id"`      // [Required] The invalid item id.
-	FailError   string `json:"fail_error"`   // [Required] The reason of the fail.
-	FailMessage string `json:"fail_message"` // [Required] The detailed reason of the failure and the hints of error fixing
 }
 
 type ShopCategoryGetItemListRequest struct {

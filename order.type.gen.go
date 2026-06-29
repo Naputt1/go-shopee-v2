@@ -197,14 +197,14 @@ type GetBuyerInvoiceInfoResponse struct {
 	InvoiceInfoList []InvoiceInfo    `json:"invoice_info_list,omitempty"` //
 }
 
-type GetEstimiateCancelValueRequest struct {
+type GetEstimateCancelValueRequest struct {
 	OrderSn               string        `json:"order_sn"`                 // [Required] <p>Shopee's unique identifier for an order.</p>
 	PartialCancelItemList []PackageItem `json:"partial_cancel_item_list"` // [Required] <p>The list of item models and quantities for which the seller wants to estimate the cancellation value before submitting the actual partial cancellation request.</p>
 }
 
-type GetEstimiateCancelValueResponse struct {
-	BaseResponse `json:",inline"` // Common response fields
-	CancelValue  int64            `json:"cancel_value,omitempty"` // <p>The estimated cancellation value for the selected item quantities. This value is calculated before the actual cancellation is submitted and can be used by sellers to preview the expected cancellation amount and support partial cancellation confirmation.</p>
+type GetEstimateCancelValueResponse struct {
+	BaseResponse     `json:",inline"` // Common response fields
+	CancelValuePrice string           `json:"cancel_value_price,omitempty"` // <p>The estimated cancellation value for the selected item quantities. This value is calculated before the actual cancellation is submitted and can be used by sellers to preview the expected cancellation amount and support partial cancellation confirmation.</p>
 }
 
 type GetFbsInvoicesResultRequest struct {
@@ -279,12 +279,12 @@ type GetOrderDetailResponseDataOrder struct {
 	CheckoutShippingCarrier               string            `json:"checkout_shipping_carrier"`                 // [Required] For non masking order, the logistics service provider that the buyer selected for the order to deliver items.  For masking order, the logistics service type that the buyer selected for the order to deliver items.
 	ReverseShippingFee                    float64           `json:"reverse_shipping_fee"`                      // [Required] Shopee charges the reverse shipping fee for the returned order.The value of this field will be non-negative.
 	OrderChargeableWeightGram             int64             `json:"order_chargeable_weight_gram"`              // [Required] display weight used to calculate ASF for this order
-	PrescriptionCheckStatus               int64             `json:"prescription_check_status"`                 // [Required] <p>Prescription check status. Only for ID and PH whitelist sellers. Applicable value:&nbsp;</p><p>0: NONE</p><p>1: PASSED</p><p>2: FAILED</p>
+	PrescriptionCheckStatus               int64             `json:"prescription_check_status"`                 // [Required] <p>Prescription check status. For ID, PH whitelisted sellers, the applicable values:</p><p>0: NONE</p><p>1: PASSED</p><p>2: FAILED</p><p>For TH whitelisted sellers, the applicable values:</p><p>0: NONE</p><p>1: PASSED<strong></strong></p>
 	PharmacistName                        string            `json:"pharmacist_name"`                           // [Required] <p>Name of the Pharmacist for Prescription Order.</p>
 	PrescriptionImages                    []string          `json:"prescription_images"`                       // [Required] <p>Return prescription images of this order, only for ID and PH whitelist sellers.</p><p><br /></p><p>Please add the prefix to review:</p><p>for ID:&nbsp;<a href="https://cf.shopee.co.id/file/+prescription_image" target="_blank" style="font-size:14px;">https://cf.shopee.co.id/file/+prescription_image</a></p><p>for PH:<a href="https://cf.shopee.co.id/file/+prescription_image" target="_blank" style="font-size:14px;">https://cf.shopee.ph/file/+prescription_image</a></p>
 	PrescriptionApprovalTime              int64             `json:"prescription_approval_time"`                // [Required] <p>Time of when the prescription is approved.</p>
 	PrescriptionRejectionTime             int64             `json:"prescription_rejection_time"`               // [Required] <p>Time of when the prescription is rejected.</p>
-	PrescriptionRejectReason              string            `json:"prescription_reject_reason"`                // [Required] <p>Return the reason why a prescription is rejected. If there is no rejection reason, return empty.</p>
+	PrescriptionRejectReason              string            `json:"prescription_reject_reason"`                // [Required] <p>Return the reason why a prescription is rejected. If there is no rejection reason, return empty.Only for ID and PH whitelist sellers</p>
 	IsBuyerShopCollection                 bool              `json:"is_buyer_shop_collection"`                  // [Required] <p>To indicate if this order is buyer self collection at store order</p>
 	BuyerProofOfCollection                []string          `json:"buyer_proof_of_collection"`                 // [Required] <p>The image url of the buyer self collection at the store.</p>
 	EdtFrom                               int64             `json:"edt_from"`                                  // [Required] <p>Earliest estimated delivery date of orders (only available for BR region)<br /></p>
@@ -472,36 +472,37 @@ type OptionImage struct {
 }
 
 type OrderItem struct {
-	ItemId                 int64           `json:"item_id"`                  // [Required] Shopee's unique identifier for an item.
-	ItemName               string          `json:"item_name"`                // [Required] The name of the item.
-	ItemSku                string          `json:"item_sku"`                 // [Required]  A item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.
-	ModelId                int64           `json:"model_id"`                 // [Required] ID of the model that belongs to the same item.
-	ModelName              string          `json:"model_name"`               // [Required] Name of the model that belongs to the same item. A seller can offer models of the same item. For example, the seller could create a fixed-priced listing for a t-shirt design and offer the shirt in different colors and sizes. In this case, each color and size combination is a separate model. Each model can have a different quantity and price.
-	ModelSku               string          `json:"model_sku"`                // [Required] A model SKU (stock keeping unit) is an identifier defined by a seller. It is only intended for the seller's use. Many sellers assign a SKU to an item of a specific type, size, and color, which are models of one item in Shopee Listings.
-	ModelQuantityPurchased int64           `json:"model_quantity_purchased"` // [Required] The number of identical items purchased at the same time by the same buyer from one listing/item.
-	ModelOriginalPrice     float64         `json:"model_original_price"`     // [Required] The original price of the item in the listing currency.
-	ModelDiscountedPrice   float64         `json:"model_discounted_price"`   // [Required] The after-discount price of the item in the listing currency. If there is no discount, this value will be same as that of model_original_price. In case of bundle deal item, this value will return 0 as by design bundle deal discount will not be breakdown to item/model level. Due to technical restriction, the value will return the price before bundle deal if we don't configure it to 0. Please call GetEscrowDetails if you want to calculate item-level discounted price for bundle deal item.
-	Wholesale              bool            `json:"wholesale"`                // [Required] This value indicates whether buyer buy the order item in wholesale price.
-	Weight                 float64         `json:"weight"`                   // [Required] The weight of the item
-	AddOnDeal              bool            `json:"add_on_deal"`              // [Required] To indicate if this item belongs to an addon deal.
-	MainItem               bool            `json:"main_item"`                // [Required] To indicate if this item is main item or sub item. True means main item, false means sub item.
-	AddOnDealId            int64           `json:"add_on_deal_id"`           // [Required] A unique ID to distinguish groups of items in Cart, and Order. (e.g. AddOnDeal)
-	PromotionType          string          `json:"promotion_type"`           // [Required] <p>Available type：product_promotion, flash_sale, bundle_deal, add_on_deal_main, add_on_deal_sub.</p><p><br /></p><p>For items which attend multiple promotions will only show one promotion, the order of priority is:&nbsp;</p><p>bundle_deal &gt; add_on_deal_main &gt; add_on_deal_sub &gt; product_promotion &gt;flash_sale</p>
-	PromotionId            int64           `json:"promotion_id"`             // [Required] The ID of the promotion.
-	OrderItemId            int64           `json:"order_item_id"`            // [Required] The identify of order item.
-	PromotionGroupId       int64           `json:"promotion_group_id"`       // [Required] The identify of product promotion.
-	ImageInfo              *OptionImage    `json:"image_info"`               // [Required] Image info of the product.
-	ProductLocationId      string          `json:"product_location_id"`      // [Required] The fulfilment warehouse ID(s) of the items in the order. (Multi-Warehouse sellers only)
-	IsPrescriptionItem     bool            `json:"is_prescription_item"`     // [Required] <p>To indicate if this item is prescription item<br /></p>
-	ConsultationId         string          `json:"consultation_id"`          // [Required] <p>An identifier of teleconsultation session which buyer did to order this item. Empty if item is not ordered through teleconsultation session</p>
-	IsB2cOwnedItem         bool            `json:"is_b2c_owned_item"`        // [Required] <p>determine if item is B2C_shop_item</p><p>It should be `<b>is_b2c_shop_item</b>` but it was a bug from dev. Then now it's <b>is_b2c_owned_item</b></p>
-	PromotionList          []ItemPromotion `json:"promotion_list"`           // [Required]
-	HotListingItem         bool            `json:"hot_listing_item"`         // [Required] <p>[Only for PH,TH,VN,MY,BR,TW] True if the item is hot listing.</p>
-	ActiveQty              int64           `json:"active_qty"`               // [Required] <p>The quantity of the item model that remains active in the order and is still expected to be fulfilled.</p>
-	CancelRequestedQty     int64           `json:"cancel_requested_qty"`     // [Required] <p>The quantity of the item model that is currently under a cancellation request but has not yet reached the final cancelled status.</p>
-	CancelledQty           int64           `json:"cancelled_qty"`            // [Required] <p>The quantity of the item model that has already been successfully cancelled.</p>
-	ReturnRequestedQty     int64           `json:"return_requested_qty"`     // [Required] <p>The quantity of the item model that is currently under a return/refund request.</p>
-	ReturnedQty            int64           `json:"returned_qty"`             // [Required] <p>The quantity of the item model that has already been successfully returned through the return/refund process.</p>
+	ItemId                            int64           `json:"item_id"`                                // [Required] Shopee's unique identifier for an item.
+	ItemName                          string          `json:"item_name"`                              // [Required] The name of the item.
+	ItemSku                           string          `json:"item_sku"`                               // [Required]  A item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.
+	ModelId                           int64           `json:"model_id"`                               // [Required] ID of the model that belongs to the same item.
+	ModelName                         string          `json:"model_name"`                             // [Required] Name of the model that belongs to the same item. A seller can offer models of the same item. For example, the seller could create a fixed-priced listing for a t-shirt design and offer the shirt in different colors and sizes. In this case, each color and size combination is a separate model. Each model can have a different quantity and price.
+	ModelSku                          string          `json:"model_sku"`                              // [Required] A model SKU (stock keeping unit) is an identifier defined by a seller. It is only intended for the seller's use. Many sellers assign a SKU to an item of a specific type, size, and color, which are models of one item in Shopee Listings.
+	ModelQuantityPurchased            int64           `json:"model_quantity_purchased"`               // [Required] The number of identical items purchased at the same time by the same buyer from one listing/item.
+	ModelOriginalPrice                float64         `json:"model_original_price"`                   // [Required] The original price of the item in the listing currency.
+	ModelDiscountedPrice              float64         `json:"model_discounted_price"`                 // [Required] The after-discount price of the item in the listing currency. If there is no discount, this value will be same as that of model_original_price. In case of bundle deal item, this value will return 0 as by design bundle deal discount will not be breakdown to item/model level. Due to technical restriction, the value will return the price before bundle deal if we don't configure it to 0. Please call GetEscrowDetails if you want to calculate item-level discounted price for bundle deal item.
+	Wholesale                         bool            `json:"wholesale"`                              // [Required] This value indicates whether buyer buy the order item in wholesale price.
+	Weight                            float64         `json:"weight"`                                 // [Required] The weight of the item
+	AddOnDeal                         bool            `json:"add_on_deal"`                            // [Required] To indicate if this item belongs to an addon deal.
+	MainItem                          bool            `json:"main_item"`                              // [Required] To indicate if this item is main item or sub item. True means main item, false means sub item.
+	AddOnDealId                       int64           `json:"add_on_deal_id"`                         // [Required] A unique ID to distinguish groups of items in Cart, and Order. (e.g. AddOnDeal)
+	PromotionType                     string          `json:"promotion_type"`                         // [Required] <p>Available type：product_promotion, flash_sale, bundle_deal, add_on_deal_main, add_on_deal_sub.</p><p><br /></p><p>For items which attend multiple promotions will only show one promotion, the order of priority is:&nbsp;</p><p>bundle_deal &gt; add_on_deal_main &gt; add_on_deal_sub &gt; product_promotion &gt;flash_sale</p>
+	PromotionId                       int64           `json:"promotion_id"`                           // [Required] The ID of the promotion.
+	OrderItemId                       int64           `json:"order_item_id"`                          // [Required] The identify of order item.
+	PromotionGroupId                  int64           `json:"promotion_group_id"`                     // [Required] The identify of product promotion.
+	ImageInfo                         *OptionImage    `json:"image_info"`                             // [Required] Image info of the product.
+	ProductLocationId                 string          `json:"product_location_id"`                    // [Required] The fulfilment warehouse ID(s) of the items in the order. (Multi-Warehouse sellers only)
+	IsPrescriptionItem                bool            `json:"is_prescription_item"`                   // [Required] <p>To indicate if this item is prescription item. Only for PH, TH, ID local shop.<br /></p>
+	ErrorInFetchingIsPrescriptionItem bool            `json:"error_in_fetching_is_prescription_item"` // [Required] <p>To indicate if there was an error when validating whether this item is prescription. Default false. If is_prescription_item=false and this field is true, the item's prescription status is uncertain (label service call failed). Only for TH, PH, ID local shop.</p>
+	ConsultationId                    string          `json:"consultation_id"`                        // [Required] <p>An identifier of teleconsultation session which buyer did to order this item. Empty if item is not ordered through teleconsultation session</p>
+	IsB2cOwnedItem                    bool            `json:"is_b2c_owned_item"`                      // [Required] <p>determine if item is B2C_shop_item</p><p>It should be `<b>is_b2c_shop_item</b>` but it was a bug from dev. Then now it's <b>is_b2c_owned_item</b></p>
+	PromotionList                     []ItemPromotion `json:"promotion_list"`                         // [Required]
+	HotListingItem                    bool            `json:"hot_listing_item"`                       // [Required] <p>[Only for PH,TH,VN,MY,BR,TW] True if the item is hot listing.</p>
+	ActiveQty                         int64           `json:"active_qty"`                             // [Required] <p>The quantity of the item model that remains active in the order and is still expected to be fulfilled.</p>
+	CancelRequestedQty                int64           `json:"cancel_requested_qty"`                   // [Required] <p>The quantity of the item model that is currently under a cancellation request but has not yet reached the final cancelled status.</p>
+	CancelledQty                      int64           `json:"cancelled_qty"`                          // [Required] <p>The quantity of the item model that has already been successfully cancelled.</p>
+	ReturnRequestedQty                int64           `json:"return_requested_qty"`                   // [Required] <p>The quantity of the item model that is currently under a return/refund request.</p>
+	ReturnedQty                       int64           `json:"returned_qty"`                           // [Required] <p>The quantity of the item model that has already been successfully returned through the return/refund process.</p>
 }
 
 type OrderPackage struct {
@@ -632,15 +633,19 @@ type ResponseDataPackage struct {
 }
 
 type ResponseDataPackageItem struct {
-	ItemId            int64  `json:"item_id"`             // [Required] <p>Shopee's unique identifier for an item.</p>
-	ModelId           int64  `json:"model_id"`            // [Required] <p>Shopee's unique identifier for a model.</p>
-	ItemSku           string `json:"item_sku"`            // [Required] <p>A item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.<br /></p>
-	ModelSku          string `json:"model_sku"`           // [Required] <p>ID of the model that belongs to the same item.<br /></p>
-	ModelQuantity     int64  `json:"model_quantity"`      // [Required] <p>The number of identical items/variations purchased at the same time by the same buyer from one listing/item.</p>
-	OrderItemId       int64  `json:"order_item_id"`       // [Required] <p>The identify of order item. For items in one same bundle deal promotion, the order_item_id should share the same id, such as 1,2. For items not in bundle deal promotion, the order_item_id should be the same as item_id.</p>
-	PromotionGroupId  int64  `json:"promotion_group_id"`  // [Required] <p>The identify of product promotion.</p>
-	ProductLocationId string `json:"product_location_id"` // [Required] <p>The warehouse ID of the item.</p>
-	ConsultationId    string `json:"consultation_id"`     // [Required] <p>An identifier of teleconsultation session which buyer did to order this item. Empty if item is not ordered through teleconsultation session</p>
+	ItemId                            int64  `json:"item_id"`                                // [Required] <p>Shopee's unique identifier for an item.</p>
+	ModelId                           int64  `json:"model_id"`                               // [Required] <p>Shopee's unique identifier for a model.</p>
+	ItemSku                           string `json:"item_sku"`                               // [Required] <p>A item SKU (stock keeping unit) is an identifier defined by a seller, sometimes called parent SKU. Item SKU can be assigned to an item in Shopee Listings.<br /></p>
+	ModelSku                          string `json:"model_sku"`                              // [Required] <p>ID of the model that belongs to the same item.<br /></p>
+	ModelQuantity                     int64  `json:"model_quantity"`                         // [Required] <p>The number of identical items/variations purchased at the same time by the same buyer from one listing/item.</p>
+	OrderItemId                       int64  `json:"order_item_id"`                          // [Required] <p>The identify of order item. For items in one same bundle deal promotion, the order_item_id should share the same id, such as 1,2. For items not in bundle deal promotion, the order_item_id should be the same as item_id.</p>
+	PromotionGroupId                  int64  `json:"promotion_group_id"`                     // [Required] <p>The identify of product promotion.</p>
+	ProductLocationId                 string `json:"product_location_id"`                    // [Required] <p>The warehouse ID of the item.</p>
+	ConsultationId                    string `json:"consultation_id"`                        // [Required] <p>An identifier of teleconsultation session which buyer did to order this item. Empty if item is not ordered through teleconsultation session</p>
+	IsPrescriptionItem                bool   `json:"is_prescription_item"`                   // [Required] <p>To indicate if this item is a prescription item. Default false. Only for PH, TH, ID whitelist shops.</p>
+	ErrorInFetchingIsPrescriptionItem bool   `json:"error_in_fetching_is_prescription_item"` // [Required] <p>To indicate if there was an error when validating whether this item is prescription. Default false. If is_prescription_item=false and this field is true, the item's prescription status is uncertain (label service call failed).&nbsp;Only for PH, TH, ID whitelist shops.</p>
+	PrescriptionCheckStatus           int64  `json:"prescription_check_status"`              // [Required] <p>Prescription check status. For ID, PH whitelisted sellers, the applicable values:</p><p>0: NONE</p><p>1: PASSED</p><p>2: FAILED</p><p>For TH whitelisted sellers, the applicable values:</p><p>0: NONE</p><p>1: PASSED</p>
+	PrescriptionRejectReason          string `json:"prescription_reject_reason"`             // [Required] <p>Return the reason why a prescription is rejected. If no rejection reason, return empty. Only for ID and PH whitelist sellers.</p>
 }
 
 type ResponseDataPagination struct {

@@ -1141,141 +1141,6 @@ func Test_Product_GetKitItemInfo(t *testing.T) {
 	t.Logf("Product.GetKitItemInfo response: %#v", res)
 }
 
-func Test_Product_GetSspList(t *testing.T) {
-	setup()
-	defer teardown()
-
-	fixture := "v2.product.get_ssp_list_resp.json"
-	data, err := loadFixtureSafe(fixture)
-	if err != nil {
-		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.product.get_ssp_list")
-		skippedMu.Unlock()
-		t.Skipf("Skipping GetSspList due to missing fixture: %v", err)
-	}
-	responder, err := httpmock.NewJsonResponder(200, data)
-	if err != nil {
-		t.Skipf("Skipping GetSspList due to invalid fixture: %v", err)
-	}
-
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/api/v2/product/get_ssp_list", app.APIURL), responder)
-	var req GetSspListRequest
-	res, err := client.Product.GetSspList(shopID, req, accessToken)
-	if err != nil {
-		t.Logf("Product.GetSspList returned error (possibly expected with mock data): %s", err)
-	}
-
-	t.Logf("Product.GetSspList response: %#v", res)
-}
-
-func Test_Product_GetSspInfo(t *testing.T) {
-	setup()
-	defer teardown()
-
-	fixture := "v2.product.get_ssp_info_resp.json"
-	data, err := loadFixtureSafe(fixture)
-	if err != nil {
-		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.product.get_ssp_info")
-		skippedMu.Unlock()
-		t.Skipf("Skipping GetSspInfo due to missing fixture: %v", err)
-	}
-	responder, err := httpmock.NewJsonResponder(200, data)
-	if err != nil {
-		t.Skipf("Skipping GetSspInfo due to invalid fixture: %v", err)
-	}
-
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/get_ssp_info", app.APIURL), responder)
-	var req GetSspInfoRequest
-	res, err := client.Product.GetSspInfo(shopID, req, accessToken)
-	if err != nil {
-		t.Logf("Product.GetSspInfo returned error (possibly expected with mock data): %s", err)
-	}
-
-	t.Logf("Product.GetSspInfo response: %#v", res)
-}
-
-func Test_Product_AddSspItem(t *testing.T) {
-	setup()
-	defer teardown()
-
-	fixture := "v2.product.add_ssp_item_resp.json"
-	data, err := loadFixtureSafe(fixture)
-	if err != nil {
-		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.product.add_ssp_item")
-		skippedMu.Unlock()
-		t.Skipf("Skipping AddSspItem due to missing fixture: %v", err)
-	}
-	responder, err := httpmock.NewJsonResponder(200, data)
-	if err != nil {
-		t.Skipf("Skipping AddSspItem due to invalid fixture: %v", err)
-	}
-
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/add_ssp_item", app.APIURL), responder)
-	var req AddSspItemRequest
-	res, err := client.Product.AddSspItem(shopID, req, accessToken)
-	if err != nil {
-		t.Logf("Product.AddSspItem returned error (possibly expected with mock data): %s", err)
-	}
-
-	t.Logf("Product.AddSspItem response: %#v", res)
-}
-
-func Test_Product_LinkSsp(t *testing.T) {
-	setup()
-	defer teardown()
-
-	fixture := "v2.product.link_ssp_resp.json"
-	data, err := loadFixtureSafe(fixture)
-	if err != nil {
-		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.product.link_ssp")
-		skippedMu.Unlock()
-		t.Skipf("Skipping LinkSsp due to missing fixture: %v", err)
-	}
-	responder, err := httpmock.NewJsonResponder(200, data)
-	if err != nil {
-		t.Skipf("Skipping LinkSsp due to invalid fixture: %v", err)
-	}
-
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/link_ssp", app.APIURL), responder)
-	var req LinkSspRequest
-	res, err := client.Product.LinkSsp(shopID, req, accessToken)
-	if err != nil {
-		t.Logf("Product.LinkSsp returned error (possibly expected with mock data): %s", err)
-	}
-
-	t.Logf("Product.LinkSsp response: %#v", res)
-}
-
-func Test_Product_UnlinkSsp(t *testing.T) {
-	setup()
-	defer teardown()
-
-	fixture := "v2.product.unlink_ssp_resp.json"
-	data, err := loadFixtureSafe(fixture)
-	if err != nil {
-		skippedMu.Lock()
-		skippedRoutes = append(skippedRoutes, "v2.product.unlink_ssp")
-		skippedMu.Unlock()
-		t.Skipf("Skipping UnlinkSsp due to missing fixture: %v", err)
-	}
-	responder, err := httpmock.NewJsonResponder(200, data)
-	if err != nil {
-		t.Skipf("Skipping UnlinkSsp due to invalid fixture: %v", err)
-	}
-
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/unlink_ssp", app.APIURL), responder)
-	var req UnlinkSspRequest
-	res, err := client.Product.UnlinkSsp(shopID, req, accessToken)
-	if err != nil {
-		t.Logf("Product.UnlinkSsp returned error (possibly expected with mock data): %s", err)
-	}
-
-	t.Logf("Product.UnlinkSsp response: %#v", res)
-}
-
 func Test_Product_GetAitemByPitemId(t *testing.T) {
 	setup()
 	defer teardown()
@@ -1571,4 +1436,139 @@ func Test_Product_GetMartItemByOutletItemId(t *testing.T) {
 	}
 
 	t.Logf("Product.GetMartItemByOutletItemId response: %#v", res)
+}
+
+func Test_Product_BatchUpdateOutletPrice(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.batch_update_outlet_price_resp.json"
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.product.batch_update_outlet_price")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BatchUpdateOutletPrice due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
+	if err != nil {
+		t.Skipf("Skipping BatchUpdateOutletPrice due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/batch_update_outlet_price", app.APIURL), responder)
+	var req BatchUpdateOutletPriceRequest
+	res, err := client.Product.BatchUpdateOutletPrice(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.BatchUpdateOutletPrice returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.BatchUpdateOutletPrice response: %#v", res)
+}
+
+func Test_Product_BatchUpdateOutletStock(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.batch_update_outlet_stock_resp.json"
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.product.batch_update_outlet_stock")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BatchUpdateOutletStock due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
+	if err != nil {
+		t.Skipf("Skipping BatchUpdateOutletStock due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/batch_update_outlet_stock", app.APIURL), responder)
+	var req BatchUpdateOutletStockRequest
+	res, err := client.Product.BatchUpdateOutletStock(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.BatchUpdateOutletStock returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.BatchUpdateOutletStock response: %#v", res)
+}
+
+func Test_Product_GetBatchTaskResult(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.get_batch_task_result_resp.json"
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.product.get_batch_task_result")
+		skippedMu.Unlock()
+		t.Skipf("Skipping GetBatchTaskResult due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
+	if err != nil {
+		t.Skipf("Skipping GetBatchTaskResult due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/get_batch_task_result", app.APIURL), responder)
+	var req GetBatchTaskResultRequest
+	res, err := client.Product.GetBatchTaskResult(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.GetBatchTaskResult returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.GetBatchTaskResult response: %#v", res)
+}
+
+func Test_Product_BatchAddItem(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.batch_add_item_resp.json"
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.product.batch_add_item")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BatchAddItem due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
+	if err != nil {
+		t.Skipf("Skipping BatchAddItem due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/batch_add_item", app.APIURL), responder)
+	var req BatchAddItemRequest
+	res, err := client.Product.BatchAddItem(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.BatchAddItem returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.BatchAddItem response: %#v", res)
+}
+
+func Test_Product_BatchPublishItemToOutletShop(t *testing.T) {
+	setup()
+	defer teardown()
+
+	fixture := "v2.product.batch_publish_item_to_outlet_shop_resp.json"
+	data, err := loadFixtureSafe(fixture)
+	if err != nil {
+		skippedMu.Lock()
+		skippedRoutes = append(skippedRoutes, "v2.product.batch_publish_item_to_outlet_shop")
+		skippedMu.Unlock()
+		t.Skipf("Skipping BatchPublishItemToOutletShop due to missing fixture: %v", err)
+	}
+	responder, err := httpmock.NewJsonResponder(200, data)
+	if err != nil {
+		t.Skipf("Skipping BatchPublishItemToOutletShop due to invalid fixture: %v", err)
+	}
+
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/api/v2/product/batch_publish_item_to_outlet_shop", app.APIURL), responder)
+	var req BatchPublishItemToOutletShopRequest
+	res, err := client.Product.BatchPublishItemToOutletShop(shopID, req, accessToken)
+	if err != nil {
+		t.Logf("Product.BatchPublishItemToOutletShop returned error (possibly expected with mock data): %s", err)
+	}
+
+	t.Logf("Product.BatchPublishItemToOutletShop response: %#v", res)
 }

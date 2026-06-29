@@ -45,7 +45,7 @@ type PaymentService interface {
 	// Path: /api/v2/payment/get_billing_transaction_info
 	// https://open.shopee.com/documents/v2/v2.payment.get_billing_transaction_info?module=97&type=1
 	GetBillingTransactionInfo(sid uint64, req GetBillingTransactionInfoRequest, tok string) (*GetBillingTransactionInfoResponse, error)
-	// GetEscrowDetailBatch Use this API to fetch the details of order income by batch.
+	// GetEscrowDetailBatch {"content":"<p>Use this API to fetch the details of order income by batch.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to fetch the details of order income by batch."}]}]}
 	// Path: /api/v2/payment/get_escrow_detail_batch
 	// https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail_batch?module=97&type=1
 	GetEscrowDetailBatch(sid uint64, req GetEscrowDetailBatchRequest, tok string) (*GetEscrowDetailBatchResponse, error)
@@ -193,7 +193,7 @@ func (s *PaymentServiceOp[T]) GetBillingTransactionInfo(sid uint64, req GetBilli
 	return resp, err
 }
 
-// GetEscrowDetailBatch Use this API to fetch the details of order income by batch.
+// GetEscrowDetailBatch {"content":"<p>Use this API to fetch the details of order income by batch.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this API to fetch the details of order income by batch."}]}]}
 // Path: /api/v2/payment/get_escrow_detail_batch
 // https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail_batch?module=97&type=1
 func (s *PaymentServiceOp[T]) GetEscrowDetailBatch(sid uint64, req GetEscrowDetailBatchRequest, tok string) (*GetEscrowDetailBatchResponse, error) {
