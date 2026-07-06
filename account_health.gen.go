@@ -1,12 +1,11 @@
 package goshopee
 
 type AccountHealthService interface {
-	// GetShopPerformance The data metrics of shop performance.
-	//
+	// GetShopPerformance {"content":"<p>The data metrics of shop performance.<br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"The data metrics of shop performance."},{"name":"softBreak"},{"data":" "}]}]}
 	// Path: /api/v2/account_health/get_shop_performance
 	// https://open.shopee.com/documents/v2/v2.account_health.get_shop_performance?module=103&type=1
 	GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error)
-	// GetMetricSourceDetail Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.
+	// GetMetricSourceDetail {"content":"<p>Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics."}]}]}
 	// Path: /api/v2/account_health/get_metric_source_detail
 	// https://open.shopee.com/documents/v2/v2.account_health.get_metric_source_detail?module=103&type=1
 	GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error)
@@ -32,8 +31,7 @@ type AccountHealthServiceOp[T any] struct {
 	client *Client[T]
 }
 
-// GetShopPerformance The data metrics of shop performance.
-//
+// GetShopPerformance {"content":"<p>The data metrics of shop performance.<br>&nbsp;</p>","raw_content":[{"name":"paragraph","children":[{"data":"The data metrics of shop performance."},{"name":"softBreak"},{"data":" "}]}]}
 // Path: /api/v2/account_health/get_shop_performance
 // https://open.shopee.com/documents/v2/v2.account_health.get_shop_performance?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetShopPerformance(sid uint64, tok string) (*GetShopPerformanceResponse, error) {
@@ -43,7 +41,7 @@ func (s *AccountHealthServiceOp[T]) GetShopPerformance(sid uint64, tok string) (
 	return resp, err
 }
 
-// GetMetricSourceDetail Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.
+// GetMetricSourceDetail {"content":"<p>Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get the Affected Orders / Relevant Listings / Relevant Violations details of metrics."}]}]}
 // Path: /api/v2/account_health/get_metric_source_detail
 // https://open.shopee.com/documents/v2/v2.account_health.get_metric_source_detail?module=103&type=1
 func (s *AccountHealthServiceOp[T]) GetMetricSourceDetail(sid uint64, opt GetMetricSourceDetailRequest, tok string) (*GetMetricSourceDetailResponse, error) {

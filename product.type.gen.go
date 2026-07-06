@@ -963,8 +963,8 @@ type GetSizeChartDetailResponseData struct {
 }
 
 type GetSizeChartListRequest struct {
-	CategoryId int64   `json:"category_id" url:"category_id"`           // [Required] <p>category id under this shop<br /></p>
-	PageSize   int64   `json:"page_size" url:"page_size"`               // [Required] <p>the size of one page.&nbsp;Max=50.<br /></p>
+	CategoryId string  `json:"category_id" url:"category_id"`           // [Required] <p>category id under this shop<br /></p>
+	PageSize   string  `json:"page_size" url:"page_size"`               // [Required] <p>the size of one page.&nbsp;Max=50.<br /></p>
 	Cursor     *string `json:"cursor,omitempty" url:"cursor,omitempty"` // [Optional] <p>Specifies the starting entry of data to return in the current call. Default is "". If data is more than one page, the cursor can be some entry to start next call.<br /></p>
 }
 
@@ -975,7 +975,7 @@ type GetSizeChartListResponse struct {
 
 type GetSizeChartListResponseData struct {
 	SizeChartList []SizeChart `json:"size_chart_list"` // [Required]
-	TotalCount    int64       `json:"total_count"`     // [Required] <p>total number of new size chart under requested category_id<br /></p>
+	TotalCount    string      `json:"total_count"`     // [Required] <p>total number of new size chart under requested category_id<br /></p>
 	NextCursor    string      `json:"next_cursor"`     // [Required] <p>if next_cursor has value, this value need set to next request.cursor<br /></p>
 }
 
@@ -1649,6 +1649,10 @@ type SharedOption struct {
 type SipItemPrice struct {
 	ModelId      *int64  `json:"model_id,omitempty"` // [Optional] 0 for no model item.
 	SipItemPrice float64 `json:"sip_item_price"`     // [Required] SIP item price.
+}
+
+type SizeChart struct {
+	SizeChartId string `json:"size_chart_id"` // [Required] <p>ID of new size chart<br /></p>
 }
 
 type Stock struct {

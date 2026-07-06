@@ -492,9 +492,9 @@ type GlobalProductGetSizeChartListResponse struct {
 }
 
 type GlobalProductGetSizeChartListResponseData struct {
-	SizeChartList []SizeChart `json:"size_chart_list"` // [Required]
-	TotalCount    int64       `json:"total_count"`     // [Required]
-	NextCursor    string      `json:"next_cursor"`     // [Required]
+	SizeChartList []ResponseDataSizeChart `json:"size_chart_list"` // [Required]
+	TotalCount    int64                   `json:"total_count"`     // [Required]
+	NextCursor    string                  `json:"next_cursor"`     // [Required]
 }
 
 type GlobalProductGetVariationsRequest struct {
@@ -708,6 +708,10 @@ type ResponseDataGlobalModel struct {
 	IsFulfillmentByShopee bool                   `json:"is_fulfillment_by_shopee"` // [Required] <p>If it it a FBS model</p>
 }
 
+type ResponseDataSizeChart struct {
+	SizeChartId int64 `json:"size_chart_id"` // [Required]
+}
+
 type ResponseDataStandardiseTierVariation struct {
 	VariationId         int64                                     `json:"variation_id"`          // [Required] <p>Standardise Tier variation ID.<br /></p>
 	VariationName       string                                    `json:"variation_name"`        // [Required] <p>Standardise Tier variation Name.<br /></p>
@@ -760,10 +764,6 @@ type ShopSync struct {
 	TierVariationNameAndOption bool   `json:"tier_variation_name_and_option"` // [Required] sync tier variation
 	Price                      bool   `json:"price"`                          // [Required] sync price
 	DaysToShip                 bool   `json:"days_to_ship"`                   // [Required] sync days to ship info
-}
-
-type SizeChart struct {
-	SizeChartId int64 `json:"size_chart_id"` // [Required]
 }
 
 type SizeChartInfo struct {

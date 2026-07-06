@@ -127,7 +127,7 @@ type GlobalProductService interface {
 	// Path: /api/v2/global_product/get_size_chart_detail
 	// https://open.shopee.com/documents/v2/v2.global_product.get_size_chart_detail?module=90&type=1
 	GetSizeChartDetail(sid uint64, req GlobalProductGetSizeChartDetailRequest, tok string) (*GlobalProductGetSizeChartDetailResponse, error)
-	// GetSizeChartList Get size chat list
+	// GetSizeChartList {"content":"<p>Get size chart list</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get size chart list"}]}]}
 	// Path: /api/v2/global_product/get_size_chart_list
 	// https://open.shopee.com/documents/v2/v2.global_product.get_size_chart_list?module=90&type=1
 	GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error)
@@ -455,7 +455,7 @@ func (s *GlobalProductServiceOp[T]) GetSizeChartDetail(sid uint64, req GlobalPro
 	return resp, err
 }
 
-// GetSizeChartList Get size chat list
+// GetSizeChartList {"content":"<p>Get size chart list</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get size chart list"}]}]}
 // Path: /api/v2/global_product/get_size_chart_list
 // https://open.shopee.com/documents/v2/v2.global_product.get_size_chart_list?module=90&type=1
 func (s *GlobalProductServiceOp[T]) GetSizeChartList(sid uint64, req GlobalProductGetSizeChartListRequest, tok string) (*GlobalProductGetSizeChartListResponse, error) {
