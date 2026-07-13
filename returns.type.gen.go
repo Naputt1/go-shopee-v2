@@ -49,6 +49,11 @@ type CancelDisputeResponseData struct {
 	Message  string `json:"message"`   // [Required] <p>To indicate whether the cancel dispute operation is successful or failed.</p>
 }
 
+type CompensationAmountList struct {
+	CompensationType   string  `json:"compensation_type"`   // [Required] <p>To indicate the type of return-related compensation</p><p>Applicable values: See Data Definition - Compensation Type</p>
+	CompensationAmount float64 `json:"compensation_amount"` // [Required]
+}
+
 type ConfirmRequest struct {
 	ReturnSn string `json:"return_sn"` // [Required] The serial number of return.
 }
@@ -421,9 +426,10 @@ type SampleEvidence struct {
 }
 
 type SellerCompensation struct {
-	SellerCompensationStatus  string  `json:"seller_compensation_status"`   // [Required] To indicate whether the seller is eligible for raising a compensation request. See "Data Definition - SellerCompensationStatus"
-	SellerCompensationDueDate int64   `json:"seller_compensation_due_date"` // [Required] To indicate the deadline for requesting the compensation
-	CompensationAmount        float64 `json:"compensation_amount"`          // [Required] To indicate the compensation amount that the agent decided
+	SellerCompensationStatus  string                  `json:"seller_compensation_status"`   // [Required] To indicate whether the seller is eligible for raising a compensation request. See "Data Definition - SellerCompensationStatus"
+	SellerCompensationDueDate int64                   `json:"seller_compensation_due_date"` // [Required] To indicate the deadline for requesting the compensation
+	CompensationAmount        float64                 `json:"compensation_amount"`          // [Required] To indicate the compensation amount that the agent decided
+	CompensationAmountList    *CompensationAmountList `json:"compensation_amount_list"`     // [Required]
 }
 
 type SellerProof struct {

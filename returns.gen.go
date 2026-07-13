@@ -9,7 +9,7 @@ type ReturnsService interface {
 	// Path: /api/v2/returns/get_return_list
 	// https://open.shopee.com/documents/v2/v2.returns.get_return_list?module=102&type=1
 	GetReturnList(sid uint64, opt GetReturnListRequest, tok string) (*GetReturnListResponse, error)
-	// GetReturnDetail Use this api to get detail information of a return by return sn.
+	// GetReturnDetail {"content":"<p>Use this api to get detail information of a return by return sn.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get detail information of a return by return sn."}]}]}
 	// Path: /api/v2/returns/get_return_detail
 	// https://open.shopee.com/documents/v2/v2.returns.get_return_detail?module=102&type=1
 	GetReturnDetail(sid uint64, opt GetReturnDetailRequest, tok string) (*GetReturnDetailResponse, error)
@@ -85,7 +85,7 @@ func (s *ReturnsServiceOp[T]) GetReturnList(sid uint64, opt GetReturnListRequest
 	return resp, err
 }
 
-// GetReturnDetail Use this api to get detail information of a return by return sn.
+// GetReturnDetail {"content":"<p>Use this api to get detail information of a return by return sn.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to get detail information of a return by return sn."}]}]}
 // Path: /api/v2/returns/get_return_detail
 // https://open.shopee.com/documents/v2/v2.returns.get_return_detail?module=102&type=1
 func (s *ReturnsServiceOp[T]) GetReturnDetail(sid uint64, opt GetReturnDetailRequest, tok string) (*GetReturnDetailResponse, error) {
