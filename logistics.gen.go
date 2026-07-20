@@ -51,7 +51,7 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/download_shipping_document
 	// https://open.shopee.com/documents/v2/v2.logistics.download_shipping_document?module=95&type=1
 	DownloadShippingDocument(sid uint64, req DownloadShippingDocumentRequest, tok string) (*DownloadShippingDocumentResponse, error)
-	// GetShippingDocumentDataInfo Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images.
+	// GetShippingDocumentDataInfo {"content":"<p>Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images."}]}]}
 	// Path: /api/v2/logistics/get_shipping_document_data_info
 	// https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_data_info?module=95&type=1
 	GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error)
@@ -145,7 +145,7 @@ type LogisticsService interface {
 	// Path: /api/v2/logistics/download_booking_shipping_document
 	// https://open.shopee.com/documents/v2/v2.logistics.download_booking_shipping_document?module=95&type=1
 	DownloadBookingShippingDocument(sid uint64, req DownloadBookingShippingDocumentRequest, tok string) (*DownloadBookingShippingDocumentResponse, error)
-	// GetBookingShippingDocumentDataInfo Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images.
+	// GetBookingShippingDocumentDataInfo {"content":"<p>Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images."}]}]}
 	// Path: /api/v2/logistics/get_booking_shipping_document_data_info
 	// https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_document_data_info?module=95&type=1
 	GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error)
@@ -315,7 +315,7 @@ func (s *LogisticsServiceOp[T]) DownloadShippingDocument(sid uint64, req Downloa
 	return resp, err
 }
 
-// GetShippingDocumentDataInfo Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images.
+// GetShippingDocumentDataInfo {"content":"<p>Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to fetch the logistics information of an order, these info can be used for self-design AWB printing. Besides, this api supports returning personal info as images."}]}]}
 // Path: /api/v2/logistics/get_shipping_document_data_info
 // https://open.shopee.com/documents/v2/v2.logistics.get_shipping_document_data_info?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetShippingDocumentDataInfo(sid uint64, req GetShippingDocumentDataInfoRequest, tok string) (*GetShippingDocumentDataInfoResponse, error) {
@@ -540,7 +540,7 @@ func (s *LogisticsServiceOp[T]) DownloadBookingShippingDocument(sid uint64, req 
 	return resp, err
 }
 
-// GetBookingShippingDocumentDataInfo Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images.
+// GetBookingShippingDocumentDataInfo {"content":"<p>Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Use this api to fetch the logistics information of a booking these info can be used for airwaybill printing. Dedicated for crossborder SLS order airwaybill. May not be applicable for local channel airwaybill. Besides, this api supports returning personal info as images."}]}]}
 // Path: /api/v2/logistics/get_booking_shipping_document_data_info
 // https://open.shopee.com/documents/v2/v2.logistics.get_booking_shipping_document_data_info?module=95&type=1
 func (s *LogisticsServiceOp[T]) GetBookingShippingDocumentDataInfo(sid uint64, req GetBookingShippingDocumentDataInfoRequest, tok string) (*GetBookingShippingDocumentDataInfoResponse, error) {

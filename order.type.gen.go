@@ -490,6 +490,7 @@ type OrderItem struct {
 	PromotionType                     string          `json:"promotion_type"`                         // [Required] <p>Available type：product_promotion, flash_sale, bundle_deal, add_on_deal_main, add_on_deal_sub.</p><p><br /></p><p>For items which attend multiple promotions will only show one promotion, the order of priority is:&nbsp;</p><p>bundle_deal &gt; add_on_deal_main &gt; add_on_deal_sub &gt; product_promotion &gt;flash_sale</p>
 	PromotionId                       int64           `json:"promotion_id"`                           // [Required] The ID of the promotion.
 	OrderItemId                       int64           `json:"order_item_id"`                          // [Required] The identify of order item.
+	LineItemId                        int64           `json:"line_item_id"`                           // [Required] <p>The identity of order item. In case the order item is a bundle deal, this value will be unique to distinguish the order item</p>
 	PromotionGroupId                  int64           `json:"promotion_group_id"`                     // [Required] The identify of product promotion.
 	ImageInfo                         *OptionImage    `json:"image_info"`                             // [Required] Image info of the product.
 	ProductLocationId                 string          `json:"product_location_id"`                    // [Required] The fulfilment warehouse ID(s) of the items in the order. (Multi-Warehouse sellers only)

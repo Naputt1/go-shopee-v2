@@ -440,15 +440,15 @@ type ItemPlanAhora struct {
 
 type ItemPromotion struct {
 	PromotionType string `json:"promotion_type"` // [Required] <p>Indicates the type of item- or package-level promotion applied to a product. Each item can be associated with at most one item promotion and one package promotion at a time.<br /><br />Item Promotions:</p><p>low_price_promotion</p><p>deep_discount</p><p>platform_sale</p><p>seller_discount</p><p>flash_sale</p><p>wholesale</p><p>welcome_package_free_gift</p><p>brand_flash_sale</p><p>in_shop_flash_sale</p><p>synced_promo</p><p>platform_streaming_price</p><p>seller_streaming_price</p><p>exclusive_streamer_price</p><p>price_bidding_with_rebate</p><p>price_bidding_without_rebate</p><p>seller_advisor_price</p><p>selling_price</p><p>settlement_price</p><p>campaign_settlement_price</p><p>local_sip_settlement_price</p><p>platform_exclusive_price</p><p>seller_exclusive_price</p><p>seller_member_exclusive_sku</p><p>item_price</p><p>order_sync_price</p><p><br />Package Promotions:<br />bundle_deal<br />add_on_deal_main<br />add_on_deal_sub<br /><br /><br /><br /><br /></p>
-	PromotionId   int64  `json:"promotion_id"`   // [Required] <p>Represents the unique identifier of a specific promotion applied to an item. Each promotion_id corresponds to a distinct promotion rule or campaign, defined under a particular promotion_type. The value is expressed in a numeric string format.</p>
+	PromotionId   int64  `json:"promotion_id"`   // [Required] <p>Represents the unique identifier of a specific promotion applied to an item. Each promotion_id corresponds to a distinct promotion rule or campaign, defined under a particular promotion_type.&nbsp;</p><p>Unsigned 64-bit integer (uint64). Clients should treat this field as an identifier, not as a numeric type.</p>
 }
 
 type KitItems struct {
-	MtItemId          float64 `json:"mt_item_id"`          // [Required] <p>The merchant item identifier of the product within the kit&nbsp;(Only for BR Local Sellers)</p>
-	MtModelId         float64 `json:"mt_model_id"`         // [Required] <p>The merchant product model of the item within the kit&nbsp;(Only for BR Local Sellers)</p>
+	OriginalProductId float64 `json:"original_product_id"` // [Required] <p>The merchant item identifier of the product within the kit&nbsp;(Only for BR Local Sellers)</p>
+	OriginalModelId   float64 `json:"original_model_id"`   // [Required] <p>The merchant product model of the item within the kit&nbsp;(Only for BR Local Sellers)</p>
 	TotalQty          float64 `json:"total_qty"`           // [Required] <p>The quantity of this specific component within the kit.&nbsp;(Only for BR Local Sellers)</p>
-	ParentItemPrice   float64 `json:"parent_item_price"`   // [Required] <p>The price of the item when it is listed as a standalone item.</p>
-	ItemPriceProrated float64 `json:"item_price_prorated"` // [Required] <p>The price of the item when it is listed within the kit (i.e. proportionally distributed)&nbsp;(Only for BR Local Sellers)</p>
+	OriginalPrice     float64 `json:"original_price"`      // [Required] <p>The price of the item when it is listed as a standalone item.</p>
+	ProportionalPrice float64 `json:"proportional_price"`  // [Required] <p>The price of the item when it is listed within the kit (i.e. proportionally distributed)&nbsp;(Only for BR Local Sellers)</p>
 }
 
 type NetCommissionFeeInfoList struct {
@@ -589,6 +589,7 @@ type OrderIncomeItems struct {
 	ModelId                   int64           `json:"model_id"`                     // [Required] <p>ID of the model that belongs to the same item.<br /></p>
 	ModelName                 string          `json:"model_name"`                   // [Required] <p>Name of the model that belongs to the same item. A seller can offer variations of the same item. For example, the seller could create a fixed-priced listing for a t-shirt design and offer the shirt in different colors and sizes. In this case, each color and size combination is a separate variation. Each variation can have a different quantity and price.<br /></p>
 	ModelSku                  string          `json:"model_sku"`                    // [Required] <p>A model SKU (stock keeping unit) is an identifier defined by a seller. It is only intended for the seller's use. Many sellers assign a SKU to an item of a specific type, size, and color, which are variations of one item in Shopee Listings.<br /></p>
+	LineItemId                int64           `json:"line_item_id"`                 // [Required] <p>The identity of order item. In case the order item is a bundle deal, this value will be unique to distinguish the order item.</p>
 	OriginalPrice             float64         `json:"original_price"`               // [Required] <p>The original price of the item before ANY promotion/discount in the listing currency. It returns the subtotal of that specific item if quantity exceeds 1.<br /></p>
 	OriginalPricePri          float64         `json:"original_price_pri"`           // [Required] <p>The agreed settlement price of items used as settlement basis, amount is in the primary currency. (Only display for CB SIP affiliate shop.)<br /></p>
 	SellingPrice              float64         `json:"selling_price"`                // [Required] <p>For non-bundle deal case, this value will be same like item original_price; For bundle deal case, this value will be price of sum of item price before bundle deal promo but after item promo. It returns the subtotal of that specific item if quantity exceeds 1 (Only display for non cb sip affiliate shop.)<br /></p>
@@ -600,7 +601,7 @@ type OrderIncomeItems struct {
 	DiscountFromVoucherShopee float64         `json:"discount_from_voucher_shopee"` // [Required] <p>The offset of this item when the buyer use Shopee voucher.&nbsp;</p>
 	DiscountFromVoucherSeller float64         `json:"discount_from_voucher_seller"` // [Required] <p>The offset of this item when the buyer use seller-specific voucher.</p>
 	ActivityType              string          `json:"activity_type"`                // [Required] <p>The type of the item, default is "". If the item is a bundle item the value is "bundle_deal", and if a add on deal item, the value is "add_on_deal"<br /></p>
-	ActivityId                int64           `json:"activity_id"`                  // [Required] <p>If bundle_deal the is id of bundle deal, if add_on_deal this is id of add on deal.<br /></p>
+	ActivityId                int64           `json:"activity_id"`                  // [Required] <p>If bundle_deal the is id of bundle deal, if add_on_deal this is id of add on deal.<br /></p><p>Unsigned 64-bit integer (uint64). Clients should treat this field as an identifier, not as a numeric type.</p>
 	IsMainItem                bool            `json:"is_main_item"`                 // [Required] <p>Meaning a main or sub item for add_on_deal.<br /></p>
 	QuantityPurchased         int64           `json:"quantity_purchased"`           // [Required] <p>This value indicates the number of identical items purchased at the same time by the same buyer from one listing/item.<br /></p>
 	IsB2cShopItem             bool            `json:"is_b2c_shop_item"`             // [Required] <p>Indicates whether this is a B2C owned item.<br /></p>
