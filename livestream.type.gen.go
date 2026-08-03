@@ -365,8 +365,9 @@ type PostCommentResponseData struct {
 }
 
 type StartSessionRequest struct {
-	SessionId int64 `json:"session_id"` // [Required] <p>The identifier of livestream session.</p>
-	DomainId  int64 `json:"domain_id"`  // [Required] <p>The identifier of the stream domain.</p>
+	SessionId int64 `json:"session_id"`          // [Required] <p>The identifier of livestream session.</p>
+	DomainId  int64 `json:"domain_id"`           // [Required] <p>The identifier of the stream domain.</p>
+	AiStream  *bool `json:"ai_stream,omitempty"` // [Optional] <p>Only available in PH region.<br />To support transparent experiences on Shopee Live,<br />please select this option if AI-generated streamer<br />is used for live-streaming.<br />Failure of doing so may lead to warning or termination.<br />Learn more about the policy:<br />PH: <a href="https://seller.shopee.ph/edu/article/25213" target="_blank">https://seller.shopee.ph/edu/article/25213</a></p>
 }
 
 type StartSessionResponse struct {

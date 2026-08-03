@@ -18,7 +18,7 @@ type LivestreamService interface {
 	// Path: /api/v2/livestream/update_session
 	// https://open.shopee.com/documents/v2/v2.livestream.update_session?module=125&type=1
 	UpdateSession(sid uint64, req UpdateSessionRequest, tok string) (*UpdateSessionResponse, error)
-	// StartSession Start Live. (For TW, ID, TH, PH, MY, SG, VN)
+	// StartSession {"content":"<p>Start Live. (For TW, ID, TH, PH, MY, SG, VN)</p>","raw_content":[{"name":"paragraph","children":[{"data":"Start Live. (For TW, ID, TH, PH, MY, SG, VN)"}]}]}
 	// Path: /api/v2/livestream/start_session
 	// https://open.shopee.com/documents/v2/v2.livestream.start_session?module=125&type=1
 	StartSession(sid uint64, req StartSessionRequest, tok string) (*StartSessionResponse, error)
@@ -152,7 +152,7 @@ func (s *LivestreamServiceOp[T]) UpdateSession(sid uint64, req UpdateSessionRequ
 	return resp, err
 }
 
-// StartSession Start Live. (For TW, ID, TH, PH, MY, SG, VN)
+// StartSession {"content":"<p>Start Live. (For TW, ID, TH, PH, MY, SG, VN)</p>","raw_content":[{"name":"paragraph","children":[{"data":"Start Live. (For TW, ID, TH, PH, MY, SG, VN)"}]}]}
 // Path: /api/v2/livestream/start_session
 // https://open.shopee.com/documents/v2/v2.livestream.start_session?module=125&type=1
 func (s *LivestreamServiceOp[T]) StartSession(sid uint64, req StartSessionRequest, tok string) (*StartSessionResponse, error) {

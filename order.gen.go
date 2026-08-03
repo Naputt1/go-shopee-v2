@@ -49,7 +49,7 @@ type OrderService interface {
 	// Path: /api/v2/order/get_pending_buyer_invoice_order_list
 	// https://open.shopee.com/documents/v2/v2.order.get_pending_buyer_invoice_order_list?module=94&type=1
 	GetPendingBuyerInvoiceOrderList(sid uint64, opt GetPendingBuyerInvoiceOrderListRequest, tok string) (*GetPendingBuyerInvoiceOrderListResponse, error)
-	// GetBuyerInvoiceInfo API to obtain buyer submitted invoice info for VN, TH and PH local sellers only.
+	// GetBuyerInvoiceInfo {"content":"<p>API to obtain buyer submitted invoice info for VN, TH and PH local sellers only.</p>","raw_content":[{"name":"paragraph","children":[{"data":"API to obtain buyer submitted invoice info for VN, TH and PH local sellers only."}]}]}
 	// Path: /api/v2/order/get_buyer_invoice_info
 	// https://open.shopee.com/documents/v2/v2.order.get_buyer_invoice_info?module=94&type=1
 	GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error)
@@ -214,7 +214,7 @@ func (s *OrderServiceOp[T]) GetPendingBuyerInvoiceOrderList(sid uint64, opt GetP
 	return resp, err
 }
 
-// GetBuyerInvoiceInfo API to obtain buyer submitted invoice info for VN, TH and PH local sellers only.
+// GetBuyerInvoiceInfo {"content":"<p>API to obtain buyer submitted invoice info for VN, TH and PH local sellers only.</p>","raw_content":[{"name":"paragraph","children":[{"data":"API to obtain buyer submitted invoice info for VN, TH and PH local sellers only."}]}]}
 // Path: /api/v2/order/get_buyer_invoice_info
 // https://open.shopee.com/documents/v2/v2.order.get_buyer_invoice_info?module=94&type=1
 func (s *OrderServiceOp[T]) GetBuyerInvoiceInfo(sid uint64, req GetBuyerInvoiceInfoRequest, tok string) (*GetBuyerInvoiceInfoResponse, error) {

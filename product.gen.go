@@ -49,7 +49,7 @@ type ProductService interface {
 	// Path: /api/v2/product/update_tier_variation
 	// https://open.shopee.com/documents/v2/v2.product.update_tier_variation?module=89&type=1
 	UpdateTierVariation(sid uint64, req UpdateTierVariationRequest, tok string) (*UpdateTierVariationResponse, error)
-	// GetModelList Get model list of an item.
+	// GetModelList {"content":"<p>Get model list of an item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get model list of an item."}]}]}
 	// Path: /api/v2/product/get_model_list
 	// https://open.shopee.com/documents/v2/v2.product.get_model_list?module=89&type=1
 	GetModelList(sid uint64, opt GetModelListRequest, tok string) (*GetModelListResponse, error)
@@ -85,7 +85,7 @@ type ProductService interface {
 	// Path: /api/v2/product/get_boosted_list
 	// https://open.shopee.com/documents/v2/v2.product.get_boosted_list?module=89&type=1
 	GetBoostedList(sid uint64, tok string) (*GetBoostedListResponse, error)
-	// GetItemPromotion Get item promotion info.
+	// GetItemPromotion {"content":"<p>Get item promotion info.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get item promotion info."}]}]}
 	// Path: /api/v2/product/get_item_promotion
 	// https://open.shopee.com/documents/v2/v2.product.get_item_promotion?module=89&type=1
 	GetItemPromotion(sid uint64, opt GetItemPromotionRequest, tok string) (*GetItemPromotionResponse, error)
@@ -360,7 +360,7 @@ func (s *ProductServiceOp[T]) UpdateTierVariation(sid uint64, req UpdateTierVari
 	return resp, err
 }
 
-// GetModelList Get model list of an item.
+// GetModelList {"content":"<p>Get model list of an item.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get model list of an item."}]}]}
 // Path: /api/v2/product/get_model_list
 // https://open.shopee.com/documents/v2/v2.product.get_model_list?module=89&type=1
 func (s *ProductServiceOp[T]) GetModelList(sid uint64, opt GetModelListRequest, tok string) (*GetModelListResponse, error) {
@@ -450,7 +450,7 @@ func (s *ProductServiceOp[T]) GetBoostedList(sid uint64, tok string) (*GetBooste
 	return resp, err
 }
 
-// GetItemPromotion Get item promotion info.
+// GetItemPromotion {"content":"<p>Get item promotion info.</p>","raw_content":[{"name":"paragraph","children":[{"data":"Get item promotion info."}]}]}
 // Path: /api/v2/product/get_item_promotion
 // https://open.shopee.com/documents/v2/v2.product.get_item_promotion?module=89&type=1
 func (s *ProductServiceOp[T]) GetItemPromotion(sid uint64, opt GetItemPromotionRequest, tok string) (*GetItemPromotionResponse, error) {

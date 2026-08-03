@@ -452,6 +452,7 @@ type InvoiceDetail struct {
 	CompanyAddress            string                     `json:"company_address"`             // [Required] <p>Buyer address in format "Street &amp; number,city, zipcode, any additional info provided by buyer"&nbsp;(only has value when invoice_type is company)<br /></p><p>- VN, TH only<br /></p>
 	CompanyAddressBreakdown   *CompanyAddressBreakdown   `json:"company_address_breakdown"`   // [Required] <p>Company address breakdown</p><p>- PH, TH only<br /></p>
 	HouseholdAddressBreakdown *HouseholdAddressBreakdown `json:"household_address_breakdown"` // [Required] <p>Household address breakdown</p><p>-Only for VN</p>
+	NationalId                string                     `json:"national_id"`                 // [Required] <p>National ID information provided by the buyer.</p><p>- Only return value when invoice_type is personal<br />- VN only</p>
 }
 
 type InvoiceInfo struct {
@@ -460,6 +461,11 @@ type InvoiceInfo struct {
 	InvoiceDetail *InvoiceDetail `json:"invoice_detail"` // [Required] <p>Invoice info submitted by buyer. Might be masked, e.g. A****b, depending on order status.<br /></p>
 	Error         string         `json:"error"`          // [Required] <p>Error in retrieving the receipt setting of a particular order.<br /></p>
 	IsRequested   bool           `json:"is_requested"`   // [Required] <p>To identify order with and without buyer request, applicable to PL.<br /></p>
+}
+
+type ItemPromotion struct {
+	PromotionType string `json:"promotion_type"` // [Required] <p>Indicates the type of item or package level promotion applied to a product. Each item can be associated with at most one item promotion and one package promotion at a time.<br /><br />Item Promotions:</p><p>low_price_promotion</p><p>deep_discount</p><p>platform_sale</p><p>seller_discount</p><p>flash_sale</p><p>wholesale</p><p>welcome_package_free_gift</p><p>brand_flash_sale</p><p>in_shop_flash_sale</p><p>synced_promo</p><p>platform_streaming_price</p><p>seller_streaming_price</p><p>exclusive_streamer_price</p><p>price_bidding_with_rebate</p><p>price_bidding_without_rebate</p><p>seller_advisor_price</p><p>selling_price</p><p>settlement_price</p><p>campaign_settlement_price</p><p>local_sip_settlement_price</p><p>platform_exclusive_price</p><p>seller_exclusive_price</p><p>seller_member_exclusive_sku</p><p>item_price</p><p>order_sync_price</p><p><br />Package Promotions:<br />bundle_deal<br />add_on_deal_main<br />add_on_deal_sub</p>
+	PromotionId   int64  `json:"promotion_id"`   // [Required] <p>Represents the unique identifier of a specific promotion applied to an item. Each promotion_id corresponds to a distinct promotion rule or campaign, defined under a particular promotion_type. The value is expressed in a numeric string format.</p>
 }
 
 type Items struct {
