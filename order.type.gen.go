@@ -432,6 +432,8 @@ type InvoiceData struct {
 	TotalValue         float64 `json:"total_value"`          // [Required] The total value of the invoice.
 	ProductsTotalValue float64 `json:"products_total_value"` // [Required] The products total value of the invoice.
 	TaxCode            string  `json:"tax_code"`             // [Required] The tax code for the invoice.
+	Status             string  `json:"status"`               // [Required] <p>The invoice statuses should be:</p><p>- valid (The invoice sent is valid)</p><p>-&nbsp;pending (System is waiting to receive the invoice)</p>
+	PendingReason      string  `json:"pending_reason"`       // [Required] <p>It's the failed reason if status is pending<strong></strong></p>
 }
 
 type InvoiceDetail struct {
@@ -461,6 +463,11 @@ type InvoiceInfo struct {
 	InvoiceDetail *InvoiceDetail `json:"invoice_detail"` // [Required] <p>Invoice info submitted by buyer. Might be masked, e.g. A****b, depending on order status.<br /></p>
 	Error         string         `json:"error"`          // [Required] <p>Error in retrieving the receipt setting of a particular order.<br /></p>
 	IsRequested   bool           `json:"is_requested"`   // [Required] <p>To identify order with and without buyer request, applicable to PL.<br /></p>
+}
+
+type InvoicePending struct {
+	Status        string `json:"status"`         // [Required] <p>The invoice statuses should be:</p><p>- valid (The invoice sent is valid)</p><p>-&nbsp;pending (System is waiting to receive the invoice)</p>
+	PendingReason string `json:"pending_reason"` // [Required] <p>It's the failed reason if status is pending</p>
 }
 
 type ItemPromotion struct {
@@ -638,6 +645,7 @@ type ResponseDataPackage struct {
 	CanFullCancelOrder                    bool                      `json:"can_full_cancel_order"`                     // [Required] <p>Indicates whether the order can be full cancelled:&nbsp;</p><p>-&nbsp;If this value is true, seller can cancel the entire order</p><p>- If the value is false, full order cancellation is not available for the order</p>
 	CanPartialCancelOrder                 bool                      `json:"can_partial_cancel_order"`                  // [Required] <p>Indicates whether the order is eligible for partial cancellation. This value is determined by both the system eligibility check and the buyer’s out-of-stock handling preference.&nbsp;</p><p>- If this value is true, seller can cancel selected out-of-stock item quantities while continuing to fulfill the remaining items.&nbsp;</p><p>- If this value is false, partial cancellation is not allowed.</p>
 	BuyerPreferenceForPartialCancellation int64                     `json:"buyer_preference_for_partial_cancellation"` // [Required] <p>Indicates the buyer’s preference for handling out-of-stock items in the order. Applicable values:</p><p>0 = Ship Available Items Only (The buyer allows the seller to cancel unavailable items and continue shipping the remaining available items)</p><p>1 = Cancel The Entire Order (The buyer does not allow partial cancellation. If any item is unavailable, the seller should cancel the entire order instead)</p>
+	InvoicePending                        *InvoicePending           `json:"invoice_pending"`                           // [Required]
 }
 
 type ResponseDataPackageItem struct {
